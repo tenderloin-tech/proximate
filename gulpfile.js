@@ -13,7 +13,9 @@ gulp.task('lint', function() {
 // checks js files for jscs styles
 gulp.task('checkStyle', function() {
   return gulp.src('src/**/*.js')
-    .pipe(jscs());
+    .pipe(jscs({
+      preset: 'airbnb'
+    }));
 });
 
 // watch files for changes
