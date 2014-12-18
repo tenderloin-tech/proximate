@@ -6,7 +6,7 @@
 
   - __Product Owner__: Sebastian Tonkin
   - __Scrum Master__: rotating between dev team members
-  - __Development Team Members__: Avi Dunn, Derek Barncard, Valentyn Boginskey, Sebastian Tonkin
+  - __Development Team Members__: [Avi Dunn](https://github.com/aggfr12), [Derek Barncard](https://github.com/renderf0x), Valentyn Boginskey, [Sebastian Tonkin](https://github.com/sgtonkin)
 
 ## Table of Contents
 
