@@ -1,6 +1,6 @@
 # Proximate.io
 
-> Pithy project description
+> Automated attendance tracking for your space
 
 ## Team
 
@@ -20,13 +20,12 @@
 
 ## Usage
 
-> Some usage instructions
+> (In progress) Planned features include iBeacons (Etimotes), a backend in Node.js, frontend in Angular.js, a mobile app for iOS in Swift, and a real-world feedback system built using Tessel. You'll likely need all of these bits to run properly.
 
 ## Requirements
 
 - Node 0.10.x
-- Redis 2.6.x
-- Postgresql 9.1.x
+- MySQL x.x.x
 - etc
 - etc
 
@@ -40,6 +39,11 @@ From within the root directory:
 sudo npm install -g bower
 npm install
 bower install
+```
+### Testing
+
+```sh
+gulp test
 ```
 
 ### Roadmap
