@@ -29,6 +29,8 @@
   "dependencies": {
     "bookshelf": "^0.7.9",
     "express": "^4.10.6",
-    "morgan": "^1.5.0"
+    "knex": "^0.7.3",
+    "morgan": "^1.5.0",
+    "mysql": "^2.5.4"
   }
 }
