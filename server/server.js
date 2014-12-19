@@ -1,6 +1,7 @@
 var express = require('express');
 var morgan = require('morgan');
-var config = require('./config/config.js');
+var config = require('./config/config');
+var db = require('./db');
 
 var pubnub  = require('pubnub').init(config);
 
