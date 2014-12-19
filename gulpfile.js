@@ -20,7 +20,7 @@ gulp.task('checkStyle', function() {
   // return gulp.src('./**/*.js')
   return gulp.src(jsPaths.path)
     .pipe(jscs({
-      preset: 'airbnb'
+      preset: 'google'
     }));
 });
 
