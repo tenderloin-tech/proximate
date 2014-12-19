@@ -4,7 +4,7 @@ angular.module('proximate',
   'proximate.controllers'])
 
 .config(function($stateProvider, $urlRouterProvider) {
-  $urlRouterProvider.otherwise("/");
+  $urlRouterProvider.otherwise('/');
 
   $stateProvider
     .state('home', {
