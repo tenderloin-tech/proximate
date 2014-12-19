@@ -4,7 +4,7 @@ var jshint = require('gulp-jshint');
 var jscs = require('gulp-jscs');
 
 var jsPaths = {
-  path: ['server/**/*.js']
+  path: ['server/**/*.js', 'client/**/*.js', 'tessel/**/*.js']
 };
 
 // checks js files with jshint
