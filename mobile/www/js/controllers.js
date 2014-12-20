@@ -21,13 +21,13 @@ angular.module('starter.controllers', [])
   $scope.friend = Friends.get($stateParams.friendId);
 })
 
-.controller('AccountCtrl', function($scope, Beacons) {
+.controller('AccountCtrl', function($scope, Beacons, PubNub) {
   $scope.settings = {
     enableFriends: true
   };
 
-  angular.element(document).ready(function(){
-    Beacons.setupTestBeacons();
+  angular.element(document).ready(function() {
+    Beacons.setupTestBeacons(PubNub.publishRegionEntry);
   });
 
 });
