@@ -2,21 +2,13 @@ var express = require('express');
 var morgan = require('morgan');
 var config = require('./config/config.js');
 
-// jscs: disable requireCamelCaseOrUpperCaseIdentifiers
-var pubnub  = require('pubnub').init({
-    publish_key:    config.pubNubPubKey,
-    subscribe_key:  config.pubNubSubKey,
-    channel:        'my_channel',
-    user:           'Server'
-});
-// jscs: enable requireCamelCaseOrUpperCaseIdentifiers
+var pubnub  = require('pubnub').init(config);
 
 pubnub.subscribe({
     channel: 'my_channel',
     callback: function(message) {
       console.log('Message received: ', message);
-    },
-    connect: publish
+    }
 });
 
 pubnub.publish({
@@ -24,14 +16,6 @@ pubnub.publish({
     callback  : function(e) { console.log('SUCCESS!', e); },
     error     : function(e) { console.log('FAILED! RETRY PUBLISH!', e); }
 });
-
-// test msg to see if server connect to pubnub channel
-function publish() {
-  pubnub.publish({
-    channel   : 'my_channel',
-    message   : 'Server subscribed YESSS!'
-  });
-}
 
 var app = express();
 
