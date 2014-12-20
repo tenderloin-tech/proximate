@@ -4,8 +4,8 @@ var config = require('./config/config.js');
 
 // jscs: disable requireCamelCaseOrUpperCaseIdentifiers
 var pubnub  = require('pubnub').init({
-    publish_key:    config.publishKey,
-    subscribe_key:  config.subscribeKey,
+    publish_key:    config.pubNubPubKey,
+    subscribe_key:  config.pubNubSubKey,
     channel:        'my_channel',
     user:           'Server'
 });
