@@ -1,14 +1,14 @@
+var config = require('../config/config');
+var models = require('../models');
+var knex = require('knex')({client: 'mysql', connection: config.mysqlConnection});
+var bookshelf = require('bookshelf')(knex);
 var promise = require('bluebird');
 
-module.exports = seedTables = function() {
+exports.seedTables = function() {
 
   models.Admin.forge({name: 'Pira'}).save();
 
-  var Participants = bookshelf.Collection.extend({
-    model: models.Participant
-  });
-
-  var participants = Participants.forge([
+  var participants = models.Participants.forge([
     {name: 'John Tan'},
     {name: 'David Raleigh'},
     {name: 'Sunny Gonnabathula'},
@@ -42,17 +42,13 @@ module.exports = seedTables = function() {
     {name: 'Cory Asato'}
   ]);
 
-  Promise.all(participants.invoke('save')).then(function() {
+  promise.all(participants.invoke('save')).then(function() {
     console.log("Participants saved");
   });
 
   // EVENTS
 
-  var Events = bookshelf.Collection.extend({
-    model: models.Event
-  });
-
-  var events = Events.forge([
+  var events = models.Events.forge([
     {
       name: 'Kickoff',
       start_time: '2014-12-28 09:00:00',
@@ -96,15 +92,11 @@ module.exports = seedTables = function() {
     }
   ]);
 
-  Promise.all(events.invoke('save')).then(function() {
+  promise.all(events.invoke('save')).then(function() {
     console.log("Events saved");
   });
 
   // EVENT PARTICIPANTS
-
-  var Events_Participants = bookshelf.Collection.extend({
-    model: models.Event_Participant
-  });
 
   var generateEventsParticipants = function() {
     var eventsParticipants = [];
@@ -124,10 +116,11 @@ module.exports = seedTables = function() {
     return eventsParticipants;
   };
 
-  var eventsParticipants = Events_Participants.forge(generateEventsParticipants());
+  var eventsParticipants = models.Events_Participants.forge(generateEventsParticipants());
 
-  Promise.all(eventsParticipants.invoke('save')).then(function() {
+  promise.all(eventsParticipants.invoke('save')).then(function() {
     console.log("Event participants saved");
   });
 
 }
+
