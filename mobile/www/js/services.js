@@ -3,6 +3,7 @@ angular.module('starter.services', [])
 .factory('Chats', function() {
   // Might use a resource here that returns a JSON array
 
+  // jscs: disable maximumLineLength
   // Some fake testing data
   var chats = [{
     id: 0,
@@ -46,7 +47,7 @@ angular.module('starter.services', [])
       }
       return null;
     }
-  }
+  };
 })
 
 /**
@@ -84,7 +85,7 @@ angular.module('starter.services', [])
     face: 'https://pbs.twimg.com/profile_images/491995398135767040/ie2Z_V6e.jpeg'
   }];
 
-
+  // jscs: enable maximumLineLength
   return {
     all: function() {
       return friends;
@@ -93,5 +94,5 @@ angular.module('starter.services', [])
       // Simple index lookup
       return friends[friendId];
     }
-  }
+  };
 });

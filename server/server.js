@@ -1,5 +1,21 @@
 var express = require('express');
 var morgan = require('morgan');
+var config = require('./config/config.js');
+
+var pubnub  = require('pubnub').init(config);
+
+pubnub.subscribe({
+    channel: config.channel,
+    callback: function(message) {
+      console.log('Message received: ', message);
+    }
+});
+
+pubnub.publish({
+    channel   : config.channel,
+    callback  : function(e) { console.log('SUCCESS!', e); },
+    error     : function(e) { console.log('FAILED! RETRY PUBLISH!', e); }
+});
 
 var app = express();
 

@@ -9,10 +9,4 @@ angular.module('proximate')
       // jscs: enable requireCamelCaseOrUpperCaseIdentifiers
     });
   }
-
-  // This is for testing only
-  PubNub.ngPublish({
-    channel: 'my_channel',
-    message: 'angular reporting in'
-  });
 });

@@ -1,6 +1,8 @@
 // Usage: Copy this file to config.js and replace each value below.
 
 module.exports = {
-  pubNubSubKey: "PUB_NUB_SUB_KEY",
-  pubNubPubKey: "PUB_NUB_PUB_KEY"
+  publish_key:    'subscription key',
+  subscribe_key:  'publish key',
+  channel:        'your channel',
+  user:           'your user'
 };
