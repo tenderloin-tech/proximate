@@ -3,47 +3,47 @@ var knex = require('knex')({client: 'mysql', connection: config.mysqlConnection}
 var bookshelf = require('bookshelf')(knex);
 var seed = require('./seed');
 
-if(config.resetDatabaseOnLoad) {
+if (config.resetDatabaseOnLoad) {
 
   // Drop any existing db tables to ensure increment values reset
   bookshelf.knex.schema.dropTableIfExists('participants')
-  .then(function(){
+  .then(function() {
     return bookshelf.knex.schema.dropTableIfExists('events');
   })
-  .then(function(){
+  .then(function() {
     return bookshelf.knex.schema.dropTableIfExists('admins');
   })
-  .then(function(){
-    return bookshelf.knex.schema.dropTableIfExists('events_participants')
+  .then(function() {
+    return bookshelf.knex.schema.dropTableIfExists('eventsParticipants');
   })
 
   // Create our tables
-  .then(function(){
-    return bookshelf.knex.schema.createTable('admins',function(t) {
-      t.increments('admin_id').primary();
+  .then(function() {
+    return bookshelf.knex.schema.createTable('admins', function(t) {
+      t.increments('adminId').primary();
       t.string('name');
     });
   })
-  .then(function(){
-    return bookshelf.knex.schema.createTable('participants',function(t) {
-      t.increments('participant_id').primary();
+  .then(function() {
+    return bookshelf.knex.schema.createTable('participants', function(t) {
+      t.increments('participantId').primary();
       t.string('name');
-      t.integer('device_id');
+      t.integer('deviceId');
     });
   })
-  .then(function(){
-    return bookshelf.knex.schema.createTable('events',function(t) {
-      t.increments('event_id').primary();
+  .then(function() {
+    return bookshelf.knex.schema.createTable('events', function(t) {
+      t.increments('eventId').primary();
       t.string('name');
-      t.dateTime('start_time');
-      t.integer('admin_id').notNullable();
+      t.dateTime('startTime');
+      t.integer('adminId').notNullable();
     });
   })
-  .then(function(){
-    return bookshelf.knex.schema.createTable('events_participants',function(t) {
+  .then(function() {
+    return bookshelf.knex.schema.createTable('eventsParticipants', function(t) {
       t.increments('id').primary();
-      t.integer('event_id').notNullable();
-      t.integer('participant_id').notNullable();
+      t.integer('eventId').notNullable();
+      t.integer('participantId').notNullable();
       t.text('status');
     });
   })
@@ -52,4 +52,3 @@ if(config.resetDatabaseOnLoad) {
   .then(seed.seedTables);
 
 }
-

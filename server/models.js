@@ -14,28 +14,28 @@ var Admin = bookshelf.Model.extend({
 var Participant = bookshelf.Model.extend({
   tableName: 'participants',
   events: function() {
-    return this.hasMany(Event).through(Event_Participant);
+    return this.hasMany(Event).through(EventParticipant);
   },
   status: function() {
-    return this.hasMany(Event_Participant);
+    return this.hasMany(EventParticipant);
   }
 });
 
 var Event = bookshelf.Model.extend({
   tableName: 'events',
   participants: function() {
-    return this.belongsToMany(Participant).through(Event_Participant);
+    return this.belongsToMany(Participant).through(EventParticipant);
   },
   admin: function() {
     return this.belongsTo(Admin);
   },
   status: function() {
-    return this.hasMany(Event_Participant);
+    return this.hasMany(EventParticipant);
   }
 });
 
-var Event_Participant = bookshelf.Model.extend({
-  tableName: 'events_participants',
+var EventParticipant = bookshelf.Model.extend({
+  tableName: 'eventsparticipants',
   participant: function() {
     return this.belongsTo(Participant);
   },
@@ -46,8 +46,8 @@ var Event_Participant = bookshelf.Model.extend({
 
 // Define bookshelf collections
 
-var Events_Participants = bookshelf.Collection.extend({
-  model: Event_Participant
+var EventsParticipants = bookshelf.Collection.extend({
+  model: EventParticipant
 });
 
 var Events = bookshelf.Collection.extend({
@@ -64,6 +64,6 @@ module.exports = {
   Participants: Participants,
   Event: Event,
   Events: Events,
-  Event_Participant: Event_Participant,
-  Events_Participants: Events_Participants
-}
+  EventParticipant: EventParticipant,
+  EventsParticipants: EventsParticipants
+};
