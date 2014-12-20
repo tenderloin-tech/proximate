@@ -1,7 +1,7 @@
 angular.module('proximate',
   ['ui.router',
-  'pubnub.angular.service',
-  'proximate.controllers'])
+  'pubnub.angular.service'
+  ])
 
 .config(function($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise('/');

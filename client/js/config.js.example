@@ -1,6 +1,6 @@
 // Usage: Copy this file to config.js and replace each value below.
 
-angular.module('proximate.secrets', [])
+angular.module('proximate')
 
 .constant('pubNubKeys', {
   sub: 'PUB_NUB_SUB_KEY',
