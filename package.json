@@ -27,6 +27,7 @@
     "karma-phantomjs-launcher": "^0.1.4"
   },
   "dependencies": {
+    "bluebird": "^2.4.0",
     "bookshelf": "^0.7.9",
     "express": "^4.10.6",
     "knex": "^0.7.3",
