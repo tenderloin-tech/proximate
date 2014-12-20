@@ -1,25 +1,28 @@
 var express = require('express');
 var morgan = require('morgan');
+var config = require('./config/config.js');
 
-var pubnub  = require("pubnub").init({
-    publish_key:    "pub-c-e3770297-47d1-4fe9-9c34-cfee91f9fa9c",
-    subscribe_key:  "sub-c-55cc2d3c-8617-11e4-a77a-02ee2ddab7fe",
+// jscs: disable requireCamelCaseOrUpperCaseIdentifiers
+var pubnub  = require('pubnub').init({
+    publish_key:    config.publishKey,
+    subscribe_key:  config.subscribeKey,
     channel:        'my_channel',
     user:           'Server'
 });
+// jscs: enable requireCamelCaseOrUpperCaseIdentifiers
 
 pubnub.subscribe({
     channel: 'my_channel',
     callback: function(message) {
-      console.log("Message received: ", message);
+      console.log('Message received: ', message);
     },
     connect: publish
 });
 
 pubnub.publish({
     channel   : 'my_channel',
-    callback  : function(e) { console.log( "SUCCESS!", e ); },
-    error     : function(e) { console.log( "FAILED! RETRY PUBLISH!", e ); }
+    callback  : function(e) { console.log('SUCCESS!', e); },
+    error     : function(e) { console.log('FAILED! RETRY PUBLISH!', e); }
 });
 
 // test msg to see if server connect to pubnub channel
