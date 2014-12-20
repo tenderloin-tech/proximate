@@ -32,4 +32,4 @@ client/lib
 .lock-wscript
 
 # Configuration data
-server/config/config.js
+**/config.js
