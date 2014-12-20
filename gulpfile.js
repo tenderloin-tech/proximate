@@ -4,13 +4,13 @@ var jshint = require('gulp-jshint');
 var jscs = require('gulp-jscs');
 
 var jsPaths = {
-  path: ['server/**/*.js', 'client/**/*.js', 'tessel/**/*.js']
+  path: ['server/**/*.js', 'client/js/*.js', 'tessel/**/*.js']
 };
 
 // checks js files with jshint
 gulp.task('lint', function() {
   // return gulp.src('server/**/*.js')
-  return gulp.src(jsPaths.path) 
+  return gulp.src(jsPaths.path)
     .pipe(jshint())
     .pipe(jshint.reporter('default'));
 });

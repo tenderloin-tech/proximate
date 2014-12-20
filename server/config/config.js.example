@@ -1,0 +1,6 @@
+// Usage: Copy this file to config.js and replace each value below.
+
+module.exports = {
+  pubNubSubKey: "PUB_NUB_SUB_KEY",
+  pubNubPubKey: "PUB_NUB_PUB_KEY"
+};
