@@ -21,8 +21,13 @@ angular.module('starter.controllers', [])
   $scope.friend = Friends.get($stateParams.friendId);
 })
 
-.controller('AccountCtrl', function($scope) {
+.controller('AccountCtrl', function($scope, Beacons) {
   $scope.settings = {
     enableFriends: true
   };
+
+  angular.element(document).ready(function(){
+    Beacons.setupTestBeacons();
+  });
+
 });
