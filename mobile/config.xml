@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <widget id="com.ionicframework.mobile135298" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-  <name>Proximate.ios</name>
+  <name>Proximate.io</name>
   <description>
         Your location is power
     </description>
-  <author email="hi@ionicframework" href="http://ionicframework.com/">
+  <author email="info@proximate.io" href="http://proximate.io/">
       Tenderloin Tech
     </author>
   <content src="index.html"/>
