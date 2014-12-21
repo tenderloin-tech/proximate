@@ -11,7 +11,7 @@
   "requireOperatorBeforeLineBreak": true,
   "requireCamelCaseOrUpperCaseIdentifiers": true,
   "maximumLineLength": {
-    "value": 80,
+    "value": 100,
     "allowComments": true,
     "allowRegex": true
   },
@@ -56,7 +56,6 @@
   "disallowSpacesInsideObjectBrackets": "all",
   "disallowSpacesInsideArrayBrackets": "all",
   "disallowSpacesInsideParentheses": true,
-
 
   "validateJSDoc": {
     "checkParamNames": true,

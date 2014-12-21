@@ -27,7 +27,12 @@
     "karma-phantomjs-launcher": "^0.1.4"
   },
   "dependencies": {
+    "bluebird": "^2.4.0",
+    "bookshelf": "^0.7.9",
     "express": "^4.10.6",
-    "morgan": "^1.5.0"
+    "knex": "^0.7.3",
+    "morgan": "^1.5.0",
+    "mysql": "^2.5.4",
+    "pubnub": "^3.7.5"
   }
 }

@@ -1,8 +1,21 @@
 // Usage: Copy this file to config.js and replace each value below.
 
+// jscs: disable requireCamelCaseOrUpperCaseIdentifiers
+
 module.exports = {
-  publish_key:    'subscription key',
-  subscribe_key:  'publish key',
-  channel:        'your channel',
-  user:           'your user'
+  mysqlConnection: {
+    host     : '',
+    user     : '',
+    password : '',
+    database : ''
+  },
+  resetDatabaseOnLoad: true,
+  pubnubConnection: {
+    publish_key:    'Sandbox',
+    subscribe_key:  'Sandbox',
+    channel:        '',
+    user:           ''
+  }
 };
+
+// jscs: enable requireCamelCaseOrUpperCaseIdentifiers
