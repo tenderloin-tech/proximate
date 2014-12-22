@@ -82,13 +82,13 @@ angular.module('proximate.services', [])
     delegate.didEnterRegion = function(pluginResult) {
 
       var regionInfo = {
-        deviceId: $localStorage.get('deviceId'),
+        deviceId: Settings.deviceId,
         username: $localStorage.get('username'),
         region: pluginResult.region,
         eventType: pluginResult.eventType
       };
 
-      onEnterCallback(regionInfo);
+      onEnterCallback('checkins', regionInfo);
 
       logToDom('[Prox] didEnterRegion:' + JSON.stringify(pluginResult));
     };
@@ -129,22 +129,88 @@ angular.module('proximate.services', [])
   };
 })
 
-.factory('Settings', function() {
+.factory('Settings', function($localStorage, $http, webServer) {
 
-  //testing data
-  var uuid = 'E2C56DB5-DFFB-48D2-B060-D0F5A71096E0';
-  var identifier = 'Apple AirLocate E2C56DB5';
-  var minor = 1000;
-  var major = 5;
+  var data = {};
+
+  data.deviceId = $localStorage.get('deviceId'); //initialize with stored value
+
+  // update the deviceID based on current device
+  var updateDeviceId = function() {
+
+    if (ionic.Platform.isIOS()){
+      window.IDFVPlugin.getIdentifier(
+        // on success, set deviceId in memory and localstorage
+        function(result){
+          console.log("Setting deviceId: " + result);
+          data.deviceId = result;
+          $localStorage.set('deviceId', data.deviceId);
+        // on failure, simlpy output the error to the console
+        // this will cause us to use the default test value / whatever is stored in localStorage
+      }, function(error) {
+          console.log(error);
+      });
+    }
+  };
+
+  updateDeviceId();
+
+  var beaconsFromLocalStorage = $localStorage.get('regionList');
+  var testData = JSON.parse(beaconsFromLocalStorage)[0];
+  console.log("local storage[0] returned: " + JSON.stringify(testData));
 
   // jscs: disable maximumLineLength
-  var testBeacon = new cordova.plugins.locationManager.BeaconRegion(identifier, uuid, major, minor);
+  var testBeacon = new cordova.plugins.locationManager.BeaconRegion(
+    testData.identifier,
+    testData.uuid,
+    testData.major,
+    testData.minor);
   // jscs: enable maximumLineLength
 
   var currentBeaconList = testBeacon; //also to be set to persistent
 
+
+
+
+  var updateBeaconList = function(){
+    return $http({
+      method: 'GET',
+      url: webServer.url + '/api/beacons',
+      data: {
+        deviceId: data.deviceId,
+        username: data.username
+      }
+    }).then(function(data){
+      currentBeaconList = data;
+    });
+  }
+
+  data.username = $localStorage.get('username');
+
+  var updateUsername = function(name){
+    $localStorage.set('username', name);
+
+    return $http({
+      method: 'POST',
+      url: webServer.url + '/api/username',
+      data: {
+        username: name,
+        deviceId: data.deviceId,
+      }
+    }).then(function(data){
+      console.log(data);
+    }).catch(function(err){
+      console.log(err);
+    });
+  }
+
+
   return {
-    currentBeaconList: currentBeaconList
+    currentBeaconList: currentBeaconList,
+    data: data,
+    updateDeviceId: updateDeviceId,
+    updateBeaconList: updateBeaconList,
+    updateUsername: updateUsername
   };
 
 });

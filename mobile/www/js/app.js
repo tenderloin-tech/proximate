@@ -7,6 +7,16 @@ angular.module('proximate', ['ionic',
   $localStorage.set('username', 'Valentyn Boginskey');
   $localStorage.set('deviceId', '123456789');
 
+  // Similarly, add fake region array to localStorage to simulate previous info
+  var testRegions = [{
+    uuid : 'E2C56DB5-DFFB-48D2-B060-D0F5A71096E0',
+    identifier : 'Apple AirLocate E2C56DB5',
+    minor : 1000,
+    major : 5
+  }];
+
+  $localStorage.set('regionList', JSON.stringify(testRegions));
+
   // Send fake enter region event, for testing
   setTimeout(function() {
     PubNub.publish('checkins', {
