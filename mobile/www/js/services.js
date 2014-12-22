@@ -21,8 +21,10 @@ angular.module('proximate.services', [])
 
 .factory('PubNub', function(pubNubKeys) {
   var pubNub = PUBNUB.init({
+    // jscs: disable requireCamelCaseOrUpperCaseIdentifiers
     publish_key: pubNubKeys.pub,
     subscribe_key: pubNubKeys.sub
+    // jscs: enable requireCamelCaseOrUpperCaseIdentifiers
   });
 
   var publish = function(channel, message) {
@@ -81,7 +83,7 @@ angular.module('proximate.services', [])
 
       var regionInfo = {
         deviceId: $localStorage.get('deviceId'),
-        userName: $localStorage.get('username'),
+        username: $localStorage.get('username'),
         region: pluginResult.region,
         eventType: pluginResult.eventType
       };

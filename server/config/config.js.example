@@ -10,7 +10,7 @@ module.exports = {
     database : ''
   },
   resetDatabaseOnLoad: true,
-  pubnubConnection: {
+  pubnub: {
     publish_key:    'Sandbox',
     subscribe_key:  'Sandbox',
     channel:        '',

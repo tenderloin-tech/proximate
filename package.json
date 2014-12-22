@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "bluebird": "^2.4.0",
+    "body-parser": "^1.10.0",
     "bookshelf": "^0.7.9",
     "express": "^4.10.6",
     "knex": "^0.7.3",
