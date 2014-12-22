@@ -1,8 +1,12 @@
-angular.module('proximate', ['ionic', 
-  'proximate.controllers', 
+angular.module('proximate', ['ionic',
+  'proximate.controllers',
   'proximate.services'])
 
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform, $localStorage) {
+  // Until settings view is built, store default username and deviceID
+  $localStorage.set('username', 'Valentyn Boginskey');
+  $localStorage.set('deviceId', '123456789');
+
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -21,30 +25,30 @@ angular.module('proximate', ['ionic',
   $stateProvider
 
     .state('tab', {
-    url: '/tab',
-    abstract: true,
-    templateUrl: 'views/tabs.html'
-  })
+      url: '/tab',
+      abstract: true,
+      templateUrl: 'views/tabs.html'
+    })
 
-  .state('tab.status', {
-    url: '/status',
-    views: {
-      'status': {
-        templateUrl: 'views/status.html',
-        controller: 'StatusCtrl'
+    .state('tab.status', {
+      url: '/status',
+      views: {
+        'status': {
+          templateUrl: 'views/status.html',
+          controller: 'StatusCtrl'
+        }
       }
-    }
-  })
+    })
 
-  .state('tab.settings', {
-    url: '/settings',
-    views: {
-      'settings': {
-        templateUrl: 'views/settings.html',
-        controller: 'SettingsCtrl'
+    .state('tab.settings', {
+      url: '/settings',
+      views: {
+        'settings': {
+          templateUrl: 'views/settings.html',
+          controller: 'SettingsCtrl'
+        }
       }
-    }
-  });
+    });
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/tab/status');
