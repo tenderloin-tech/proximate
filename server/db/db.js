@@ -1,9 +1,13 @@
 var config = require('../config/config');
 var knex = require('knex')({
   client: 'mysql',
-  connection: config.mysqlConnection
+  connection: config.mysqlConnection,
+  debug: true
 });
 var bookshelf = require('bookshelf')(knex);
+// Export database connection for reuse
+module.exports = bookshelf;
+
 var seed = require('./seed');
 
 if (config.resetDatabaseOnLoad) {
@@ -31,7 +35,7 @@ if (config.resetDatabaseOnLoad) {
     return bookshelf.knex.schema.createTable('participants', function(t) {
       t.increments('participantId').primary();
       t.string('name');
-      t.integer('deviceId');
+      t.integer('deviceId').unique();
     });
   })
   .then(function() {

@@ -1,11 +1,5 @@
-var config = require('../config/config');
-var models = require('../models');
-var knex = require('knex')({
-  client: 'mysql',
-  connection: config.mysqlConnection
-});
-var bookshelf = require('bookshelf')(knex);
 var promise = require('bluebird');
+var models = require('../models');
 
 exports.seedTables = function() {
 

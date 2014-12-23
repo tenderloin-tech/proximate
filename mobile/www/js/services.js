@@ -212,7 +212,7 @@ angular.module('proximate.services', [])
 
     return $http({
       method: 'POST',
-      url: webServer.url + '/api/username',
+      url: webServer.url + '/api/register',
       data: {
         username: name,
         deviceId: data.deviceId,

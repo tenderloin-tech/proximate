@@ -1,9 +1,4 @@
-var config = require('./config/config');
-var knex = require('knex')({
-  client: 'mysql',
-  connection: config.mysqlConnection
-});
-var bookshelf = require('bookshelf')(knex);
+var bookshelf = require('./db/db');
 
 // Define bookshelf models
 
