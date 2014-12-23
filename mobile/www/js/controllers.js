@@ -1,33 +1,24 @@
-angular.module('starter.controllers', [])
+angular.module('proximate.controllers', [])
 
-.controller('DashCtrl', function($scope) {})
+.controller('StatusCtrl', function($scope) {
 
-.controller('ChatsCtrl', function($scope, Chats) {
-  $scope.chats = Chats.all();
-  $scope.remove = function(chat) {
-    Chats.remove(chat);
-  };
 })
 
-.controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
-  $scope.chat = Chats.get($stateParams.chatId);
-})
+.controller('SettingsCtrl', function($scope, Beacons, PubNub, Settings) {
 
-.controller('FriendsCtrl', function($scope, Friends) {
-  $scope.friends = Friends.all();
-})
-
-.controller('FriendDetailCtrl', function($scope, $stateParams, Friends) {
-  $scope.friend = Friends.get($stateParams.friendId);
-})
-
-.controller('AccountCtrl', function($scope, Beacons, PubNub) {
-  $scope.settings = {
-    enableFriends: true
-  };
-
+  //waits for the view to load so as to not interrupt the html/css
   angular.element(document).ready(function() {
-    Beacons.setupTestBeacons(PubNub.publishRegionEntry);
+
+    Beacons.setupTestBeacons(PubNub.publish);
+
+    $scope.data = Settings.data;
+
   });
+
+  /* scope functions */
+
+  $scope.updateUsername = function() {
+    Settings.updateUsername($scope.data.username);
+  }
 
 });

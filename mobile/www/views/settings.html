@@ -1,0 +1,25 @@
+<ion-view view-title="Settings">
+  <ion-content>
+    <div class="list">
+      <label class="item item-input item-floating-label">
+        <span class="input-label">Name</span>
+        <input ng-model="data.username" type="text" placeholder="Please enter your name">
+      </label>
+      <label class="item item-input">
+          <span class="input-label">Device ID: </span>
+          <input ng-model="data.deviceId" type="text" disabled>
+      </label>
+      <button ng-click="updateUsername()" class="button button-block button-positive">
+        Save settings!
+      </button>
+    </div>
+    <div class="list card">
+      <div class="item item-divider">Dev Status Messages</div>
+      <div class="item item-body">
+        <div id="dev-messages">
+
+        </div>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>
