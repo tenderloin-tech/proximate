@@ -64,6 +64,8 @@ angular.module('proximate.services', [])
 
   var setupTestBeacons = function(onEnterCallback) {
 
+    // Our delegate object, which is a container for event callbacks
+
     var delegate = new cordova.plugins.locationManager.Delegate();
 
     //provide logging for state changes
@@ -82,8 +84,8 @@ angular.module('proximate.services', [])
     delegate.didEnterRegion = function(pluginResult) {
 
       var regionInfo = {
-        deviceId: Settings.deviceId,
-        username: $localStorage.get('username'),
+        deviceId: Settings.data.deviceId,
+        username: Settings.data.username,
         region: pluginResult.region,
         eventType: pluginResult.eventType
       };
@@ -103,7 +105,8 @@ angular.module('proximate.services', [])
       logToDom('Accuracy: ' + JSON.stringify(pluginResult.beacons[0].accuracy));
     };
 
-    var beaconRegion = Settings.currentBeaconList;
+    var currentRegions = regionsFromBeacons(Settings.data.currentBeaconList);
+    var beaconRegion = currentRegions[0];
 
     cordova.plugins.locationManager.setDelegate(delegate);
 
@@ -124,12 +127,36 @@ angular.module('proximate.services', [])
 
   };
 
+  // Utility function that parses a JSON beacon list, and turns it into
+  //region objects that the locationManager plugin can monitor/range
+
+  var regionsFromBeacons = function(beaconListAsJSON) {
+
+    var list = JSON.parse(beaconListAsJSON);
+
+    var regionList = [];
+
+    list.forEach(function(beacon) {
+      var region = new cordova.plugins.locationManager.BeaconRegion(
+        beacon.identifier,
+        beacon.uuid,
+        beacon.major,
+        beacon.minor);
+      regionList.push(region)
+    });
+
+    return regionList;
+  }
+
   return {
     setupTestBeacons: setupTestBeacons
   };
 })
 
 .factory('Settings', function($localStorage, $http, webServer) {
+
+  // Container object for settings values, needed for syncing across controllers
+  // Exposes the following: data.deviceId, data.username, data.currentBeaconList
 
   var data = {};
 
@@ -138,41 +165,29 @@ angular.module('proximate.services', [])
   // update the deviceID based on current device
   var updateDeviceId = function() {
 
-    if (ionic.Platform.isIOS()){
+    if (ionic.Platform.isIOS()) {
       window.IDFVPlugin.getIdentifier(
         // on success, set deviceId in memory and localstorage
-        function(result){
-          console.log("Setting deviceId: " + result);
+        function(result) {
+          console.log('Setting deviceId: ' + result);
           data.deviceId = result;
           $localStorage.set('deviceId', data.deviceId);
         // on failure, simlpy output the error to the console
         // this will cause us to use the default test value / whatever is stored in localStorage
-      }, function(error) {
+        }, function(error) {
           console.log(error);
-      });
+        });
     }
   };
 
   updateDeviceId();
 
-  var beaconsFromLocalStorage = $localStorage.get('regionList');
-  var testData = JSON.parse(beaconsFromLocalStorage)[0];
-  console.log("local storage[0] returned: " + JSON.stringify(testData));
+  data.currentBeaconList = $localStorage.get('beaconList');
 
-  // jscs: disable maximumLineLength
-  var testBeacon = new cordova.plugins.locationManager.BeaconRegion(
-    testData.identifier,
-    testData.uuid,
-    testData.major,
-    testData.minor);
-  // jscs: enable maximumLineLength
+  // Gets the most recent beacons from the server, populating local storage
+  //on success
 
-  var currentBeaconList = testBeacon; //also to be set to persistent
-
-
-
-
-  var updateBeaconList = function(){
+  var updateBeaconList = function() {
     return $http({
       method: 'GET',
       url: webServer.url + '/api/beacons',
@@ -180,14 +195,19 @@ angular.module('proximate.services', [])
         deviceId: data.deviceId,
         username: data.username
       }
-    }).then(function(data){
-      currentBeaconList = data;
+    }).then(function(result) {
+      data.currentBeaconList = result;
+      localStorage.set('beaconList', result);
     });
   }
 
+  //initializes the username property from localStorage
+
   data.username = $localStorage.get('username');
 
-  var updateUsername = function(name){
+  //sets username both in localStorage and on the server
+
+  var updateUsername = function(name) {
     $localStorage.set('username', name);
 
     return $http({
@@ -197,16 +217,14 @@ angular.module('proximate.services', [])
         username: name,
         deviceId: data.deviceId,
       }
-    }).then(function(data){
+    }).then(function(data) {
       console.log(data);
-    }).catch(function(err){
+    }).catch(function(err) {
       console.log(err);
     });
   }
 
-
   return {
-    currentBeaconList: currentBeaconList,
     data: data,
     updateDeviceId: updateDeviceId,
     updateBeaconList: updateBeaconList,

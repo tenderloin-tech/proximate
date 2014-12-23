@@ -15,7 +15,7 @@ angular.module('proximate', ['ionic',
     major : 5
   }];
 
-  $localStorage.set('regionList', JSON.stringify(testRegions));
+  $localStorage.set('beaconList', JSON.stringify(testRegions));
 
   // Send fake enter region event, for testing
   setTimeout(function() {
