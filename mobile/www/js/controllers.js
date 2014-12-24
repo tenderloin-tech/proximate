@@ -19,6 +19,6 @@ angular.module('proximate.controllers', [])
 
   $scope.updateUsername = function() {
     Settings.updateUsername($scope.data.username);
-  }
+  };
 
 });

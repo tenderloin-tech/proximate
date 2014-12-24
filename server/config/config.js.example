@@ -1,7 +1,5 @@
 // Usage: Copy this file to config.js and replace each value below.
 
-// jscs: disable requireCamelCaseOrUpperCaseIdentifiers
-
 module.exports = {
   mysqlConnection: {
     host     : '',
@@ -17,5 +15,3 @@ module.exports = {
     user:           ''
   }
 };
-
-// jscs: enable requireCamelCaseOrUpperCaseIdentifiers

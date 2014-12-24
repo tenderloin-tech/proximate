@@ -21,10 +21,8 @@ angular.module('proximate.services', [])
 
 .factory('PubNub', function(pubNubKeys) {
   var pubNub = PUBNUB.init({
-    // jscs: disable requireCamelCaseOrUpperCaseIdentifiers
     publish_key: pubNubKeys.pub,
     subscribe_key: pubNubKeys.sub
-    // jscs: enable requireCamelCaseOrUpperCaseIdentifiers
   });
 
   var publish = function(channel, message) {
@@ -79,7 +77,8 @@ angular.module('proximate.services', [])
       }
     };
 
-    //This handler will be called when we enter the specified region, including when the app is backgrounded.
+    // This handler will be called when we enter the specified region,
+    // including when the app is backgrounded.
 
     delegate.didEnterRegion = function(pluginResult) {
 
@@ -142,11 +141,11 @@ angular.module('proximate.services', [])
         beacon.uuid,
         beacon.major,
         beacon.minor);
-      regionList.push(region)
+      regionList.push(region);
     });
 
     return regionList;
-  }
+  };
 
   return {
     setupTestBeacons: setupTestBeacons
@@ -198,7 +197,7 @@ angular.module('proximate.services', [])
       data.currentBeaconList = result;
       localStorage.set('beaconList', result);
     });
-  }
+  };
 
   //initializes the username property from localStorage
 
@@ -221,7 +220,7 @@ angular.module('proximate.services', [])
     }).catch(function(err) {
       console.log(err);
     });
-  }
+  };
 
   return {
     data: data,
