@@ -189,10 +189,9 @@ angular.module('proximate.services', [])
 
   var updateBeaconList = function() {
     return $http({
-      method: 'GET',
+      method: 'POST',
       url: webServer.url + '/api/beacons',
       data: {
-        deviceId: data.deviceId,
         username: data.username
       }
     }).then(function(result) {

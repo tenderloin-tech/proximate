@@ -20,11 +20,12 @@ module.exports = function(app) {
       });
   });
 
-  // Similar to the above, this endpoint is also a test stem.
-  // The real call should serve appropriate beacons based on the
-  // supplied req.body.username and req.body.deviceId
-
-  app.get('/api/beacons', function(req, res) {
+  // Return a list of beacons for a participant
+  // Expect body of the request to contain:
+  // {username: 'Meat puppet'}
+  // This should fetch from the DB in the future
+  app.post('/api/beacons', function(req, res) {
+    console.log('%s requested beacons', req.body.username);
 
     var testRegions = [{
         uuid : 'E2C56DB5-DFFB-48D2-B060-D0F5A71096E0',
@@ -37,4 +38,18 @@ module.exports = function(app) {
     res.json(testRegions);
   });
 
+  // Return a list of events for a participant
+  // Expect body of the request to contain:
+  // {username: 'Meat puppet'}
+  app.post('/api/events', function(req, res) {
+    new models.Participant({
+      name: req.body.username
+    })
+      .fetch({withRelated: ['events'], require: true})
+      .then(function(participant) {
+        res.json(participant.related('events').toJSON());
+      }, function() {
+        res.status(404).send('Invalid username');
+      });
+  });
 };

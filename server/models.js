@@ -12,7 +12,7 @@ var Admin = bookshelf.Model.extend({
 var Participant = bookshelf.Model.extend({
   tableName: 'participants',
   events: function() {
-    return this.hasMany(Event).through(EventParticipant);
+    return this.belongsToMany(Event).through(EventParticipant);
   },
   status: function() {
     return this.hasMany(EventParticipant);
@@ -33,7 +33,7 @@ var Event = bookshelf.Model.extend({
 });
 
 var EventParticipant = bookshelf.Model.extend({
-  tableName: 'eventsparticipants',
+  tableName: 'events_participants',
   participant: function() {
     return this.belongsTo(Participant);
   },
