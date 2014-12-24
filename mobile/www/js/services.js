@@ -62,6 +62,30 @@ angular.module('proximate.services', [])
 
   var setupTestBeacons = function(onEnterCallback) {
 
+    setupDelegate(onEnterCallback);
+
+    var currentRegions = regionsFromBeacons(Settings.data.currentBeaconList);
+    var beaconRegion = currentRegions[0];
+
+    // request auth from the user
+    cordova.plugins.locationManager.requestAlwaysAuthorization();
+
+    cordova.plugins.locationManager.startMonitoringForRegion(beaconRegion)
+        .fail(console.error)
+        .done();
+
+    //ranging - reenable after V0 when rangefinding is necessary
+
+    // cordova.plugins.locationManager.startRangingBeaconsInRegion(beaconRegion)
+    //     .fail(console.error)
+    //     .done();
+
+    // cordova.plugins.locationManager.getAuthorizationStatus().then();
+
+  };
+
+  var setupDelegate = function(onEnterCallback){
+
     // Our delegate object, which is a container for event callbacks
 
     var delegate = new cordova.plugins.locationManager.Delegate();
@@ -104,25 +128,7 @@ angular.module('proximate.services', [])
       logToDom('Accuracy: ' + JSON.stringify(pluginResult.beacons[0].accuracy));
     };
 
-    var currentRegions = regionsFromBeacons(Settings.data.currentBeaconList);
-    var beaconRegion = currentRegions[0];
-
     cordova.plugins.locationManager.setDelegate(delegate);
-
-    // request auth from the user
-    cordova.plugins.locationManager.requestAlwaysAuthorization();
-
-    cordova.plugins.locationManager.startMonitoringForRegion(beaconRegion)
-        .fail(console.error)
-        .done();
-
-    //ranging - reenable after V0 when rangefinding is necessary
-
-    // cordova.plugins.locationManager.startRangingBeaconsInRegion(beaconRegion)
-    //     .fail(console.error)
-    //     .done();
-
-    // cordova.plugins.locationManager.getAuthorizationStatus().then();
 
   };
 
