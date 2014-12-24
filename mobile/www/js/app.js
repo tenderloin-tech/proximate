@@ -13,12 +13,12 @@ angular.module('proximate', ['ionic',
     identifier : 'Estimote Icy One',
     minor : 10907,
     major : 23516
-  },{
+  }, {
     uuid : 'B9407F30-F5F8-466E-AFF9-25556B57FE6D',
     identifier : 'Estimote Blue One',
     minor : 50306,
     major : 54690
-  },{
+  }, {
     uuid : 'B9407F30-F5F8-466E-AFF9-25556B57FE6D',
     identifier : 'Estimote Mint One',
     minor : 3704,
