@@ -11,5 +11,17 @@ angular.module('proximate',
       templateUrl: 'views/home.html',
       controller: 'MainController',
       url: '/'
+    })
+
+    .state('event', {
+      templeteUrl: 'views/event.html',
+      controller: 'EventCtrl',
+      url: '/event'
+    })
+
+    .state('admin', {
+      templeteUrl: 'views/admin.html',
+      controller: 'AdminCtrl',
+      url: '/admin'
     });
 });

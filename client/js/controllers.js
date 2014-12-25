@@ -13,6 +13,6 @@ angular.module('proximate')
 
 })
 
-.controller('eventCtrl', function($scope) {
+.controller('EventCtrl', function($scope) {
 
 })
