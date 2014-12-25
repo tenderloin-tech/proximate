@@ -8,3 +8,11 @@ angular.module('proximate')
     });
   }
 });
+
+.controller('AdminCtrl', function($scope) {
+
+})
+
+.controller('eventCtrl', function($scope) {
+
+})
