@@ -1,8 +1,18 @@
-angular.module('proximate.controllers', [a])
+angular.module('proximate.controllers', [])
 
-.controller('AdminCtrl', function($scope) {
+.controller('AdminCtrl', function($scope, Populate, PubNub) {
   // initial http request to server for attendees
-  // on pubnub event update view
+  $scope.attendees = [];
+  $scope.getAttendees = function() {
+    $scope.attendees = Populate.getAttendeeList();
+  };
+
+  // handle presence events
+  $rootScope.$on(PubNub.ngPrsEv(my_channel), function(event, payload) {
+    $scope.getAttendees();
+    // payload contains message, channel, env...
+    console.log('got a presence event:', payload);
+  });
 })
 
 .controller('EventCtrl', function($scope) {

@@ -2,9 +2,12 @@ angular.module('proximate',
   ['ui.router',
   'proximate.controllers',
   'proximate.services',
-  // not sure below line is for, lets review
   'pubnub.angular.service'
   ])
+
+.run(function(PubNub) {
+  PubNub.subscribe(my_channel);
+})
 
 .config(function($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise('/');
