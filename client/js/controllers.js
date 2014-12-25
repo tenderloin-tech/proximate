@@ -7,12 +7,18 @@ angular.module('proximate')
       publish_key: pubNubKeys.pub
     });
   }
-});
+})
 
 .controller('AdminCtrl', function($scope) {
 
 })
 
 .controller('EventCtrl', function($scope) {
-
-})
+  var updateClock = function() {
+    $scope.clock = new Date();
+  };
+  var timer = setInterval(function() {
+    $scope.$apply(updateClock);
+  }, 1000);
+  updateClock();
+});
