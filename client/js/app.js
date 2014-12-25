@@ -1,5 +1,8 @@
 angular.module('proximate',
   ['ui.router',
+  'proximate.controllers',
+  'proximate.services',
+  // not sure below line is for, lets review
   'pubnub.angular.service'
   ])
 

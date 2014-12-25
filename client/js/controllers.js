@@ -1,4 +1,4 @@
-angular.module('proximate')
+angular.module('proximate.controllers', [])
 
 .controller('MainController', function($scope, PubNub, pubNubKeys) {
   if (!PubNub.initialized()) {
