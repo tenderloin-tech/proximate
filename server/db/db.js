@@ -1,9 +1,13 @@
 var config = require('../config/config');
 var knex = require('knex')({
   client: 'mysql',
-  connection: config.mysqlConnection
+  connection: config.mysqlConnection,
+  debug: true
 });
 var bookshelf = require('bookshelf')(knex);
+// Export database connection for reuse
+module.exports = bookshelf;
+
 var seed = require('./seed');
 
 if (config.resetDatabaseOnLoad) {
@@ -17,36 +21,36 @@ if (config.resetDatabaseOnLoad) {
     return bookshelf.knex.schema.dropTableIfExists('admins');
   })
   .then(function() {
-    return bookshelf.knex.schema.dropTableIfExists('eventsParticipants');
+    return bookshelf.knex.schema.dropTableIfExists('events_participants');
   })
 
   // Create our tables
   .then(function() {
     return bookshelf.knex.schema.createTable('admins', function(t) {
-      t.increments('adminId').primary();
+      t.increments('id').primary();
       t.string('name');
     });
   })
   .then(function() {
     return bookshelf.knex.schema.createTable('participants', function(t) {
-      t.increments('participantId').primary();
+      t.increments('id').primary();
       t.string('name');
-      t.integer('deviceId');
+      t.integer('device_id').unique();
     });
   })
   .then(function() {
     return bookshelf.knex.schema.createTable('events', function(t) {
-      t.increments('eventId').primary();
+      t.increments('id').primary();
       t.string('name');
-      t.dateTime('startTime');
-      t.integer('adminId').notNullable();
+      t.dateTime('start_time');
+      t.integer('admin_id').notNullable();
     });
   })
   .then(function() {
-    return bookshelf.knex.schema.createTable('eventsParticipants', function(t) {
+    return bookshelf.knex.schema.createTable('events_participants', function(t) {
       t.increments('id').primary();
-      t.integer('eventId').notNullable();
-      t.integer('participantId').notNullable();
+      t.integer('event_id').notNullable();
+      t.integer('participant_id').notNullable();
       t.text('status');
     });
   })

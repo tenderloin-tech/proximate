@@ -1,24 +1,31 @@
+var models = require('./models');
+
 module.exports = function(app) {
 
   /* API routes */
 
-  // This is currently a testing stem of an endpoint that needs to be created
-  //to recieve and process username and deviceId POSTs.
-  // Currently, info arrives in the following format from the mobile app (as logged below):
-  // Got info: {"username":"Meat puppet","deviceId":"B19A9282-3124-4A3D-A387-60B4E92F22AF"}
-
-  app.post('/api/username', function(req, res) {
-
-    // Per the note above, this is just logging requests
-    console.log('Got info: ' + JSON.stringify(req.body));
-    res.send('Got info: ' + JSON.stringify(req.body));
+  // Register a deviceId to a participant
+  // Expect body of the request to contain:
+  // {deviceId: 'B19A9282-3124-4A3D-A387-60B4E92F22AF', username: 'Meat puppet'}
+  app.post('/api/register', function(req, res) {
+    new models.Participant({
+        name: req.body.username,
+        deviceId: req.body.deviceId
+      })
+      .save()
+      .then(function() {
+        res.status(200).send();
+      }, function() {
+        res.status(404).send('Invalid username');
+      });
   });
 
-  // Similar to the above, this endpoint is also a test stem.
-  // The real call should serve appropriate beacons based on the
-  // supplied req.body.username and req.body.deviceId
-
-  app.get('/api/beacons', function(req, res) {
+  // Return a list of beacons for a participant
+  // Expect body of the request to contain:
+  // {username: 'Meat puppet'}
+  // This should fetch from the DB in the future
+  app.post('/api/beacons', function(req, res) {
+    console.log('%s requested beacons', req.body.username);
 
     var testRegions = [{
         uuid : 'E2C56DB5-DFFB-48D2-B060-D0F5A71096E0',
@@ -31,4 +38,18 @@ module.exports = function(app) {
     res.json(testRegions);
   });
 
+  // Return a list of events for a participant
+  // Expect body of the request to contain:
+  // {username: 'Meat puppet'}
+  app.post('/api/events', function(req, res) {
+    new models.Participant({
+      name: req.body.username
+    })
+      .fetch({withRelated: ['events'], require: true})
+      .then(function(participant) {
+        res.json(participant.related('events').toJSON());
+      }, function() {
+        res.status(404).send('Invalid username');
+      });
+  });
 };

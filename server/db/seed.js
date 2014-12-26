@@ -1,11 +1,5 @@
-var config = require('../config/config');
-var models = require('../models');
-var knex = require('knex')({
-  client: 'mysql',
-  connection: config.mysqlConnection
-});
-var bookshelf = require('bookshelf')(knex);
 var promise = require('bluebird');
+var models = require('../models');
 
 exports.seedTables = function() {
 
@@ -53,44 +47,44 @@ exports.seedTables = function() {
   var events = models.Events.forge([
     {
       name: 'Kickoff',
-      startTime: '2014-12-28 09:00:00',
-      adminId: 1
+      start_time: '2014-12-28 09:00:00',
+      admin_id: 1
     }, {
       name: 'Kickoff',
-      startTime: '2014-12-29 09:00:00',
-      adminId: 1
+      start_time: '2014-12-29 09:00:00',
+      admin_id: 1
     }, {
       name: 'Kickoff',
-      startTime: '2014-12-30 09:00:00',
-      adminId: 1
+      start_time: '2014-12-30 09:00:00',
+      admin_id: 1
     }, {
       name: 'Kickoff',
-      startTime: '2014-01-02 09:00:00',
-      adminId: 1
+      start_time: '2014-01-02 09:00:00',
+      admin_id: 1
     }, {
       name: 'Kickoff',
-      startTime: '2014-01-03 09:00:00',
-      adminId: 1
+      start_time: '2014-01-03 09:00:00',
+      admin_id: 1
     }, {
       name: 'Kickoff',
-      startTime: '2014-01-05 09:00:00',
-      adminId: 1
+      start_time: '2014-01-05 09:00:00',
+      admin_id: 1
     }, {
       name: 'Kickoff',
-      startTime: '2014-01-06 09:00:00',
-      adminId: 1
+      start_time: '2014-01-06 09:00:00',
+      admin_id: 1
     }, {
       name: 'Kickoff',
-      startTime: '2014-01-07 09:00:00',
-      adminId: 1
+      start_time: '2014-01-07 09:00:00',
+      admin_id: 1
     }, {
       name: 'Kickoff',
-      startTime: '2014-01-08 09:00:00',
-      adminId: 1
+      start_time: '2014-01-08 09:00:00',
+      admin_id: 1
     }, {
       name: 'Kickoff',
-      startTime: '2014-01-09 09:00:00',
-      adminId: 1
+      start_time: '2014-01-09 09:00:00',
+      admin_id: 1
     }
   ]);
 
@@ -106,8 +100,8 @@ exports.seedTables = function() {
       for (var j = 1; j < 10; j++) {
         eventsParticipants.push(
           {
-            participantId: i,
-            eventId: j,
+            participant_id: i,
+            event_id: j,
             status: status
           }
         );
