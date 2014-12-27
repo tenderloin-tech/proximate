@@ -1,52 +1,5 @@
 var promise = require('bluebird');
 var models = require('../models');
-var moment = require('moment');
-
-
-var getDeviceId = function(name) {
-
-
-
-}
-
-var checkinUser = function(deviceID) {
-
-  var participantId;
-  var eventId;
-  var startTime;
-  var status;
-  var now = moment();
-
-  // Get the participant_id from the deviceID
-  var user = new models.Participant({device_id:deviceID})
-    .fetch()
-    .then(function(model) {
-      participantId = model.get('id');
-    })
-
-    // Get the event_id of the closest event in time
-    .then(function(){
-      new models.Event()
-        .query('orderByRaw', 'ABS(UNIX_TIMESTAMP() - UNIX_TIMESTAMP(start_time)) ASC')
-        .fetch()
-        .then(function(model) {
-          eventId = model.get('id');
-          startTime = moment(model.get('start_time'));
-
-        // Update the event_participant status if needed
-        }).then(function(model){
-          status = (startTime.format('X') - now.format('X') >= 0) ? 'ontime' : 'late';
-          new models.EventParticipant({event_id: eventId, participant_id: participantId})
-            .fetch()
-            .then(function(model) {
-              model.set('status', status);
-              model.set('checkin_time', moment().format('YYYY-MM-DD HH:mm:ss'));
-              model.save();
-            });
-      });
-    });
-}
-
 
 exports.seedTables = function() {
 
@@ -161,9 +114,6 @@ exports.seedTables = function() {
   var eventsParticipants = models.EventsParticipants.forge(generateEventsParticipants());
 
   promise.all(eventsParticipants.invoke('save')).then(function() {
-    checkinUser('343');
   });
 
 };
-
-
