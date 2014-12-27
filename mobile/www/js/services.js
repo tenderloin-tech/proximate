@@ -58,9 +58,55 @@ angular.module('proximate.services', [])
     //window.scrollTo(0, window.document.height);
   };
 
-  // This function is currently configured to work with one single iBeacon - change to use multiple
+  // Sets up beacon environment and calls functions to begin monitoring / ranging
+  //the beacon list
 
   var setupTestBeacons = function(onEnterCallback) {
+
+    setupDelegate(onEnterCallback);
+
+    // request auth from the user
+    cordova.plugins.locationManager.requestAlwaysAuthorization();
+    // cordova.plugins.locationManager.getAuthorizationStatus().then();
+
+    startMonitoringRegions();
+
+    //ranging - reenable after V0 when rangefinding is necessary
+
+    // startRangingRegions();
+
+  };
+
+  // Begins monitoring for all regions, as specified in the beacon list
+
+  var startMonitoringRegions = function() {
+
+    var currentRegions = regionsFromBeacons(Settings.data.currentBeaconList);
+
+    currentRegions.forEach(function(region) {
+      cordova.plugins.locationManager.startRangingBeaconsInRegion(region)
+        .fail(console.error)
+        .done();
+    });
+  };
+
+  // Begins monitoring for all regions, as specified in the beacon list
+
+  var startRangingRegions = function() {
+
+    var currentRegions = regionsFromBeacons(Settings.data.currentBeaconList);
+
+    currentRegions.forEach(function(region) {
+      cordova.plugins.locationManager.startMonitoringForRegion(region)
+        .fail(console.error)
+        .done();
+    });
+  };
+
+  // Sets event callbacks and attaches them to a 'delegate' object to be called
+  //when that event is triggered.
+
+  var setupDelegate = function(onEnterCallback) {
 
     // Our delegate object, which is a container for event callbacks
 
@@ -104,25 +150,7 @@ angular.module('proximate.services', [])
       logToDom('Accuracy: ' + JSON.stringify(pluginResult.beacons[0].accuracy));
     };
 
-    var currentRegions = regionsFromBeacons(Settings.data.currentBeaconList);
-    var beaconRegion = currentRegions[0];
-
     cordova.plugins.locationManager.setDelegate(delegate);
-
-    // request auth from the user
-    cordova.plugins.locationManager.requestAlwaysAuthorization();
-
-    cordova.plugins.locationManager.startMonitoringForRegion(beaconRegion)
-        .fail(console.error)
-        .done();
-
-    //ranging - reenable after V0 when rangefinding is necessary
-
-    // cordova.plugins.locationManager.startRangingBeaconsInRegion(beaconRegion)
-    //     .fail(console.error)
-    //     .done();
-
-    // cordova.plugins.locationManager.getAuthorizationStatus().then();
 
   };
 

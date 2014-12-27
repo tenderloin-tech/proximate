@@ -9,10 +9,20 @@ angular.module('proximate', ['ionic',
 
   // Similarly, add fake region array to localStorage to simulate previous info
   var testRegions = [{
-    uuid : 'E2C56DB5-DFFB-48D2-B060-D0F5A71096E0',
-    identifier : 'Apple AirLocate E2C56DB5',
-    minor : 1000,
-    major : 5
+    uuid : 'B9407F30-F5F8-466E-AFF9-25556B57FE6D',
+    identifier : 'Estimote Icy One',
+    minor : 10907,
+    major : 23516
+  }, {
+    uuid : 'B9407F30-F5F8-466E-AFF9-25556B57FE6D',
+    identifier : 'Estimote Blue One',
+    minor : 50306,
+    major : 54690
+  }, {
+    uuid : 'B9407F30-F5F8-466E-AFF9-25556B57FE6D',
+    identifier : 'Estimote Mint One',
+    minor : 3704,
+    major : 57868
   }];
 
   $localStorage.set('beaconList', JSON.stringify(testRegions));
