@@ -1,12 +1,71 @@
 var promise = require('bluebird');
 var models = require('../models');
+var moment = require('moment');
+
+var getDeviceId = function(name) {
+
+
+
+}
+
+
+
+var checkinUser = function(deviceID) {
+
+
+
+  // Compare the date from that and see if current status is late or ontime
+  // Find the eventParticipant record with that participantID and eventID
+  // Update the record in eventStatus if it exists (including check-in time)
+
+
+  var participantId;
+  var eventId;
+  var startTime;
+  var status;
+  var now = new Date();
+
+  console.log(now);
+
+  // Get the participant_id from the deviceID
+  var user = new models.Participant({device_id:deviceID})
+    .fetch()
+    .then(function(model) {
+      participantId = model.get('id');
+    })
+
+    // Get the event_id of the closest event in time
+    .then(function(){
+      new models.Event()
+        .query('orderByRaw', 'ABS(UNIX_TIMESTAMP() - UNIX_TIMESTAMP(start_time)) ASC')
+        .fetch()
+        .then(function(model) {
+          eventId = model.get('id');
+          startTime = new Date(model.get('start_time'));
+
+        // Update the event_participant status if needed
+        }).then(function(model){
+          status = ((startTime.getTime()/1000) - (now.getTime()/1000) >= 0) ? 'ontime' : 'late';
+          new models.EventParticipant({event_id: eventId, participant_id: participantId})
+            .fetch()
+            .then(function(model) {
+              model.set('status', status);
+              model.set('checkin_time', moment().format('YYYY-MM-DD HH:mm:ss'));
+              model.save();
+            });
+
+
+      });
+    });
+}
+
 
 exports.seedTables = function() {
 
   models.Admin.forge({name: 'Pira'}).save();
 
   var participants = models.Participants.forge([
-    {name: 'John Tan'},
+    {name: 'John Tan', device_id: '999'},
     {name: 'David Raleigh'},
     {name: 'Sunny Gonnabathula'},
     {name: 'Michael Lom'},
@@ -59,31 +118,31 @@ exports.seedTables = function() {
       admin_id: 1
     }, {
       name: 'Kickoff',
-      start_time: '2014-01-02 09:00:00',
+      start_time: '2015-01-02 09:00:00',
       admin_id: 1
     }, {
       name: 'Kickoff',
-      start_time: '2014-01-03 09:00:00',
+      start_time: '2015-01-03 09:00:00',
       admin_id: 1
     }, {
       name: 'Kickoff',
-      start_time: '2014-01-05 09:00:00',
+      start_time: '2015-01-05 09:00:00',
       admin_id: 1
     }, {
       name: 'Kickoff',
-      start_time: '2014-01-06 09:00:00',
+      start_time: '2015-01-06 09:00:00',
       admin_id: 1
     }, {
       name: 'Kickoff',
-      start_time: '2014-01-07 09:00:00',
+      start_time: '2015-01-07 09:00:00',
       admin_id: 1
     }, {
       name: 'Kickoff',
-      start_time: '2014-01-08 09:00:00',
+      start_time: '2015-01-08 09:00:00',
       admin_id: 1
     }, {
       name: 'Kickoff',
-      start_time: '2014-01-09 09:00:00',
+      start_time: '2015-01-09 09:00:00',
       admin_id: 1
     }
   ]);
@@ -114,6 +173,9 @@ exports.seedTables = function() {
   var eventsParticipants = models.EventsParticipants.forge(generateEventsParticipants());
 
   promise.all(eventsParticipants.invoke('save')).then(function() {
+    checkinUser('999');
   });
 
 };
+
+

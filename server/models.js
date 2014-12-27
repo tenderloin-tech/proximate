@@ -16,7 +16,7 @@ var Participant = bookshelf.Model.extend({
   },
   status: function() {
     return this.hasMany(EventParticipant);
-  }
+  },
 });
 
 var Event = bookshelf.Model.extend({

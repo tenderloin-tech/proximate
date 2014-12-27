@@ -2,7 +2,7 @@ var config = require('../config/config');
 var knex = require('knex')({
   client: 'mysql',
   connection: config.mysqlConnection,
-  debug: true
+  debug: false
 });
 var bookshelf = require('bookshelf')(knex);
 // Export database connection for reuse
@@ -52,6 +52,7 @@ if (config.resetDatabaseOnLoad) {
       t.integer('event_id').notNullable();
       t.integer('participant_id').notNullable();
       t.text('status');
+      t.dateTime('checkin_time');
     });
   })
 
@@ -59,3 +60,5 @@ if (config.resetDatabaseOnLoad) {
   .then(seed.seedTables);
 
 }
+
+
