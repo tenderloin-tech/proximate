@@ -2,30 +2,20 @@ var promise = require('bluebird');
 var models = require('../models');
 var moment = require('moment');
 
+
 var getDeviceId = function(name) {
 
 
 
 }
 
-
-
 var checkinUser = function(deviceID) {
-
-
-
-  // Compare the date from that and see if current status is late or ontime
-  // Find the eventParticipant record with that participantID and eventID
-  // Update the record in eventStatus if it exists (including check-in time)
-
 
   var participantId;
   var eventId;
   var startTime;
   var status;
-  var now = new Date();
-
-  console.log(now);
+  var now = moment();
 
   // Get the participant_id from the deviceID
   var user = new models.Participant({device_id:deviceID})
@@ -41,11 +31,11 @@ var checkinUser = function(deviceID) {
         .fetch()
         .then(function(model) {
           eventId = model.get('id');
-          startTime = new Date(model.get('start_time'));
+          startTime = moment(model.get('start_time'));
 
         // Update the event_participant status if needed
         }).then(function(model){
-          status = ((startTime.getTime()/1000) - (now.getTime()/1000) >= 0) ? 'ontime' : 'late';
+          status = (startTime.format('X') - now.format('X') >= 0) ? 'ontime' : 'late';
           new models.EventParticipant({event_id: eventId, participant_id: participantId})
             .fetch()
             .then(function(model) {
@@ -53,8 +43,6 @@ var checkinUser = function(deviceID) {
               model.set('checkin_time', moment().format('YYYY-MM-DD HH:mm:ss'));
               model.save();
             });
-
-
       });
     });
 }
@@ -173,7 +161,7 @@ exports.seedTables = function() {
   var eventsParticipants = models.EventsParticipants.forge(generateEventsParticipants());
 
   promise.all(eventsParticipants.invoke('save')).then(function() {
-    checkinUser('999');
+    checkinUser('343');
   });
 
 };
