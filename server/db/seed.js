@@ -6,7 +6,7 @@ exports.seedTables = function() {
   models.Admin.forge({name: 'Pira'}).save();
 
   var participants = models.Participants.forge([
-    {name: 'John Tan'},
+    {name: 'John Tan', device_id: '999'},
     {name: 'David Raleigh'},
     {name: 'Sunny Gonnabathula'},
     {name: 'Michael Lom'},
@@ -59,31 +59,31 @@ exports.seedTables = function() {
       admin_id: 1
     }, {
       name: 'Kickoff',
-      start_time: '2014-01-02 09:00:00',
+      start_time: '2015-01-02 09:00:00',
       admin_id: 1
     }, {
       name: 'Kickoff',
-      start_time: '2014-01-03 09:00:00',
+      start_time: '2015-01-03 09:00:00',
       admin_id: 1
     }, {
       name: 'Kickoff',
-      start_time: '2014-01-05 09:00:00',
+      start_time: '2015-01-05 09:00:00',
       admin_id: 1
     }, {
       name: 'Kickoff',
-      start_time: '2014-01-06 09:00:00',
+      start_time: '2015-01-06 09:00:00',
       admin_id: 1
     }, {
       name: 'Kickoff',
-      start_time: '2014-01-07 09:00:00',
+      start_time: '2015-01-07 09:00:00',
       admin_id: 1
     }, {
       name: 'Kickoff',
-      start_time: '2014-01-08 09:00:00',
+      start_time: '2015-01-08 09:00:00',
       admin_id: 1
     }, {
       name: 'Kickoff',
-      start_time: '2014-01-09 09:00:00',
+      start_time: '2015-01-09 09:00:00',
       admin_id: 1
     }
   ]);

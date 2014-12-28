@@ -2,16 +2,13 @@ var config = require('../config/config');
 var knex = require('knex')({
   client: 'mysql',
   connection: config.mysqlConnection,
-  debug: true
 });
 var bookshelf = require('bookshelf')(knex);
-// Export database connection for reuse
 module.exports = bookshelf;
 
 var seed = require('./seed');
 
 if (config.resetDatabaseOnLoad) {
-
   // Drop any existing db tables to ensure increment values reset
   bookshelf.knex.schema.dropTableIfExists('participants')
   .then(function() {
@@ -52,6 +49,7 @@ if (config.resetDatabaseOnLoad) {
       t.integer('event_id').notNullable();
       t.integer('participant_id').notNullable();
       t.text('status');
+      t.dateTime('checkin_time');
     });
   })
 
