@@ -1,4 +1,5 @@
 var models = require('./models');
+var helpers = require('./db/helpers')
 
 module.exports = function(app) {
 
@@ -51,5 +52,20 @@ module.exports = function(app) {
       }, function() {
         res.status(404).send('Invalid username');
       });
+  });
+
+  // Get event participants for a given eventId
+  app.get('/api/participants/:eventId', function(req, res) {
+
+    var eventId = req.params.eventId;
+
+     helpers.getEventParticipants(eventId)
+    .then(function(model) {
+      res.json(model.toJSON());
+    })
+    .catch(function(error) {
+      res.send("Invalid event ID");
+    });
+
   });
 };

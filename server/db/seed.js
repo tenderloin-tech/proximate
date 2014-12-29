@@ -97,16 +97,25 @@ exports.seedTables = function() {
   var generateEventsParticipants = function() {
     var eventsParticipants = [];
     var status = 'ontime';
-    for (var i = 1; i < 25; i++) {
+    for (var i = 1; i < 32; i++) {
       for (var j = 1; j < 10; j++) {
         eventsParticipants.push(
           {
             participant_id: i,
             event_id: j,
-            status: status
+            status: status,
+            checkin_time: '2014-12-03 12:00:00'
           }
         );
         status = (status === 'ontime') ? 'late' : 'ontime';
+      }
+      for (var j = 10; j <32; j++) {
+        eventsParticipants.push(
+          {
+            participant_id: i,
+            event_id: j
+          }
+        );
       }
     }
     return eventsParticipants;
@@ -151,15 +160,6 @@ exports.seedTables = function() {
     //     .catch(function(error) {
     //       console.error(error);
     //     });
-
-    // Checkin a user
-      helpers.checkinUser('999')
-        .then(function(model) {
-          console.log(model.toJSON())
-        })
-        .catch(function(error) {
-          console.error(error);
-        })
 
   });
 
