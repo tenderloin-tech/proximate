@@ -10,7 +10,7 @@ module.exports = function(config) {
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['jasmine'],
+    frameworks: ['jasmine', 'sinon'],
 
 
     // list of files / patterns to load in the browser
@@ -19,10 +19,27 @@ module.exports = function(config) {
       , './www/js/controllers/*.js'
       , './www/js/models/*.js'
       , './www/js/services.js'
-      , './www/lib/ionic/js/angular/angular.js'
-      , './plugins/org.apache.cordova.FacebookConnect/www/angular/facebookConnect.js'
-      , './test/lib/angular-mocks.js'
+      /* Ionic dependencies */
+      , './mobile/www/lib/ionic/js/angular/angular.js'
+      , './mobile/www/lib/ionic/js/angular/angular-animate.js'
+      , './mobile/www/lib/ionic/js/angular/angular-resource.js'
+      , './mobile/www/lib/ionic/js/angular/angular-sanitize.js'
+      , './mobile/www/lib/ionic/js/angular-ui/angular-ui-router.js'
+      , './mobile/www/lib/pubnub/pubnub.min.js'
+      , './mobile/www/lib/ionic/js/ionic.js'
+      , './mobile/www/lib/ionic/js/ionic-angular.js'
+      , './node_modules/angular-mocks/angular-mocks.js'
+      /* Cordova plugins */
+      , './mobile/platforms/ios/platform_www/cordova.js'
+      /*, './mobile/plugins/com.unarin.cordova.beacon/www/Delegate.js'
+      , './mobile/plugins/com.unarin.cordova.beacon/www/LocationManager.js'
+      , './mobile/plugins/com.unarin.cordova.beacon/www/Regions.js' */
+      , './mobile/plugins/com.jcesarmobile.IDFVPlugin/www/IDFVPlugin.js'
+      /* Actual mobile files */
+      , './mobile/www/js/*.js'
+      /* Test suites */
       , './test/spec/**/*.js'
+      , './test/mobile/**/*.js'
     ],
 
 
@@ -34,6 +51,7 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
+      /*'./mobile/plugins/com.unarin.cordova.beacon/www/*.js': ['commonjs'] */
     },
 
 
@@ -66,7 +84,9 @@ module.exports = function(config) {
 
     plugins: [
       'karma-jasmine',
-      'karma-phantomjs-launcher'
+      'karma-phantomjs-launcher',
+      'karma-commonjs',
+      'karma-sinon'
     ],
 
     // Continuous Integration mode
