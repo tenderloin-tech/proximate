@@ -35,7 +35,7 @@ var getCheckinStatus = function(deviceId, eventId) {
     })
     .then(function() {
       return new models.EventsParticipants()
-        .query({where:{participant_id: participant_id, event_id: eventId }})
+        .query({where:{participant_id: participant_id, event_id: eventId}})
         .fetch({require: true})
         .then(function(model) {
           return model;
@@ -50,7 +50,7 @@ var getCurrentEvent = function() {
     .query('orderByRaw', 'ABS(UNIX_TIMESTAMP() - UNIX_TIMESTAMP(start_time)) ASC')
     .fetch({require:true})
     .then(function(model) {
-        return model;
+      return model;
     });
 
 };

@@ -1,5 +1,5 @@
 var models = require('./models');
-var helpers = require('./db/helpers')
+var helpers = require('./db/helpers');
 
 module.exports = function(app) {
 
@@ -98,7 +98,7 @@ module.exports = function(app) {
       })
       .catch(function(error) {
         res.status(404).send('Unable to fetch participant info');
-      })
+      });
 
   });
 
@@ -108,7 +108,7 @@ module.exports = function(app) {
     var deviceId = req.params.deviceId;
     var eventId = req.params.eventId;
 
-    helpers.getCheckinStatus('999','1')
+    helpers.getCheckinStatus('999', '1')
       .then(function(model) {
         res.json(model.toJSON());
       })
