@@ -7,6 +7,7 @@ angular.module('proximate',
 
 .run(function(PubNub) {
   PubNub.subscribe(my_channel);
+  PubNub.publish(my_channel, 'start');
 })
 
 .config(function($stateProvider, $urlRouterProvider) {

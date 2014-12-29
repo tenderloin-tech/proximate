@@ -8,7 +8,6 @@ angular.module('proximate.services', [])
 
   var subscribe = function(channel) {
     pubNub.subscribe({
-      // not sure which channel to subscribe to, might want to change it
       channel: channel,
       callback: function(message) {
         console.log('recieved message: ', message);
@@ -16,8 +15,18 @@ angular.module('proximate.services', [])
     });
   };
 
+  var publish = function(channel, message) {
+    info = {
+      channel: channel,
+      message: message
+    };
+
+    pubNub.publish(info);
+  };
+
   return {
-    subscribe: subscribe
+    subscribe: subscribe,
+    publish: publish
   };
 
 })
