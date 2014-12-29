@@ -1,5 +1,6 @@
 var promise = require('bluebird');
 var models = require('../models');
+var helpers = require('./helpers');
 
 exports.seedTables = function() {
 
@@ -114,6 +115,54 @@ exports.seedTables = function() {
   var eventsParticipants = models.EventsParticipants.forge(generateEventsParticipants());
 
   promise.all(eventsParticipants.invoke('save')).then(function() {
+
+    // // Get event participants for a given event
+    //  helpers.getEventParticipants('1')
+    //   .then(function(model) {
+    //     console.log(model.toJSON());
+    //   })
+    //   .catch(function(error) {
+    //     console.error(error);
+    //   });
+
+    // // Get the most recent event
+    //   helpers.getCurrentEvent()
+    //     .then(function(model) {
+    //       console.log(model.toJSON());
+    //     })
+    //     .catch(function(error) {
+    //       console.error(error);
+    //     });
+
+    // // Get the participant ID for a device ID
+    //   helpers.getParticipant('999')
+    //     .then(function(model) {
+    //       console.log(model.get('id'));
+    //     })
+    //     .catch(function(error) {
+    //       console.error(error);
+    //     })
+
+    // // Get checkin status for a given event
+    //   helpers.getCheckinStatus('999','1')
+    //     .then(function(model) {
+    //       console.log(model.toJSON());
+    //     })
+    //     .catch(function(error) {
+    //       console.error(error);
+    //     });
+
+    // Checkin a user
+      helpers.checkinUser('999')
+        .then(function(model) {
+          console.log(model.toJSON())
+        })
+        .catch(function(error) {
+          console.error(error);
+        })
+
   });
+
+
 
 };
