@@ -6,17 +6,15 @@ angular.module('proximate.services', [])
     subscribe_key: pubNubKeys.sub
   });
 
-  var subscribe = function(channel) {
+  var subscribe = function(channel, callback) {
     pubNub.subscribe({
       channel: channel,
-      callback: function(message) {
-        console.log('recieved message: ', message);
-      }
+      callback: callback
     });
   };
 
   var publish = function(channel, message) {
-    info = {
+    var info = {
       channel: channel,
       message: message
     };
@@ -44,4 +42,9 @@ angular.module('proximate.services', [])
       console.log(err);
     });
   };
+
+  return {
+    getAttendeeList: getAttendeeList
+  }
+
 });
