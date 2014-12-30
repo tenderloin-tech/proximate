@@ -16,14 +16,14 @@ angular.module('proximate.controllers', [])
   $scope.initWithEvent = function() {
     Events.getMostCurrentEvent()
       .then(function(res) {
-        console.log('Event Stuffs: ' + JSON.stringify(res));
+        console.log('Got current event: ' + JSON.stringify(res));
         $scope.event = res;
         $scope.prettifyStartTime();
       })
       .then(function() {
         Events.getEventCheckinStatus($scope.event.id)
         .then(function(res) {
-          console.log('Checkin Status is: ' + JSON.stringify(res));
+          console.log('Checkin status is: ' + JSON.stringify(res));
           if (res) {
             $scope.event.status = res.status;
           } else {
@@ -32,7 +32,7 @@ angular.module('proximate.controllers', [])
           }
         });
       })
-      .catch(function(err){
+      .catch(function(err) {
         console.log('getMostCurrentEvent error: ' + err);
       });
   };
@@ -44,8 +44,8 @@ angular.module('proximate.controllers', [])
     PubNub.subscribe('checkins', function(message) {
       console.log(message);
 
-      if (message.deviceId === Settings.data.deviceId
-          && message.eventType === 'checkinConfirm') {
+      if (message.deviceId === Settings.data.deviceId &&
+          message.eventType === 'checkinConfirm') {
         console.log('Setting status: ' + message.checkinStatus);
         $scope.event.status = message.checkinStatus;
         $state.go($state.current, {}, {reload: true});
