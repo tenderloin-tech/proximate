@@ -30,11 +30,11 @@ angular.module('proximate.services', [])
 })
 
 .factory('Populate', function($http) {
-  var getAttendeeList = function() {
+  // get event participants for a given eventID
+  var getParticipants = function() {
     return $http({
       method: 'GET',
-      // not sure on correct endpoint
-      url: 'api/event',
+      url: 'api/events/:eventId/participants',
       data: attendees
     }).then(function(data) {
       console.log(data);
@@ -43,8 +43,20 @@ angular.module('proximate.services', [])
     });
   };
 
+  var getCurrentEvent = function() {
+    return $http({
+      method: 'GET',
+      url: 'api/events/current',
+    }).then(function(data) {
+      console.log(data);
+    }).catch(function(err) {
+      console.log(err);
+    });
+  };
+
   return {
-    getAttendeeList: getAttendeeList
-  }
+    getParticipants: getParticipants,
+    getCurrentEvent: getCurrentEvent
+  };
 
 });

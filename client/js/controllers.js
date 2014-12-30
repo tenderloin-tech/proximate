@@ -2,9 +2,15 @@ angular.module('proximate.controllers', [])
 
 .controller('AdminCtrl', function($scope, Populate, PubNub) {
   // initial http request to server for attendees
-  $scope.attendees = [];
-  $scope.getAttendees = function() {
-    $scope.attendees = Populate.getAttendeeList();
+  $scope.participants = [];
+  $scope.currentEvent = {};
+
+  $scope.getCurrentEvent = function() {
+    $scope.currentEvent = Populate.getCurrentEvent();
+  };
+
+  $scope.getParticipants = function() {
+    $scope.participants = Populate.getParticipants();
   };
 
   console.log('publish in admin ctrl', PubNub.subscribe);
@@ -18,6 +24,9 @@ angular.module('proximate.controllers', [])
   PubNub.subscribe('checkins', function(message) {
     console.log(message);
   });
+
+  $scope.getCurrentEvent();
+  console.log('currentEvent', $scope.currentEvent);
   // handle presence events
   // $rootScope.$on(PubNub.ngPrsEv(my_channel), function(event, payload) {
     // $scope.getAttendees();
