@@ -1,22 +1,39 @@
 var models = require('../models');
 var moment = require('moment');
 
+// POST HELPERS
+
+var updateDeviceId = function(username, deviceId) {
+
+  return new models.Participant()
+    .query({where: {name: username}})
+    .fetch()
+    .then(function(model) {
+      model.set('device_id', deviceId);
+      model.save();
+      return model;
+    });
+
+};
+
+// GET HELPERS
+
 var getEvents = function(participantId) {
 
   return new models.Participant()
-  .query({where: {id: participantId}})
-  .fetch({withRelated: ['events'], require: true})
-  .then(function(model) {
-    return model.related('events');
-  });
+    .query({where: {id: participantId}})
+    .fetch({withRelated: ['events'], require: true})
+    .then(function(model) {
+      return model;
+    });
 
 };
 
 var getEventParticipants = function(eventId) {
 
-  return new models.EventsParticipants()
-    .query({where:{event_id: eventId}})
-    .fetch({require: true})
+  return new models.Events()
+    .query({where:{id: eventId}})
+    .fetch({withRelated: ['participants'], require: true})
     .then(function(collection) {
       return collection;
     });
@@ -65,6 +82,8 @@ var getCurrentEvent = function() {
     });
 
 };
+
+// PUBNUB HELPERS
 
 var checkinUser = function(deviceId) {
 
@@ -130,5 +149,6 @@ module.exports = {
   getCurrentEvent: getCurrentEvent,
   getCheckinStatus: getCheckinStatus,
   getParticipant: getParticipant,
-  getEvents: getEvents
+  getEvents: getEvents,
+  updateDeviceId: updateDeviceId
 };

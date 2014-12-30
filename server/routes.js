@@ -6,19 +6,19 @@ module.exports = function(app) {
   /* API routes */
 
   // Register a deviceId to a participant
-  // Expect body of the request to contain:
-  // {deviceId: 'B19A9282-3124-4A3D-A387-60B4E92F22AF', username: 'Meat puppet'}
   app.post('/api/devices/register', function(req, res) {
 
-    new models.Participant({
-        name: req.body.username,
-        deviceId: req.body.deviceId
+    var username = req.body.username;
+    var deviceId = req.body.deviceId;
+
+    console.log('username', username, 'deviceId', deviceId);
+
+    helpers.updateDeviceId(username, deviceId)
+      .then(function(model) {
+        res.status(201).send('Device registered');
       })
-      .save()
-      .then(function() {
-        res.status(200).send();
-      }, function() {
-        res.status(404).send('Invalid username');
+      .catch(function(error) {
+        res.status(404).send('Unable to register device');
       });
 
   });
@@ -49,7 +49,7 @@ module.exports = function(app) {
         res.json(model.toJSON());
       })
       .catch(function(error) {
-        res.send('Unable to fetch events for this participant');
+        res.status(404).send('Unable to fetch events for this participant');
       });
 
   });
@@ -64,7 +64,7 @@ module.exports = function(app) {
       res.json(model.toJSON());
     })
     .catch(function(error) {
-      res.send('Invalid event ID');
+      res.status(404).send('Invalid event ID');
     });
 
   });

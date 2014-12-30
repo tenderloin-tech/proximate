@@ -19,6 +19,12 @@ if (config.resetDatabaseOnLoad) {
   .then(function() {
     return bookshelf.knex.schema.dropTableIfExists('events_participants');
   })
+  .then(function() {
+    return bookshelf.knex.schema.dropTableIfExists('beacons');
+  })
+  .then(function() {
+    return bookshelf.knex.schema.dropTableIfExists('beacons_events');
+  })
 
   // Create our tables
   .then(function() {
@@ -31,7 +37,7 @@ if (config.resetDatabaseOnLoad) {
     return bookshelf.knex.schema.createTable('participants', function(t) {
       t.increments('id').primary();
       t.string('name');
-      t.integer('device_id').unique();
+      t.string('device_id').unique();
     });
   })
   .then(function() {
@@ -49,6 +55,23 @@ if (config.resetDatabaseOnLoad) {
       t.integer('participant_id').notNullable();
       t.text('status');
       t.dateTime('checkin_time');
+    });
+  })
+  .then(function() {
+    return bookshelf.knex.schema.createTable('beacons', function(t) {
+      t.increments('id').primary();
+      t.text('uuid');
+      t.text('identifier');
+      t.integer('major');
+      t.integer('minor');
+      t.integer('admin_id').notNullable();
+    });
+  })
+  .then(function() {
+    return bookshelf.knex.schema.createTable('beacons_events', function(t) {
+      t.increments('id').primary();
+      t.integer('beacon_id');
+      t.integer('event_id');
     });
   })
 
