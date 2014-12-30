@@ -22,7 +22,9 @@ var Participant = bookshelf.Model.extend({
 var Event = bookshelf.Model.extend({
   tableName: 'events',
   participants: function() {
-    return this.belongsToMany(Participant).through(EventParticipant).withPivot(['status','checkin_time']);
+    return this.belongsToMany(Participant)
+      .through(EventParticipant)
+      .withPivot(['status', 'checkin_time']);
   },
   admin: function() {
     return this.belongsTo(Admin);
@@ -58,7 +60,6 @@ var BeaconEvent = bookshelf.Model.extend({
     return this.belongsTo(Event);
   }
 });
-
 
 // Define bookshelf collections
 

@@ -64,7 +64,7 @@ if (config.resetDatabaseOnLoad) {
       t.text('identifier');
       t.integer('major');
       t.integer('minor');
-      t.integer('admin_id').notNullable;
+      t.integer('admin_id').notNullable();
     });
   })
   .then(function() {

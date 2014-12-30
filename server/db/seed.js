@@ -33,7 +33,7 @@ exports.seedTables = function() {
     {name: 'Issac Pao'},
     {name: 'Derek Wu'},
     {name: 'Douglas Eichelberger'},
-    {name: 'Derek Barncard'},
+    {name: 'Derek Barncard', device_id: 'B19A9282-3124-4A3D-A387-60B4E92F22AF'},
     {name: 'Christopher Trevino'},
     {name: 'Dennis Lin'},
     {name: 'Liz Portnoy'},
@@ -156,7 +156,7 @@ exports.seedTables = function() {
     var results = [];
 
     for (var i = 0; i < 3; i++) {
-      for (var j =0; j < 10; j ++) {
+      for (var j = 0; j < 10; j++) {
         results.push({
           event_id: j,
           beacon_id: i
@@ -165,7 +165,7 @@ exports.seedTables = function() {
     }
 
     return results;
-  }
+  };
 
   var beaconsEvents = models.BeaconsEvents.forge(generateBeaconEvents());
 

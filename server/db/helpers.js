@@ -14,7 +14,7 @@ var updateDeviceId = function(username, deviceId) {
       return model;
     });
 
-}
+};
 
 // GET HELPERS
 
