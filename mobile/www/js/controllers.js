@@ -5,7 +5,7 @@ angular.module('proximate.controllers', [])
   $scope.event = {
     id: '882',
     name: 'My Awesomest Event!',
-    start_time: new Date(),
+    start_time: 'Tue, 30 Dec 2014 00:46:41 GMT',
     pretty_time: '',
     status: 'notyet'
   };
@@ -38,9 +38,11 @@ angular.module('proximate.controllers', [])
     $scope.event.pretty_time = moment($scope.event.start_time).format('h:mm a');
   };
 
-  $scope.prettifyStartTime();
-  // $scope.initWithEvent();
-  // $scope.subscribeToCheckinStatus();
+  angular.element(document).ready(function() {
+    $scope.prettifyStartTime();
+    // $scope.initWithEvent();
+    // $scope.subscribeToCheckinStatus();
+  });
 
 })
 
