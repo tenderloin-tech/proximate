@@ -19,22 +19,22 @@ angular.module('proximate.services', [])
   };
 }])
 
-.factory('Events', function($http, Settings) {
+.factory('Events', function($http, webServer, Settings) {
   var getMostCurrentEvent = function() {
     return $http({
       method: 'GET',
       url: webServer.url + '/api/events/current'
     }).then(function(res) {
-      return JSON.parse(res);
+      return res.data;
     });
   };
 
   var getEventCheckinStatus = function(eventId) {
     return $http({
       method: 'GET',
-      url: webServer.url + '/api/participants/status/' + data.deviceId + '/' + eventId
+      url: webServer.url + '/api/devices/' + Settings.data.deviceId + '/events/' + eventId + '/status'
     }).then(function(res) {
-      return JSON.parse(res)[0];
+      return res.data[0];
     });
   };
 
@@ -143,7 +143,7 @@ angular.module('proximate.services', [])
           deviceId: Settings.data.deviceId,
           username: Settings.data.username,
           region: pluginResult.region,
-          eventType: pluginResult.eventType
+          eventType: 'didEnterRegion'
         };
 
         onEnterCallback('checkins', regionInfo);
