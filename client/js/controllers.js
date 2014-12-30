@@ -9,15 +9,16 @@ angular.module('proximate.controllers', [])
   $scope.getCurrentEvent(function(eventData) {
     $scope.eventData = eventData;
     console.log('eventData', eventData);
-    $scope.getParticipants(eventData.data.id,
-      function(participantData) {
-        $scope.participantData = participantData;
-        console.log($scope.participantData);
+    $scope.getParticipants(eventData.data.id, function(participantData) {
+      $scope.participantData = participantData;
+      console.log($scope.participantData);
     });
-  })
+  });
 
   PubNub.subscribe('checkins', function(message) {
     console.log(message);
+    // push to array
+    // use array in custom filter
   });
 
 })
