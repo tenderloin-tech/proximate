@@ -37,7 +37,7 @@ angular.module('proximate.services', [])
       method: 'GET',
       url: url,
     }).then(function(data) {
-      console.log('data in getParticipants', data);
+      // console.log('data in getParticipants', data);
       callback(data);
     }).catch(function(err) {
       console.log(err);
@@ -50,7 +50,7 @@ angular.module('proximate.services', [])
       method: 'GET',
       url: 'api/events/current',
     }).then(function(data) {
-      console.log('data in getCurrentEvent', data);
+      // console.log('data in getCurrentEvent', data);
       callback(data);
     }).catch(function(err) {
       console.log(err);

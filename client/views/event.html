@@ -1,8 +1,11 @@
-<div id="event">
-  <h1>{{ clock | date:'shortTime' }}</h1>
-  <h2>{{}} minutes till launch<h2>
-</div>
 <div>
-  <!-- populate with attendees not yet here -->
+  <h1>{{ clock | date:'shortTime' }}</h1>
+  <h2>{{ eventData.data.start_time }} :minutes till launch<h2>
+  	<!-- <span am-time-ago='eventData.data.start_time'></span> -->
 </div>
+<div ng-repeat='data in participantData'>
+  {{data.name}}
+</div>
+
+<div>{{ newCheckins }}</div>
 
