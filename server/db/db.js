@@ -5,7 +5,6 @@ var knex = require('knex')({
 });
 var bookshelf = require('bookshelf')(knex);
 module.exports = bookshelf;
-
 var seed = require('./seed');
 
 if (config.resetDatabaseOnLoad) {

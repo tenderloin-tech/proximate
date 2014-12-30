@@ -1,6 +1,71 @@
 var models = require('../models');
 var moment = require('moment');
 
+var getEvents = function(participantId) {
+
+  return new models.Participant()
+  .query({where: {id: participantId}})
+  .fetch({withRelated: ['events'], require: true})
+  .then(function(model) {
+    return model.related('events');
+  });
+
+};
+
+var getEventParticipants = function(eventId) {
+
+  return new models.EventsParticipants()
+    .query({where:{event_id: eventId}})
+    .fetch({require: true})
+    .then(function(collection) {
+      return collection;
+    });
+
+};
+
+var getParticipant = function(deviceId) {
+
+  return new models.Participant()
+    .query({where: {device_id: deviceId}})
+    .fetch({require: true})
+    .then(function(model) {
+      return model;
+    });
+
+};
+
+var getCheckinStatus = function(deviceId, eventId) {
+
+  var participant_id;
+
+  console.log('deviceId', deviceId, 'eventId', eventId);
+
+  return getParticipant(deviceId)
+    .then(function(model) {
+      participant_id = model.get('id');
+    })
+    .then(function() {
+      return new models.EventsParticipants()
+        .query({where:{participant_id: participant_id, event_id: eventId}})
+        .fetch({require: true})
+        .then(function(model) {
+          return model;
+        });
+    });
+
+};
+
+var getCurrentEvent = function() {
+
+  return new models.Event()
+    .query('orderByRaw', 'ABS(UNIX_TIMESTAMP() - UNIX_TIMESTAMP(start_time)) ASC')
+    .fetch({require:true})
+    .then(function(model) {
+      return model;
+    });
+
+};
+
 var checkinUser = function(deviceId) {
 
   var participantId;
@@ -60,5 +125,10 @@ var checkinUser = function(deviceId) {
 };
 
 module.exports = {
-  checkinUser: checkinUser
+  checkinUser: checkinUser,
+  getEventParticipants: getEventParticipants,
+  getCurrentEvent: getCurrentEvent,
+  getCheckinStatus: getCheckinStatus,
+  getParticipant: getParticipant,
+  getEvents: getEvents
 };
