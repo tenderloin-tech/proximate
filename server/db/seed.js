@@ -1,5 +1,6 @@
 var promise = require('bluebird');
 var models = require('../models');
+var helpers = require('./helpers');
 
 exports.seedTables = function() {
 
@@ -123,6 +124,52 @@ exports.seedTables = function() {
   var eventsParticipants = models.EventsParticipants.forge(generateEventsParticipants());
 
   promise.all(eventsParticipants.invoke('save')).then(function() {
+  });
+
+  // BEACONS
+
+  var beacons = models.Beacons.forge([
+  {
+    uuid : 'B9407F30-F5F8-466E-AFF9-25556B57FE6D',
+    identifier : 'Estimote Icy One',
+    minor : 10907,
+    major : 23516,
+    admin_id : 1
+  }, {
+    uuid : 'B9407F30-F5F8-466E-AFF9-25556B57FE6D',
+    identifier : 'Estimote Blue One',
+    minor : 50306,
+    major : 54690,
+    admin_id : 1
+  }, {
+    uuid : 'B9407F30-F5F8-466E-AFF9-25556B57FE6D',
+    identifier : 'Estimote Mint One',
+    minor : 3704,
+    major : 57868,
+    admin_id : 1
+  }]);
+
+  promise.all(beacons.invoke('save')).then(function() {
+  });
+
+  var generateBeaconEvents = function() {
+    var results = [];
+
+    for (var i = 0; i < 3; i++) {
+      for (var j =0; j < 10; j ++) {
+        results.push({
+          event_id: j,
+          beacon_id: i
+        });
+      }
+    }
+
+    return results;
+  }
+
+  var beaconsEvents = models.BeaconsEvents.forge(generateBeaconEvents());
+
+  promise.all(beaconsEvents.invoke('save')).then(function() {
   });
 
 };

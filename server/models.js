@@ -22,7 +22,7 @@ var Participant = bookshelf.Model.extend({
 var Event = bookshelf.Model.extend({
   tableName: 'events',
   participants: function() {
-    return this.belongsToMany(Participant).through(EventParticipant);
+    return this.belongsToMany(Participant).through(EventParticipant).withPivot(['status','checkin_time']);
   },
   admin: function() {
     return this.belongsTo(Admin);
@@ -42,6 +42,24 @@ var EventParticipant = bookshelf.Model.extend({
   }
 });
 
+var Beacon = bookshelf.Model.extend({
+  tableName: 'beacons',
+  events: function() {
+    return this.belongsToMany(Event).through(beacons_events);
+  }
+});
+
+var BeaconEvent = bookshelf.Model.extend({
+  tableName: 'beacons_events',
+  beacon: function() {
+    return this.belongsTo(Beacon);
+  },
+  event: function() {
+    return this.belongsTo(Event);
+  }
+});
+
+
 // Define bookshelf collections
 
 var EventsParticipants = bookshelf.Collection.extend({
@@ -50,6 +68,14 @@ var EventsParticipants = bookshelf.Collection.extend({
 
 var Events = bookshelf.Collection.extend({
   model: Event
+});
+
+var Beacons = bookshelf.Collection.extend({
+  model: Beacon
+});
+
+var BeaconsEvents = bookshelf.Collection.extend({
+  model: BeaconEvent
 });
 
 var Participants = bookshelf.Collection.extend({
@@ -63,5 +89,9 @@ module.exports = {
   Event: Event,
   Events: Events,
   EventParticipant: EventParticipant,
-  EventsParticipants: EventsParticipants
+  EventsParticipants: EventsParticipants,
+  Beacon: Beacon,
+  Beacons: Beacons,
+  BeaconsEvent: BeaconEvent,
+  BeaconsEvents: BeaconsEvents
 };
