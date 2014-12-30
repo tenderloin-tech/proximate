@@ -3,21 +3,22 @@ var bodyparser = require('body-parser');
 var morgan = require('morgan');
 var config = require('./config/config');
 var db = require('./db/db');
+var helpers = require('./db/helpers.js');
+var pubnub = require('./pubnub');
 
-var pubnub = require('pubnub').init(config.pubnub);
-
-pubnub.subscribe({
-    channel: config.pubnub.channel,
-    callback: function(message) {
-      console.log('Message received: ', message);
-    }
+// Listen for and confirm received checkins
+pubnub.subscribe('checkins', function(message) {
+  if (message.eventType === 'didEnterRegion') {
+    helpers.checkinUser(message.deviceId, function(checkinProps) {
+      pubnub.publish('checkins', {
+        eventType: 'checkinConfirm',
+        deviceId: checkinProps.deviceId,
+        eventId: checkinProps.eventId,
+        checkinStatus: checkinProps.status
+      });
+    });
+  }
 });
-
-// pubnub.publish({
-//     channel   : config.channel,
-//     callback  : function(e) { console.log('SUCCESS!', e); },
-//     error     : function(e) { console.log('FAILED! RETRY PUBLISH!', e); }
-// });
 
 var app = express();
 
