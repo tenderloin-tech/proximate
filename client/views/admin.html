@@ -1,12 +1,10 @@
-<div id="admin">
-  <!-- will change this tag to pull event name from database -->
-  <h1>My Awesome Event</h1>
+<div>
+  <h1>{{ eventData.data.name }}</h1>
   <div>
-    <h2>Starts:</h2>
-    <!-- pull event time from database -->
+    <h2>Starts: {{ eventData.data.start_time | date:'EEEE, MMMM, h:mm a' }}</h2>
   </div>
-  <div id="attendenceList">
-  	<!-- pull attendees from database -->
+  <div ng-repeat='data in participantData.data'>
+  	{{data.participant_id}}
+    {{data.status}}
   </div>
-
 </div>

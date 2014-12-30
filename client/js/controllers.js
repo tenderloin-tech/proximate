@@ -7,9 +7,11 @@ angular.module('proximate.controllers', [])
   angular.extend($scope, Populate);
 
   $scope.getCurrentEvent(function(eventData) {
+    $scope.eventData = eventData;
+    console.log('eventData', eventData);
     $scope.getParticipants(eventData.data.id,
       function(participantData) {
-        $scope.participantData = participantData.data;
+        $scope.participantData = participantData;
         console.log($scope.participantData);
     });
   })
