@@ -17,4 +17,3 @@
     <param name="ios-package" value="CDVStatusBar" onload="true"/>
   </feature>
 </widget>
-
