@@ -36,7 +36,7 @@ angular.module('proximate.services', [])
     }).then(function(res) {
       return JSON.parse(res)[0];
     });
-  }
+  };
 
   return {
     getMostCurrentEvent: getMostCurrentEvent,
@@ -51,9 +51,12 @@ angular.module('proximate.services', [])
   });
 
   var publish = function(channel, message) {
-    info = {
+    var info = {
       channel: channel,
-      message: message
+      message: message,
+      callback: function(res) {
+        console.log('Publish successful ', res);
+      }
     };
 
     pubNub.publish(info);
@@ -128,32 +131,31 @@ angular.module('proximate.services', [])
     // Our delegate object, which is a container for event callbacks
     var delegate = new cordova.plugins.locationManager.Delegate();
 
-    //provide logging for state changes
+    // Subsumes the didEnterRegion handler, which
+    // will be called when we enter the specified region,
+    // including when the app is backgrounded.
     delegate.didDetermineStateForRegion = function(pluginResult) {
 
       if (pluginResult.state === 'CLRegionStateInside') {
         console.log('Entered the region!');
+
+        var regionInfo = {
+          deviceId: Settings.data.deviceId,
+          username: Settings.data.username,
+          region: pluginResult.region,
+          eventType: pluginResult.eventType
+        };
+
+        onEnterCallback('checkins', regionInfo);
+        logToDom('[Prox] didEnterRegion:' + JSON.stringify(pluginResult));
+
       } else if (pluginResult.state === 'CLRegionStateOutside') {
         console.log('Exited the region!');
       }
     };
 
-    // This handler will be called when we enter the specified region,
-    // including when the app is backgrounded.
-    delegate.didEnterRegion = function(pluginResult) {
-      var regionInfo = {
-        deviceId: Settings.data.deviceId,
-        username: Settings.data.username,
-        region: pluginResult.region,
-        eventType: pluginResult.eventType
-      };
-
-      onEnterCallback('checkins', regionInfo);
-      logToDom('[Prox] didEnterRegion:' + JSON.stringify(pluginResult));
-    };
-
     delegate.didStartMonitoringForRegion = function(pluginResult) {
-      console.log('didStartMonitoringForRegion:', JSON.stringify(pluginResult));
+      // console.log('didStartMonitoringForRegion:', JSON.stringify(pluginResult));
       logToDom('didStartMonitoringForRegion:' + JSON.stringify(pluginResult));
     };
 
@@ -215,7 +217,7 @@ angular.module('proximate.services', [])
     }
   };
 
-  updateDeviceId();
+  // updateDeviceId();
 
   data.currentBeaconList = $localStorage.get('beaconList');
 
