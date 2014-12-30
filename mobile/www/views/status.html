@@ -9,8 +9,8 @@
       </div>
       <div class="item item-body">
         <div class="checkin-status">
-          <div class="checkin-status-notyet" ng-show="event.status==='notyet'"><i class="ion-close-round"></i> You're not yet checked in!</div>
-          <div class="checkin-status-here" ng-show="event.status==='here'"><i class="ion-checkmark-round"></i> You're here!</div>
+          <div class="checkin-status-notyet" ng-show="event.status===null"><i class="ion-close-round"></i> You're not yet checked in!</div>
+          <div class="checkin-status-here" ng-show="event.status==='ontime'"><i class="ion-checkmark-round"></i> You're here!</div>
           <div class="checkin-status-late" ng-show="event.status==='late'"><i class="ion-alert-circled"></i> You're late!</div>
         </div>
       </div>
