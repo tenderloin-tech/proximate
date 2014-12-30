@@ -62,4 +62,19 @@ angular.module('proximate.services', [])
     getCurrentEvent: getCurrentEvent
   };
 
-});
+})
+
+.filter('removeArrivedParticipants', function() {
+  return function(participants, arrivedParticipants) {
+    var filteredResults = [];
+    participants.forEach(function(participant) {
+      for(var arrivedParticipant in arrivedParticipants) {
+        if(participant === arrivedParticipant) {
+          return;
+        }
+      }
+      filteredResults.push(participant);
+    });
+    return filteredResults;
+  };
+})

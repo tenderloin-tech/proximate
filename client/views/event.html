@@ -3,7 +3,7 @@
   <h2>{{ eventData.data.start_time }} :minutes till launch<h2>
   	<!-- <span am-time-ago='eventData.data.start_time'></span> -->
 </div>
-<div ng-repeat='data in participantData'>
+<div ng-repeat='data in participantData | removeArrivedParticipants:data.name:newCheckins'>
   {{data.name}}
 </div>
 
