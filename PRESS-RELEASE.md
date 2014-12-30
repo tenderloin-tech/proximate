@@ -2,30 +2,18 @@
 
 ## Automated attendance tracking for your space ##
 
-## Summary ##
- • Know when people enter and leave
- • Know where they go in your space and when they get there
- • Automate real-world actions based on their location
- • Communicate with your guests!
+Today Proximate, one of San Francisco's hottest technology startups,
+announced the release of Proximate.io, the world's first automated
+micro-attendance system using Apple's iBeacon standard.  Proximate.io allows smartphone owners to automatically register their presence in a space just by showing up.  Business owners, school administrators and other building managers use Proximate to understand how their constituents move through their facilities during the day.
 
-## Problem ##
- • Even with web-based checkin systems, people often forget to check themselves in
- • It's not always possible to take attendance
- • It can be difficult to track attendance data over time
+Optimizing shared resources like conference rooms, break rooms, workout facilities and other group spaces is a constant struggle. With any large group, it's difficult to keep track of who's present and who's not, not to mention how traffic in a given area varies over time.
 
-## Solution ##
-  • Install an app, and check in becomes automatic
-  • Tracks data over time
-  • Attaches user-specified actions to location
+By placing low-energy beacons throughout their space and distributing a proximate-enabled app to their guests, space-owners can immediately get real time visibility into pathing and movements.  Today's iBeacons are weather-resistant, self-adhesive and weigh less than four ounces with a battery-life of close to two years.  These inexpensive beacons provide location-tracking accurate to one square meter.
 
-## Quote from You ##
-  "Proximate takes the friction out of roll call and attendance by automatically checking your guests in when they arrive and leave. It's kind of a big deal"
+Using facility automation technology, lights, locks, doors and other physical features of the space can be configured to respond to individual user movements.  Emergency personnel can quickly understand who's accounted for, using historical path information to quickly locate victims in a disaster.
 
-## How to Get Started ##
-  Visit Proximate.io to get started today!
+"Proximate takes the friction out of roll call and attendance by automatically checking your guests in when they arrive and leave." says Proximate's Chief Scientist, Avi Dunn."
 
-## Customer Quote ##
-  "Now I never have to be the bad guy in the morning. Attendance gets tracked and now I can just move on knowing that our beautiful juniors are safe." - Pira Tritasavit
+"With Proximate.io I never have to be the bad guy in the morning. Attendance gets tracked and now I can just move on knowing that our beautiful juniors are safe," adds Pira Tritasavit of Hack Reactor, an advanced programming immersive in San Francisco, CA.
 
-## Closing and Call to Action ##
-  Visit Proximate.io to get started today!
+Interested space-owners can visit Proximate.io to get started.
