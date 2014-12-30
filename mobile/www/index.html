@@ -14,6 +14,7 @@
 
     <script src="lib/ionic/js/ionic.bundle.js"></script>
     <script src="lib/pubnub/pubnub.min.js"></script>
+    <script src="lib/moment/min/moment.min.js"></script>
     <!-- cordova script (this will be a 404 during development) -->
     <script src="cordova.js"></script>
 
@@ -21,7 +22,11 @@
     <script src="js/app.js"></script>
     <script src="js/config.js"></script>
     <script src="js/controllers.js"></script>
-    <script src="js/services.js"></script>
+    <script src="js/services/localstorageFactory.js"></script>
+    <script src="js/services/eventsFactory.js"></script>
+    <script src="js/services/pubnubFactory.js"></script>
+    <script src="js/services/settingsFactory.js"></script>
+    <script src="js/services/beaconsFactory.js"></script>
   </head>
   <body ng-app="proximate">
     <ion-nav-bar class="bar-stable">
