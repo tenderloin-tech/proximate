@@ -23,11 +23,9 @@ module.exports = function(app) {
 
   });
 
-  // Return a list of beacons for a participant
-  // Expect body of the request to contain:
-  // {username: 'Meat puppet'}
-  // This should fetch from the DB in the future
-  app.get('/api/beacons/:deviceId', function(req, res) {
+  // Return a list of beacons associated with events
+  // that belong to a certain device ID
+  app.get('/api/devices/:deviceId/beacons', function(req, res) {
 
     var deviceId = req.params.deviceId;
     var testRegions = [{
@@ -37,30 +35,27 @@ module.exports = function(app) {
         major : 5
       }];
 
-    console.log('Sending: ' + testRegions);
     res.json(testRegions);
 
   });
 
   // Return a list of events for a participant
-  app.get('/api/events/:participantId', function(req, res) {
+  app.get('/api/participants/:participantId/events', function(req, res) {
 
     var participantId = req.params.participantId;
 
-    new models.Participant({
-      id: participantId
-    })
-      .fetch({withRelated: ['events'], require: true})
-      .then(function(participant) {
-        res.json(participant.related('events').toJSON());
-      }, function() {
-        res.status(404).send('Invalid username');
+    helpers.getEvents(participantId)
+      .then(function(model) {
+        res.json(model.toJSON());
+      })
+      .catch(function(error) {
+        res.send('Unable to fetch events for this participant');
       });
 
   });
 
   // Get event participants for a given eventId
-  app.get('/api/events/participants/:eventId', function(req, res) {
+  app.get('/api/events/:eventId/participants', function(req, res) {
 
     var eventId = req.params.eventId;
 
@@ -88,7 +83,7 @@ module.exports = function(app) {
   });
 
   // Get the participant info for a given device ID
-  app.get('/api/participants/devices/:deviceId', function(req, res) {
+  app.get('/api/devices/:deviceId/participant', function(req, res) {
 
     var deviceId = req.params.deviceId;
 
@@ -103,12 +98,12 @@ module.exports = function(app) {
   });
 
   // Get the checkin status for a given device and event
-  app.get('/api/participants/status/:deviceId/:eventId', function(req, res) {
+  app.get('/api/devices/:deviceId/events/:eventId/status', function(req, res) {
 
     var deviceId = req.params.deviceId;
     var eventId = req.params.eventId;
 
-    helpers.getCheckinStatus('999', '1')
+    helpers.getCheckinStatus(deviceId, eventId)
       .then(function(model) {
         res.json(model.toJSON());
       })

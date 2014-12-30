@@ -1,6 +1,17 @@
 var models = require('../models');
 var moment = require('moment');
 
+var getEvents = function(participantId) {
+
+  return new models.Participant()
+  .query({where: {id: participantId}})
+  .fetch({withRelated: ['events'], require: true})
+  .then(function(model) {
+    return model.related('events');
+  });
+
+};
+
 var getEventParticipants = function(eventId) {
 
   return new models.EventsParticipants()
@@ -118,5 +129,6 @@ module.exports = {
   getEventParticipants: getEventParticipants,
   getCurrentEvent: getCurrentEvent,
   getCheckinStatus: getCheckinStatus,
-  getParticipant: getParticipant
+  getParticipant: getParticipant,
+  getEvents: getEvents
 };
