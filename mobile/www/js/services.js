@@ -19,6 +19,31 @@ angular.module('proximate.services', [])
   };
 }])
 
+.factory('Events', function($http, Settings) {
+  var getMostCurrentEvent = function() {
+    return $http({
+      method: 'GET',
+      url: webServer.url + '/api/events/current'
+    }).then(function(res) {
+      return JSON.parse(res);
+    });
+  };
+
+  var getEventCheckinStatus = function(eventId) {
+    return $http({
+      method: 'GET',
+      url: webServer.url + '/api/participants/status/' + data.deviceId + '/' + eventId
+    }).then(function(res) {
+      return JSON.parse(res)[0];
+    });
+  }
+
+  return {
+    getMostCurrentEvent: getMostCurrentEvent,
+    getEventCheckinStatus: getEventCheckinStatus
+  };
+})
+
 .factory('PubNub', function(pubNubKeys) {
   var pubNub = PUBNUB.init({
     publish_key: pubNubKeys.pub,
@@ -34,8 +59,16 @@ angular.module('proximate.services', [])
     pubNub.publish(info);
   };
 
+  var subscribe = function(channel, callback) {
+    pubNub.subscribe({
+      channel: channel,
+      callback: callback
+    });
+  };
+
   return {
-    publish: publish
+    publish: publish,
+    subscribe: subscribe
   };
 })
 
@@ -167,7 +200,6 @@ angular.module('proximate.services', [])
 
   // update the deviceID based on current device
   var updateDeviceId = function() {
-
     if (ionic.Platform.isIOS()) {
       window.IDFVPlugin.getIdentifier(
         // on success, set deviceId in memory and localstorage
@@ -192,11 +224,8 @@ angular.module('proximate.services', [])
 
   var updateBeaconList = function() {
     return $http({
-      method: 'POST',
-      url: webServer.url + '/api/beacons',
-      data: {
-        username: data.username
-      }
+      method: 'GET',
+      url: webServer.url + '/api/beacons/' + data.deviceId,
     }).then(function(result) {
       data.currentBeaconList = result;
       localStorage.set('beaconList', result);
@@ -204,17 +233,15 @@ angular.module('proximate.services', [])
   };
 
   //initializes the username property from localStorage
-
   data.username = $localStorage.get('username');
 
   //sets username both in localStorage and on the server
-
   var updateUsername = function(name) {
     $localStorage.set('username', name);
 
     return $http({
       method: 'POST',
-      url: webServer.url + '/api/register',
+      url: webServer.url + '/api/devices/register',
       data: {
         username: name,
         deviceId: data.deviceId,
@@ -226,11 +253,37 @@ angular.module('proximate.services', [])
     });
   };
 
+  // Gets participant id, name, and deviceId from server
+  var updateParticipantInfo = function() {
+    return $http({
+      method: 'GET',
+      url: webServer.url + '/api/participants/devices/' + data.deviceId
+    }).then(function(res) {
+      var parsed = JSON.parse(res);
+      if (parsed.id) {
+        data.participantId = parsed.id;
+      }
+    });
+  };
+
+  var checkServerStatus = function() {
+    return $http({
+      method: 'GET',
+      url: webServer.url + '/'
+    }).then(function(res) {
+      return res;
+    }).catch(function(err) {
+      return 'err';
+    });
+  };
+
   return {
     data: data,
     updateDeviceId: updateDeviceId,
     updateBeaconList: updateBeaconList,
-    updateUsername: updateUsername
+    updateUsername: updateUsername,
+    updateParticipantInfo: updateParticipantInfo,
+    checkServerStatus: checkServerStatus
   };
 
 });
