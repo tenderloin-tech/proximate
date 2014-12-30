@@ -1,28 +1,28 @@
 /* Empty. Add your own CSS if you like */
 
 .event-timestamp {
-	text-align: right;
-	color: gray;
-	margin-right: 30px;
+  text-align: right;
+  color: gray;
+  margin-right: 30px;
 }
 
 .checkin-status {
-	font-size: 2em;
-	margin: 15px;
+  font-size: 2em;
+  margin: 15px;
 }
 
 .checkin-status i {
-	margin-right: 10px;
+  margin-right: 10px;
 }
 
 .checkin-status-notyet {
-	color: red;
+  color: red;
 }
 
 .checkin-status-here {
-	color: green;
+  color: green;
 }
 
 .checkin-status-late {
-	color: orange;
+  color: orange;
 }

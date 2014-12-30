@@ -5,7 +5,7 @@ angular.module('proximate.controllers', [])
   // Initial test data
   $scope.event = {
     id: '882',
-    name: 'My Awesomest Event!',
+    name: 'Test Event',
     start_time: 'Tue, 30 Dec 2014 00:46:41 GMT',
     pretty_time: '',
     status: null

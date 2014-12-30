@@ -27,16 +27,6 @@ angular.module('proximate', ['ionic',
 
   $localStorage.set('beaconList', JSON.stringify(testRegions));
 
-  // Send fake enter region event, for testing
-  setTimeout(function() {
-    PubNub.publish('checkins', {
-      deviceId: 'TEST_ID',
-      username: 'TEST_USER',
-      region: 'E2C56DB5-DFFB-48D2-B060-D0F5A71096E0',
-      eventType: 'enterRegion'
-    });
-  }, 10000);
-
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
