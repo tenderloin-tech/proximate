@@ -1,6 +1,6 @@
 angular.module('proximate.controllers', [])
 
-.controller('StatusCtrl', function($scope, PubNub, Events, Settings) {
+.controller('StatusCtrl', function($scope, $state, PubNub, Events, Settings) {
 
   // Initial test data
   $scope.event = {
@@ -48,6 +48,7 @@ angular.module('proximate.controllers', [])
           && message.eventType === 'checkinConfirm') {
         console.log('Setting status: ' + message.checkinStatus);
         $scope.event.status = message.checkinStatus;
+        $state.go($state.current, {}, {reload: true});
       }
     });
   };
@@ -57,6 +58,7 @@ angular.module('proximate.controllers', [])
     $scope.event.pretty_time = moment($scope.event.start_time).format('h:mm a');
   };
 
+  //wait for load, then full initialize cycle
   angular.element(document).ready(function() {
     $scope.prettifyStartTime();
     $scope.initWithEvent();
