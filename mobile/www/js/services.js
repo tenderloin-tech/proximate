@@ -54,46 +54,21 @@ angular.module('proximate.services', [])
     devMsgElement.appendChild(e);
     devMsgElement.appendChild(br);
     devMsgElement.appendChild(br2);
-
-    //window.scrollTo(0, window.document.height);
   };
 
   // Sets up beacon environment and calls functions to begin monitoring / ranging
   //the beacon list
-
   var setupTestBeacons = function(onEnterCallback) {
-
     setupDelegate(onEnterCallback);
 
     // request auth from the user
     cordova.plugins.locationManager.requestAlwaysAuthorization();
-    // cordova.plugins.locationManager.getAuthorizationStatus().then();
 
     startMonitoringRegions();
-
-    //ranging - reenable after V0 when rangefinding is necessary
-
-    // startRangingRegions();
-
   };
 
   // Begins monitoring for all regions, as specified in the beacon list
-
   var startMonitoringRegions = function() {
-
-    var currentRegions = regionsFromBeacons(Settings.data.currentBeaconList);
-
-    currentRegions.forEach(function(region) {
-      cordova.plugins.locationManager.startRangingBeaconsInRegion(region)
-        .fail(console.error)
-        .done();
-    });
-  };
-
-  // Begins monitoring for all regions, as specified in the beacon list
-
-  var startRangingRegions = function() {
-
     var currentRegions = regionsFromBeacons(Settings.data.currentBeaconList);
 
     currentRegions.forEach(function(region) {
@@ -103,17 +78,24 @@ angular.module('proximate.services', [])
     });
   };
 
+  // Begins monitoring for all regions, as specified in the beacon list
+  var startRangingRegions = function() {
+    var currentRegions = regionsFromBeacons(Settings.data.currentBeaconList);
+
+    currentRegions.forEach(function(region) {
+      cordova.plugins.locationManager.startRangingBeaconsInRegion(region)
+        .fail(console.error)
+        .done();
+    });
+  };
+
   // Sets event callbacks and attaches them to a 'delegate' object to be called
   //when that event is triggered.
-
   var setupDelegate = function(onEnterCallback) {
-
     // Our delegate object, which is a container for event callbacks
-
     var delegate = new cordova.plugins.locationManager.Delegate();
 
     //provide logging for state changes
-
     delegate.didDetermineStateForRegion = function(pluginResult) {
 
       if (pluginResult.state === 'CLRegionStateInside') {
@@ -125,9 +107,7 @@ angular.module('proximate.services', [])
 
     // This handler will be called when we enter the specified region,
     // including when the app is backgrounded.
-
     delegate.didEnterRegion = function(pluginResult) {
-
       var regionInfo = {
         deviceId: Settings.data.deviceId,
         username: Settings.data.username,
@@ -136,7 +116,6 @@ angular.module('proximate.services', [])
       };
 
       onEnterCallback('checkins', regionInfo);
-
       logToDom('[Prox] didEnterRegion:' + JSON.stringify(pluginResult));
     };
 
@@ -151,16 +130,13 @@ angular.module('proximate.services', [])
     };
 
     cordova.plugins.locationManager.setDelegate(delegate);
-
   };
 
   // Utility function that parses a JSON beacon list, and turns it into
   //region objects that the locationManager plugin can monitor/range
 
   var regionsFromBeacons = function(beaconListAsJSON) {
-
     var list = JSON.parse(beaconListAsJSON);
-
     var regionList = [];
 
     list.forEach(function(beacon) {
