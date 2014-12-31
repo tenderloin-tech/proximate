@@ -19,6 +19,17 @@ exports.updateDeviceId = function(email, deviceId) {
 
 // GET HELPERS
 
+exports.getBeacons = function(eventId) {
+
+  return new models.Events()
+    .query({where: {event_id: eventId}})
+    .fetch({withRelated: ['beacons'], require: true})
+    .then(function(events) {
+      return events.related('beacons');
+    });
+
+}
+
 exports.getEvents = function(participantId) {
 
   return new models.Participant()

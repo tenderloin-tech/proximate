@@ -31,6 +31,9 @@ exports.Event = bookshelf.Model.extend({
   },
   status: function() {
     return this.hasMany(EventParticipant);
+  },
+  beacons: function() {
+    this.belongsToMany(Beacon).through(beacons_events);
   }
 });
 

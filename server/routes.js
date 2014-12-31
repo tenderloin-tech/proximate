@@ -26,6 +26,23 @@ module.exports = function(app) {
   app.get('/api/devices/:deviceId/beacons', function(req, res) {
 
     var deviceId = req.params.deviceId;
+
+    helpers.getParticipant(deviceId)
+    .then(function(participant) {
+      var participantID = participant.get('id');
+      return new models.Participant()
+        .query(where:{id: participantId})
+        .fetch({withRelated:['events']}, require:true)
+    })
+    .then(function(events) {
+        // For each event ID in events
+          // Get all the beacon information
+          // Push that onto an array
+    })
+    .catch(function(error) {
+      res.status(404).send();
+    })
+
     var testRegions = [{
         uuid : 'E2C56DB5-DFFB-48D2-B060-D0F5A71096E0',
         identifier : 'Apple AirLocate E2C56DB5',
