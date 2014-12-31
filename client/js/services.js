@@ -1,5 +1,3 @@
-
-
 angular.module('proximate.services', [])
 
 .factory('PubNub', function(pubNubKeys) {
