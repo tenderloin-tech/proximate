@@ -26,4 +26,17 @@ angular.module('proximate',
       controller: 'AdminCtrl',
       url: '/admin'
     });
+})
+
+.run(function($rootScope, PubNub) {
+  $rootScope.arrivedParticipants = [];
+
+  PubNub.subscribe('checkins', function(message) {
+    if (message.eventType === 'checkinConfirm') {
+      $rootScope.arrivedParticipants.push({
+        id: message.participantId,
+        status: message.checkinStatus
+      });
+    }
+  });
 });

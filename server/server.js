@@ -14,6 +14,7 @@ pubnub.subscribe('checkins', function(message) {
         eventType: 'checkinConfirm',
         deviceId: checkinProps.deviceId,
         eventId: checkinProps.eventId,
+        participantId: checkinProps.participantId,
         checkinStatus: checkinProps.status
       });
     });

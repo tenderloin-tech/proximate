@@ -1,3 +1,5 @@
+
+
 angular.module('proximate.services', [])
 
 .factory('PubNub', function(pubNubKeys) {
@@ -64,17 +66,19 @@ angular.module('proximate.services', [])
 
 })
 
-.filter('removeArrivedParticipants', function() {
-  return function(participants, arrivedParticipants) {
+.filter('removeArrivedParticipants', function($rootScope) {
+  return function(participants) {
     var filteredResults = [];
-    participants.forEach(function(participant) {
-      for(var arrivedParticipant in arrivedParticipants) {
-        if(participant === arrivedParticipant) {
-          return;
+    if (participants) {
+      participants.forEach(function(participant) {
+        for (var i = 0; i < $rootScope.arrivedParticipants.length; i++) {
+          if (participant.id === $rootScope.arrivedParticipants[i].id) {
+            return;
+          }
         }
-      }
-      filteredResults.push(participant);
-    });
+        filteredResults.push(participant);
+      });
+    }
     return filteredResults;
   };
 })
