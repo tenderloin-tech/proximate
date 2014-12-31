@@ -28,15 +28,31 @@ angular.module('proximate',
     });
 })
 
-.run(function($rootScope, PubNub) {
-  $rootScope.arrivedParticipants = [];
+.run(function($rootScope, PubNub, Populate) {
+  $rootScope.participantData = [];
+  // Fetch the participant and event data from the server
+  Populate.getCurrentEvent(function(eventData) {
+    $rootScope.eventData = eventData;
+    Populate.getParticipants(eventData.data.id, function(participantData) {
+      $rootScope.participantData = participantData.data[0].participants;
+    });
+  });
 
+  $rootScope.arrivedParticipants = [];
+  // Listen for checkin confirmations and add these to arrivedParticipants
   PubNub.subscribe('checkins', function(message) {
     if (message.eventType === 'checkinConfirm') {
       $rootScope.arrivedParticipants.push({
         id: message.participantId,
         status: message.checkinStatus
       });
+      // Find the correct participant in participantData and update their status
+      $rootScope.$apply($rootScope.participantData.some(function(participant) {
+        if (participant.id === message.participantId) {
+          participant._pivot_status = message.checkinStatus;
+          return true;
+        }
+      }));
     }
   });
 });
