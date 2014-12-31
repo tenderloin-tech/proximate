@@ -5,20 +5,18 @@ module.exports = function(app) {
 
   /* API routes */
 
-  // Register a deviceId to a participant
-  app.post('/api/devices/register', function(req, res) {
+  // Sign a user in and register their device if needed
+  app.post('/api/signin', function(req, res) {
 
-    var username = req.body.username;
+    var email = req.body.email;
     var deviceId = req.body.deviceId;
 
-    console.log('username', username, 'deviceId', deviceId);
-
-    helpers.updateDeviceId(username, deviceId)
+    helpers.updateDeviceId(email, deviceId)
       .then(function(model) {
-        res.status(201).send('Device registered');
+        res.status(201).send(model.toJSON());
       })
       .catch(function(error) {
-        res.status(404).send('Unable to register device');
+        res.status(404).send('No user found');
       });
 
   });

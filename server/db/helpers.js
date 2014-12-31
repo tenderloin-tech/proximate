@@ -3,11 +3,12 @@ var moment = require('moment');
 
 // POST HELPERS
 
-exports.updateDeviceId = function(username, deviceId) {
+
+exports.updateDeviceId = function(email, deviceId) {
 
   return new models.Participant()
-    .query({where: {name: username}})
-    .fetch()
+    .query({where: {email: email}})
+    .fetch({require:true})
     .then(function(model) {
       model.set('device_id', deviceId);
       model.save();
