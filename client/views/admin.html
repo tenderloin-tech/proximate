@@ -1,0 +1,11 @@
+<div>
+  <h1>{{eventData.data.name}}</h1>
+  <div>
+  	<h3>Starts:</h3>
+    <h2>{{eventData.data.start_time | date:'EEEE, MMMM dd h:mm a'}}</h2>
+  </div>
+  <div ng-repeat='data in participantData'>
+  	{{data.name}}
+    {{data._pivot_status}}
+  </div>
+</div>

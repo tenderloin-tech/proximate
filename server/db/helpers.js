@@ -135,6 +135,7 @@ var checkinUser = function(deviceId, callback) {
               callback({
                 deviceId: deviceId,
                 eventId: eventId,
+                participantId: participantId,
                 status: status
               });
             });
