@@ -1,26 +1,17 @@
 <ion-view view-title="Status">
   <ion-content class="padding">
     <div class="list card">
-      <div class="item item-divider">Recent Updates</div>
-      <div class="item item-body">
-        <div>
-          There is a fire in <b>sector 3</b>
+      <div class="item item-divider">
+        <div class="event-title">
+          <h1>{{event.name}}</h1>
+          <div class="event-timestamp">starts at <b>{{event.pretty_time}}</b></div>
         </div>
       </div>
-    </div>
-    <div class="list card">
-      <div class="item item-divider">Health</div>
       <div class="item item-body">
-        <div>
-          You ate an apple today!
-        </div>
-      </div>
-    </div>
-    <div class="list card">
-      <div class="item item-divider">Upcoming</div>
-      <div class="item item-body">
-        <div>
-          You have <b>29</b> meetings on your calendar tomorrow.
+        <div class="checkin-status">
+          <div class="checkin-status-notyet" ng-show="event.status!=='ontime'&&event.status!=='late'"><i class="ion-close-round"></i> You're not yet checked in!</div>
+          <div class="checkin-status-here" ng-show="event.status==='ontime'"><i class="ion-checkmark-round"></i> You're here!</div>
+          <div class="checkin-status-late" ng-show="event.status==='late'"><i class="ion-alert-circled"></i> You're late!</div>
         </div>
       </div>
     </div>

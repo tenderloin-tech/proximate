@@ -2,7 +2,7 @@ angular.module('proximate', ['ionic',
   'proximate.controllers',
   'proximate.services'])
 
-.run(function($ionicPlatform, $localStorage, PubNub) {
+.run(function($ionicPlatform, $localStorage, PubNub, Settings) {
   // Until settings view is built, store default username and deviceID
   $localStorage.set('username', 'Valentyn Boginskey');
   $localStorage.set('deviceId', '123456789');
@@ -27,16 +27,6 @@ angular.module('proximate', ['ionic',
 
   $localStorage.set('beaconList', JSON.stringify(testRegions));
 
-  // Send fake enter region event, for testing
-  setTimeout(function() {
-    PubNub.publish('checkins', {
-      deviceId: $localStorage.get('deviceId'),
-      username: $localStorage.get('username'),
-      region: 'E2C56DB5-DFFB-48D2-B060-D0F5A71096E0',
-      eventType: 'enterRegion'
-    });
-  }, 10000);
-
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -47,6 +37,9 @@ angular.module('proximate', ['ionic',
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
+
+    Settings.updateDeviceId();
+
   });
 })
 
