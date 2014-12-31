@@ -2,7 +2,7 @@ angular.module('proximate', ['ionic',
   'proximate.controllers',
   'proximate.services'])
 
-.run(function($ionicPlatform, $localStorage, PubNub, Settings) {
+.run(function($ionicPlatform, $localStorage, $state, PubNub, Settings) {
   // Until settings view is built, store default username and deviceID
   $localStorage.set('username', 'Valentyn Boginskey');
   $localStorage.set('deviceId', '123456789');
@@ -39,6 +39,11 @@ angular.module('proximate', ['ionic',
     }
 
     Settings.updateDeviceId();
+    $localStorage.set('initialized', 'false');
+
+    if ($localStorage.get('initialized') !== 'true'){
+      $state.go('splash', {}, {reload: true});
+    }
 
   });
 })

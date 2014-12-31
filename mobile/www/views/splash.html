@@ -1,17 +1,26 @@
 <ion-view view-title="Splash">
   <ion-content class="splash">
-    <img class="logo-image" src="img/tessel_logo.png">
+    <div class="row">
+      <div class="col">
+
+      </div>
+      <div class="col">
+        <img class="logo-image" src="img/tessel_logo.png">
+      </div>
+      <div class="col">
+
+      </div>
+    </div>
     <div class="list">
-      <label class="item item-input item-floating-label">
-        <span class="input-label">email</span>
-        <input ng-model="data.email" type="email" placeholder="Please enter your email">
+      <label class="item item-input item-floating-label test">
+        <span class="input-label register">email</span>
+        <input ng-model="data.email" type="email" placeholder="Please enter your email" class="register">
       </label>
       <label class="item item-input item-floating-label">
-        <span class="input-label">password</span>
-        <input ng-model="data.password" type="password" placeholder="Please enter your password">
+        <span class="input-label register">password</span>
+        <input ng-model="data.password" type="password" placeholder="Please enter your password" class="register">
       </label>
-      <input ng-model="data.deviceId" type="text" hidden>
-      <button ng-click="login()" class="button button-block button-positive">
+      <button ng-click="register()" class="button button-block button-positive">
         Login
       </button>
     </div>

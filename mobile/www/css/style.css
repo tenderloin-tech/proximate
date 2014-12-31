@@ -30,11 +30,35 @@
 }
 
 .splash {
-	background: gray;
+	background: url('../img/snow_peak-HD.jpg');
 }
 
 .logo-image {
 	text-align: center;
 	height: 100px;
 	width: 100px;
+}
+
+.register {
+  color: #FFF !important;
+}
+
+input.register {
+  font-size: 1.3em;
+}
+
+.item ::-webkit-input-placeholder {
+   color: #edd;
+}
+
+.item :-moz-placeholder { /* Firefox 18- */
+   color: red;
+}
+
+.item ::-moz-placeholder {  /* Firefox 19+ */
+   color: red;
+}
+
+.item :-ms-input-placeholder {
+   color: red;
 }

@@ -77,7 +77,7 @@ angular.module('proximate.controllers', [])
 
 })
 
-.controller('SplashCtrl', function($scope, Settings) {
+.controller('SplashCtrl', function($scope, $state, Settings) {
 
   $scope.data = {
     username: '',
@@ -85,8 +85,13 @@ angular.module('proximate.controllers', [])
     deviceId: ''
   };
 
-  $scope.login = function() {
-    console.log('Put a function here');
+  $scope.register = function() {
+    console.log('[DEBUG] register called');
+    Settings.register($scope.data)
+      // .then(function(){
+      //   $state.go('tab.status', {}, {reload: true});
+      // });
+    $state.go('tab.status');
   };
 
 })
