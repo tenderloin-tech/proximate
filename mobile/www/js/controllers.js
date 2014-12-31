@@ -34,6 +34,9 @@ angular.module('proximate.controllers', [])
       })
       .catch(function(err) {
         console.log('getMostCurrentEvent error: ' + err);
+      })
+      .finally(function() {
+        $scope.$broadcast('scroll.refreshComplete');
       });
   };
 
@@ -54,6 +57,10 @@ angular.module('proximate.controllers', [])
         });
       }
     });
+  };
+
+  $scope.doRefresh = function() {
+    $scope.initWithEvent();
   };
 
   // Utility function that populates the pretty time field from start time
