@@ -11,7 +11,7 @@ pubnub.subscribe('checkins', function(message) {
   if (message.eventType === 'didEnterRegion') {
     helpers.checkinUser(message.deviceId)
       .then(function(checkinProps) {
-        if(checkinProps) {
+        if (checkinProps) {
           pubnub.publish('checkins', {
             eventType: 'checkinConfirm',
             deviceId: checkinProps.deviceId,
@@ -23,7 +23,7 @@ pubnub.subscribe('checkins', function(message) {
       })
       .catch(function(error) {
         console.log('Unable to checkin user', error);
-      })
+      });
   }
 });
 

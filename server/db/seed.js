@@ -32,7 +32,11 @@ exports.seedTables = function() {
     {email: 'issac_pao@sbcglobal.net', name: 'Issac Pao'},
     {email: 'mamamia1734@gmail.com', name: 'Derek Wu'},
     {email: 'dduugg@gmail.com', name: 'Douglas Eichelberger'},
-    {email: 'derek.barncard@gmail.com', name: 'Derek Barncard', device_id: 'B19A9282-3124-4A3D-A387-60B4E92F22AF'},
+    {
+      email: 'derek.barncard@gmail.com',
+      name: 'Derek Barncard',
+      device_id: 'B19A9282-3124-4A3D-A387-60B4E92F22AF'
+    },
     {email: 'christian.manuel.perez', name: 'Chris Perez'},
     {email: 'pioneerlike@gmail.com', name: 'Dennis Lin'},
     {email: 'lizport10@gmail.com', name: 'Liz Portnoy'},

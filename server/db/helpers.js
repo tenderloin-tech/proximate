@@ -93,7 +93,6 @@ exports.checkinUser = function(deviceId) {
   var status;
   var now = moment();
 
-  // Getparticipant
   // Get the participant_id from the deviceID
   return exports.getParticipant(deviceId)
 
@@ -108,7 +107,7 @@ exports.checkinUser = function(deviceId) {
       // Update the event_participant status and check-in time
       status = (eventStartTime.format('X') - now.format('X') >= 0) ? 'ontime' : 'late';
       return new models.EventParticipant({event_id: eventId, participant_id: participantId})
-        .fetch()
+        .fetch();
     })
     .then(function(model) {
       if (model && !model.get('status')) {
@@ -134,6 +133,5 @@ exports.checkinUser = function(deviceId) {
         participantId: participantId,
         status: status
       };
-    })
+    });
 };
-
