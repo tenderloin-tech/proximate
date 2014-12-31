@@ -9,16 +9,10 @@ angular.module('proximate',
   $urlRouterProvider.otherwise('/');
 
   $stateProvider
-    .state('home', {
-      templateUrl: 'views/home.html',
-      // controller: 'MainController',
-      url: '/'
-    })
-
     .state('event', {
       templateUrl: 'views/event.html',
       controller: 'EventCtrl',
-      url: '/event'
+      url: '/'
     })
 
     .state('admin', {
@@ -31,11 +25,13 @@ angular.module('proximate',
 .run(function($rootScope, PubNub, Populate) {
   $rootScope.participantData = [];
   // Fetch the participant and event data from the server
-  Populate.getCurrentEvent(function(eventData) {
+  Populate.getCurrentEvent().then(function(eventData) {
     $rootScope.eventData = eventData;
-    Populate.getParticipants(eventData.data.id, function(participantData) {
-      $rootScope.participantData = participantData.data[0].participants;
-    });
+    return Populate.getParticipants(eventData.data.id);
+  }).then(function(participantData) {
+    $rootScope.participantData = participantData.data[0].participants;
+  }).catch(function(err) {
+    console.log(err);
   });
 
   $rootScope.arrivedParticipants = [];

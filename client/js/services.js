@@ -31,29 +31,19 @@ angular.module('proximate.services', [])
 
 .factory('Populate', function($http) {
   // get event participants for a given eventID
-  var getParticipants = function(eventID, callback) {
+  var getParticipants = function(eventID) {
     var url = 'api/events/' + eventID + '/participants';
     return $http({
       method: 'GET',
       url: url,
-    }).then(function(data) {
-      // console.log('data in getParticipants', data);
-      callback(data);
-    }).catch(function(err) {
-      console.log(err);
     });
   };
 
   // get current event ID
-  var getCurrentEvent = function(callback) {
+  var getCurrentEvent = function() {
     return $http({
       method: 'GET',
       url: 'api/events/current',
-    }).then(function(data) {
-      // console.log('data in getCurrentEvent', data);
-      callback(data);
-    }).catch(function(err) {
-      console.log(err);
     });
   };
 
@@ -79,4 +69,4 @@ angular.module('proximate.services', [])
     }
     return filteredResults;
   };
-})
+});
