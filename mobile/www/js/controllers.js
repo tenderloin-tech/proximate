@@ -77,6 +77,20 @@ angular.module('proximate.controllers', [])
 
 })
 
+.controller('SplashCtrl', function($scope, Settings) {
+
+  $scope.data = {
+    username: '',
+    password: '',
+    deviceId: ''
+  };
+
+  $scope.login = function() {
+    console.log('Put a function here');
+  };
+
+})
+
 .controller('SettingsCtrl', function($scope, Beacons, PubNub, Settings) {
 
   //waits for the view to load so as to not interrupt the html/css

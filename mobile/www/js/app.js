@@ -71,6 +71,12 @@ angular.module('proximate', ['ionic',
           controller: 'SettingsCtrl'
         }
       }
+    })
+
+    .state('splash', {
+      url: '/splash',
+      templateUrl: 'views/splash.html',
+      controller: 'SplashCtrl'
     });
 
   // if none of the above states are matched, use this as the fallback

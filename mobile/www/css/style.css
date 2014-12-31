@@ -28,3 +28,13 @@
 .checkin-status-late {
   color: orange;
 }
+
+.splash {
+	background: gray;
+}
+
+.logo-image {
+	text-align: center;
+	height: 100px;
+	width: 100px;
+}

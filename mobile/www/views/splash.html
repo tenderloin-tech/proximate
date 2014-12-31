@@ -1,0 +1,19 @@
+<ion-view view-title="Splash">
+  <ion-content class="splash">
+    <img class="logo-image" src="img/tessel_logo.png">
+    <div class="list">
+      <label class="item item-input item-floating-label">
+        <span class="input-label">email</span>
+        <input ng-model="data.email" type="email" placeholder="Please enter your email">
+      </label>
+      <label class="item item-input item-floating-label">
+        <span class="input-label">password</span>
+        <input ng-model="data.password" type="password" placeholder="Please enter your password">
+      </label>
+      <input ng-model="data.deviceId" type="text" hidden>
+      <button ng-click="login()" class="button button-block button-positive">
+        Login
+      </button>
+    </div>
+  </ion-content>
+</ion-view>
