@@ -2,14 +2,14 @@ var bookshelf = require('./db/db');
 
 // Define bookshelf models
 
-var Admin = bookshelf.Model.extend({
+exports.Admin = bookshelf.Model.extend({
   tableName: 'admins',
   events: function() {
     return this.hasMany(Event);
   }
 });
 
-var Participant = bookshelf.Model.extend({
+exports.Participant = bookshelf.Model.extend({
   tableName: 'participants',
   events: function() {
     return this.belongsToMany(Event).through(EventParticipant);
@@ -19,7 +19,7 @@ var Participant = bookshelf.Model.extend({
   }
 });
 
-var Event = bookshelf.Model.extend({
+exports.Event = bookshelf.Model.extend({
   tableName: 'events',
   participants: function() {
     return this.belongsToMany(Participant)
@@ -34,7 +34,7 @@ var Event = bookshelf.Model.extend({
   }
 });
 
-var EventParticipant = bookshelf.Model.extend({
+exports.EventParticipant = bookshelf.Model.extend({
   tableName: 'events_participants',
   participant: function() {
     return this.belongsTo(Participant);
@@ -44,14 +44,14 @@ var EventParticipant = bookshelf.Model.extend({
   }
 });
 
-var Beacon = bookshelf.Model.extend({
+exports.Beacon = bookshelf.Model.extend({
   tableName: 'beacons',
   events: function() {
     return this.belongsToMany(Event).through(beacons_events);
   }
 });
 
-var BeaconEvent = bookshelf.Model.extend({
+exports.BeaconEvent = bookshelf.Model.extend({
   tableName: 'beacons_events',
   beacon: function() {
     return this.belongsTo(Beacon);
@@ -63,36 +63,22 @@ var BeaconEvent = bookshelf.Model.extend({
 
 // Define bookshelf collections
 
-var EventsParticipants = bookshelf.Collection.extend({
-  model: EventParticipant
+exports.EventsParticipants = bookshelf.Collection.extend({
+  model: exports.EventParticipant
 });
 
-var Events = bookshelf.Collection.extend({
-  model: Event
+exports.Events = bookshelf.Collection.extend({
+  model: exports.Event
 });
 
-var Beacons = bookshelf.Collection.extend({
-  model: Beacon
+exports.Beacons = bookshelf.Collection.extend({
+  model: exports.Beacon
 });
 
-var BeaconsEvents = bookshelf.Collection.extend({
-  model: BeaconEvent
+exports.BeaconsEvents = bookshelf.Collection.extend({
+  model: exports.BeaconEvent
 });
 
-var Participants = bookshelf.Collection.extend({
-  model: Participant
+exports.Participants = bookshelf.Collection.extend({
+  model: exports.Participant
 });
-
-module.exports = {
-  Admin: Admin,
-  Participant: Participant,
-  Participants: Participants,
-  Event: Event,
-  Events: Events,
-  EventParticipant: EventParticipant,
-  EventsParticipants: EventsParticipants,
-  Beacon: Beacon,
-  Beacons: Beacons,
-  BeaconsEvent: BeaconEvent,
-  BeaconsEvents: BeaconsEvents
-};

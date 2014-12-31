@@ -1,43 +1,46 @@
 var promise = require('bluebird');
 var models = require('../models');
-var helpers = require('./helpers');
 
 exports.seedTables = function() {
 
   models.Admin.forge({name: 'Pira'}).save();
 
   var participants = models.Participants.forge([
-    {name: 'John Tan', device_id: '999'},
-    {name: 'David Raleigh'},
-    {name: 'Sunny Gonnabathula'},
-    {name: 'Michael Lom'},
-    {name: 'Rene Polo'},
-    {name: 'Sebastian Tonkin'},
-    {name: 'Rustin Crandall'},
-    {name: 'Brett Leibowitz'},
-    {name: 'Alex Dajani'},
-    {name: 'Arthur Chan'},
-    {name: 'Robert Niimi'},
-    {name: 'Bernard Chu'},
-    {name: 'Nikhil Ballaney'},
-    {name: 'Judy Zaratan'},
-    {name: 'Brian Zindler'},
-    {name: 'Tim Hua'},
-    {name: 'Rick Takes'},
-    {name: 'Rachel Sison'},
-    {name: 'Anastasia Zotova'},
-    {name: 'Owen Diehl'},
-    {name: 'Valentyn Boginskey'},
-    {name: 'Avi Dunn'},
-    {name: 'Raymond Ma'},
-    {name: 'Issac Pao'},
-    {name: 'Derek Wu'},
-    {name: 'Douglas Eichelberger'},
-    {name: 'Derek Barncard', device_id: 'B19A9282-3124-4A3D-A387-60B4E92F22AF'},
-    {name: 'Christopher Trevino'},
-    {name: 'Dennis Lin'},
-    {name: 'Liz Portnoy'},
-    {name: 'Cory Asato'}
+    {email: 'tantai.john@gmail.com', name: 'John Tan', device_id: '999'},
+    {email: 'davidraleigh@gmail.com', name: 'David Raleigh'},
+    {email: 'sunny.gonna@gmail.com', name: 'Sunny Gonnabathula'},
+    {email: 'lom.michael@gmail.com', name: 'Michael Lom'},
+    {email: 'ichitopolo@gmail.com', name: 'Rene Polo'},
+    {email: 'sgtonkin@gmail.com', name: 'Sebastian Tonkin'},
+    {email: 'rustinpc@gmail.com', name: 'Rustin Crandall'},
+    {email: 'brettleibo@gmail.com', name: 'Brett Leibowitz'},
+    {email: 'xelad1@gmail.com', name: 'Alex Dajani'},
+    {email: 'arfurboy@gmail.com', name: 'Arthur Chan'},
+    {email: 'robertn702@gmail.com', name: 'Robert Niimi'},
+    {email: 'bernard.chu@yahoo.com', name: 'Bernard Chu'},
+    {email: 'ballaneyster@gmail.com', name: 'Nikhil Ballaney'},
+    {email: 'mochicat8@gmail.com', name: 'Judy Zaratan'},
+    {email: 'zindlerb@gmail.com', name: 'Brian Zindler'},
+    {email: 'tim.hua@icloud.com', name: 'Tim Hua'},
+    {email: 'rick@theparkmart.com', name: 'Rick Takes', device_id: '000'},
+    {email: 'rsison87@gmail.com', name: 'Rachel Sison'},
+    {email: 'azotova@gmail.com', name: 'Anastasia Zotova'},
+    {email: 'ow.diehl@gmail.com', name: 'Owen Diehl'},
+    {email: 'poison5151@gmail.com', name: 'Valentyn Boginskey'},
+    {email: 'avidunn@gmail.com', name: 'Avi Dunn'},
+    {email: 'raymondxma@gmail.com', name: 'Raymond Ma'},
+    {email: 'issac_pao@sbcglobal.net', name: 'Issac Pao'},
+    {email: 'mamamia1734@gmail.com', name: 'Derek Wu'},
+    {email: 'dduugg@gmail.com', name: 'Douglas Eichelberger'},
+    {
+      email: 'derek.barncard@gmail.com',
+      name: 'Derek Barncard',
+      device_id: 'B19A9282-3124-4A3D-A387-60B4E92F22AF'
+    },
+    {email: 'christian.manuel.perez', name: 'Chris Perez'},
+    {email: 'pioneerlike@gmail.com', name: 'Dennis Lin'},
+    {email: 'lizport10@gmail.com', name: 'Liz Portnoy'},
+    {email: 'czasato@gmail.com', name: 'Cory Asato'}
   ]);
 
   promise.all(participants.invoke('save')).then(function() {

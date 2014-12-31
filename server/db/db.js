@@ -37,6 +37,7 @@ if (config.resetDatabaseOnLoad) {
     return bookshelf.knex.schema.createTable('participants', function(t) {
       t.increments('id').primary();
       t.string('name');
+      t.string('email');
       t.string('device_id').unique();
     });
   })

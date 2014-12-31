@@ -9,15 +9,21 @@ var pubnub = require('./pubnub');
 // Listen for and confirm received checkins
 pubnub.subscribe('checkins', function(message) {
   if (message.eventType === 'didEnterRegion') {
-    helpers.checkinUser(message.deviceId, function(checkinProps) {
-      pubnub.publish('checkins', {
-        eventType: 'checkinConfirm',
-        deviceId: checkinProps.deviceId,
-        eventId: checkinProps.eventId,
-        participantId: checkinProps.participantId,
-        checkinStatus: checkinProps.status
+    helpers.checkinUser(message.deviceId)
+      .then(function(checkinProps) {
+        if (checkinProps) {
+          pubnub.publish('checkins', {
+            eventType: 'checkinConfirm',
+            deviceId: checkinProps.deviceId,
+            eventId: checkinProps.eventId,
+            participantId: checkinProps.participantId,
+            checkinStatus: checkinProps.status
+          });
+        }
+      })
+      .catch(function(error) {
+        console.log('Unable to checkin user', error);
       });
-    });
   }
 });
 
