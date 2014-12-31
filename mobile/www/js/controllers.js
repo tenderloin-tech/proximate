@@ -18,7 +18,7 @@ angular.module('proximate.controllers', [])
       .then(function(res) {
         console.log('Got current event: ' + JSON.stringify(res));
         $scope.event = res;
-        $scope.prettifyStartTime();
+        $scope.setPrettyStartTime();
       })
       .then(function() {
         Events.getEventCheckinStatus($scope.event.id)
@@ -45,22 +45,25 @@ angular.module('proximate.controllers', [])
       console.log(message);
 
       if (message.deviceId === Settings.data.deviceId &&
-          message.eventType === 'checkinConfirm') {
+          message.eventType === 'checkinConfirm' &&
+          message.eventId == $scope.event.id) {
         console.log('Setting status: ' + message.checkinStatus);
-        $scope.event.status = message.checkinStatus;
-        $state.go($state.current, {}, {reload: true});
+        //apply scope in callback so as to not lose reference
+        $scope.$apply(function() {
+          $scope.event.status = message.checkinStatus;
+        });
       }
     });
   };
 
   // Utility function that populates the pretty time field from start time
-  $scope.prettifyStartTime = function() {
+  $scope.setPrettyStartTime = function() {
     $scope.event.pretty_time = moment($scope.event.start_time).format('h:mm a');
   };
 
   //wait for load, then full initialize cycle
   angular.element(document).ready(function() {
-    $scope.prettifyStartTime();
+    $scope.setPrettyStartTime();
     $scope.initWithEvent();
     $scope.subscribeToCheckinStatus();
   });
