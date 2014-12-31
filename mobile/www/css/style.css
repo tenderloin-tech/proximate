@@ -1,4 +1,6 @@
-/* Empty. Add your own CSS if you like */
+[ng\:cloak], [ng-cloak], .ng-cloak {
+  display: none !important;
+}
 
 .event-timestamp {
   text-align: right;
