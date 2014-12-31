@@ -54,6 +54,14 @@ angular.module('proximate.services', [])
 
 })
 
+.filter('fromNow', function() {
+  return function(startTime, endTime) {
+    a = moment(startTime);
+    b = moment(endTime);
+    return a.diff(b, 'minutes');
+  };
+})
+
 .filter('removeArrivedParticipants', function($rootScope) {
   return function(participants) {
     var filteredResults = [];
