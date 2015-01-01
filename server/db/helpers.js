@@ -27,7 +27,7 @@ exports.getBeacons = function(eventId) {
       return events.related('beacons');
     });
 
-}
+};
 
 exports.getEvents = function(participantId) {
 
