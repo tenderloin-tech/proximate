@@ -1,7 +1,22 @@
+<div class="event">
+  <h3>{{eventData.data.name}} Begins</h3>
 </div>
-  <h1>{{clock | date:'shortTime'}}</h1>
-  <h2>{{eventData.data.start_time}} :minutes till launch<h2>
+<div class="time">
+   <h3 ng-show="timeDiffLessThanHour">
+   	<!-- {{fakeEvent2 | fromNow:clock}}</h3> -->
+   	{{eventData.data.start_time | fromNow:clock}}</h3>
+   <h3 ng-show="timeDiffMoreThanHour">{{eventData.data.start_time | date:"h:mm a"}}</h3>
 </div>
-<div ng-repeat='data in participantData | removeArrivedParticipants'>
-  {{data.name}}
+<div class="participants">
+  <h3>Have Not Checked In</h3>
+
+  <div class="status">
+    <ul>
+      <li ng-repeat="data in participantData | removeArrivedParticipants">
+       <a href="#">{{data.name}}</a>
+      </li>
+    </ul>
+  <div>
+
+
 </div>
