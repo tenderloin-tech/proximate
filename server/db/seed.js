@@ -158,8 +158,8 @@ exports.seedTables = function() {
   var generateBeaconEvents = function() {
     var results = [];
 
-    for (var i = 0; i < 3; i++) {
-      for (var j = 0; j < 10; j++) {
+    for (var i = 1; i <= 3; i++) {
+      for (var j = 1; j <= 10; j++) {
         results.push({
           event_id: j,
           beacon_id: i
