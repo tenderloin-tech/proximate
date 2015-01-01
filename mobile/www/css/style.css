@@ -10,27 +10,33 @@
 
 .checkin-status {
   font-size: 2em;
-  margin: 15px;
+  font-weight: bold;
+  line-height: 1em;
+  margin: 30px;
+}
+
+.checkin-status i {
+  font-size: 4em;
+  display: block;
 }
 
 .checkin-status i {
   margin-right: 10px;
 }
 
-.checkin-status-notyet {
-  color: red;
-}
-
-.checkin-status-here {
-  color: green;
-}
-
-.checkin-status-late {
-  color: orange;
-}
-
 .splash {
 	background: url('../img/snow_peak-HD.jpg');
+}
+
+.status {
+  background: url('../img/mntns.jpg');
+  color: #fff;
+  width: 100%;
+  text-align: center !important;
+}
+
+.status-heading {
+  color: #fff;
 }
 
 .logo-image {

@@ -82,6 +82,8 @@ angular.module('proximate.services')
     data.password = info.password;
     $localStorage.set('initialized', 'true');
 
+    //returns participant JSON or 404
+
     // return $http({
     //   method: 'POST',
     //   url: webServer.url + '/api/devices/register',
