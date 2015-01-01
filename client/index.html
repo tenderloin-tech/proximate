@@ -8,6 +8,9 @@
     <meta name="description" content="Automated attendance tracking for your space">
     <!-- CSS -->
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic' rel='stylesheet' type='text/css'>
+
     <!-- LIBS -->
     <script src="https://cdn.pubnub.com/pubnub.min.js"></script>
     <script src="lib/angular/angular.min.js"></script>
@@ -21,7 +24,19 @@
     <script src="js/services.js"></script>
   </head>
   <body ng-app="proximate">
-    <h1>Proximate</h1>
-    <div ui-view></div>
+  <div class="background"></div>
+  <div class="container">
+  <div class="leftMenu">
+    <ul class="nav">
+      <li><a href="#">Links</a></li>
+    </ul>
+  </div>
+  <div class="rightMenu">
+    <ul class="nav">
+      <li><a href="#">Other stuff</a></li>
+    </ul>
+  </div>
+  <div ui-view></div>
+  </div>
   </body>
 </html>
