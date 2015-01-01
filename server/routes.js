@@ -5,20 +5,18 @@ module.exports = function(app) {
 
   /* API routes */
 
-  // Register a deviceId to a participant
-  app.post('/api/devices/register', function(req, res) {
+  // Sign a user in and register their device if needed
+  app.post('/api/signin', function(req, res) {
 
-    var username = req.body.username;
+    var email = req.body.email;
     var deviceId = req.body.deviceId;
 
-    console.log('username', username, 'deviceId', deviceId);
-
-    helpers.updateDeviceId(username, deviceId)
+    helpers.updateDeviceId(email, deviceId)
       .then(function(model) {
-        res.status(201).send('Device registered');
+        res.status(201).send(model.toJSON());
       })
       .catch(function(error) {
-        res.status(404).send('Unable to register device');
+        res.status(404).send('No user found');
       });
 
   });
@@ -28,14 +26,27 @@ module.exports = function(app) {
   app.get('/api/devices/:deviceId/beacons', function(req, res) {
 
     var deviceId = req.params.deviceId;
-    var testRegions = [{
-        uuid : 'E2C56DB5-DFFB-48D2-B060-D0F5A71096E0',
-        identifier : 'Apple AirLocate E2C56DB5',
-        minor : 1000,
-        major : 5
-      }];
 
-    res.json(testRegions);
+    new models.Participant()
+      .query({where:{device_id: deviceId}})
+      .fetch({withRelated:'events.beacons'})
+      .then(function(model) {
+        var beacons = model.related('events')
+          .chain()
+          .map(function(event) {
+            return event.related('beacons')
+              .map(function(beacon) {
+                return JSON.stringify(beacon.pick(function(value, key) {
+                  return !(/_pivot/.test(key));
+                }));
+              });
+          })
+          .flatten()
+          .uniq()
+          .value();
+
+        res.json(beacons);
+      });
 
   });
 
