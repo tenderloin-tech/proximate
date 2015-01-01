@@ -1,18 +1,19 @@
+/* GENERAL */
+
 body {
   height: 100%;
   min-height: 100%;
-  overflow: hidden;
   background: #fff;
   font-size: 1em;
-  text-shadow: 0px 1px 5px rgba(0,0,0,0.3);
   font-family: 'Lato', sans-serif;
   zoom: 1;
-  color: #fff;
 }
 
 ul {
   list-style: none;
 }
+
+/* EVENT VIEW */
 
 .background {
   position: absolute;
@@ -30,6 +31,8 @@ ul {
 }
 
 .container {
+  text-shadow: 0px 1px 5px rgba(0,0,0,0.3);
+  color: #fff;
   position: absolute;
   top: 0;
   left: 0;
@@ -183,3 +186,50 @@ ul {
   .weather ul li {
     opacity: .8;
   }
+
+/* ADMIN VIEW */
+
+.admin {
+  position: absolute;
+  width: 100%;
+}
+
+   .admin .nav li a {
+    color: #333;
+  }
+
+  .admin h1 {
+    margin: 0;
+    padding: 0;
+  }
+
+  .admin-time {
+    margin: 0;
+    padding: 0;
+    opacity: .7;
+  }
+
+.logo {
+  position: absolute;
+  top: 2%;
+  left: 2%;
+  width: 100px;
+}
+
+.userinfo {
+  position: absolute;
+  top: 2%;
+  right: 2%;
+  width: 100px;
+  text-align: right;
+}
+
+.content {
+  width: 70%;
+  margin: 100px auto;
+}
+
+.table .username {
+  font-weight: bold;
+}
+
