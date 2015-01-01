@@ -1,9 +1,18 @@
+<div class="leftMenu">
+  <ul class="nav">
+    <li><a href="#">Links</a></li>
+  </ul>
+</div>
+<div class="rightMenu">
+  <ul class="nav">
+    <li><a href="#">Other stuff</a></li>
+  </ul>
+</div>
 <div class="event">
   <h3>{{eventData.data.name}} Begins</h3>
 </div>
 <div class="time">
    <h3 ng-show="timeDiffLessThanHour">
-   	<!-- {{fakeEvent2 | fromNow:clock}}</h3> -->
    	{{eventData.data.start_time | fromNow:clock}}</h3>
    <h3 ng-show="timeDiffMoreThanHour">{{eventData.data.start_time | date:"h:mm a"}}</h3>
 </div>
