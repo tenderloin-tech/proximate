@@ -3,7 +3,6 @@ var moment = require('moment');
 
 // POST HELPERS
 
-
 exports.updateDeviceId = function(email, deviceId) {
 
   return new models.Participant()

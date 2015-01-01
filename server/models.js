@@ -2,14 +2,14 @@ var bookshelf = require('./db/db');
 
 // Define bookshelf models
 
-exports.Admin = bookshelf.Model.extend({
+var Admin = exports.Admin = bookshelf.Model.extend({
   tableName: 'admins',
   events: function() {
     return this.hasMany(Event);
   }
 });
 
-exports.Participant = bookshelf.Model.extend({
+var Participant = exports.Participant = bookshelf.Model.extend({
   tableName: 'participants',
   events: function() {
     return this.belongsToMany(Event).through(EventParticipant);
@@ -19,7 +19,7 @@ exports.Participant = bookshelf.Model.extend({
   }
 });
 
-exports.Event = bookshelf.Model.extend({
+var Event = exports.Event = bookshelf.Model.extend({
   tableName: 'events',
   participants: function() {
     return this.belongsToMany(Participant)
@@ -33,11 +33,11 @@ exports.Event = bookshelf.Model.extend({
     return this.hasMany(EventParticipant);
   },
   beacons: function() {
-    this.belongsToMany(Beacon).through(beacons_events);
+    return this.belongsToMany(Beacon).through(BeaconEvent);
   }
 });
 
-exports.EventParticipant = bookshelf.Model.extend({
+var EventParticipant = exports.EventParticipant = bookshelf.Model.extend({
   tableName: 'events_participants',
   participant: function() {
     return this.belongsTo(Participant);
@@ -47,14 +47,14 @@ exports.EventParticipant = bookshelf.Model.extend({
   }
 });
 
-exports.Beacon = bookshelf.Model.extend({
+var Beacon = exports.Beacon = bookshelf.Model.extend({
   tableName: 'beacons',
   events: function() {
-    return this.belongsToMany(Event).through(beacons_events);
+    return this.belongsToMany(Event).through(BeaconEvent);
   }
 });
 
-exports.BeaconEvent = bookshelf.Model.extend({
+var BeaconEvent = exports.BeaconEvent = bookshelf.Model.extend({
   tableName: 'beacons_events',
   beacon: function() {
     return this.belongsTo(Beacon);
@@ -67,21 +67,21 @@ exports.BeaconEvent = bookshelf.Model.extend({
 // Define bookshelf collections
 
 exports.EventsParticipants = bookshelf.Collection.extend({
-  model: exports.EventParticipant
+  model: EventParticipant
 });
 
 exports.Events = bookshelf.Collection.extend({
-  model: exports.Event
+  model: Event
 });
 
 exports.Beacons = bookshelf.Collection.extend({
-  model: exports.Beacon
+  model: Beacon
 });
 
 exports.BeaconsEvents = bookshelf.Collection.extend({
-  model: exports.BeaconEvent
+  model: BeaconEvent
 });
 
 exports.Participants = bookshelf.Collection.extend({
-  model: exports.Participant
+  model: Participant
 });

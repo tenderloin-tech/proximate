@@ -27,30 +27,26 @@ module.exports = function(app) {
 
     var deviceId = req.params.deviceId;
 
-    helpers.getParticipant(deviceId)
-    .then(function(participant) {
-      var participantID = participant.get('id');
-      return new models.Participant()
-        .query(where:{id: participantId})
-        .fetch({withRelated:['events']}, require:true)
-    })
-    .then(function(events) {
-        // For each event ID in events
-          // Get all the beacon information
-          // Push that onto an array
-    })
-    .catch(function(error) {
-      res.status(404).send();
-    })
+    new models.Participant()
+      .query({where:{device_id: deviceId}})
+      .fetch({withRelated:'events.beacons'})
+      .then(function(model) {
+        var beacons = model.related('events')
+          .chain()
+          .map(function(event) {
+            return event.related('beacons')
+              .map(function(beacon) {
+                return JSON.stringify(beacon.pick(function(value, key) {
+                  return !(/_pivot/.test(key));
+                }));
+              });
+          })
+          .flatten()
+          .uniq()
+          .value();
 
-    var testRegions = [{
-        uuid : 'E2C56DB5-DFFB-48D2-B060-D0F5A71096E0',
-        identifier : 'Apple AirLocate E2C56DB5',
-        minor : 1000,
-        major : 5
-      }];
-
-    res.json(testRegions);
+        res.json(beacons);
+      });
 
   });
 
