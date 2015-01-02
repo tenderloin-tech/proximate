@@ -91,10 +91,10 @@ angular.module('proximate.services')
         deviceId: data.deviceId
       }
     }).then(function(res) {
-      if (res.data.name){
+      if (res.data.name) {
         $localStorage.set('username', res.data.name);
       }
-      if (res.data.id){
+      if (res.data.id) {
         $localStorage.set('userId', res.data.id);
       }
       return res.data;

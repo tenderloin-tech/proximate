@@ -29,7 +29,7 @@
 }
 
 .status {
-  background: url('../img/mntns.jpg');
+  background-color: blue;
   color: #fff;
   width: 100%;
   text-align: center !important;
