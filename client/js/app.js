@@ -2,7 +2,8 @@ angular.module('proximate',
   ['ui.router',
   'proximate.controllers',
   'proximate.services',
-  'angularMoment'
+  'angularMoment',
+  'ngAnimate'
   ])
 
 .config(function($stateProvider, $urlRouterProvider) {

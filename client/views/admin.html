@@ -16,17 +16,21 @@
       <thead>
         <tr>
           <th class="left align">Participant</th>
-          <th class="left align">Status</th>
           <th class="left align">Email</th>
+          <th class="left align">Status</th>
         </tr>
       </thead>
-
+      <tbody>
 
     <tr ng-repeat="data in participantData">
   	  	<td class="username"> {{data.name}}</td>
-  	  	<!-- <td class="mail"> {{data.email}}</td> -->
-  	  	<td class="participantStatus negative">{{data._pivot_status}}</td>
+  	  	<td class="mail">
+  	  	  GetMyRealEmail.com
+  	  		<!-- {{data.email}} -->
+  	  	</td>
+  	  	<td class="participantStatus">{{data._pivot_status}}</td>
     </tr>
+</tbody>
     </table>
   </div>
 </div>

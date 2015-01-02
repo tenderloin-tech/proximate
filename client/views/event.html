@@ -1,31 +1,36 @@
-<div class="leftMenu">
-  <ul class="nav">
-    <li><a href="#">Links</a></li>
-  </ul>
-</div>
-<div class="rightMenu">
-  <ul class="nav">
-    <li><a href="#">Other stuff</a></li>
-  </ul>
-</div>
-<div class="event">
-  <h3>{{eventData.data.name}} Begins</h3>
-</div>
-<div class="time">
-   <h3 ng-show="timeDiffLessThanHour">
-   	{{eventData.data.start_time | fromNow:clock}}</h3>
-   <h3 ng-show="timeDiffMoreThanHour">{{eventData.data.start_time | date:"h:mm a"}}</h3>
-</div>
-<div class="participants">
-  <h3>Have Not Checked In</h3>
-
-  <div class="status">
-    <ul>
-      <li ng-repeat="data in participantData | removeArrivedParticipants">
-       <a href="#">{{data.name}}</a>
-      </li>
+<div class="container">
+  <div class="background"></div>
+  <div class="leftMenu">
+    <ul class="nav">
+      <li><a href="#">Links</a></li>
     </ul>
-  <div>
+  </div>
+  <div class="rightMenu">
+    <ul class="nav">
+      <li><a href="#">Other stuff</a></li>
+    </ul>
+  </div>
+  <div class="event">
+    <h3 ng-show="timeDiffLessThanHourBefore">{{eventData.data.name}} Begins In</h3>
+    <h3 ng-show="timeDiffLessThanHourAfter">{{eventData.data.name}} StartedAt</h3>
+    <h3 ng-show="timeDiffMoreThanHourBefore">{{eventData.data.name}} Begins At</h3>
+    <h3 ng-show="timeDiffMoreThanHourAfter">{{eventData.data.name}} Started</h3>
+  </div>
+  <div class="time">
+     <h1 ng-show="timeDiffLessThanHourBefore">{{eventData.data.start_time | date:"h:mm a"}}</h1>
+     <h1 ng-show="timeDiffLessThanHourAfter">{{eventData.data.start_time | date:"h:mm a"}}</h1>
+     <h1 ng-show="timeDiffMoreThanHourBefore">{{eventData.data.start_time | fromNow:clock}}</h1>
+     <h1 ng-show="timeDiffMoreThanHourAfter">{{eventData.data.start_time | date:"h:mm a"}}</h1>
 
-
+  </div>
+  <div class="participants">
+    <div class="status">
+      <ul>
+        <li ng-repeat="data in participantData | removeArrivedParticipants" class="repeated-item">
+         <a href="#">{{data.name}}</a>
+        </li>
+      </ul>
+    </div>
+    <h3>Have Not Checked In</h3>
+  </div>
 </div>
