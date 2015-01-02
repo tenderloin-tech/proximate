@@ -2,9 +2,10 @@ var gulp = require('gulp');
 
 var jshint = require('gulp-jshint');
 var jscs = require('gulp-jscs');
+var jasmine = require('gulp-jasmine');
 
 var jsPaths = {
-  path: ['server/**/*.js', 'client/js/**/*.js', 'tessel/**/*.js', 'mobile/www/js/**/*.js']
+  path: ['server/**/*.js', 'client/js/**/*.js', 'tessel/**/*.js', 'mobile/www/js/**/*.js', 'test/**/*.js']
 };
 
 // checks js files with jshint
