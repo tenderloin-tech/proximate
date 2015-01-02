@@ -25,7 +25,7 @@
 }
 
 .splash {
-	background: url('../img/snow_peak-HD.jpg');
+  background: url('../img/snow_peak-HD.jpg');
 }
 
 .status {
@@ -40,9 +40,9 @@
 }
 
 .logo-image {
-	text-align: center;
-	height: 100px;
-	width: 100px;
+  text-align: center;
+  height: 100px;
+  width: 100px;
 }
 
 .register {
@@ -54,17 +54,17 @@ input.register {
 }
 
 .item ::-webkit-input-placeholder {
-   color: #edd;
+  color: #edd;
 }
 
 .item :-moz-placeholder { /* Firefox 18- */
-   color: red;
+  color: red;
 }
 
 .item ::-moz-placeholder {  /* Firefox 19+ */
-   color: red;
+  color: red;
 }
 
 .item :-ms-input-placeholder {
-   color: red;
+  color: red;
 }

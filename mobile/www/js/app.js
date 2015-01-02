@@ -3,9 +3,6 @@ angular.module('proximate', ['ionic',
   'proximate.services'])
 
 .run(function($ionicPlatform, $localStorage, $state, PubNub, Settings) {
-  // Until settings view is built, store default username and deviceID
-  $localStorage.set('username', 'Valentyn Boginskey');
-  //$localStorage.set('deviceId', '123456789');
 
   // Similarly, add fake region array to localStorage to simulate previous info
   var testRegions = [{
