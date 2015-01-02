@@ -1,15 +1,29 @@
 <ion-view view-title="Settings">
-  <ion-content>
+  <ion-content class="padding">
     <div class="list">
-      <label class="item item-input item-floating-label">
+      <div class="item item-divider">Your info</div>
+      <label class="item item-input">
         <span class="input-label">Name</span>
-        <input ng-model="data.username" type="text" placeholder="Please enter your name">
+        <input ng-model="data.username" type="text" disabled>
       </label>
       <label class="item item-input">
           <span class="input-label">Device ID: </span>
           <input ng-model="data.deviceId" type="text" disabled>
       </label>
-      <button ng-click="updateUsername()" class="button button-block button-positive">
+      <div class="item item-divider">Change password</div>
+      <label class="item item-input item-floating-label">
+        <span class="input-label">Current Password</span>
+        <input ng-model="data.password" type="password" placeholder="Current password">
+      </label>
+      <label class="item item-input item-floating-label">
+        <span class="input-label">New Password</span>
+        <input ng-model="data.password" type="password" placeholder="New password">
+      </label>
+      <label class="item item-input item-floating-label">
+        <span class="input-label">New Password (Confirmation)</span>
+        <input ng-model="data.passwordConf" type="password" placeholder="Current password (confirmation)">
+      </label>
+      <button ng-click="updatePassword()" class="button button-block button-positive">
         Save settings!
       </button>
     </div>

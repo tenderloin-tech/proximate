@@ -1,6 +1,6 @@
 angular.module('proximate.controllers', [])
 
-.controller('StatusCtrl', function($scope, $state, PubNub, Events, Settings) {
+.controller('StatusCtrl', function($scope, $state, PubNub, Events, Settings, Beacons) {
 
   // Initial test data
   $scope.event = {
@@ -68,12 +68,14 @@ angular.module('proximate.controllers', [])
     $scope.event.pretty_time = moment($scope.event.start_time).format('h:mm a');
   };
 
-  //wait for load, then full initialize cycle
+  // Wait for load, then full initialize cycle
   $scope.$on('$stateChangeSuccess', function() {
     $scope.setPrettyStartTime();
     $scope.initWithEvent();
     $scope.subscribeToCheckinStatus();
+    Beacons.setupTestBeacons(PubNub.publish);
   });
+
 
 })
 
@@ -96,17 +98,14 @@ angular.module('proximate.controllers', [])
 
 .controller('SettingsCtrl', function($scope, Beacons, PubNub, Settings) {
 
-  //waits for the view to load so as to not interrupt the html/css
   angular.element(document).ready(function() {
-
-    Beacons.setupTestBeacons(PubNub.publish);
 
     $scope.data = Settings.data;
 
   });
 
-  $scope.updateUsername = function() {
-    Settings.updateUsername($scope.data.username);
+  $scope.updatePassword = function() {
+    // Stem function
   };
 
 });
