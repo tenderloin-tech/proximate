@@ -2,10 +2,7 @@ angular.module('proximate', ['ionic',
   'proximate.controllers',
   'proximate.services'])
 
-.run(function($ionicPlatform, $localStorage, PubNub, Settings) {
-  // Until settings view is built, store default username and deviceID
-  $localStorage.set('username', 'Valentyn Boginskey');
-  $localStorage.set('deviceId', '123456789');
+.run(function($ionicPlatform, $localStorage, $state, PubNub, Settings) {
 
   // Similarly, add fake region array to localStorage to simulate previous info
   var testRegions = [{
@@ -40,6 +37,13 @@ angular.module('proximate', ['ionic',
 
     Settings.updateDeviceId();
 
+    // Resets initialized value (testing)
+    //$localStorage.set('initialized', 'false');
+
+    if ($localStorage.get('initialized') !== 'true') {
+      $state.go('splash', {}, {reload: true});
+    }
+
   });
 })
 
@@ -71,6 +75,12 @@ angular.module('proximate', ['ionic',
           controller: 'SettingsCtrl'
         }
       }
+    })
+
+    .state('splash', {
+      url: '/splash',
+      templateUrl: 'views/splash.html',
+      controller: 'SplashCtrl'
     });
 
   // if none of the above states are matched, use this as the fallback

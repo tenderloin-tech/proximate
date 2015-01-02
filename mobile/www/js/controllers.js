@@ -45,7 +45,7 @@ angular.module('proximate.controllers', [])
   // change status to match
   $scope.subscribeToCheckinStatus = function() {
     PubNub.subscribe('checkins', function(message) {
-      console.log(message);
+      console.log('Received PubNub message: ', JSON.stringify(message));
 
       if (message.deviceId === Settings.data.deviceId &&
           message.eventType === 'checkinConfirm' &&
@@ -69,11 +69,28 @@ angular.module('proximate.controllers', [])
   };
 
   //wait for load, then full initialize cycle
-  angular.element(document).ready(function() {
+  $scope.$on('$stateChangeSuccess', function() {
     $scope.setPrettyStartTime();
     $scope.initWithEvent();
     $scope.subscribeToCheckinStatus();
   });
+
+})
+
+.controller('SplashCtrl', function($scope, $state, Settings) {
+
+  $scope.data = {
+    username: '',
+    password: '',
+    deviceId: ''
+  };
+
+  $scope.register = function() {
+    Settings.signin($scope.data)
+      .then(function() {
+        $state.go('tab.status', {}, {reload: true});
+      });
+  };
 
 })
 

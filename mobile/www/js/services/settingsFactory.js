@@ -75,6 +75,32 @@ angular.module('proximate.services')
     });
   };
 
+  var signin = function(info) {
+    $localStorage.set('email', info.email);
+    data.email = info.email;
+    $localStorage.set('password', info.password);
+    data.password = info.password;
+    $localStorage.set('initialized', 'true');
+
+    return $http({
+      method: 'POST',
+      url: webServer.url + '/api/signin',
+      data: {
+        email: info.email,
+        password: info.password,
+        deviceId: data.deviceId
+      }
+    }).then(function(res) {
+      if (res.data.name) {
+        $localStorage.set('username', res.data.name);
+      }
+      if (res.data.id) {
+        $localStorage.set('userId', res.data.id);
+      }
+      return res.data;
+    });
+  };
+
   var checkServerStatus = function() {
     return $http({
       method: 'GET',
@@ -92,7 +118,8 @@ angular.module('proximate.services')
     updateBeaconList: updateBeaconList,
     updateUsername: updateUsername,
     updateParticipantInfo: updateParticipantInfo,
-    checkServerStatus: checkServerStatus
+    checkServerStatus: checkServerStatus,
+    signin: signin
   };
 
 });
