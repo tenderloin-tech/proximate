@@ -13,7 +13,7 @@ describe('Settings Controller - functions and values', function() {
     scope = $rootScope.$new();
     ctrl = $controller('SettingsCtrl', {
       $scope: scope
-    })
+    });
   }));
 
   it('Should have a function to set the username', function() {
