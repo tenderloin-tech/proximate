@@ -33,10 +33,12 @@ module.exports = function(config) {
       , './mobile/platforms/ios/platform_www/cordova.js'
       /*, './mobile/plugins/com.unarin.cordova.beacon/www/Delegate.js'
       , './mobile/plugins/com.unarin.cordova.beacon/www/LocationManager.js'
-      , './mobile/plugins/com.unarin.cordova.beacon/www/Regions.js' */
-      , './mobile/plugins/com.jcesarmobile.IDFVPlugin/www/IDFVPlugin.js'
+      , './mobile/plugins/com.unarin.cordova.beacon/www/Regions.js'
+      , './mobile/plugins/com.jcesarmobile.IDFVPlugin/www/IDFVPlugin.js' */
       /* Actual mobile files */
       , './mobile/www/js/*.js'
+      , './mobile/www/js/services/localstorageFactory.js'
+      , './mobile/www/js/services/*.js'
       /* Test suites */
       , './test/spec/**/*.js'
       , './test/mobile/**/*.js'
