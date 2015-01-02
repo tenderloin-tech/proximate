@@ -15,12 +15,9 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      './www/js/moment.min.js'
-      , './www/js/controllers/*.js'
-      , './www/js/models/*.js'
-      , './www/js/services.js'
+      /* add files here */
       /* Ionic dependencies */
-      , './mobile/www/lib/ionic/js/angular/angular.js'
+      './mobile/www/lib/ionic/js/angular/angular.js'
       , './mobile/www/lib/ionic/js/angular/angular-animate.js'
       , './mobile/www/lib/ionic/js/angular/angular-resource.js'
       , './mobile/www/lib/ionic/js/angular/angular-sanitize.js'
