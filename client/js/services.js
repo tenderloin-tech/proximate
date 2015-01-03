@@ -68,7 +68,6 @@ angular.module('proximate.services', [])
       $rootScope.timeDiffLessThanHourBefore = true;
     } else if (Math.abs(a.diff(b, 'minutes')) > 60 && a.diff(b, 'minutes') < 0) {
       $rootScope.timeDiffMoreThanHourAfter = true;
-      console.log('yes');
     } else {
       $rootScope.timeDiffMoreThanHourBefore = true;
     }
