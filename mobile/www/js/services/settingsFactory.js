@@ -23,6 +23,9 @@ angular.module('proximate.services')
         }, function(error) {
           console.log(error);
         });
+    } else if (ionic.Platform.isAndroid()) {
+      data.deviceId = device.uuid;
+      $localStorage.set('deviceId', data.deviceId);
     }
   };
 
