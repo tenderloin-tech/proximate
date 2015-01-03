@@ -1,11 +1,32 @@
-<div>
-  <h1>{{eventData.data.name}}</h1>
-  <div>
-  	<h3>Starts:</h3>
-    <h2>{{eventData.data.start_time | date:'EEEE, MMMM dd h:mm a'}}</h2>
+<div class="admin">
+  <div class="logo">
+    <ul class="nav">
+      <li>Proximate</li>
+    </ul>
   </div>
-  <div ng-repeat='data in participantData'>
-  	{{data.name}}
-    {{data._pivot_status}}
+  <div class="userinfo">
+    <ul class="nav">
+      <li><a href="#">Pira</a></li>
+    </ul>
+  </div>
+  <div class="content">
+    <h1>{{eventData.data.name}}</h1>
+    <p class="admin-time">{{eventData.data.start_time | date:'h:mm a, MMMM dd, yyyy'}}</p>
+    <table class="ui table sortable">
+      <thead>
+        <tr>
+          <th class="left align">Participant</th>
+          <th class="left align">Email</th>
+          <th class="left align">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="data in participantData">
+          <td class="username">{{data.name}}</td>
+          <td class="mail">{{data.email}}</td>
+          <td class="participantStatus" ng-class="{'positive': data._pivot_status === 'ontime', 'negative': data._pivot_status === 'late', 'warning': data._pivot_Status === 'null'}">{{data._pivot_status}}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>

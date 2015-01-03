@@ -54,6 +54,24 @@ angular.module('proximate.services', [])
 
 })
 
+.filter('fromNow', function($rootScope) {
+  return function(startTime, endTime) {
+    $rootScope.timeDiffLessThanHourBefore = false;
+    $rootScope.timeDiffMoreThanHourBefore = false;
+    $rootScope.timeDiffAfter = false;
+    a = moment(startTime);
+    b = moment(endTime);
+    if (Math.abs(a.diff(b, 'minutes')) <= 60 && a.diff(b, 'minutes') > 0) {
+      $rootScope.timeDiffLessThanHourBefore = true;
+    } else if (Math.abs(a.diff(b, 'minutes')) > 60 && a.diff(b, 'minutes') > 0) {
+      $rootScope.timeDiffMoreThanHourBefore = true;
+    } else {
+      $rootScope.timeDiffAfter = true;
+    }
+    return moment.duration(a - b).humanize(true);
+  };
+})
+
 .filter('removeArrivedParticipants', function($rootScope) {
   return function(participants) {
     var filteredResults = [];
