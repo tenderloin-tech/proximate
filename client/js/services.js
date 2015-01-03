@@ -56,20 +56,17 @@ angular.module('proximate.services', [])
 
 .filter('fromNow', function($rootScope) {
   return function(startTime, endTime) {
-    $rootScope.timeDiffLessThanHour = false;
-    $rootScope.timeDiffMoreThanHour = false;
+    $rootScope.timeDiffLessThanHourBefore = false;
+    $rootScope.timeDiffMoreThanHourBefore = false;
+    $rootScope.timeDiffAfter = false;
     a = moment(startTime);
     b = moment(endTime);
-    if (Math.abs(a.diff(b, 'minutes')) <= 60 && a.diff(b, 'minutes') < 0) {
-      console.log(a.diff(b, 'minutes'));
-      $rootScope.timeDiffLessThanHourAfter = true;
-    } else if (Math.abs(a.diff(b, 'minutes')) <= 60 && a.diff(b, 'minutes') > 0){
-      console.log(a.diff(b, 'minutes'));
+    if (Math.abs(a.diff(b, 'minutes')) <= 60 && a.diff(b, 'minutes') > 0) {
       $rootScope.timeDiffLessThanHourBefore = true;
-    } else if (Math.abs(a.diff(b, 'minutes')) > 60 && a.diff(b, 'minutes') < 0) {
-      $rootScope.timeDiffMoreThanHourAfter = true;
-    } else {
+    } else if (Math.abs(a.diff(b, 'minutes')) > 60 && a.diff(b, 'minutes') > 0) {
       $rootScope.timeDiffMoreThanHourBefore = true;
+    } else {
+      $rootScope.timeDiffAfter = true;
     }
     return moment.duration(a - b).humanize(true);
   };
