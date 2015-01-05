@@ -89,8 +89,12 @@ angular.module('proximate.controllers', [])
 
   $scope.register = function() {
     Settings.signin($scope.data)
-      .then(function() {
+      .then(function(res) {
+        console.log('Res at register function' + JSON.stringify(res));
         $state.go('tab.status', {}, {reload: true});
+      })
+      .catch(function(err){
+        console.log('registerCatch: ' + JSON.stringify(err));
       });
   };
 

@@ -101,6 +101,8 @@ angular.module('proximate.services')
         $localStorage.set('userId', res.data.id);
       }
       return res.data;
+    }).error(function(err) {
+      console.log('$http error catch returned: ' + err);
     });
   };
 
