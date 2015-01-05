@@ -15,4 +15,8 @@ angular.module('proximate.controllers', [])
   }, 1000);
   updateClock();
 
+})
+
+.controller('LoginCtrl', function($scope, googleKeys) {
+  angular.extend($scope, googleKeys);
 });
