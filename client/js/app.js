@@ -20,6 +20,12 @@ angular.module('proximate',
       templateUrl: 'views/admin.html',
       controller: 'AdminCtrl',
       url: '/admin'
+    })
+
+    .state('eventsSummary', {
+      templateUrl: 'views/eventsSummary.html',
+      controller: 'EventsSummaryCtrl',
+      url: '/eventsSummary'
     });
 })
 
