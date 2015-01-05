@@ -39,7 +39,7 @@ app.set('view engine', 'ejs');
 app.use(morgan('dev'));
 app.use(bodyparser.json());
 app.use(session({
-  secret: 'apsotho8hasdh97ht97ha9sudhfuh2149uhtahskjbghuopa',
+  secret: config.expressSession.secret,
   resave: false,
   saveUninitialized: false
 }));
