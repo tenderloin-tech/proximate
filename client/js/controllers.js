@@ -17,6 +17,46 @@ angular.module('proximate.controllers', [])
 
 })
 
-.controller('LoginCtrl', function($scope, googleKeys) {
-  angular.extend($scope, googleKeys);
+.controller('LoginCtrl', function($http, $scope, $state, googleKeys) {
+  $scope.signinCallback = function(authResult) {
+    if (authResult.code) {
+      // Send the code to the server
+      $http({
+        method: 'POST',
+        url: 'api/token',
+        data: {
+          code: authResult.code,
+          state: stateToken
+        },
+      }).then(function(result) {
+        console.log(result);
+        // Render admin view
+        $state.go('admin');
+      }).catch(function(err) {
+        console.log(err);
+      });
+    } else if (authResult.error) {
+      console.log('Unable to authenticate user: ', authResult.error);
+    }
+  };
+
+  $scope.renderSignIn = function() {
+    gapi.signin.render('signinButton', {
+      'callback': $scope.signinCallback,
+      'clientid': googleKeys.clientId,
+      'requestvisibleactions': 'http://schemas.google.com/AddActivity',
+      'scope': 'https://www.googleapis.com/auth/plus.login',
+      'cookiepolicy': 'single_host_origin',
+      'accesstype': 'offline'
+    });
+  };
+  // Load the G+ API
+  var po = document.createElement('script');
+  po.type = 'text/javascript';
+  po.async = true;
+  po.src = 'https://plus.google.com/js/client:plusone.js';
+  var s = document.getElementsByTagName('script')[0];
+  s.parentNode.insertBefore(po, s);
+
+  po.onload = $scope.renderSignIn;
 });

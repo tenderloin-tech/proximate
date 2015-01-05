@@ -1,4 +1,5 @@
 var crypto = require('crypto');
+var google = require('googleapis');
 
 var config = require('./config/config');
 var models = require('./models');
@@ -14,10 +15,36 @@ module.exports = function(app) {
     // Render template with token
     res.render('index', {state: stateToken});
     // Store token in session
-    req.session['state'] = stateToken;
+    req.session.state = stateToken;
   });
 
   /* API routes */
+
+  // Receive one-time Google+ authorization code
+  app.post('/api/token', function(req, res) {
+    // Confirm anti-CSRF token validity
+    if (!req.session.state || !req.body.state || req.session.state !== req.body.state) {
+      res.status(401).send('Invalid state token');
+      return;
+    }
+    // State token is valid
+    // Initialize OAuth2 client
+    var oauth2 = new google.auth.OAuth2(
+      config.google.clientId,
+      config.google.clientSecret,
+      'postmessage'
+    );
+    // Exchange one-time code for tokens
+    oauth2.getToken(req.body.code, function(err, tokens) {
+      if (!err) {
+        console.log('Received tokens!');
+        console.log(tokens);
+        oauth2.setCredentials(tokens);
+      } else {
+        console.log('Unable to exchange code for tokens: ', err);
+      }
+    });
+  });
 
   // Sign a user in and register their device if needed
   app.post('/api/signin', function(req, res) {
