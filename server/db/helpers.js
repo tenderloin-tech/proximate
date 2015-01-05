@@ -40,6 +40,17 @@ exports.getEvents = function(participantId) {
 
 };
 
+exports.getAdminName = function(adminId) {
+
+  return new models.Admin()
+    .query({where: {id: adminId}})
+    .fetch({require: true})
+    .then(function(model) {
+      return model;
+    });
+
+};
+
 exports.getEventsByAdminId = function(adminId) {
 
   return new models.Events()
