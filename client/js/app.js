@@ -40,12 +40,19 @@ angular.module('proximate',
   // Fetch the participant and event data from the server
   Populate.getCurrentEvent().then(function(eventData) {
     $rootScope.eventData = eventData;
+    console.log('event data', $rootScope.eventData);
     return Populate.getParticipants(eventData.data.id);
   }).then(function(participantData) {
     $rootScope.participantData = participantData.data[0].participants;
   }).catch(function(err) {
     console.log(err);
   });
+
+  // Fetch events data for given adminId
+  Populate.getEventsByAdminId(1).then(function(eventsData) {
+    $rootScope.eventsData = eventsData;
+    console.log('events data', $rootScope.eventsData);
+  })
 
   $rootScope.arrivedParticipants = [];
   // Listen for checkin confirmations and add these to arrivedParticipants
