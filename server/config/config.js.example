@@ -1,0 +1,17 @@
+// Usage: Copy this file to config.js and replace each value below.
+
+module.exports = {
+  mysqlConnection: {
+    host     : '',
+    user     : '',
+    password : '',
+    database : ''
+  },
+  resetDatabaseOnLoad: true,
+  pubnub: {
+    publish_key:    'Sandbox',
+    subscribe_key:  'Sandbox',
+    channel:        '',
+    user:           ''
+  }
+};

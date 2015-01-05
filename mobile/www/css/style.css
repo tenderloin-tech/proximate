@@ -1,0 +1,70 @@
+[ng\:cloak], [ng-cloak], .ng-cloak {
+  display: none !important;
+}
+
+.event-timestamp {
+  text-align: right;
+  color: gray;
+  margin-right: 30px;
+}
+
+.checkin-status {
+  font-size: 2em;
+  font-weight: bold;
+  line-height: 1em;
+  margin: 30px;
+}
+
+.checkin-status i {
+  font-size: 4em;
+  display: block;
+}
+
+.checkin-status i {
+  margin-right: 10px;
+}
+
+.splash {
+  background: url('../img/snow_peak-HD.jpg');
+}
+
+.status {
+  background-color: blue;
+  color: #fff;
+  width: 100%;
+  text-align: center !important;
+}
+
+.status-heading {
+  color: #fff;
+}
+
+.logo-image {
+  text-align: center;
+  height: 100px;
+  width: 100px;
+}
+
+.register {
+  color: #FFF !important;
+}
+
+input.register {
+  font-size: 1.3em;
+}
+
+.item ::-webkit-input-placeholder {
+  color: #edd;
+}
+
+.item :-moz-placeholder { /* Firefox 18- */
+  color: red;
+}
+
+.item ::-moz-placeholder {  /* Firefox 19+ */
+  color: red;
+}
+
+.item :-ms-input-placeholder {
+  color: red;
+}
