@@ -16,21 +16,36 @@ exports.updateDeviceId = function(email, deviceId) {
 
 };
 
-exports.createAdmin = function(email, name) {
-
-  var now = moment();
+exports.upsertAdmin = function(email, name) {
 
   return models.Admin
     .forge(
       {
         name: name,
         email: email,
-        created_at: now.format('YYYY-MM-DD HH:mm:ss')
+        created_at: moment().format('YYYY-MM-DD HH:mm:ss')
       }
     )
     .save();
 
 }
+
+exports.upsertBeacon = function(beaconInfo, beaconId) {
+
+  // Beacon exists, update it
+  if(beaconId) {
+    return new models.Beacon({id: beaconId})
+      .fetch()
+      .then(function(beacon) {
+        return beacon.save(beaconInfo);
+      });
+  }
+  // New beacon, create it
+  return models.Beacon.forge(beaconInfo).save()
+
+}
+
+
 
 // GET HELPERS
 

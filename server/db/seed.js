@@ -175,22 +175,6 @@ exports.seedTables = function() {
 
   promise.all(beaconsEvents.invoke('save')).then(function() {
 
-    helpers.createAdmin('sgtonkin@gmail.com', 'Sebastian Tonkin')
-    .then(function(admin) {
-      console.log(admin.toJSON());
-    })
-    .catch(function(error) {
-      console.log('Error creating admin', error)
-    });
-
-    helpers.createAdmin('sgtonkin@gmail.com', 'Sebastian Tonkin')
-    .then(function(admin) {
-      console.log(admin);
-    })
-    .catch(function(error) {
-      console.log('Error creating admin', error)
-    });
-
   });
 
 };

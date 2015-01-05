@@ -66,17 +66,39 @@ module.exports = function(app) {
 
   });
 
-  app.post('/api/admin/create', function(req, res) {
+  app.post('/api/admin/upsert', function(req, res) {
 
     var email = req.body.email;
     var name = req.body.name;
 
-    helpers.createAdmin('sgtonkin@gmail.com', 'Sebastian Tonkin')
+    helpers.upsertAdmin('sgtonkin@gmail.com', 'Sebastian Tonkin')
       .then(function(admin) {
         res.status(201).send(admin.toJSON());
       })
       .catch(function(error) {
         res.status(404).send('Error creating admin', error)
+      });
+
+  });
+
+  app.post('/api/beacon/upsert', function(req, res) {
+
+    var beaconInfo = {
+      admin_id: req.body.adminId,
+      uuid: req.body.uuid,
+      identifier: req.body.identifier,
+      major: req.body.major,
+      minor: req.body.minor
+    }
+
+    var beaconId = req.body.id;
+
+    helpers.upsertBeacon(beaconInfo, beaconId)
+      .then(function(beacon) {
+        res.status(201).send(beacon.toJSON());
+      })
+      .catch(function(error) {
+        res.status(404).send('Error creating beacon', error)
       });
 
   });
