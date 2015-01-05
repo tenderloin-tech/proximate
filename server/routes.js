@@ -61,7 +61,22 @@ module.exports = function(app) {
         res.status(201).send(model.toJSON());
       })
       .catch(function(error) {
-        res.status(404).send('No user found');
+        res.status(404).send('No user found', error);
+      });
+
+  });
+
+  app.post('/api/admin/create', function(req, res) {
+
+    var email = req.body.email;
+    var name = req.body.name;
+
+    helpers.createAdmin('sgtonkin@gmail.com', 'Sebastian Tonkin')
+      .then(function(admin) {
+        res.status(201).send(admin.toJSON());
+      })
+      .catch(function(error) {
+        res.status(404).send('Error creating admin', error)
       });
 
   });
@@ -105,7 +120,7 @@ module.exports = function(app) {
         res.json(model.toJSON());
       })
       .catch(function(error) {
-        res.status(404).send('Unable to fetch events for this participant');
+        res.status(404).send('Unable to fetch events for this participant ', error);
       });
 
   });
@@ -120,7 +135,7 @@ module.exports = function(app) {
       res.json(model.toJSON());
     })
     .catch(function(error) {
-      res.status(404).send('Invalid event ID');
+      res.status(404).send('Invalid event ID ', error);
     });
 
   });
@@ -133,7 +148,7 @@ module.exports = function(app) {
         res.json(model.toJSON());
       })
       .catch(function(error) {
-        res.status(404).send('Unable to fetch current event data');
+        res.status(404).send('Unable to fetch current event data ', error);
       });
 
   });
@@ -148,7 +163,7 @@ module.exports = function(app) {
         res.json(model.toJSON());
       })
       .catch(function(error) {
-        res.status(404).send('Unable to fetch admin events data');
+        res.status(404).send('Unable to fetch admin events data ', error);
       });
 
   });
@@ -163,7 +178,7 @@ module.exports = function(app) {
         res.json(model.toJSON());
       })
       .catch(function(error) {
-        res.status(404).send('Unable to fetch admin name');
+        res.status(404).send('Unable to fetch admin name ', error);
       });
   });
 
@@ -177,7 +192,7 @@ module.exports = function(app) {
         res.json(model.toJSON());
       })
       .catch(function(error) {
-        res.status(404).send('Unable to fetch participant info');
+        res.status(404).send('Unable to fetch participant info ', error);
       });
 
   });
@@ -193,7 +208,7 @@ module.exports = function(app) {
         res.json(model.toJSON());
       })
       .catch(function(error) {
-        res.status(404).send('Unable to fetch checkin status');
+        res.status(404).send('Unable to fetch checkin status ', error);
       });
 
   });

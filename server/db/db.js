@@ -31,6 +31,8 @@ if (config.resetDatabaseOnLoad) {
     return bookshelf.knex.schema.createTable('admins', function(t) {
       t.increments('id').primary();
       t.string('name');
+      t.string('email');
+      t.dateTime('created_at');
     });
   })
   .then(function() {

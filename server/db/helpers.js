@@ -16,6 +16,22 @@ exports.updateDeviceId = function(email, deviceId) {
 
 };
 
+exports.createAdmin = function(email, name) {
+
+  var now = moment();
+
+  return models.Admin
+    .forge(
+      {
+        name: name,
+        email: email,
+        created_at: now.format('YYYY-MM-DD HH:mm:ss')
+      }
+    )
+    .save();
+
+}
+
 // GET HELPERS
 
 exports.getBeacons = function(eventId) {

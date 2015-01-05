@@ -1,5 +1,6 @@
 var promise = require('bluebird');
 var models = require('../models');
+var helpers = require('./helpers');
 
 exports.seedTables = function() {
 
@@ -173,6 +174,23 @@ exports.seedTables = function() {
   var beaconsEvents = models.BeaconsEvents.forge(generateBeaconEvents());
 
   promise.all(beaconsEvents.invoke('save')).then(function() {
+
+    helpers.createAdmin('sgtonkin@gmail.com', 'Sebastian Tonkin')
+    .then(function(admin) {
+      console.log(admin.toJSON());
+    })
+    .catch(function(error) {
+      console.log('Error creating admin', error)
+    });
+
+    helpers.createAdmin('sgtonkin@gmail.com', 'Sebastian Tonkin')
+    .then(function(admin) {
+      console.log(admin);
+    })
+    .catch(function(error) {
+      console.log('Error creating admin', error)
+    });
+
   });
 
 };
