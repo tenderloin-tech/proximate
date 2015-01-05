@@ -93,6 +93,21 @@ module.exports = function(app) {
 
   });
 
+  // Get all events for a given admin ID
+  app.get('/api/admins/:adminId/events', function(req, res) {
+
+    var adminId = req.params.adminId;
+
+    helpers.getEventsByAdminId(adminId)
+      .then(function(model) {
+        res.json(model.toJSON());
+      })
+      .catch(function(error) {
+        res.status(404).send('unable to fetch admin events data');
+      });
+
+  });
+
   // Get the participant info for a given device ID
   app.get('/api/devices/:deviceId/participant', function(req, res) {
 
