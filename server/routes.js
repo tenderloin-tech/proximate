@@ -1,7 +1,21 @@
+var crypto = require('crypto');
+
+var config = require('./config/config');
 var models = require('./models');
 var helpers = require('./db/helpers');
 
 module.exports = function(app) {
+
+  /* Client routes */
+
+  app.get('/', function(req, res) {
+    // Create anti-CSRF token
+    var stateToken = crypto.randomBytes(48).toString('hex');
+    // Render template with token
+    res.render('index', {state: stateToken});
+    // Store token in session
+    req.session['state'] = stateToken;
+  });
 
   /* API routes */
 
