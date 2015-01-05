@@ -11,6 +11,8 @@
   </div>
   <div class="content">
     <h1>{{eventData.data.name}}{{eventData.data.start_time | date:' M/d/yy h:mm a'}}</h1>
+    <hr>
+    <h3>Upcoming Events</h3>
     <table class="ui table sortable">
       <thead>
         <tr>
@@ -20,7 +22,25 @@
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="data in events | CurrentEvents">
+        <tr ng-repeat="data in eventsData | CurrentEvents">
+          <td class="username">{{data.start_time | date:'M/d/yy'}}</td>
+          <td class="mail">{{data.start_time | date:'h:mm a'}}</td>
+          <td class="participantStatus">{{data.name}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <hr>
+    <h3>Past Events</h3>
+    <table class="ui table sortable">
+      <thead>
+        <tr>
+          <th class="left align">Date</th>
+          <th class="left align">Time</th>
+          <th class="left align">Event Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="data in eventsData | PastEvents">
           <td class="username">{{data.start_time | date:'M/d/yy'}}</td>
           <td class="mail">{{data.start_time | date:'h:mm a'}}</td>
           <td class="participantStatus">{{data.name}}</td>

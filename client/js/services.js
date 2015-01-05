@@ -94,17 +94,36 @@ angular.module('proximate.services', [])
   return function(events) {
     var filteredResults = [];
     var now = moment();
-    events.forEach(function(event) {
-      for (var i = 0; i < $rootScope.eventsData.length; i++) {
-        if (moment(event.start_time).diff(now) < 0) {
-          return;
+    if (events) {
+      events.forEach(function(event) {
+        for (var i = 0; i < $rootScope.eventsData.length; i++) {
+          if (moment(event.start_time).diff(now) < 0) {
+            return;
+          }
         }
-      }
-      filteredResults.push(event);
-    });
-
+        filteredResults.push(event);
+      });
+    }
     return filteredResults;
-  }
+  };
+})
+
+.filter('PastEvents', function($rootScope) {
+  return function(events) {
+    var filteredResults = [];
+    var now = moment();
+    if (events) {
+      events.forEach(function(event) {
+        for (var i = 0; i < $rootScope.eventsData.length; i++) {
+          if (moment(event.start_time).diff(now) >= 0) {
+            return;
+          }
+        }
+        filteredResults.push(event);
+      });
+    }
+    return filteredResults;
+  };
 })
 
 .filter('removeArrivedParticipants', function($rootScope) {
