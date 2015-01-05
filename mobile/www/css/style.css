@@ -1,5 +1,16 @@
+@font-face {
+  font-family: 'Lato';
+  src: url('../fonts/Lato-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 [ng\:cloak], [ng-cloak], .ng-cloak {
   display: none !important;
+}
+
+body {
+  font-family: 'Lato';
 }
 
 .event-timestamp {
@@ -26,6 +37,11 @@
 
 .splash {
   background: url('../img/snow_peak-HD.jpg');
+}
+
+.splash-error {
+  color: red;
+  font-weight: bold;
 }
 
 .status {

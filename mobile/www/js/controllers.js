@@ -1,6 +1,6 @@
 angular.module('proximate.controllers', [])
 
-.controller('StatusCtrl', function($scope, $state, PubNub, Events, Settings) {
+.controller('StatusCtrl', function($scope, $state, PubNub, Events, Settings, Beacons) {
 
   // Initial test data
   $scope.event = {
@@ -68,16 +68,21 @@ angular.module('proximate.controllers', [])
     $scope.event.pretty_time = moment($scope.event.start_time).format('h:mm a');
   };
 
-  //wait for load, then full initialize cycle
+  // Wait for load, then full initialize cycle
   $scope.$on('$stateChangeSuccess', function() {
     $scope.setPrettyStartTime();
     $scope.initWithEvent();
     $scope.subscribeToCheckinStatus();
+    Beacons.setupTestBeacons(PubNub.publish);
   });
 
 })
 
+// Controls the splash screen for user signin on mobile
+
 .controller('SplashCtrl', function($scope, $state, Settings) {
+
+  // Initialize data objects
 
   $scope.data = {
     username: '',
@@ -85,28 +90,46 @@ angular.module('proximate.controllers', [])
     deviceId: ''
   };
 
+  $scope.error = '';
+
+  // Calls the factory signin function, and takes the user to the Status view upon success,
+  // or displays an error otherwise
+
   $scope.register = function() {
     Settings.signin($scope.data)
-      .then(function() {
+      .then(function(res) {
+        $scope.error = '';
         $state.go('tab.status', {}, {reload: true});
+      })
+      .catch(function(err) {
+        $scope.logSplashError(err);
       });
+  };
+
+  $scope.logSplashError = function(err) {
+    if (err.status === 404) {
+      $scope.error = 'We couldn\'t find you in the system. Please contact your administrator.';
+    } else if (err.status === 0) {
+      $scope.error = 'Could not contact Proximate server. Please try again later.';
+    } else {
+      $scope.error = 'Unknown error: ' + JSON.stringify(err);
+    }
   };
 
 })
 
-.controller('SettingsCtrl', function($scope, Beacons, PubNub, Settings) {
+.controller('SettingsCtrl', function($scope, Settings) {
 
-  //waits for the view to load so as to not interrupt the html/css
   angular.element(document).ready(function() {
 
-    Beacons.setupTestBeacons(PubNub.publish);
-
-    $scope.data = Settings.data;
+    $scope.data = {};
+    $scope.data.username = Settings.data.username;
+    $scope.data.deviceId = Settings.data.deviceId;
 
   });
 
-  $scope.updateUsername = function() {
-    Settings.updateUsername($scope.data.username);
+  $scope.updatePassword = function() {
+    // Stem function
   };
 
 });

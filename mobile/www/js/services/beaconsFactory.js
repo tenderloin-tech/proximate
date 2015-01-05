@@ -26,6 +26,7 @@ angular.module('proximate.services')
     cordova.plugins.locationManager.requestAlwaysAuthorization();
 
     startMonitoringRegions();
+    startRangingRegions();
   };
 
   // Begins monitoring for all regions, as specified in the beacon list
@@ -80,13 +81,20 @@ angular.module('proximate.services')
     };
 
     delegate.didStartMonitoringForRegion = function(pluginResult) {
-      // console.log('didStartMonitoringForRegion:', JSON.stringify(pluginResult));
       logToDom('didStartMonitoringForRegion:' + JSON.stringify(pluginResult));
     };
 
-    delegate.didRangeBeacons = function(pluginResult) {
-      console.log('moo' + JSON.stringify(pluginResult));
-      logToDom('Accuracy: ' + JSON.stringify(pluginResult.beacons[0].accuracy));
+    delegate.didRangeBeaconsInRegion = function(pluginResult) {
+
+      var rangingInfo = {
+        deviceId: Settings.data.deviceId,
+        username: Settings.data.username,
+        beacons: pluginResult.beacons,
+        eventType: 'didRangeBeaconsInRegion'
+      };
+
+      onEnterCallback('ranging', rangingInfo);
+      logToDom('[Prox] Beacon 0 Accuracy: ' + JSON.stringify(pluginResult.beacons[0].accuracy));
     };
 
     cordova.plugins.locationManager.setDelegate(delegate);
