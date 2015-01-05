@@ -76,10 +76,13 @@ angular.module('proximate.controllers', [])
     Beacons.setupTestBeacons(PubNub.publish);
   });
 
-
 })
 
+// Controls the splash screen for user signin on mobile
+
 .controller('SplashCtrl', function($scope, $state, Settings) {
+
+  // Initialize data objects
 
   $scope.data = {
     username: '',
@@ -89,22 +92,25 @@ angular.module('proximate.controllers', [])
 
   $scope.error = '';
 
+  // Calls the factory signin function, and takes the user to the Status view upon success,
+  // or displays an error otherwise
+
   $scope.register = function() {
     Settings.signin($scope.data)
       .then(function(res) {
         $scope.error = '';
         $state.go('tab.status', {}, {reload: true});
       })
-      .catch(function(err){
+      .catch(function(err) {
         $scope.logSplashError(err);
       });
   };
 
   $scope.logSplashError = function(err) {
-    if (err.status === 404){
+    if (err.status === 404) {
       $scope.error = 'We couldn\'t find you in the system. Please contact your administrator.';
     } else if (err.status === 0) {
-      $scope.error = 'Could not contact Proximate server. Please contact your administrator, or try again later.';
+      $scope.error = 'Could not contact Proximate server. Please try again later.';
     } else {
       $scope.error = 'Unknown error: ' + JSON.stringify(err);
     }
@@ -112,11 +118,13 @@ angular.module('proximate.controllers', [])
 
 })
 
-.controller('SettingsCtrl', function($scope, Beacons, PubNub, Settings) {
+.controller('SettingsCtrl', function($scope, Settings) {
 
   angular.element(document).ready(function() {
 
-    $scope.data = Settings.data;
+    $scope.data = {};
+    $scope.data.username = Settings.data.username;
+    $scope.data.deviceId = Settings.data.deviceId;
 
   });
 

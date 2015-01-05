@@ -13,15 +13,15 @@
       <div class="item item-divider">Change password</div>
       <label class="item item-input item-floating-label">
         <span class="input-label">Current Password</span>
-        <input ng-model="data.password" type="password" placeholder="Current password">
+        <input ng-model="data.oldPassword" type="password" placeholder="Current password">
       </label>
       <label class="item item-input item-floating-label">
         <span class="input-label">New Password</span>
-        <input ng-model="data.password" type="password" placeholder="New password">
+        <input ng-model="data.newPassword" type="password" placeholder="New password">
       </label>
       <label class="item item-input item-floating-label">
         <span class="input-label">New Password (Confirmation)</span>
-        <input ng-model="data.passwordConf" type="password" placeholder="Current password (confirmation)">
+        <input ng-model="data.newPasswordConf" type="password" placeholder="New password (confirmation)">
       </label>
       <button ng-click="updatePassword()" class="button button-block button-positive">
         Save settings!

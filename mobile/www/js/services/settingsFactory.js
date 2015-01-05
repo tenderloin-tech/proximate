@@ -79,12 +79,15 @@ angular.module('proximate.services')
   };
 
   var signin = function(info) {
+    // Set user input from splash screen to localStorage
+    // then initialize Settings variables as well
     $localStorage.set('email', info.email);
     data.email = info.email;
     $localStorage.set('password', info.password);
     data.password = info.password;
     $localStorage.set('initialized', 'true');
 
+    // Signs in, and returns a promise, setting the user's username and ID on success
     return $http({
       method: 'POST',
       url: webServer.url + '/api/signin',
@@ -96,9 +99,11 @@ angular.module('proximate.services')
     }).then(function(res) {
       if (res.data.name) {
         $localStorage.set('username', res.data.name);
+        data.username = res.data.name;
       }
       if (res.data.id) {
         $localStorage.set('userId', res.data.id);
+        data.userId = res.data.id;
       }
       return res.data;
     });
