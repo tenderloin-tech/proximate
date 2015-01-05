@@ -1,5 +1,9 @@
 angular.module('proximate.controllers', [])
 
+.controller('EventsSummaryCtrl', function() {
+
+})
+
 .controller('AdminCtrl', function() {
 
 })
