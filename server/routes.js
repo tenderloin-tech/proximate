@@ -103,13 +103,13 @@ module.exports = function(app) {
         res.json(model.toJSON());
       })
       .catch(function(error) {
-        res.status(404).send('unable to fetch admin events data');
+        res.status(404).send('Unable to fetch admin events data');
       });
 
   });
 
   // Get the admin name for a given admin ID
-  app.get('/api/admins/:adminId/admin', function(req, res) {
+  app.get('/api/admins/:adminId', function(req, res) {
 
     var adminId = req.params.adminId;
 
@@ -118,7 +118,7 @@ module.exports = function(app) {
         res.json(model.toJSON());
       })
       .catch(function(error) {
-        res.status(404).send('unable to fetch admin name');
+        res.status(404).send('Unable to fetch admin name');
       });
   });
 

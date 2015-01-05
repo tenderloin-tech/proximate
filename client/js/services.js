@@ -47,6 +47,14 @@ angular.module('proximate.services', [])
     });
   };
 
+  var getAdminName = function(adminId) {
+    var url = '/api/admins/' + adminId;
+    return $http({
+      method: 'GET',
+      url: url,
+    });
+  };
+
   var getEventsByAdminId = function(adminId) {
     var url = 'api/admins/' + adminId + '/events';
     return $http({
@@ -58,6 +66,7 @@ angular.module('proximate.services', [])
   return {
     getParticipants: getParticipants,
     getCurrentEvent: getCurrentEvent,
+    getAdminName: getAdminName,
     getEventsByAdminId: getEventsByAdminId
   };
 
