@@ -25,7 +25,7 @@ angular.module('proximate',
     .state('eventsSummary', {
       templateUrl: 'views/eventsSummary.html',
       controller: 'EventsSummaryCtrl',
-      url: '/eventsSummary'
+      url: '/events-summary'
     })
 
     .state('login', {
