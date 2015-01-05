@@ -16,17 +16,19 @@ exports.updateDeviceId = function(email, deviceId) {
 
 };
 
-exports.upsertAdmin = function(email, name) {
+exports.upsertAdmin = function(adminInfo, adminId) {
 
-  return models.Admin
-    .forge(
-      {
-        name: name,
-        email: email,
-        created_at: moment().format('YYYY-MM-DD HH:mm:ss')
-      }
-    )
-    .save();
+  // Admin record exists, update it
+  if(adminId) {
+    return new models.Admin({id: adminId})
+      .fetch()
+      .then(function(admin) {
+        return admin.save(adminInfo);
+      });
+  }
+  // New admin, generate timestamp and add it
+  adminInfo.created_at = moment().format('YYYY-MM-DD HH:mm:ss');
+  return models.Admin.forge(adminInfo).save();
 
 }
 
