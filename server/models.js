@@ -6,6 +6,9 @@ var Admin = exports.Admin = bookshelf.Model.extend({
   tableName: 'admins',
   events: function() {
     return this.hasMany(Event);
+  },
+  beacons: function() {
+    return this.hasMany(Beacon);
   }
 });
 

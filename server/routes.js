@@ -20,6 +20,8 @@ module.exports = function(app) {
 
   /* API routes */
 
+  // POST ROUTES
+
   // Receive one-time Google+ authorization code
   app.post('/api/token', function(req, res) {
     // Confirm anti-CSRF token validity
@@ -104,6 +106,8 @@ module.exports = function(app) {
       });
 
   });
+
+  // GET ROUTES
 
   // Return a list of beacons associated with events
   // that belong to a certain device ID
@@ -233,6 +237,20 @@ module.exports = function(app) {
       })
       .catch(function(error) {
         res.status(404).send('Unable to fetch checkin status ', error);
+      });
+
+  });
+
+   app.get('/api/admins/:adminId/beacons', function(req, res) {
+
+    var adminId = req.params.adminId;
+
+    helpers.getAdminBeacons(adminId)
+      .then(function(beacons) {
+        res.json(beacons.toJSON());
+      })
+      .catch(function(error) {
+        res.status(404).send('Unable to fetch beacons ', error);
       });
 
   });

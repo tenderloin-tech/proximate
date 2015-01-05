@@ -62,6 +62,17 @@ exports.getBeacons = function(eventId) {
 
 };
 
+exports.getAdminBeacons = function(adminId) {
+
+  return new models.Admin()
+    .query({where: {id: adminId}})
+    .fetch({withRelated: ['beacons'], require: true})
+    .then(function(admin) {
+      return admin.related('beacons');
+    });
+
+};
+
 exports.getEvents = function(participantId) {
 
   return new models.Participant()
