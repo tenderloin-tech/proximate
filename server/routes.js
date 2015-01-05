@@ -24,7 +24,7 @@ module.exports = function(app) {
   app.post('/api/token', function(req, res) {
     // Confirm anti-CSRF token validity
     if (!req.session.state || !req.body.state || req.session.state !== req.body.state) {
-      res.status(401).send('Invalid state token');
+      res.status(401).send('Authentication error');
       return;
     }
     // State token is valid
@@ -37,11 +37,11 @@ module.exports = function(app) {
     // Exchange one-time code for tokens
     oauth2.getToken(req.body.code, function(err, tokens) {
       if (!err) {
-        console.log('Received tokens!');
-        console.log(tokens);
         oauth2.setCredentials(tokens);
+        res.status(200).send();
       } else {
         console.log('Unable to exchange code for tokens: ', err);
+        res.status(401).send('Authentication error')
       }
     });
   });
