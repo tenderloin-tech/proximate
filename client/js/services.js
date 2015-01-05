@@ -47,6 +47,14 @@ angular.module('proximate.services', [])
     });
   };
 
+  var getEventsByAdminId = function(adminId) {
+    return $http({
+      var url = 'api/admins/' + adminId + '/events';
+      method: 'GET',
+      url: url,
+    });
+  };
+
   return {
     getParticipants: getParticipants,
     getCurrentEvent: getCurrentEvent
