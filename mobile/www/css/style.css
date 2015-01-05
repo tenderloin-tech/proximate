@@ -39,6 +39,11 @@ body {
   background: url('../img/snow_peak-HD.jpg');
 }
 
+.splash-error {
+  color: red;
+  font-weight: bold;
+}
+
 .status {
   background-color: blue;
   color: #fff;

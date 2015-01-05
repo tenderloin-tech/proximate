@@ -87,15 +87,27 @@ angular.module('proximate.controllers', [])
     deviceId: ''
   };
 
+  $scope.error = '';
+
   $scope.register = function() {
     Settings.signin($scope.data)
       .then(function(res) {
-        console.log('Res at register function' + JSON.stringify(res));
+        $scope.error = '';
         $state.go('tab.status', {}, {reload: true});
       })
       .catch(function(err){
-        console.log('registerCatch: ' + JSON.stringify(err));
+        $scope.logSplashError(err);
       });
+  };
+
+  $scope.logSplashError = function(err) {
+    if (err.status === 404){
+      $scope.error = 'We couldn\'t find you in the system. Please contact your administrator.';
+    } else if (err.status === 0) {
+      $scope.error = 'Could not contact Proximate server. Please contact your administrator, or try again later.';
+    } else {
+      $scope.error = 'Unknown error: ' + JSON.stringify(err);
+    }
   };
 
 })

@@ -94,7 +94,6 @@ angular.module('proximate.services')
       };
 
       onEnterCallback('ranging', rangingInfo);
-      console.log('pluginResult from didRangeBeacons:' + JSON.stringify(pluginResult));
       logToDom('[Prox] Beacon 0 Accuracy: ' + JSON.stringify(pluginResult.beacons[0].accuracy));
     };
 
