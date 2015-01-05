@@ -1,6 +1,10 @@
 // Usage: Copy this file to config.js and replace each value below.
 
 module.exports = {
+  google: {
+    clientId: '',
+    clientSecret: ''
+  },
   mysqlConnection: {
     host     : '',
     user     : '',
@@ -9,9 +13,7 @@ module.exports = {
   },
   resetDatabaseOnLoad: true,
   pubnub: {
-    publish_key:    'Sandbox',
-    subscribe_key:  'Sandbox',
-    channel:        '',
-    user:           ''
+    publish_key:    '',
+    subscribe_key:  ''
   }
 };

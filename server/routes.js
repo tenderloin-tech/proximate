@@ -41,7 +41,7 @@ module.exports = function(app) {
         res.status(200).send();
       } else {
         console.log('Unable to exchange code for tokens: ', err);
-        res.status(401).send('Authentication error')
+        res.status(401).send('Authentication error');
       }
     });
   });

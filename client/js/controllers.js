@@ -29,7 +29,6 @@ angular.module('proximate.controllers', [])
           state: stateToken
         },
       }).then(function(result) {
-        console.log(result);
         // Render admin view
         $state.go('admin');
       }).catch(function(err) {
