@@ -20,7 +20,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="data in events">
+        <tr ng-repeat="data in events | CurrentEvents">
           <td class="username">{{data.start_time | date:'M/d/yy'}}</td>
           <td class="mail">{{data.start_time | date:'h:mm a'}}</td>
           <td class="participantStatus">{{data.name}}</td>
