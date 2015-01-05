@@ -48,6 +48,12 @@ angular.module('proximate',
     console.log(err);
   });
 
+  // Fetch admin name for a given adminId
+  Populate.getAdminName(1).then(function(adminInformation) {
+    $rootScope.adminInformation = adminInformation;
+    console.log($rootScope.adminInformation.data.name);
+  })
+
   // Fetch events data for given adminId
   Populate.getEventsByAdminId(1).then(function(eventsData) {
     $rootScope.eventsData = eventsData;
