@@ -7,15 +7,12 @@ module.exports = function(config) {
     // base path that will be used to resolve all patterns (eg. files, exclude)
     basePath: '',
 
-
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
     frameworks: ['jasmine', 'sinon'],
 
-
     // list of files / patterns to load in the browser
     files: [
-      /* add files here */
       /* Ionic dependencies */
       './mobile/www/lib/ionic/js/angular/angular.js'
       , './mobile/www/lib/ionic/js/angular/angular-animate.js'
@@ -27,8 +24,8 @@ module.exports = function(config) {
       , './mobile/www/lib/ionic/js/ionic-angular.js'
       , './node_modules/angular-mocks/angular-mocks.js'
       /* Cordova plugins */
-      , './mobile/platforms/ios/platform_www/cordova.js'
-      /*, './mobile/plugins/com.unarin.cordova.beacon/www/Delegate.js'
+      /*, './mobile/platforms/ios/platform_www/cordova.js'
+      , './mobile/plugins/com.unarin.cordova.beacon/www/Delegate.js'
       , './mobile/plugins/com.unarin.cordova.beacon/www/LocationManager.js'
       , './mobile/plugins/com.unarin.cordova.beacon/www/Regions.js'
       , './mobile/plugins/com.jcesarmobile.IDFVPlugin/www/IDFVPlugin.js' */
@@ -37,7 +34,7 @@ module.exports = function(config) {
       , './mobile/www/js/services/localstorageFactory.js'
       , './mobile/www/js/services/*.js'
       /* Test suites */
-      , './test/spec/**/*.js'
+      , './test/server/**/*.js'
       , './test/mobile/**/*.js'
     ],
 
