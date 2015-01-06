@@ -78,12 +78,38 @@ angular.module('proximate.controllers', [])
 
 })
 
-// Controls the splash screen for user signin on mobile
+.controller('UpcomingCtrl', function($scope, Events) {
 
+  //Instantiate empty events list
+  $scope.data = {
+    events: []
+  };
+
+  $scope.getUpcomingEvents = function() {
+    Events.getUpcomingEvents()
+      .then(function(events) {
+        $scope.data.events = events;
+      }).finally(function() {
+        // Re-scrolls the mobile screen on
+        // pull-to-refresh
+        $scope.$broadcast('scroll.refreshComplete');
+      });
+  };
+
+  // Pull-to-refresh functionality
+  $scope.doRefresh = function() {
+    $scope.getUpcomingEvents();
+  };
+
+  $scope.$on('$stateChangeSuccess', function() {
+    $scope.getUpcomingEvents();
+  });
+})
+
+// Controls the splash screen for user signin on mobile
 .controller('SplashCtrl', function($scope, $state, Settings) {
 
   // Initialize data objects
-
   $scope.data = {
     username: '',
     password: '',

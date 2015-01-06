@@ -46,6 +46,7 @@ angular.module('proximate.services')
 
   //initializes the username property from localStorage
   data.username = $localStorage.get('username');
+  data.userId = $localStorage.get('userId');
 
   //sets username both in localStorage and on the server
   var updateUsername = function(name) {
@@ -109,24 +110,12 @@ angular.module('proximate.services')
     });
   };
 
-  var checkServerStatus = function() {
-    return $http({
-      method: 'GET',
-      url: webServer.url + '/'
-    }).then(function(res) {
-      return res;
-    }).catch(function(err) {
-      return 'err';
-    });
-  };
-
   return {
     data: data,
     updateDeviceId: updateDeviceId,
     updateBeaconList: updateBeaconList,
     updateUsername: updateUsername,
     updateParticipantInfo: updateParticipantInfo,
-    checkServerStatus: checkServerStatus,
     signin: signin
   };
 

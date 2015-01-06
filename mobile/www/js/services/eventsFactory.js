@@ -20,8 +20,19 @@ angular.module('proximate.services')
     });
   };
 
+  var getUpcomingEvents = function() {
+    return $http({
+      method: 'GET',
+      url: webServer.url + '/api/participants/' +
+        Settings.data.userId + '/events'
+    }).then(function(res) {
+      return res.data.events;
+    });
+  };
+
   return {
     getMostCurrentEvent: getMostCurrentEvent,
-    getEventCheckinStatus: getEventCheckinStatus
+    getEventCheckinStatus: getEventCheckinStatus,
+    getUpcomingEvents: getUpcomingEvents
   };
 });

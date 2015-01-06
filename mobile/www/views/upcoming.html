@@ -1,0 +1,21 @@
+<ion-view view-title="Upcoming">
+  <ion-content class="padding upcoming">
+  <ion-refresher pulling-text="pull to refresh" on-refresh="doRefresh()">
+  </ion-refresher>
+    <div ng-show="data.events.length===0" class="no-upcoming">
+      <h2 class="status-heading">No events found!</h2>
+      <small class="status-heading">try refreshing if you expected some</small>
+    </div>
+    <div class="list">
+      <div ng-repeat="event in data.events" class="item">
+        <div class="upcoming-datetime">
+          <h3>{{event.start_time | date:'MM/dd/yyyy'}}</h3>
+          <small>{{event.start_time | date:'h:mm a'}}</small>
+        </div>
+        <div class="upcoming-content">
+          {{event.name}}
+        </div>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

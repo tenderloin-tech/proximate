@@ -44,8 +44,8 @@ body {
   font-weight: bold;
 }
 
-.status {
-  background-color: blue;
+.status, .upcoming {
+  background-color: gray;
   color: #fff;
   width: 100%;
   text-align: center !important;
@@ -74,13 +74,24 @@ input.register {
 }
 
 .item :-moz-placeholder { /* Firefox 18- */
-  color: red;
+  color: #edd;
 }
 
 .item ::-moz-placeholder {  /* Firefox 19+ */
-  color: red;
+  color: #edd;
 }
 
 .item :-ms-input-placeholder {
-  color: red;
+  color: #edd;
+}
+
+.upcoming-datetime {
+  float: left;
+}
+
+.upcoming-content {
+  float: left;
+  margin-left: 22%;
+  margin-top: 2%;
+  font-size: 2em;
 }
