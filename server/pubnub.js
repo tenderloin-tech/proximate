@@ -1,16 +1,17 @@
 var config = require('./config/config');
-var pubnub = require('pubnub').init(config.pubnub);
+var helpers = require('./db/helpers.js');
+var PubNub = require('pubnub').init(config.pubnub);
 
-module.exports = {
+var pubnub = module.exports = {
   subscribe: function(channel, callback) {
-    pubnub.subscribe({
+    PubNub.subscribe({
       channel: channel,
       callback: callback
     });
   },
 
   publish: function(channel, message) {
-    pubnub.publish({
+    PubNub.publish({
       channel: channel,
       message: message,
       callback: function(res) {
@@ -20,3 +21,24 @@ module.exports = {
     });
   }
 };
+
+// Listen for and confirm received checkins
+pubnub.subscribe('checkins', function(message) {
+  if (message.eventType === 'didEnterRegion') {
+    helpers.checkinUser(message.deviceId)
+      .then(function(checkinProps) {
+        if (checkinProps) {
+          pubnub.publish('checkins', {
+            eventType: 'checkinConfirm',
+            deviceId: checkinProps.deviceId,
+            eventId: checkinProps.eventId,
+            participantId: checkinProps.participantId,
+            checkinStatus: checkinProps.status
+          });
+        }
+      })
+      .catch(function(error) {
+        console.log('Unable to checkin user', error);
+      });
+  }
+});
