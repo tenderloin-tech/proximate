@@ -25,5 +25,6 @@
     "angular-moment": "~0.8.3",
     "semantic-ui-table": "*",
     "angular-animate": "~1.3.8"
+    "semantic-ui-menu": "~1.0.0"
   }
 }
