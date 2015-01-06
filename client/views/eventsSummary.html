@@ -19,14 +19,14 @@
       <div class="ui"></div>
     </a>
   </div>
-  <div class="content">
+  <div class="events content">
     <h1>{{eventData.data.name}}{{eventData.data.start_time | date:' M/d/yy h:mm a'}}</h1>
     <h3>
-      <a href="#">Public View</a>
-      <a href="#">Admin View</a>
+      <a href="/#/">Public View</a>
+      <a href="/#/admin">Admin View</a>
     <hr>
     <h3>Upcoming Events</h3>
-    <table class="ui table sortable">
+    <table class="ui celled table sortable">
       <thead>
         <tr>
           <th class="left align">Date</th>
@@ -44,7 +44,7 @@
     </table>
     <hr>
     <h3>Past Events</h3>
-    <table class="ui table sortable">
+    <table class="ui celled table sortable">
       <thead>
         <tr>
           <th class="left align">Date</th>
