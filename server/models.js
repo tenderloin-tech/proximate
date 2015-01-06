@@ -13,7 +13,7 @@ var Admin = exports.Admin = bookshelf.Model.extend({
   currentEvent: function() {
     return this.hasMany(Event)
     .query(function(qb) {
-      return qb.whereRaw('ABS(UNIX_TIMESTAMP() - UNIX_TIMESTAMP(events.start_time)) <= 3600')
+      return qb.whereRaw('ABS(UNIX_TIMESTAMP() - UNIX_TIMESTAMP(events.start_time)) <= 86400')
         .orderByRaw('ABS(UNIX_TIMESTAMP() - UNIX_TIMESTAMP(events.start_time)) ASC')
         .limit(1);
     });
