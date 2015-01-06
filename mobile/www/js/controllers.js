@@ -78,6 +78,32 @@ angular.module('proximate.controllers', [])
 
 })
 
+.controller('UpcomingControl', function($scope, Events) {
+
+  $scope.data = {
+    events: [{"id":1,"name":"Test Kickoff","start_time":"2014-12-28T17:00:00.000Z","admin_id":1,"_pivot_id":63,"_pivot_participant_id":3,"_pivot_event_id":1},{"id":2,"name":"Kickoff","start_time":"2014-12-29T17:00:00.000Z","admin_id":1,"_pivot_id":64,"_pivot_participant_id":3,"_pivot_event_id":2},{"id":3,"name":"Kickoff","start_time":"2014-12-30T17:00:00.000Z","admin_id":1,"_pivot_id":65,"_pivot_participant_id":3,"_pivot_event_id":3},{"id":4,"name":"Kickoff","start_time":"2015-01-02T17:00:00.000Z","admin_id":1,"_pivot_id":66,"_pivot_participant_id":3,"_pivot_event_id":4},{"id":5,"name":"Kickoff","start_time":"2015-01-03T17:00:00.000Z","admin_id":1,"_pivot_id":67,"_pivot_participant_id":3,"_pivot_event_id":5},{"id":6,"name":"Kickoff","start_time":"2015-01-05T17:00:00.000Z","admin_id":1,"_pivot_id":68,"_pivot_participant_id":3,"_pivot_event_id":6},{"id":7,"name":"Kickoff","start_time":"2015-01-06T17:00:00.000Z","admin_id":1,"_pivot_id":69,"_pivot_participant_id":3,"_pivot_event_id":7},{"id":8,"name":"Kickoff","start_time":"2015-01-07T17:00:00.000Z","admin_id":1,"_pivot_id":70,"_pivot_participant_id":3,"_pivot_event_id":8},{"id":9,"name":"Kickoff","start_time":"2015-01-08T17:00:00.000Z","admin_id":1,"_pivot_id":71,"_pivot_participant_id":3,"_pivot_event_id":9},{"id":10,"name":"Kickoff","start_time":"2015-01-09T17:00:00.000Z","admin_id":1,"_pivot_id":72,"_pivot_participant_id":3,"_pivot_event_id":10}]
+  };
+
+  // Functions stemmed for now --
+
+  $scope.getUpcomingEvents = function() {
+    Events.getUpcomingEvents()
+      .then(function(res) {
+        $scope.raw_data = res;
+      }).finally(function(res) {
+        $scope.$broadcast('scroll.refreshComplete');
+      });
+  };
+
+  $scope.doRefresh = function() {
+    $scope.getUpcomingEvents();
+  };
+
+  $scope.$on('$stateChangeSuccess', function() {
+    $scope.getUpcomingEvents();
+  });
+})
+
 // Controls the splash screen for user signin on mobile
 
 .controller('SplashCtrl', function($scope, $state, Settings) {

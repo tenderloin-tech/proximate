@@ -1,0 +1,18 @@
+<ion-view view-title="Upcoming Events">
+  <ion-content class="padding upcoming">
+  <ion-refresher pulling-text="pull to refresh" on-refresh="doRefresh()">
+  </ion-refresher>
+    <div class="list">
+      <div ng-repeat="event in data.events" class="item">
+        <div class="upcoming-datetime">
+          <h3>{{event.start_time | date:'MM/dd/yyyy'}}</h3>
+          <small>{{event.start_time | date:'h:mm a'}}</small>
+        </div>
+        <div class="upcoming-content">
+          {{event.name}}
+        </div>
+      </div>
+    </div>
+    <pre>{{raw_data}}</pre>
+  </ion-content>
+</ion-view>

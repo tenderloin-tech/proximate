@@ -67,6 +67,16 @@ angular.module('proximate', ['ionic',
       }
     })
 
+    .state('tab.upcoming', {
+      url: '/upcoming',
+      views: {
+        'upcoming': {
+          templateUrl: 'views/upcoming.html',
+          controller: 'UpcomingControl'
+        }
+      }
+    })
+
     .state('tab.settings', {
       url: '/settings',
       views: {
