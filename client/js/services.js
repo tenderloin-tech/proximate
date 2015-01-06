@@ -75,7 +75,14 @@ angular.module('proximate.services', [])
   var postNewBeacon = function(adminId, identifier, uuid, major, minor) {
     return $http({
       method: 'POST',
-      url: '/api/beacon/upsert'
+      url: '/api/beacon/upsert',
+      data: {
+        adminId: adminId,
+        identifier: identifier,
+        uuid: uuid,
+        major: major,
+        minor: minor
+      },
     });
   };
 
