@@ -1,5 +1,6 @@
 var crypto = require('crypto');
 var google = require('googleapis');
+var moment = require('moment');
 
 var config = require('./config/config');
 var models = require('./models');
@@ -70,23 +71,24 @@ module.exports = function(app) {
 
   app.post('/api/admin/upsert', function(req, res) {
 
-    var adminId = req.body.adminId;
+    var adminId = req.body.id;
+
     var adminInfo = {
       email: req.body.email,
-      name: req.body.name
+      name: req.body.name,
     };
 
-    if (adminInfo.email && adminInfo.name) {
-      helpers.upsertAdmin(adminInfo, adminId)
-        .then(function(admin) {
-          res.status(201).send(admin.toJSON());
-        })
-        .catch(function(error) {
-          res.status(404).send('Error updating admin info', error);
-        });
-    } else {
-      res.status(404).send('Invalid input data');
+    if (!adminId) {
+      adminInfo.created_at = moment().format('YYYY-MM-DD HH:mm:ss');
     }
+
+    helpers.upsert('Admin', adminInfo, adminId)
+      .then(function(admin) {
+        res.status(201).send(admin.toJSON());
+      })
+      .catch(function(error) {
+        res.status(404).send('Error updating admin info', error);
+      });
 
   });
 
@@ -101,7 +103,7 @@ module.exports = function(app) {
       minor: req.body.minor
     };
 
-    helpers.upsertBeacon(beaconInfo, beaconId)
+    helpers.upsert('Beacon', beaconInfo, beaconId)
       .then(function(beacon) {
         res.status(201).send(beacon.toJSON());
       })

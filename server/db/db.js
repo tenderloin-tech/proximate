@@ -49,7 +49,7 @@ if (config.resetDatabaseOnLoad) {
       t.string('gcal_id');
       t.text('name');
       t.text('location');
-      t.integer('recurring_event_id');
+      t.string('recurring_event_id');
       t.dateTime('start_time');
       t.integer('admin_id').notNullable();
     });

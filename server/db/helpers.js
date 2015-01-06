@@ -16,35 +16,18 @@ exports.updateDeviceId = function(email, deviceId) {
 
 };
 
-exports.upsertAdmin = function(adminInfo, adminId) {
+exports.upsert = function(model, recordInfo, recordId) {
 
   // Admin record exists, update it
-  if (adminId) {
-    return new models.Admin({id: adminId})
-      .fetch()
-      .then(function(admin) {
-        return admin.save(adminInfo);
+  if (recordId) {
+    return new models[model]({id: recordId})
+      .fetch({require: true})
+      .then(function(model) {
+        return model.save(recordInfo);
       });
   }
-  // New admin, generate timestamp and add it
-  adminInfo.created_at = moment().format('YYYY-MM-DD HH:mm:ss');
-  return models.Admin.forge(adminInfo).save();
-
-};
-
-exports.upsertBeacon = function(beaconInfo, beaconId) {
-
-  console.log(beaconInfo);
-  // Beacon exists, update it
-  if (beaconId) {
-    return new models.Beacon({id: beaconId})
-      .fetch()
-      .then(function(beacon) {
-        return beacon.save(beaconInfo);
-      });
-  }
-  // New beacon, create it
-  return models.Beacon.forge(beaconInfo).save();
+  // New record, create it
+  return models[model].forge(recordInfo).save();
 
 };
 
