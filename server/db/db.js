@@ -31,6 +31,8 @@ if (config.resetDatabaseOnLoad) {
     return bookshelf.knex.schema.createTable('admins', function(t) {
       t.increments('id').primary();
       t.string('name');
+      t.string('email');
+      t.dateTime('created_at');
     });
   })
   .then(function() {
@@ -44,7 +46,10 @@ if (config.resetDatabaseOnLoad) {
   .then(function() {
     return bookshelf.knex.schema.createTable('events', function(t) {
       t.increments('id').primary();
-      t.string('name');
+      t.string('gcal_id');
+      t.text('name');
+      t.text('location');
+      t.string('recurring_event_id');
       t.dateTime('start_time');
       t.integer('admin_id').notNullable();
     });
@@ -54,15 +59,16 @@ if (config.resetDatabaseOnLoad) {
       t.increments('id').primary();
       t.integer('event_id').notNullable();
       t.integer('participant_id').notNullable();
-      t.text('status');
+      t.string('status');
+      t.string('gcal_response_status');
       t.dateTime('checkin_time');
     });
   })
   .then(function() {
     return bookshelf.knex.schema.createTable('beacons', function(t) {
       t.increments('id').primary();
-      t.text('uuid');
-      t.text('identifier');
+      t.string('uuid');
+      t.string('identifier');
       t.integer('major');
       t.integer('minor');
       t.integer('admin_id').notNullable();

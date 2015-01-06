@@ -16,6 +16,34 @@ exports.updateDeviceId = function(email, deviceId) {
 
 };
 
+exports.upsert = function(model, recordInfo, recordId) {
+
+  // Admin record exists, update it
+  if (recordId) {
+    return new models[model]({id: recordId})
+      .fetch({require: true})
+      .then(function(model) {
+        return model.save(recordInfo);
+      });
+  }
+  // New record, create it
+  return models[model].forge(recordInfo).save();
+
+};
+
+exports.updateStatus = function(participantInfo) {
+
+  return new models.EventParticipant({
+      participant_id: participantInfo.participant_id,
+      event_id: participantInfo.event_id
+    })
+    .fetch({require:true})
+    .then(function(event_participant) {
+      return event_participant.save({status:participantInfo.status});
+    });
+
+};
+
 // GET HELPERS
 
 exports.getBeacons = function(eventId) {
@@ -25,6 +53,17 @@ exports.getBeacons = function(eventId) {
     .fetch({withRelated: ['beacons'], require: true})
     .then(function(events) {
       return events.related('beacons');
+    });
+
+};
+
+exports.getAdminBeacons = function(adminId) {
+
+  return new models.Admin()
+    .query({where: {id: adminId}})
+    .fetch({withRelated: ['beacons'], require: true})
+    .then(function(admin) {
+      return admin.related('beacons');
     });
 
 };
@@ -105,13 +144,12 @@ exports.getCheckinStatus = function(deviceId, eventId) {
 
 };
 
-exports.getCurrentEvent = function() {
+exports.getCurrentEvent = function(participantId) {
 
-  return new models.Event()
-    .query('orderByRaw', 'ABS(UNIX_TIMESTAMP() - UNIX_TIMESTAMP(start_time)) ASC')
-    .fetch({require:true})
-    .then(function(model) {
-      return model;
+  return new models.Participant({id: participantId})
+    .fetch({withRelated: 'currentEvent', require: true})
+    .then(function(participant) {
+      return participant.related('currentEvent');
     });
 
 };
@@ -132,7 +170,7 @@ exports.checkinUser = function(deviceId) {
     // Get the event_id of the closest event in time
     .then(function(model) {
       participantId = model.get('id');
-      return exports.getCurrentEvent();
+      return exports.getCurrentEvent(participantId);
     })
     .then(function(model) {
       eventId = model.get('id');

@@ -1,5 +1,6 @@
 var crypto = require('crypto');
 var google = require('googleapis');
+var moment = require('moment');
 
 var config = require('./config/config');
 var models = require('./models');
@@ -19,6 +20,8 @@ module.exports = function(app) {
   });
 
   /* API routes */
+
+  // POST ROUTES
 
   // Receive one-time Google+ authorization code
   app.post('/api/token', function(req, res) {
@@ -61,10 +64,74 @@ module.exports = function(app) {
         res.status(201).send(model.toJSON());
       })
       .catch(function(error) {
-        res.status(404).send('No user found');
+        res.status(404).send('No user found', error);
       });
 
   });
+
+  app.post('/api/admin/upsert', function(req, res) {
+
+    var adminId = req.body.id;
+
+    var adminInfo = {
+      email: req.body.email,
+      name: req.body.name,
+    };
+
+    if (!adminId) {
+      adminInfo.created_at = moment().format('YYYY-MM-DD HH:mm:ss');
+    }
+
+    helpers.upsert('Admin', adminInfo, adminId)
+      .then(function(admin) {
+        res.status(201).send(admin.toJSON());
+      })
+      .catch(function(error) {
+        res.status(404).send('Error updating admin info', error);
+      });
+
+  });
+
+  app.post('/api/beacon/upsert', function(req, res) {
+
+    var beaconId = req.body.id;
+    var beaconInfo = {
+      admin_id: req.body.adminId,
+      uuid: req.body.uuid,
+      identifier: req.body.identifier,
+      major: req.body.major,
+      minor: req.body.minor
+    };
+
+    helpers.upsert('Beacon', beaconInfo, beaconId)
+      .then(function(beacon) {
+        res.status(201).send(beacon.toJSON());
+      })
+      .catch(function(error) {
+        res.status(404).send('Error updating beacon info', error);
+      });
+
+  });
+
+  app.post('/api/participant/updateStatus', function(req, res) {
+
+    var participantInfo = {
+      participant_id: req.body.participantId,
+      event_id: req.body.eventId,
+      status: req.body.status
+    };
+
+    helpers.updateStatus(participantInfo)
+      .then(function(event_participant) {
+        res.status(201).send(event_participant.toJSON());
+      })
+      .catch(function(error) {
+        res.status(404).send('Error updating participant status', error);
+      });
+
+  });
+
+  // GET ROUTES
 
   // Return a list of beacons associated with events
   // that belong to a certain device ID
@@ -102,10 +169,10 @@ module.exports = function(app) {
 
     helpers.getEvents(participantId)
       .then(function(model) {
-        res.json(model.toJSON());
+        res.status(200).json(model.toJSON());
       })
       .catch(function(error) {
-        res.status(404).send('Unable to fetch events for this participant');
+        res.status(404).send('Unable to fetch events for this participant ', error);
       });
 
   });
@@ -117,23 +184,28 @@ module.exports = function(app) {
 
     helpers.getEventParticipants(eventId)
     .then(function(model) {
-      res.json(model.toJSON());
+      res.status(200).json(model.toJSON());
     })
     .catch(function(error) {
-      res.status(404).send('Invalid event ID');
+      res.status(404).send('Invalid event ID ', error);
     });
 
   });
 
-  // Get info for the most current event from the db
-  app.get('/api/events/current', function(req, res) {
+  // Get the event info for any events happening within 1 hour of now for a given participant
+  app.get('/api/participants/:participantId/events/current', function(req, res) {
 
-    helpers.getCurrentEvent()
-      .then(function(model) {
-        res.json(model.toJSON());
+    var participantId = req.params.participantId;
+
+    helpers.getCurrentEvent(participantId)
+      .then(function(event) {
+        if (event.length > 0) {
+          res.status(200).json(event.toJSON());
+        }
+        res.status(404).send('No current event found for this participant ');
       })
       .catch(function(error) {
-        res.status(404).send('Unable to fetch current event data');
+        res.status(404).send('No current event found for this participant ', error);
       });
 
   });
@@ -145,10 +217,10 @@ module.exports = function(app) {
 
     helpers.getEventsByAdminId(adminId)
       .then(function(model) {
-        res.json(model.toJSON());
+        res.status(200).json(model.toJSON());
       })
       .catch(function(error) {
-        res.status(404).send('Unable to fetch admin events data');
+        res.status(404).send('Unable to fetch admin events data ', error);
       });
 
   });
@@ -160,10 +232,10 @@ module.exports = function(app) {
 
     helpers.getAdminName(adminId)
       .then(function(model) {
-        res.json(model.toJSON());
+        res.status(200).json(model.toJSON());
       })
       .catch(function(error) {
-        res.status(404).send('Unable to fetch admin name');
+        res.status(404).send('Unable to fetch admin name ', error);
       });
   });
 
@@ -174,10 +246,10 @@ module.exports = function(app) {
 
     helpers.getParticipant(deviceId)
       .then(function(model) {
-        res.json(model.toJSON());
+        res.status(200).json(model.toJSON());
       })
       .catch(function(error) {
-        res.status(404).send('Unable to fetch participant info');
+        res.status(404).send('Unable to fetch participant info ', error);
       });
 
   });
@@ -190,10 +262,25 @@ module.exports = function(app) {
 
     helpers.getCheckinStatus(deviceId, eventId)
       .then(function(model) {
-        res.json(model.toJSON());
+        res.status(200).json(model.toJSON());
       })
       .catch(function(error) {
-        res.status(404).send('Unable to fetch checkin status');
+        res.status(404).send('Unable to fetch checkin status ', error);
+      });
+
+  });
+
+  // Get all the beacons for a given admin
+  app.get('/api/admins/:adminId/beacons', function(req, res) {
+
+    var adminId = req.params.adminId;
+
+    helpers.getAdminBeacons(adminId)
+      .then(function(beacons) {
+        res.status(200).json(beacons.toJSON());
+      })
+      .catch(function(error) {
+        res.status(404).send('Unable to fetch beacons ', error);
       });
 
   });
