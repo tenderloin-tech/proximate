@@ -4,7 +4,8 @@ angular.module('proximate.services')
   var getMostCurrentEvent = function() {
     return $http({
       method: 'GET',
-      url: webServer.url + '/api/events/current'
+      url: webServer.url + '/api/participants/' +
+        Settings.data.userId + '/events/current'
     }).then(function(res) {
       return res.data;
     });
