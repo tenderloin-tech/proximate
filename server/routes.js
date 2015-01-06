@@ -200,7 +200,7 @@ module.exports = function(app) {
         res.status(404).send('No current event found for this participant ');
       })
       .catch(function(error) {
-        res.status(404).send('No current event found for this participant ' + error);
+        res.status(404).send('Error fetching events for this participant ' + error);
       });
 
   });

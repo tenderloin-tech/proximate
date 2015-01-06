@@ -4,7 +4,7 @@
   "description": "Automated attendance tracking for your space",
   "main": "server.js",
   "scripts": {
-    "test": "node ./server/server.js& ./node_modules/.bin/mocha --bail --reporter nyan test/server/serverspec.js; pkill -n node;"
+    "test": "mocha test/server/serverspec.js"
   },
   "repository": {
     "type": "git",
