@@ -1,8 +1,7 @@
 var crypto = require('crypto');
-var google = require('googleapis');
 var moment = require('moment');
 
-var config = require('./config/config');
+var auth = require('./auth');
 var models = require('./models');
 var helpers = require('./db/helpers');
 
@@ -35,16 +34,12 @@ module.exports = function(app) {
       return;
     }
     // State token is valid
-    // Initialize OAuth2 client
-    var oauth2 = new google.auth.OAuth2(
-      config.google.clientId,
-      config.google.clientSecret,
-      'postmessage'
-    );
+
     // Exchange one-time code for tokens
-    oauth2.getToken(req.body.code, function(err, tokens) {
+    auth.getToken(req.body.code, function(err, tokens) {
       if (!err) {
-        oauth2.setCredentials(tokens);
+        console.log('Received tokens: ', tokens);
+        auth.setCredentials(tokens);
         res.status(200).send();
       } else {
         console.log('Unable to exchange code for tokens: ', err);
@@ -64,7 +59,7 @@ module.exports = function(app) {
         res.status(201).send(model.toJSON());
       })
       .catch(function(error) {
-        res.status(404).send('No user found', error);
+        res.status(404).send('No user found' + error);
       });
 
   });
@@ -87,7 +82,7 @@ module.exports = function(app) {
         res.status(201).send(admin.toJSON());
       })
       .catch(function(error) {
-        res.status(404).send('Error updating admin info', error);
+        res.status(404).send('Error updating admin info' + error);
       });
 
   });
@@ -108,7 +103,7 @@ module.exports = function(app) {
         res.status(201).send(beacon.toJSON());
       })
       .catch(function(error) {
-        res.status(404).send('Error updating beacon info', error);
+        res.status(404).send('Error updating beacon info' + error);
       });
 
   });
@@ -126,7 +121,7 @@ module.exports = function(app) {
         res.status(201).send(event_participant.toJSON());
       })
       .catch(function(error) {
-        res.status(404).send('Error updating participant status', error);
+        res.status(404).send('Error updating participant status' + error);
       });
 
   });
@@ -172,7 +167,7 @@ module.exports = function(app) {
         res.status(200).json(model.toJSON());
       })
       .catch(function(error) {
-        res.status(404).send('Unable to fetch events for this participant ', error);
+        res.status(404).send('Unable to fetch events for this participant ' + error);
       });
 
   });
@@ -187,7 +182,7 @@ module.exports = function(app) {
       res.status(200).json(model.toJSON());
     })
     .catch(function(error) {
-      res.status(404).send('Invalid event ID ', error);
+      res.status(404).send('Invalid event ID ' + error);
     });
 
   });
@@ -205,7 +200,7 @@ module.exports = function(app) {
         res.status(404).send('No current event found for this participant ');
       })
       .catch(function(error) {
-        res.status(404).send('No current event found for this participant ', error);
+        res.status(404).send('No current event found for this participant ' + error);
       });
 
   });
@@ -220,7 +215,7 @@ module.exports = function(app) {
         res.status(200).json(model.toJSON());
       })
       .catch(function(error) {
-        res.status(404).send('Unable to fetch admin events data ', error);
+        res.status(404).send('Unable to fetch admin events data ' + error);
       });
 
   });
@@ -235,7 +230,7 @@ module.exports = function(app) {
         res.status(200).json(model.toJSON());
       })
       .catch(function(error) {
-        res.status(404).send('Unable to fetch admin name ', error);
+        res.status(404).send('Unable to fetch admin name ' + error);
       });
   });
 
@@ -249,7 +244,7 @@ module.exports = function(app) {
         res.status(200).json(model.toJSON());
       })
       .catch(function(error) {
-        res.status(404).send('Unable to fetch participant info ', error);
+        res.status(404).send('Unable to fetch participant info ' + error);
       });
 
   });
@@ -265,7 +260,7 @@ module.exports = function(app) {
         res.status(200).json(model.toJSON());
       })
       .catch(function(error) {
-        res.status(404).send('Unable to fetch checkin status ', error);
+        res.status(404).send('Unable to fetch checkin status ' + error);
       });
 
   });
@@ -280,7 +275,7 @@ module.exports = function(app) {
         res.status(200).json(beacons.toJSON());
       })
       .catch(function(error) {
-        res.status(404).send('Unable to fetch beacons ', error);
+        res.status(404).send('Unable to fetch beacons ' + error);
       });
 
   });
