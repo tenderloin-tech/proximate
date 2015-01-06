@@ -5,17 +5,21 @@ angular.module('proximate.controllers', [])
 })
 
 .controller('BeaconsSummaryCtrl', function($scope, Populate) {
-  // get beacons for given adminID
-  $scope.beaconsData = [];
-  Populate.getBeaconsByAdminId(1).then(function(beaconData) {
-    $scope.beaconsData = beaconData.data;
-  });
 
+  $scope.beaconsData = [];
+  // get beacons for given adminID
+  $scope.getBeacons = function() {
+    Populate.getBeaconsByAdminId(1).then(function(beaconData) {
+      $scope.beaconsData = beaconData.data;
+    });
+  };
+  $scope.getBeacons();
   // post beacon data
   $scope.beaconData = {};
   $scope.postBeacons = function(user) {
-    Populate.postNewBeacon(1, user.identifier, user.uuid, user.major, user.minor);
-  }
+    Populate.postNewBeacon(1, user.identifier, user.uuid, user.major, user.minor)
+      .then($scope.getBeacons());
+  };
 })
 
 .controller('AdminCtrl', function() {

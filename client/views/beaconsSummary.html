@@ -10,7 +10,7 @@
     </ul>
   </div>
   <div class="ui vertical menu">
-    <a class="item">
+    <a class="item" href="/#/events-summary">
       Events
       <div class="ui"></div>
     </a>
@@ -21,7 +21,19 @@
   </div>
   <div class="events content">
     <h1>Input Beacon Information</h1>
-    <h3>
+    <form novalidate class="simple-form ui form">
+      Identifier:
+      <input type="text" ng-model="user.identifier" />
+      <br />
+      UUID:
+      <input type="text" ng-model="user.uuid" />
+      <br />
+      Major:
+      <input type="number" ng-model="user.major" /><br />
+      Minor:
+      <input type="number" ng-model="user.minor" /><br />
+      <input class="ui submit button" type="submit" ng-click="postBeacons(user)" value="submit" />
+    </form>
     <hr>
     <h3>My Beacons</h3>
     <table class="ui celled table sortable">

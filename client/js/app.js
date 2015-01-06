@@ -46,10 +46,8 @@ angular.module('proximate',
   // Fetch the participant and event data from the server
   Populate.getCurrentEvent(1).then(function(eventData) {
     $rootScope.eventData = eventData;
-    console.log('eventData', eventData);
     return Populate.getParticipants(eventData.data[0].id);
   }).then(function(participantData) {
-    console.log('participantData', participantData);
     $rootScope.participantData = participantData.data[0].participants;
   }).catch(function(err) {
     console.log(err);
