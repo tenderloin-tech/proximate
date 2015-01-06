@@ -4,8 +4,12 @@ angular.module('proximate.controllers', [])
 
 })
 
-.controller('BeaconsSummaryCtrl', function() {
-
+.controller('BeaconsSummaryCtrl', function($scope, Populate) {
+  $scope.beaconsData = [];
+  Populate.getBeaconsByAdminId(1).then(function(beaconData) {
+    $scope.beaconsData = beaconData.data;
+    console.log($scope.beaconsData);
+  });
 })
 
 .controller('AdminCtrl', function() {

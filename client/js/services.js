@@ -76,7 +76,8 @@ angular.module('proximate.services', [])
     getParticipants: getParticipants,
     getCurrentEvent: getCurrentEvent,
     getAdminName: getAdminName,
-    getEventsByAdminId: getEventsByAdminId
+    getEventsByAdminId: getEventsByAdminId,
+    getBeaconsByAdminId: getBeaconsByAdminId
   };
 
 })

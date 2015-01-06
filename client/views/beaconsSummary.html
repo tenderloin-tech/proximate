@@ -23,22 +23,22 @@
     <h1>Input Beacon Information</h1>
     <h3>
     <hr>
-    <h3>Upcoming Events</h3>
-    <hr>
-    <h3>Past Events</h3>
+    <h3>My Beacons</h3>
     <table class="ui celled table sortable">
       <thead>
         <tr>
-          <th class="left align">Date</th>
-          <th class="left align">Time</th>
-          <th class="left align">Event Name</th>
+          <th class="left align">Identifier</th>
+          <th class="left align">UUID</th>
+          <th class="left align">Major</th>
+          <th class="left align">Minor</th>
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="data in eventsData | PastEvents">
-          <td class="username">{{data.start_time | date:'M/d/yy'}}</td>
-          <td class="mail">{{data.start_time | date:'h:mm a'}}</td>
-          <td class="participantStatus"><a href="#">{{data.name}}</a></td>
+        <tr ng-repeat="data in beaconsData">
+          <td class="username">{{data.identifier}}</td>
+          <td class="mail">{{data.uuid}}</td>
+          <td class="participantStatus">{{data.major}}</td>
+          <td class="participantStatus">{{data.minor}}</td>
         </tr>
       </tbody>
     </table>
