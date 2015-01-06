@@ -34,7 +34,6 @@ module.exports = function(config) {
       , './mobile/www/js/services/localstorageFactory.js'
       , './mobile/www/js/services/*.js'
       /* Test suites */
-      , './test/server/**/*.js'
       , './test/mobile/**/*.js'
     ],
 
