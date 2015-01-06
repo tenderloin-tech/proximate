@@ -111,24 +111,12 @@ angular.module('proximate.services')
     });
   };
 
-  var checkServerStatus = function() {
-    return $http({
-      method: 'GET',
-      url: webServer.url + '/'
-    }).then(function(res) {
-      return res;
-    }).catch(function(err) {
-      return 'err';
-    });
-  };
-
   return {
     data: data,
     updateDeviceId: updateDeviceId,
     updateBeaconList: updateBeaconList,
     updateUsername: updateUsername,
     updateParticipantInfo: updateParticipantInfo,
-    checkServerStatus: checkServerStatus,
     signin: signin
   };
 

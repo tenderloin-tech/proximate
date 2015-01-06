@@ -72,7 +72,7 @@ angular.module('proximate', ['ionic',
       views: {
         'upcoming': {
           templateUrl: 'views/upcoming.html',
-          controller: 'UpcomingControl'
+          controller: 'UpcomingCtrl'
         }
       }
     })
