@@ -29,6 +29,14 @@ pubnub.subscribe('checkins', function(message) {
   }
 });
 
+// Cross domain functions
+var allowCrossDomain = function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,OPTIONS,DELETE');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  next();
+};
+
 var app = express();
 
 var port = process.env.PORT || 8080;
@@ -44,6 +52,7 @@ app.use(session({
   saveUninitialized: false
 }));
 app.use(express.static(__dirname + '/../client'));
+app.use(allowCrossDomain);
 
 require('./routes')(app);
 

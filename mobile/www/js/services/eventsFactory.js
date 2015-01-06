@@ -24,9 +24,9 @@ angular.module('proximate.services')
     return $http({
       method: 'GET',
       url: webServer.url + '/api/participants/' +
-        Settings.userId + '/events'
-    }).then(function() {
-      return res.data;
+        Settings.data.userId + '/events'
+    }).then(function(res) {
+      return res.data.events;
     });
   };
 

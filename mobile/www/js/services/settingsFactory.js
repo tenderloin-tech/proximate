@@ -46,6 +46,8 @@ angular.module('proximate.services')
 
   //initializes the username property from localStorage
   data.username = $localStorage.get('username');
+  data.userId = $localStorage.get('userId');
+  data.password = $localStorage.get('password');
 
   //sets username both in localStorage and on the server
   var updateUsername = function(name) {
