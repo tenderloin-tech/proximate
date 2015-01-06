@@ -23,6 +23,10 @@ module.exports = function(app) {
   // Receive one-time Google+ authorization code
   app.post('/api/token', function(req, res) {
     // Confirm anti-CSRF token validity
+    console.log('Checking CSRF state token ...');
+    console.log('Server: ', req.session.state);
+    console.log('Client: ', req.body.state);
+
     if (!req.session.state || !req.body.state || req.session.state !== req.body.state) {
       res.status(401).send('Authentication error');
       return;

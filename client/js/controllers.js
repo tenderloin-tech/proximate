@@ -35,7 +35,7 @@ angular.module('proximate.controllers', [])
         console.log(err);
       });
     } else if (authResult.error) {
-      console.log('Unable to authenticate user: ', authResult.error);
+      console.log('User not authenticated: ', authResult.error);
     }
   };
 
@@ -43,8 +43,7 @@ angular.module('proximate.controllers', [])
     gapi.signin.render('signinButton', {
       'callback': $scope.signinCallback,
       'clientid': googleKeys.clientId,
-      'requestvisibleactions': 'http://schemas.google.com/AddActivity',
-      'scope': 'https://www.googleapis.com/auth/plus.login',
+      'scope': 'profile',
       'cookiepolicy': 'single_host_origin',
       'accesstype': 'offline'
     });
