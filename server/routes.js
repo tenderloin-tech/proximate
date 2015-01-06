@@ -76,13 +76,18 @@ module.exports = function(app) {
       name: req.body.name
     }
 
-    helpers.upsertAdmin(adminInfo, adminId)
-      .then(function(admin) {
-        res.status(201).send(admin.toJSON());
-      })
-      .catch(function(error) {
-        res.status(404).send('Error updating admin info', error)
-      });
+    if(adminInfo.email && adminInfo.name) {
+      helpers.upsertAdmin(adminInfo, adminId)
+        .then(function(admin) {
+          res.status(201).send(admin.toJSON());
+        })
+        .catch(function(error) {
+          res.status(404).send('Error updating admin info', error)
+        });
+    } else {
+      res.status(404).send('Invalid input data');
+    }
+
 
   });
 
@@ -103,6 +108,24 @@ module.exports = function(app) {
       })
       .catch(function(error) {
         res.status(404).send('Error updating beacon info', error)
+      });
+
+  });
+
+  app.post('/api/participant/updateStatus', function(req, res) {
+
+    var participantInfo = {
+      participant_id: req.body.participantId,
+      event_id: req.body.eventId,
+      status: req.body.status
+    }
+
+    helpers.updateStatus(participantInfo)
+      .then(function(event_participant) {
+        res.status(201).send(event_participant.toJSON());
+      })
+      .catch(function(error) {
+        res.status(404).send('Error updating participant status', error)
       });
 
   });
@@ -145,7 +168,7 @@ module.exports = function(app) {
 
     helpers.getEvents(participantId)
       .then(function(model) {
-        res.json(model.toJSON());
+        res.status(200).json(model.toJSON());
       })
       .catch(function(error) {
         res.status(404).send('Unable to fetch events for this participant ', error);
@@ -160,7 +183,7 @@ module.exports = function(app) {
 
     helpers.getEventParticipants(eventId)
     .then(function(model) {
-      res.json(model.toJSON());
+      res.status(200).json(model.toJSON());
     })
     .catch(function(error) {
       res.status(404).send('Invalid event ID ', error);
@@ -168,15 +191,20 @@ module.exports = function(app) {
 
   });
 
-  // Get info for the most current event from the db
-  app.get('/api/events/current', function(req, res) {
+  // Get the event info for any events happening within 1 hour of now for a given participant
+  app.get('/api/participants/:participantId/events/current', function(req, res) {
 
-    helpers.getCurrentEvent()
-      .then(function(model) {
-        res.json(model.toJSON());
+    var participantId = req.params.participantId;
+
+    helpers.getCurrentEvent(participantId)
+      .then(function(event) {
+        if(event.length > 0) {
+          res.status(200).json(event.toJSON());
+        }
+        res.status(404).send('No current event found for this participant ');
       })
       .catch(function(error) {
-        res.status(404).send('Unable to fetch current event data ', error);
+        res.status(404).send('No current event found for this participant ', error);
       });
 
   });
@@ -188,7 +216,7 @@ module.exports = function(app) {
 
     helpers.getEventsByAdminId(adminId)
       .then(function(model) {
-        res.json(model.toJSON());
+        res.status(200).json(model.toJSON());
       })
       .catch(function(error) {
         res.status(404).send('Unable to fetch admin events data ', error);
@@ -203,7 +231,7 @@ module.exports = function(app) {
 
     helpers.getAdminName(adminId)
       .then(function(model) {
-        res.json(model.toJSON());
+        res.status(200).json(model.toJSON());
       })
       .catch(function(error) {
         res.status(404).send('Unable to fetch admin name ', error);
@@ -217,7 +245,7 @@ module.exports = function(app) {
 
     helpers.getParticipant(deviceId)
       .then(function(model) {
-        res.json(model.toJSON());
+        res.status(200).json(model.toJSON());
       })
       .catch(function(error) {
         res.status(404).send('Unable to fetch participant info ', error);
@@ -233,7 +261,7 @@ module.exports = function(app) {
 
     helpers.getCheckinStatus(deviceId, eventId)
       .then(function(model) {
-        res.json(model.toJSON());
+        res.status(200).json(model.toJSON());
       })
       .catch(function(error) {
         res.status(404).send('Unable to fetch checkin status ', error);
@@ -241,13 +269,14 @@ module.exports = function(app) {
 
   });
 
-   app.get('/api/admins/:adminId/beacons', function(req, res) {
+  // Get all the beacons for a given admin
+  app.get('/api/admins/:adminId/beacons', function(req, res) {
 
     var adminId = req.params.adminId;
 
     helpers.getAdminBeacons(adminId)
       .then(function(beacons) {
-        res.json(beacons.toJSON());
+        res.status(200).json(beacons.toJSON());
       })
       .catch(function(error) {
         res.status(404).send('Unable to fetch beacons ', error);

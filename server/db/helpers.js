@@ -34,6 +34,7 @@ exports.upsertAdmin = function(adminInfo, adminId) {
 
 exports.upsertBeacon = function(beaconInfo, beaconId) {
 
+  console.log(beaconInfo);
   // Beacon exists, update it
   if(beaconId) {
     return new models.Beacon({id: beaconId})
@@ -47,7 +48,18 @@ exports.upsertBeacon = function(beaconInfo, beaconId) {
 
 }
 
+exports.updateStatus = function(participantInfo) {
 
+  return new models.EventParticipant({
+      participant_id: participantInfo.participant_id,
+      event_id: participantInfo.event_id
+    })
+    .fetch({require:true})
+    .then(function(event_participant) {
+      return event_participant.save({status:participantInfo.status});
+    });
+
+}
 
 // GET HELPERS
 
@@ -149,13 +161,12 @@ exports.getCheckinStatus = function(deviceId, eventId) {
 
 };
 
-exports.getCurrentEvent = function() {
+exports.getCurrentEvent = function(participantId) {
 
-  return new models.Event()
-    .query('orderByRaw', 'ABS(UNIX_TIMESTAMP() - UNIX_TIMESTAMP(start_time)) ASC')
-    .fetch({require:true})
-    .then(function(model) {
-      return model;
+  return new models.Participant({id: participantId})
+    .fetch({withRelated: 'currentEvent', require: true})
+    .then(function(participant) {
+      return participant.related('currentEvent');
     });
 
 };
@@ -176,7 +187,7 @@ exports.checkinUser = function(deviceId) {
     // Get the event_id of the closest event in time
     .then(function(model) {
       participantId = model.get('id');
-      return exports.getCurrentEvent();
+      return exports.getCurrentEvent(participantId);
     })
     .then(function(model) {
       eventId = model.get('id');

@@ -19,7 +19,17 @@ var Participant = exports.Participant = bookshelf.Model.extend({
   },
   status: function() {
     return this.hasMany(EventParticipant);
+  },
+  currentEvent: function() {
+    return this.belongsToMany(Event)
+    .through(EventParticipant)
+    .query(function(qb) {
+      return qb.whereRaw('ABS(UNIX_TIMESTAMP() - UNIX_TIMESTAMP(events.start_time)) <= 3600')
+        .orderByRaw('ABS(UNIX_TIMESTAMP() - UNIX_TIMESTAMP(events.start_time)) ASC')
+        .limit(1);
+    })
   }
+
 });
 
 var Event = exports.Event = bookshelf.Model.extend({
