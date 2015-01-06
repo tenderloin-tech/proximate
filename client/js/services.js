@@ -40,10 +40,11 @@ angular.module('proximate.services', [])
   };
 
   // get current event ID
-  var getCurrentEvent = function() {
+  var getCurrentEvent = function(adminId) {
+    var url = '/api/admins/' + adminId + '/events/current';
     return $http({
       method: 'GET',
-      url: 'api/events/current',
+      url: url,
     });
   };
 

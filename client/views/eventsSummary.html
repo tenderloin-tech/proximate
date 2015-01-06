@@ -20,7 +20,7 @@
     </a>
   </div>
   <div class="events content">
-    <h1>{{eventData.data.name}}{{eventData.data.start_time | date:' M/d/yy h:mm a'}}</h1>
+    <h1>{{eventData.data[0].name}}{{eventData.data[0].start_time | date:' M/d/yy h:mm a'}}</h1>
     <h3>
       <a href="/#/">Public View</a>
       <a href="/#/admin">Admin View</a>

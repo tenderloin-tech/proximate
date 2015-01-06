@@ -38,10 +38,12 @@ angular.module('proximate',
 .run(function($rootScope, PubNub, Populate) {
   $rootScope.participantData = [];
   // Fetch the participant and event data from the server
-  Populate.getCurrentEvent().then(function(eventData) {
+  Populate.getCurrentEvent(1).then(function(eventData) {
     $rootScope.eventData = eventData;
-    return Populate.getParticipants(eventData.data.id);
+    console.log('eventData', eventData);
+    return Populate.getParticipants(eventData.data[0].id);
   }).then(function(participantData) {
+    console.log('participantData', participantData);
     $rootScope.participantData = participantData.data[0].participants;
   }).catch(function(err) {
     console.log(err);
