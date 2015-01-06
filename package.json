@@ -4,7 +4,7 @@
   "description": "Automated attendance tracking for your space",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node ./server/server.js& ./node_modules/.bin/mocha --bail --reporter nyan test/server/serverspec.js; pkill -n node;"
   },
   "repository": {
     "type": "git",
@@ -42,6 +42,7 @@
     "moment": "^2.8.4",
     "morgan": "^1.5.0",
     "mysql": "^2.5.4",
-    "pubnub": "^3.7.5"
+    "pubnub": "^3.7.5",
+    "request": "^2.51.0"
   }
 }
