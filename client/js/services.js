@@ -64,6 +64,14 @@ angular.module('proximate.services', [])
     });
   };
 
+  var getBeaconsByAdminId = function(adminId) {
+    var url = '/api/admins/' + adminId + '/beacons';
+    return $http({
+      method: 'GET',
+      url: url
+    });
+  };
+
   return {
     getParticipants: getParticipants,
     getCurrentEvent: getCurrentEvent,
