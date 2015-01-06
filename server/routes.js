@@ -1,9 +1,54 @@
+var crypto = require('crypto');
+var google = require('googleapis');
+
+var config = require('./config/config');
 var models = require('./models');
 var helpers = require('./db/helpers');
 
 module.exports = function(app) {
 
+  /* Client routes */
+
+  app.get('/', function(req, res) {
+    // Create anti-CSRF token
+    var stateToken = crypto.randomBytes(48).toString('hex');
+    // Render template with token
+    res.render('index', {state: stateToken});
+    // Store token in session
+    req.session.state = stateToken;
+  });
+
   /* API routes */
+
+  // Receive one-time Google+ authorization code
+  app.post('/api/token', function(req, res) {
+    // Confirm anti-CSRF token validity
+    console.log('Checking CSRF state token ...');
+    console.log('Server: ', req.session.state);
+    console.log('Client: ', req.body.state);
+
+    if (!req.session.state || !req.body.state || req.session.state !== req.body.state) {
+      res.status(401).send('Authentication error');
+      return;
+    }
+    // State token is valid
+    // Initialize OAuth2 client
+    var oauth2 = new google.auth.OAuth2(
+      config.google.clientId,
+      config.google.clientSecret,
+      'postmessage'
+    );
+    // Exchange one-time code for tokens
+    oauth2.getToken(req.body.code, function(err, tokens) {
+      if (!err) {
+        oauth2.setCredentials(tokens);
+        res.status(200).send();
+      } else {
+        console.log('Unable to exchange code for tokens: ', err);
+        res.status(401).send('Authentication error');
+      }
+    });
+  });
 
   // Sign a user in and register their device if needed
   app.post('/api/signin', function(req, res) {

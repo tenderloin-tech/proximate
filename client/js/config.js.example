@@ -5,4 +5,8 @@ angular.module('proximate')
 .constant('pubNubKeys', {
   sub: 'PUB_NUB_SUB_KEY',
   pub: 'PUB_NUB_PUB_KEY'
+})
+
+.constant('googleKeys', {
+  clientId: 'GOOGLE_CLIENT_ID'
 });
