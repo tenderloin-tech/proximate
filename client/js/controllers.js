@@ -4,6 +4,10 @@ angular.module('proximate.controllers', [])
 
 })
 
+.controller('BeaconsSummaryCtrl', function() {
+
+})
+
 .controller('AdminCtrl', function() {
 
 })

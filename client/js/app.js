@@ -28,6 +28,12 @@ angular.module('proximate',
       url: '/events-summary'
     })
 
+    .state('beaconsSummary', {
+      templateUrl: 'views/beaconsSummary.html',
+      controller: 'BeaconsSummaryCtrl',
+      url: '/beacons-summary'
+    })
+
     .state('login', {
       templateUrl: 'views/login.html',
       controller: 'LoginCtrl',
