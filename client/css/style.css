@@ -238,6 +238,16 @@ ul {
   overflow: auto;
 }
 
+.menu {
+  float: left;
+  margin: 140px 0 0 0px !important;
+}
+
+.content {
+  float: right;
+  margin-right: 100px;
+}
+
 /*
   We're using CSS transitions for when
   the enter and move events are triggered
