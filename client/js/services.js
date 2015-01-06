@@ -72,12 +72,20 @@ angular.module('proximate.services', [])
     });
   };
 
+  var postNewBeacon = function(adminId, identifier, uuid, major, minor) {
+    return $http({
+      method: 'POST',
+      url: '/api/beacon/upsert'
+    });
+  };
+
   return {
     getParticipants: getParticipants,
     getCurrentEvent: getCurrentEvent,
     getAdminName: getAdminName,
     getEventsByAdminId: getEventsByAdminId,
-    getBeaconsByAdminId: getBeaconsByAdminId
+    getBeaconsByAdminId: getBeaconsByAdminId,
+    postNewBeacon: postNewBeacon
   };
 
 })
