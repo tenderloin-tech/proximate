@@ -19,7 +19,7 @@ exports.updateDeviceId = function(email, deviceId) {
 exports.upsertAdmin = function(adminInfo, adminId) {
 
   // Admin record exists, update it
-  if(adminId) {
+  if (adminId) {
     return new models.Admin({id: adminId})
       .fetch()
       .then(function(admin) {
@@ -30,13 +30,13 @@ exports.upsertAdmin = function(adminInfo, adminId) {
   adminInfo.created_at = moment().format('YYYY-MM-DD HH:mm:ss');
   return models.Admin.forge(adminInfo).save();
 
-}
+};
 
 exports.upsertBeacon = function(beaconInfo, beaconId) {
 
   console.log(beaconInfo);
   // Beacon exists, update it
-  if(beaconId) {
+  if (beaconId) {
     return new models.Beacon({id: beaconId})
       .fetch()
       .then(function(beacon) {
@@ -44,9 +44,9 @@ exports.upsertBeacon = function(beaconInfo, beaconId) {
       });
   }
   // New beacon, create it
-  return models.Beacon.forge(beaconInfo).save()
+  return models.Beacon.forge(beaconInfo).save();
 
-}
+};
 
 exports.updateStatus = function(participantInfo) {
 
@@ -59,7 +59,7 @@ exports.updateStatus = function(participantInfo) {
       return event_participant.save({status:participantInfo.status});
     });
 
-}
+};
 
 // GET HELPERS
 

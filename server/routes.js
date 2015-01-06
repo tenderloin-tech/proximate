@@ -70,24 +70,23 @@ module.exports = function(app) {
 
   app.post('/api/admin/upsert', function(req, res) {
 
-    var adminId = req.body.adminId
+    var adminId = req.body.adminId;
     var adminInfo = {
       email: req.body.email,
       name: req.body.name
-    }
+    };
 
-    if(adminInfo.email && adminInfo.name) {
+    if (adminInfo.email && adminInfo.name) {
       helpers.upsertAdmin(adminInfo, adminId)
         .then(function(admin) {
           res.status(201).send(admin.toJSON());
         })
         .catch(function(error) {
-          res.status(404).send('Error updating admin info', error)
+          res.status(404).send('Error updating admin info', error);
         });
     } else {
       res.status(404).send('Invalid input data');
     }
-
 
   });
 
@@ -100,14 +99,14 @@ module.exports = function(app) {
       identifier: req.body.identifier,
       major: req.body.major,
       minor: req.body.minor
-    }
+    };
 
     helpers.upsertBeacon(beaconInfo, beaconId)
       .then(function(beacon) {
         res.status(201).send(beacon.toJSON());
       })
       .catch(function(error) {
-        res.status(404).send('Error updating beacon info', error)
+        res.status(404).send('Error updating beacon info', error);
       });
 
   });
@@ -118,14 +117,14 @@ module.exports = function(app) {
       participant_id: req.body.participantId,
       event_id: req.body.eventId,
       status: req.body.status
-    }
+    };
 
     helpers.updateStatus(participantInfo)
       .then(function(event_participant) {
         res.status(201).send(event_participant.toJSON());
       })
       .catch(function(error) {
-        res.status(404).send('Error updating participant status', error)
+        res.status(404).send('Error updating participant status', error);
       });
 
   });
@@ -198,7 +197,7 @@ module.exports = function(app) {
 
     helpers.getCurrentEvent(participantId)
       .then(function(event) {
-        if(event.length > 0) {
+        if (event.length > 0) {
           res.status(200).json(event.toJSON());
         }
         res.status(404).send('No current event found for this participant ');

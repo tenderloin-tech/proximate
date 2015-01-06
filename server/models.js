@@ -27,7 +27,7 @@ var Participant = exports.Participant = bookshelf.Model.extend({
       return qb.whereRaw('ABS(UNIX_TIMESTAMP() - UNIX_TIMESTAMP(events.start_time)) <= 3600')
         .orderByRaw('ABS(UNIX_TIMESTAMP() - UNIX_TIMESTAMP(events.start_time)) ASC')
         .limit(1);
-    })
+    });
   }
 
 });
