@@ -30,6 +30,8 @@ angular.module('proximate.services', [])
 })
 
 .factory('Populate', function($http) {
+
+  var adminId = 1;
   // get event participants for a given eventID
   var getParticipants = function(eventID) {
     var url = 'api/events/' + eventID + '/participants';
@@ -87,6 +89,7 @@ angular.module('proximate.services', [])
   };
 
   return {
+    adminId: adminId,
     getParticipants: getParticipants,
     getCurrentEvent: getCurrentEvent,
     getAdminName: getAdminName,

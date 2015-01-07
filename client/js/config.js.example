@@ -9,8 +9,4 @@ angular.module('proximate')
 
 .constant('googleKeys', {
   clientId: 'GOOGLE_CLIENT_ID'
-})
-
-.constant('adminInfo', {
-  Id: Id
 });
