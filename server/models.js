@@ -9,6 +9,14 @@ var Admin = exports.Admin = bookshelf.Model.extend({
   },
   beacons: function() {
     return this.hasMany(Beacon);
+  },
+  currentEvent: function() {
+    return this.hasMany(Event)
+    .query(function(qb) {
+      return qb.whereRaw('ABS(UNIX_TIMESTAMP() - UNIX_TIMESTAMP(events.start_time)) <= 86400')
+        .orderByRaw('ABS(UNIX_TIMESTAMP() - UNIX_TIMESTAMP(events.start_time)) ASC')
+        .limit(1);
+    });
   }
 });
 
@@ -29,7 +37,6 @@ var Participant = exports.Participant = bookshelf.Model.extend({
         .limit(1);
     });
   }
-
 });
 
 var Event = exports.Event = bookshelf.Model.extend({

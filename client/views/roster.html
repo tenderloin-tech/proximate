@@ -6,13 +6,13 @@
   </div>
   <div class="userinfo">
     <ul class="nav">
-      <li><a href="#">Pira</a></li>
+      <li><a href="#">{{adminInformation.data.name}}</a></li>
     </ul>
   </div>
   <div class="content">
-    <h1>{{eventData.data.name}}</h1>
-    <p class="admin-time">{{eventData.data.start_time | date:'h:mm a, MMMM dd, yyyy'}}</p>
-    <table class="ui table sortable">
+    <h1>{{eventData.data[0].name}}</h1>
+    <p class="admin-time">{{eventData.data[0].start_time | date:'h:mm a, MMMM dd, yyyy'}}</p>
+    <table class="ui celled table sortable">
       <thead>
         <tr>
           <th class="left align">Participant</th>

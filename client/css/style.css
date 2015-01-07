@@ -224,6 +224,11 @@ ul {
   text-align: right;
 }
 
+.events {
+  float: right !important;
+  margin-right: 100px !important;
+}
+
 .content {
   width: 70%;
   margin: 100px auto;
@@ -236,6 +241,11 @@ ul {
 .table {
   height: 500px;
   overflow: auto;
+}
+
+.menu {
+  float: left;
+  margin: 140px 0 0 0px !important;
 }
 
 /*

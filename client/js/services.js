@@ -30,6 +30,8 @@ angular.module('proximate.services', [])
 })
 
 .factory('Populate', function($http) {
+
+  var adminId = 1;
   // get event participants for a given eventID
   var getParticipants = function(eventID) {
     var url = 'api/events/' + eventID + '/participants';
@@ -40,10 +42,11 @@ angular.module('proximate.services', [])
   };
 
   // get current event ID
-  var getCurrentEvent = function() {
+  var getCurrentEvent = function(adminId) {
+    var url = '/api/admins/' + adminId + '/events/current';
     return $http({
       method: 'GET',
-      url: 'api/events/current',
+      url: url,
     });
   };
 
@@ -63,11 +66,36 @@ angular.module('proximate.services', [])
     });
   };
 
+  var getBeaconsByAdminId = function(adminId) {
+    var url = '/api/admins/' + adminId + '/beacons';
+    return $http({
+      method: 'GET',
+      url: url
+    });
+  };
+
+  var postNewBeacon = function(adminId, identifier, uuid, major, minor) {
+    return $http({
+      method: 'POST',
+      url: '/api/beacon/upsert',
+      data: {
+        adminId: adminId,
+        identifier: identifier,
+        uuid: uuid,
+        major: major,
+        minor: minor
+      },
+    });
+  };
+
   return {
+    adminId: adminId,
     getParticipants: getParticipants,
     getCurrentEvent: getCurrentEvent,
     getAdminName: getAdminName,
-    getEventsByAdminId: getEventsByAdminId
+    getEventsByAdminId: getEventsByAdminId,
+    getBeaconsByAdminId: getBeaconsByAdminId,
+    postNewBeacon: postNewBeacon
   };
 
 })
@@ -87,6 +115,30 @@ angular.module('proximate.services', [])
       $rootScope.timeDiffAfter = true;
     }
     return moment.duration(a - b).humanize(true);
+  };
+})
+
+.filter('CurrentEvents', function($rootScope) {
+  return function(events, current) {
+    var filteredResults = [];
+    var now = moment();
+    if (events) {
+      events.forEach(function(event) {
+        for (var i = 0; i < $rootScope.eventsData.length; i++) {
+          if (current) {
+            if (moment(event.start_time).diff(now) < 0) {
+              return;
+            }
+          } else {
+            if (moment(event.start_time).diff(now) >= 0) {
+              return;
+            }
+          }
+        }
+        filteredResults.push(event);
+      });
+    }
+    return filteredResults;
   };
 })
 

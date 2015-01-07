@@ -195,6 +195,15 @@ exports.getCurrentEvent = function(participantId) {
 
 };
 
+exports.getCurrentEventByAdmin = function(adminId) {
+
+  return new models.Admin({id: adminId})
+    .fetch({withRelated: 'currentEvent', require: true})
+    .then(function(admin) {
+      return admin.related('currentEvent');
+    });
+};
+
 // PUBNUB HELPERS
 
 exports.checkinUser = function(deviceId) {

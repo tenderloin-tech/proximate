@@ -220,6 +220,23 @@ module.exports = function(app) {
 
   });
 
+  app.get('/api/admins/:adminId/events/current', function(req, res) {
+
+    var adminId = req.params.adminId;
+
+    helpers.getCurrentEventByAdmin(adminId)
+      .then(function(event) {
+        if (event.length > 0) {
+          res.status(200).json(event.toJSON());
+        }
+        res.status(404).send('No current event found for this admin ');
+      })
+      .catch(function(error) {
+        res.status(404).send('Error fetching current event data ', error);
+      });
+
+  });
+
   // Get all events for a given admin ID
   app.get('/api/admins/:adminId/events', function(req, res) {
 

@@ -11,14 +11,14 @@
     </ul>
   </div>
   <div class="event">
-    <h3 ng-show="timeDiffLessThanHourBefore">{{eventData.data.name}} Starts In</h3>
-    <h3 ng-show="timeDiffMoreThanHourBefore">{{eventData.data.name}} Starts At</h3>
-    <h3 ng-show="timeDiffAfter">{{eventData.data.name}} Started At</h3>
+    <h3 ng-show="timeDiffLessThanHourBefore">{{eventData.data[0].name}} Starts In</h3>
+    <h3 ng-show="timeDiffMoreThanHourBefore">{{eventData.data[0].name}} Starts At</h3>
+    <h3 ng-show="timeDiffAfter">{{eventData.data[0].name}} Started At</h3>
   </div>
   <div class="time">
-     <h1 ng-show="timeDiffLessThanHourBefore">{{eventData.data.start_time | date:"h:mm a"}}</h1>
-     <h1 ng-show="timeDiffMoreThanHourBefore">{{eventData.data.start_time | fromNow:clock}}</h1>
-     <h1 ng-show="timeDiffAfter">{{eventData.data.start_time | date:"h:mm a"}}</h1>
+     <h1 ng-show="timeDiffLessThanHourBefore">{{eventData.data[0].start_time | date:"h:mm a"}}</h1>
+     <h1 ng-show="timeDiffMoreThanHourBefore">{{eventData.data[0].start_time | fromNow:clock}}</h1>
+     <h1 ng-show="timeDiffAfter">{{eventData.data[0].start_time | date:"h:mm a"}}</h1>
 
   </div>
   <div class="participants">
