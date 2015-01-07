@@ -56,7 +56,7 @@ angular.module('proximate',
 
   $rootScope.postParticipantStatus = function(participantId, eventId, participantStatus) {
     Populate.updateParticipantStatus(participantId, eventId, participantStatus);
-  }
+  };
 
   // Fetch admin name for a given adminId
   Populate.getAdminName(Populate.adminId).then(function(adminInformation) {
