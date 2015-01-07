@@ -51,6 +51,7 @@ if (config.resetDatabaseOnLoad) {
     return bookshelf.knex.schema.createTable('events', function(t) {
       t.increments('id').primary();
       t.string('gcal_id');
+      t.string('link');
       t.text('name');
       t.text('location');
       t.string('recurring_event_id');
