@@ -12,19 +12,33 @@
   <div class="content">
     <h1>{{eventData.data[0].name}}</h1>
     <p class="admin-time">{{eventData.data[0].start_time | date:'h:mm a, MMMM dd, yyyy'}}</p>
-    <table class="ui celled table sortable">
+    <table ng-table="tableParams" class="ui celled table sortable">
       <thead>
         <tr>
           <th class="left align">Participant</th>
           <th class="left align">Email</th>
           <th class="left align">Status</th>
+          <th class="left align"></th>
         </tr>
       </thead>
       <tbody>
         <tr ng-repeat="data in participantData">
-          <td class="username">{{data.name}}</td>
-          <td class="mail">{{data.email}}</td>
-          <td class="participantStatus" ng-class="{'positive': data._pivot_status === 'ontime', 'negative': data._pivot_status === 'late', 'warning': data._pivot_Status === 'null'}">{{data._pivot_status}}</td>
+          <td data-title="'Name'">
+            <span>{{data.name}}</span>
+          </td>
+          <td data-title="'Email'">
+            <span>{{data.email}}</span>
+          </td>
+          <td data-title="'Status'" ng-class="{'positive': data._pivot_status === 'ontime', 'negative': data._pivot_status === 'late', 'warning': data._pivot_Status === 'null'}">
+            <span ng-if="!data.$edit">{{data._pivot_status}}</span>
+            <div ng-if="data.$edit">
+              <input class="form-control" type="text" ng-model="data._pivot_status" />
+            </div>
+          </td>
+          <td data-title="'Actions'" width="200">
+            <a ng-if="!data.$edit" href="" class="btn btn-default btn-xs" ng-click="data.$edit = true">Edit</a>
+            <a ng-if="data.$edit" href="" class="btn btn-primary btn-xs" ng-click="data.$edit = false; postParticipantStatus(data.id, data._pivot_event_id, data._pivot_status)" >Save</a>
+          </td>
         </tr>
       </tbody>
     </table>
