@@ -40,6 +40,32 @@ sudo npm install -g bower
 npm install
 bower install
 ```
+
+### Setting up mobile builds
+
+Install ionic, dependencies, plugins, and add platforms:
+
+```sh
+npm install ionic-cli -g
+npm install cordova-icon -g
+npm install cordova-splash -g
+cd proximate/mobile
+ionic plugin add https://github.com/petermetz/cordova-plugin-ibeacon.git
+ionic plugin add https://github.com/jcesarmobile/IDFVPlugin.git
+cordova plugin add https://github.com/katzer/cordova-plugin-local-notifications.git && cordova prepare
+ionic platform add ios
+ionic platform add android
+```
+
+then run the following to build:
+
+```sh
+cd proximate/mobile
+ionic build
+```
+
+The `icon.png` and `splash.png` files in the mobile root should be edited to fit your brand, and will update with all platform-specific images on build.
+
 ### Testing
 
 ```sh
