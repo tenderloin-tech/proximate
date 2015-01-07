@@ -31,7 +31,7 @@ exports.getAdminTokens = function(email) {
 
 exports.updateAdminTokens = function(email, name, tokens) {
 
-  return new models.Admin({name: name})
+  return new models.Admin({email: email})
     .fetch()
     .then(function(model) {
       if (!model) {
@@ -49,7 +49,7 @@ exports.updateAdminTokens = function(email, name, tokens) {
         }).save();
       } else {
         // Update existing record
-        model.set('access_token', tokens.refresh_token);
+        model.set('access_token', tokens.access_token);
         model.set('token_expiry', tokens.expiry_date);
         return model.save();
       }
