@@ -23,7 +23,8 @@ exports.getAdminTokens = function(email) {
     .then(function(model) {
       return {
         access_token: model.get('access_token'),
-        refresh_token: model.get('refresh_token')
+        refresh_token: model.get('refresh_token'),
+        expiry_date: model.get('token_expiry')
       };
     });
 
