@@ -7,13 +7,13 @@ angular.module('proximate',
   ])
 
 .config(function($stateProvider, $urlRouterProvider) {
-  $urlRouterProvider.otherwise('/');
+  $urlRouterProvider.otherwise('/events');
 
   $stateProvider
     .state('event', {
       templateUrl: 'views/event.html',
       controller: 'EventCtrl',
-      url: '/'
+      url: '/event'
     })
 
     .state('admin', {
@@ -22,16 +22,16 @@ angular.module('proximate',
       url: '/admin'
     })
 
-    .state('eventsSummary', {
-      templateUrl: 'views/eventsSummary.html',
-      controller: 'EventsSummaryCtrl',
-      url: '/events-summary'
+    .state('events', {
+      templateUrl: 'views/events.html',
+      controller: 'EventsCtrl',
+      url: '/events'
     })
 
     .state('beaconsSummary', {
-      templateUrl: 'views/beaconsSummary.html',
-      controller: 'BeaconsSummaryCtrl',
-      url: '/beacons-summary'
+      templateUrl: 'views/beacons.html',
+      controller: 'BeaconsCtrl',
+      url: '/beacons'
     })
 
     .state('login', {
