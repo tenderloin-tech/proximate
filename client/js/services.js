@@ -160,7 +160,7 @@ angular.module('proximate.services', [])
     var filteredResults = [];
     if (participants) {
       participants.forEach(function(participant) {
-        if (participant._pivot_status === "ontime") {
+        if (participant._pivot_status === 'ontime') {
           return;
         }
         filteredResults.push(participant);
