@@ -1,10 +1,10 @@
 var auth = require('googleapis').auth;
-var Promise = require('bluebird');
+var promise = require('bluebird');
 var config = require('./config/config');
 var helpers = require('./db/helpers');
 
 // Promisify authentication API
-Promise.promisifyAll(auth);
+promise.promisifyAll(auth);
 
 // Initialize OAuth2 client
 var client = exports.client = new auth.OAuth2(
@@ -28,7 +28,7 @@ exports.authenticate = function(email) {
           });
       } else {
         // Access token is valid
-        return new Promise(function(resolve, reject) {
+        return new promise(function(resolve, reject) {
           client.setCredentials({access_token: tokens.access_token});
           resolve();
         });
