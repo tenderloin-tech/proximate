@@ -121,6 +121,17 @@ exports.getEvents = function(participantId) {
 
 };
 
+exports.getEventHistory = function(participantId) {
+
+  return new models.EventsParticipants()
+    .query({where: {participant_id: participantId}})
+    .fetch({withRelated: ['event'], require: true})
+    .then(function(model) {
+      return model;
+    });
+
+};
+
 exports.getAdminName = function(adminId) {
 
   return new models.Admin()
@@ -130,6 +141,15 @@ exports.getAdminName = function(adminId) {
       return model;
     });
 
+};
+
+exports.getParticipantInfo = function(participantId) {
+  return new models.Participant()
+    .query({where: {id: participantId}})
+    .fetch({require: true})
+    .then(function(model) {
+      return model;
+    });
 };
 
 exports.getEventsByAdminId = function(adminId) {

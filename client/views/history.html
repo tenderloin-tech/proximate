@@ -1,0 +1,45 @@
+<div class="admin">
+  <div class="logo">
+    <ul class="nav">
+      <li>Proximate</li>
+    </ul>
+  </div>
+  <div class="userinfo">
+    <ul class="nav">
+      <li><a href="#">{{adminInformation.data.name}}</a></li>
+    </ul>
+  </div>
+  <div class="ui vertical menu">
+    <a class="active item">
+      Events
+      <div class="ui"></div>
+    </a>
+    <a class="item" href="/#/beacons">
+      Beacons
+      <div class="ui"></div>
+    </a>
+  </div>
+  <div class="events content">
+    <h1>Attendance history for <i>{{participantInfo.name}}</i></h1>
+    <div class="chart">
+      Cool chart goes here
+    </div>
+    <table class="ui celled table sortable">
+      <thead>
+        <tr>
+          <th class="left align">Date</th>
+          <th class="left align">Event Name</th>
+          <th class="left align">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="data in eventsData | CurrentEvents:current">
+          <td class="username">{{data.start_time | date:'MMM d, y, h:mm:ss a'}}</td>
+          <td class="participantStatus"><a href="#">{{data.name}}</a></td>
+          <td class="participantStatus">Meow</td>
+        </tr>
+      </tbody>
+    </table>
+    <pre>{{data}}</pre>
+  </div>
+</div>

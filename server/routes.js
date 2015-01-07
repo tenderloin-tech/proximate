@@ -187,6 +187,21 @@ module.exports = function(app) {
 
   });
 
+  // Return a list of events with associated statuses for a participant
+  app.get('/api/participants/:participantId/history', function(req, res) {
+
+    var participantId = req.params.participantId;
+
+    helpers.getEventHistory(participantId)
+      .then(function(model) {
+        res.status(200).json(model.toJSON());
+      })
+      .catch(function(error) {
+        res.status(404).send('Unable to fetch events for this participant ' + error);
+      });
+
+  });
+
   // Get event participants for a given eventId
   app.get('/api/events/:eventId/participants', function(req, res) {
 
@@ -265,6 +280,20 @@ module.exports = function(app) {
       })
       .catch(function(error) {
         res.status(404).send('Unable to fetch admin name ' + error);
+      });
+  });
+
+  // Get the participant info for a given participlant ID
+  app.get('/api/participants/:participantId', function(req, res) {
+
+    var participantId = req.params.participantId;
+
+    helpers.getParticipantInfo(participantId)
+      .then(function(model){
+        res.status(200).json(model.toJSON());
+      })
+      .catch(function(error) {
+        res.status(404).send('Unable to fetch participant info ' + error);
       });
   });
 

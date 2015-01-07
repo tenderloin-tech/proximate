@@ -4,6 +4,25 @@ angular.module('proximate.controllers', [])
   $scope.current = true;
 })
 
+.controller('HistoryCtrl', function($scope, $stateParams, $rootScope, History) {
+
+  //get info about participant and populate view
+  $scope.participantInfo = {};
+
+  History.getParticipantInfoFromId($stateParams.participantId).then(function(res) {
+    $scope.participantInfo = res.data;
+    console.log($scope.participantInfo);
+  }).then(function(){
+
+    return History.getHistoryByParticipantId($stateParams.participantId);
+
+  }).then(function(res){
+    console.log('Events', res.data);
+  });
+
+
+ })
+
 .controller('BeaconsCtrl', function($scope, Populate) {
 
   $scope.beaconsData = [];

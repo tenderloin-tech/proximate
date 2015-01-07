@@ -29,6 +29,30 @@ angular.module('proximate.services', [])
 
 })
 
+.factory('History', function($http, $rootScope) {
+
+  var getParticipantInfoFromId = function(participantId) {
+    var url = '/api/participants/' + participantId;
+    return $http({
+      method: 'GET',
+      url: url
+    });
+  };
+
+  var getHistoryByParticipantId = function(participantId) {
+    var url = '/api/participants/' + participantId + '/history';
+    return $http({
+      method: 'GET',
+      url: url
+    });
+  };
+
+  return {
+    getParticipantInfoFromId: getParticipantInfoFromId,
+    getHistoryByParticipantId: getHistoryByParticipantId
+  }
+})
+
 .factory('Populate', function($http) {
 
   var adminId = 1;
