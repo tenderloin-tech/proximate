@@ -1,10 +1,10 @@
 angular.module('proximate.controllers', [])
 
-.controller('EventsSummaryCtrl', function() {
-
+.controller('EventsCtrl', function($scope) {
+  $scope.current = true;
 })
 
-.controller('BeaconsSummaryCtrl', function($scope, Populate) {
+.controller('BeaconsCtrl', function($scope, Populate) {
 
   $scope.beaconsData = [];
   // get beacons for given adminID

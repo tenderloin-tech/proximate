@@ -232,7 +232,7 @@ module.exports = function(app) {
         res.status(404).send('No current event found for this admin ');
       })
       .catch(function(error) {
-        res.status(404).send('No current event found for this admin ', error);
+        res.status(404).send('Error fetching current event data ', error);
       });
 
   });

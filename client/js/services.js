@@ -116,32 +116,20 @@ angular.module('proximate.services', [])
 })
 
 .filter('CurrentEvents', function($rootScope) {
-  return function(events) {
+  return function(events, current) {
     var filteredResults = [];
     var now = moment();
     if (events) {
       events.forEach(function(event) {
         for (var i = 0; i < $rootScope.eventsData.length; i++) {
-          if (moment(event.start_time).diff(now) < 0) {
-            return;
-          }
-        }
-        filteredResults.push(event);
-      });
-    }
-    return filteredResults;
-  };
-})
-
-.filter('PastEvents', function($rootScope) {
-  return function(events) {
-    var filteredResults = [];
-    var now = moment();
-    if (events) {
-      events.forEach(function(event) {
-        for (var i = 0; i < $rootScope.eventsData.length; i++) {
-          if (moment(event.start_time).diff(now) >= 0) {
-            return;
+          if(current) {
+            if (moment(event.start_time).diff(now) < 0) {
+              return;
+            }
+          } else {
+            if (moment(event.start_time).diff(now) >= 0) {
+              return;
+            }
           }
         }
         filteredResults.push(event);
