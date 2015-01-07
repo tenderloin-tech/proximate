@@ -4,6 +4,7 @@ var moment = require('moment');
 var auth = require('./auth');
 var models = require('./models');
 var helpers = require('./db/helpers');
+var sync = require('./db/sync');
 
 module.exports = function(app) {
 
@@ -325,4 +326,8 @@ module.exports = function(app) {
 
   });
 
+  sync.sync();
+
 };
+
+
