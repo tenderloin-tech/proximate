@@ -1,0 +1,60 @@
+<div class="admin">
+  <div class="logo">
+    <ul class="nav">
+      <li>Proximate</li>
+    </ul>
+  </div>
+  <div class="userinfo">
+    <ul class="nav">
+      <li><a href="#">{{adminInformation.data.name}}</a></li>
+    </ul>
+  </div>
+  <div class="ui vertical menu">
+    <a class="active item">
+      Events
+      <div class="ui"></div>
+    </a>
+    <a class="item" href="/#/beacons">
+      Beacons
+      <div class="ui"></div>
+    </a>
+  </div>
+  <div class="events content">
+    <h1>{{eventData.data[0].name}}{{eventData.data[0].start_time | date:' M/d/yy h:mm a'}}</h1>
+    <h3>
+      <a href="/#/event">Public View</a>
+      <a href="/#/admin">Admin View</a>
+    <hr>
+    <h3>Upcoming Events</h3>
+    <table class="ui celled table sortable">
+      <thead>
+        <tr>
+          <th class="left align">Date</th>
+          <th class="left align">Event Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="data in eventsData | CurrentEvents:current">
+          <td class="username">{{data.start_time | date:'MMM d, y, h:mm:ss a'}}</td>
+          <td class="participantStatus"><a href="#">{{data.name}}</a></td>
+        </tr>
+      </tbody>
+    </table>
+    <hr>
+    <h3>Past Events</h3>
+    <table class="ui celled table sortable">
+      <thead>
+        <tr>
+          <th class="left align">Date</th>
+          <th class="left align">Event Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="data in eventsData | CurrentEvents">
+          <td class="username">{{data.start_time | date:'MMM d, y, h:mm:ss a'}}</td>
+          <td class="participantStatus"><a href="#">{{data.name}}</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
