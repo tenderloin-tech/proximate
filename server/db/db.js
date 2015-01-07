@@ -32,6 +32,9 @@ if (config.resetDatabaseOnLoad) {
       t.increments('id').primary();
       t.string('name');
       t.string('email');
+      t.string('refresh_token');
+      t.string('access_token');
+      t.bigInteger('token_expiry');
       t.dateTime('created_at');
     });
   })

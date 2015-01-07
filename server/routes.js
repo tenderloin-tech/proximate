@@ -36,16 +36,31 @@ module.exports = function(app) {
     // State token is valid
 
     // Exchange one-time code for tokens
-    auth.getToken(req.body.code, function(err, tokens) {
-      if (!err) {
-        console.log('Received tokens: ', tokens);
-        auth.setCredentials(tokens);
-        res.status(200).send();
-      } else {
+    var ret = auth.getToken(req.body.code, function(err, tokens) {
+      if (err) {
         console.log('Unable to exchange code for tokens: ', err);
         res.status(401).send('Authentication error');
+      } else {
+        console.log('Received tokens: ', tokens);
+        auth.setCredentials(tokens);
+        // Retrieve authenticated user's e-mail address
+        var plus = require('googleapis').plus({version: 'v1', auth: auth});
+        plus.people.get({userId: 'me'}, function(err, data) {
+          if (!err) {
+            data.emails.some(function(email) {
+              if (email.type === 'account') {
+                helpers.updateAdminTokens(email.value, data.displayName, tokens);
+                res.status(200).send();
+                return true;
+              }
+            });
+          } else {
+            res.status(401).send('Authentication error');
+          }
+        });
       }
     });
+
   });
 
   // Sign a user in and register their device if needed

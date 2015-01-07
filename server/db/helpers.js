@@ -16,6 +16,47 @@ exports.updateDeviceId = function(email, deviceId) {
 
 };
 
+exports.getAdminTokens = function(email) {
+
+  return new models.Admin({email: email})
+    .fetch({require: true})
+    .then(function(model) {
+      return {
+        access_token: model.get('access_token'),
+        refresh_token: model.get('refresh_token')
+      };
+    });
+
+};
+
+exports.updateAdminTokens = function(email, name, tokens) {
+
+  return new models.Admin({name: name})
+    .fetch()
+    .then(function(model) {
+      if (!model) {
+        if (!tokens.refresh_token) {
+          throw new Error('Refresh token not supplied for new user');
+        }
+        // Create record if it doesn't exist
+        return models.Admin.forge({
+          name: name,
+          email: email,
+          refresh_token: tokens.refresh_token,
+          access_token: tokens.access_token,
+          token_expiry: tokens.expiry_date,
+          created_at: moment().format('YYYY-MM-DD HH:mm:ss')
+        }).save();
+      } else {
+        // Update existing record
+        model.set('access_token', tokens.refresh_token);
+        model.set('token_expiry', tokens.expiry_date);
+        return model.save();
+      }
+    });
+
+};
+
 exports.upsert = function(model, recordInfo, recordId) {
 
   // Admin record exists, update it
