@@ -43,7 +43,7 @@ angular.module('proximate.controllers', [])
     gapi.signin.render('signinButton', {
       'callback': $scope.signinCallback,
       'clientid': googleKeys.clientId,
-      'scope': 'profile https://www.googleapis.com/auth/calendar.readonly',
+      'scope': 'email profile https://www.googleapis.com/auth/calendar.readonly',
       'cookiepolicy': 'single_host_origin',
       'accesstype': 'offline'
     });
