@@ -41,10 +41,10 @@ angular.module('proximate',
     });
 })
 
-.run(function($rootScope, PubNub, Populate) {
+.run(function($rootScope, PubNub, Populate, adminInfo) {
   $rootScope.participantData = [];
   // Fetch the participant and event data from the server
-  Populate.getCurrentEvent(1).then(function(eventData) {
+  Populate.getCurrentEvent(adminInfo.Id).then(function(eventData) {
     $rootScope.eventData = eventData;
     return Populate.getParticipants(eventData.data[0].id);
   }).then(function(participantData) {
@@ -54,12 +54,12 @@ angular.module('proximate',
   });
 
   // Fetch admin name for a given adminId
-  Populate.getAdminName(1).then(function(adminInformation) {
+  Populate.getAdminName(adminInfo.Id).then(function(adminInformation) {
     $rootScope.adminInformation = adminInformation;
   });
 
   // Fetch events data for given adminId
-  Populate.getEventsByAdminId(1).then(function(eventsData) {
+  Populate.getEventsByAdminId(adminInfo.Id).then(function(eventsData) {
     $rootScope.eventsData = eventsData.data;
   });
 
