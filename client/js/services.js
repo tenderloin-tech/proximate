@@ -122,7 +122,7 @@ angular.module('proximate.services', [])
     if (events) {
       events.forEach(function(event) {
         for (var i = 0; i < $rootScope.eventsData.length; i++) {
-          if(current) {
+          if (current) {
             if (moment(event.start_time).diff(now) < 0) {
               return;
             }
