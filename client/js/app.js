@@ -3,7 +3,8 @@ angular.module('proximate',
   'proximate.controllers',
   'proximate.services',
   'angularMoment',
-  'ngAnimate'
+  'ngAnimate',
+  'ngTable'
   ])
 
 .config(function($stateProvider, $urlRouterProvider) {
