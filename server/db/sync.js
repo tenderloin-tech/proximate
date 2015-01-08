@@ -1,4 +1,4 @@
-var Promise = require('bluebird');
+var promise = require('bluebird');
 var models = require('../models');
 var auth = require('../auth');
 var helpers = require('./helpers');
@@ -6,7 +6,7 @@ var _ = require('underscore');
 var moment = require('moment');
 
 exports.sync = function() {
-
+  // Define calendar API and admin info
   var calendar = require('googleapis').calendar({version: 'v3', auth: auth});
   var adminParams = {
     id: 1,
@@ -14,13 +14,14 @@ exports.sync = function() {
     lastSync: '2015-01-01T09:41:00.735-04:00'
   }
 
+  // Get the calendar ID's for all gcal this admin email owns
   var getCalendars = function() {
 
     var params = {
       minAccessRole: 'owner'
     }
 
-    return new Promise(function (resolve, reject) {
+    return new promise(function (resolve, reject) {
       calendar.calendarList.list(params, function(err, data) {
         if(data) {
           resolve(_.pluck(data.items, 'id'));
@@ -32,6 +33,7 @@ exports.sync = function() {
 
   }
 
+  // Fetch all the events for the calendarIDs belonging to this admin
   var getEvents = function(calendarId) {
 
     var params = {
@@ -44,7 +46,7 @@ exports.sync = function() {
       updatedMin: adminParams.lastSync
     }
 
-    return new Promise(function (resolve, reject) {
+    return new promise(function (resolve, reject) {
       calendar.events.list(params, function(err, data) {
         if(data) {
           resolve(data.items);
@@ -56,12 +58,14 @@ exports.sync = function() {
 
   }
 
+  // Check for proximate in the attendee list
   var hasProximate = function(attendeeList) {
     return _.some(attendeeList, function(item) {
       return item.email === 'attendance@proximate.io';
     });
   }
 
+  // Only get events that occur up to three months in the future
   var isBeforeCutoff = function(event) {
     var cutoff = moment().add(3, 'months');
     var date = moment(event.start.dateTime);
@@ -69,12 +73,12 @@ exports.sync = function() {
     return date.isBefore(cutoff);
   }
 
+  // Helper to filter events returned by Gcal
   var isValid = function(event) {
     var conditions = [
       event.creator.email === adminParams.email,
       hasProximate(event.attendees),
-      isBeforeCutoff(event),
-      event.status === 'confirmed'
+      isBeforeCutoff(event)
     ]
 
     return _.every(conditions,function(val) { return val; });
@@ -82,30 +86,32 @@ exports.sync = function() {
 
   helpers.getAdminTokens('sgtonkin@gmail.com')
     .then(function(tokens) {
-      auth.setCredentials(tokens);
+      return auth.setCredentials(tokens);
     })
     .then(getCalendars)
     .then(function(calendarIds) {
+      // Get the gcal event data into an array
       var events = _.map(calendarIds, function(item) {
         return getEvents(item);
       });
-      return Promise.all(events)
+      // Make sure all gcal calls are finished before continuing
+      return promise.all(events)
     })
     .then(function(events) {
-      var events = _.chain(events)
-      .flatten()
-      .filter(function(event) {
-        return isValid(event);
-      })
-      .value()
+      // Flatten and apply the filters defined above
+      var events =
+        _.chain(events)
+        .flatten()
+        .filter(function(event) {
+          return isValid(event);
+        })
+        .value()
 
-      // For every event in the list
-      // Run an upsert on that gcal ID in the events table
-      //
+      console.log('events', events);
 
     })
     .catch(function(error) {
-      console.log('error', error);
+      console.log('Error syncing calendar', error);
     });
 
 }
