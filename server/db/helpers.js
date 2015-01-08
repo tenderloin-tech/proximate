@@ -178,7 +178,7 @@ exports.getCheckinStatus = function(deviceId, eventId) {
     .then(function() {
       return new models.EventsParticipants()
         .query({where:{participant_id: participant_id, event_id: eventId}})
-        .fetch({require: true})
+        .fetchOne({require: true})
         .then(function(model) {
           return model;
         });
@@ -223,7 +223,8 @@ exports.checkinUser = function(deviceId) {
       participantId = model.get('id');
       return exports.getCurrentEvent(participantId);
     })
-    .then(function(model) {
+    .then(function(collection) {
+      var model = collection.at(0);
       eventId = model.get('id');
       eventStartTime = moment(model.get('start_time'));
       // Update the event_participant status and check-in time
