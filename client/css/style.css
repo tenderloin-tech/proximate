@@ -270,6 +270,11 @@ ul {
   margin-left: 5px;
 }
 
+.history-stats strong{
+  margin-left: 2px;
+  font-size: 1.2em;
+}
+
 #history-stats-ontime {
   color: #4F8A10;
   background-color: #DFF2BF;

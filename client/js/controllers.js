@@ -31,7 +31,7 @@ angular.module('proximate.controllers', [])
     $scope.stats.forEach(function(stat) {
       var nameForClass = stat.name === null ? 'absent' : stat.name;
       $('#history-stats-' + nameForClass)
-        .append('<span>' + nameForClass + '</span>')
+        .append('<span>' + nameForClass + ': <strong>' + stat.value + '</strong></span>')
         .animate({width: stat.value * 100 + 'px'}, 1000);
       console.log('Setting width to stat value: ' + stat.value);
     });
