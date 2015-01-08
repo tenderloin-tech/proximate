@@ -17,7 +17,7 @@ angular.module('proximate.controllers', [])
     Events.getMostCurrentEvent()
       .then(function(res) {
         console.log('Got current event: ' + JSON.stringify(res));
-        $scope.event = res[0];
+        $scope.event = res;
         $scope.setPrettyStartTime();
         return res;
       })

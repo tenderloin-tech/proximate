@@ -225,8 +225,7 @@ module.exports = function(app) {
     helpers.getCurrentEvent(participantId)
       .then(function(event) {
         if (event.length > 0) {
-          console.log(event.toJSON());
-          res.status(200).json(event.toJSON());
+          res.status(200).json(event.at(0).toJSON());
         } else {
           res.status(404).send('No current event found for this participant ');
           return;

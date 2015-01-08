@@ -53,9 +53,8 @@ angular.module('proximate.controllers', [])
     return History.getHistoryByParticipantId($stateParams.participantId);
   }).then(function(res) {
     $scope.eventHistory = res.data.filter(function(item) {
-      return (item.event.hasOwnProperty('name'));
-      // add condition:
-      // && moment(item.event.start_time).diff(moment()) < 0
+      return (item.event.hasOwnProperty('name')
+        && moment(item.event.start_time).diff(moment()) < 0);
     });
     //Then call functions with fetched info
     computeStats();
