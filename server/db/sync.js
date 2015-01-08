@@ -6,17 +6,17 @@ var _ = require('underscore');
 var moment = require('moment');
 
 exports.sync = function() {
+
   // Define calendar API and admin info
-  var calendar = require('googleapis').calendar({version: 'v3', auth: auth});
+  var calendar = require('googleapis').calendar({version: 'v3', auth: auth.client});
   var adminParams = {
     id: 1,
     email: 'sgtonkin@gmail.com',
     lastSync: '2015-01-01T09:41:00.735-04:00'
   }
 
-  // Get the calendar ID's for all gcal this admin email owns
+  // Get the calendar IDs for all gcal this admin email owns
   var getCalendars = function() {
-
     var params = {
       minAccessRole: 'owner'
     }
@@ -30,7 +30,6 @@ exports.sync = function() {
         }
       });
     });
-
   }
 
   // Fetch all the events for the calendarIDs belonging to this admin
@@ -84,13 +83,32 @@ exports.sync = function() {
     return _.every(conditions,function(val) { return val; });
   }
 
-  helpers.getAdminTokens('sgtonkin@gmail.com')
-    .then(function(tokens) {
-      return auth.setCredentials(tokens);
-    })
+  var formatEventsForDb = function(events) {
+    return _.map(events, function(item) {
+      return {
+        gcal_id: item.id,
+        name: item.summary,
+        location: item.location,
+        htmlLink: item.htmlLink,
+        recurring_event_id: item.recurringEventId,
+        start_time: item.start.dateTime,
+        updated: item.updated,
+        status: item.status
+      }
+    });
+  }
+
+  // Pull out the event into and upsert it
+  var syncEvents = function(events) {
+    _.each(formatEventsForDb(events), function(event) {
+      helpers.upsertEvent(event);
+    });
+  }
+
+  auth.authenticate(adminParams.email)
     .then(getCalendars)
     .then(function(calendarIds) {
-      // Get the gcal event data into an array
+      // Get the gcal event data from all calendars into one array
       var events = _.map(calendarIds, function(item) {
         return getEvents(item);
       });
@@ -106,12 +124,13 @@ exports.sync = function() {
           return isValid(event);
         })
         .value()
-
-      console.log('events', events);
-
+      // Update the events in the db
+      syncEvents(events);
     })
     .catch(function(error) {
       console.log('Error syncing calendar', error);
     });
 
 }
+
+exports.sync();

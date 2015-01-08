@@ -278,3 +278,20 @@ exports.checkinUser = function(deviceId) {
       };
     });
 };
+
+// SYNC HELPERS
+
+exports.upsertEvent = function(event) {
+  return new models.Event({gcal_id: event.gcal_id})
+    .fetch()
+    .then(function(model) {
+      if(model) {
+        console.log('updating record');
+        return model.save(event);
+      } else {
+        console.log('saving new record');
+        return models.Event.forge(event).save();
+      }
+    });
+}
+

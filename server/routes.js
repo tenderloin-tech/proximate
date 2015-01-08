@@ -326,8 +326,6 @@ module.exports = function(app) {
 
   });
 
-  sync.sync();
-
 };
 
 
