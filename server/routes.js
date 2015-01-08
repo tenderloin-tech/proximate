@@ -211,9 +211,8 @@ module.exports = function(app) {
       .then(function(event) {
         if (event.length > 0) {
           res.status(200).json(event.toJSON());
-        } else {
-          res.status(404).send('No current event found for this participant ');
         }
+        res.status(404).send('No current event found for this participant ');
       })
       .catch(function(error) {
         res.status(404).send('Error fetching events for this participant ' + error);
@@ -229,9 +228,8 @@ module.exports = function(app) {
       .then(function(event) {
         if (event.length > 0) {
           res.status(200).json(event.toJSON());
-        } else {
-          res.status(404).send('No current event found for this admin ');
         }
+        res.status(404).send('No current event found for this admin ');
       })
       .catch(function(error) {
         res.status(404).send('Error fetching current event data ' + error);
