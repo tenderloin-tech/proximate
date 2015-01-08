@@ -20,18 +20,17 @@ exports.authenticate = function(email) {
       if (tokens.expiry_date < Date.now()) {
         // Access token is expired
         client.setCredentials({refresh_token: tokens.refresh_token});
-        return client.refreshAccessTokenAsync()
-          .then(function(tokens) {
-            if (tokens) {
-              return helpers.updateAdminTokens(email, '', tokens);
-            }
-          });
+        return client.refreshAccessTokenAsync();
       } else {
         // Access token is valid
         return new promise(function(resolve, reject) {
           client.setCredentials({access_token: tokens.access_token});
           resolve();
         });
+      }
+    }).then(function(tokens) {
+      if (tokens) {
+        return helpers.updateAdminTokens(email, '', tokens);
       }
     });
 };
