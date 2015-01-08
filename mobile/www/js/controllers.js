@@ -19,8 +19,9 @@ angular.module('proximate.controllers', [])
         console.log('Got current event: ' + JSON.stringify(res));
         $scope.event = res[0];
         $scope.setPrettyStartTime();
+        return res;
       })
-      .then(function() {
+      .then(function(res) {
         Events.getEventCheckinStatus($scope.event.id)
         .then(function(res) {
           console.log('Checkin status is: ' + JSON.stringify(res));

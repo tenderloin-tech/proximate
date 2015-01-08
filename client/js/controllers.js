@@ -6,7 +6,7 @@ angular.module('proximate.controllers', [])
 
 .controller('HistoryCtrl', function($scope, $stateParams, $rootScope, History) {
 
-  //get info about participant and populate view
+  // Init values for scope, setting params for status values
   $scope.participantInfo = {};
   $scope.eventHistory = {};
   $scope.stats = [
@@ -15,6 +15,7 @@ angular.module('proximate.controllers', [])
     {name: null, label:'Absent', id: 'history-stats-absent', value: 0},
   ];
 
+  // Populates $scope.stats for use in table and chart
   var computeStats = function() {
 
     $scope.eventHistory.forEach(function(event) {
@@ -29,32 +30,34 @@ angular.module('proximate.controllers', [])
   var drawChart = function() {
 
     // var maxWidth = $('table').css('width');
+    var widthScale = 100;
+    var animationTime = 1000;
 
     $scope.stats.forEach(function(stat) {
       var nameForClass = stat.name === null ? 'absent' : stat.name;
+      // If no vals calculated, hide element
       if (stat.value === 0) {
         $('#history-stats-' + nameForClass).css('display', 'none');
       }
+      // Otherwsie append and animate
       $('#history-stats-' + nameForClass)
         .append('<span>' + nameForClass + ': <strong>' + stat.value + '</strong></span>')
-        .animate({width: stat.value * 100 + 'px'}, 1000);
+        .animate({width: stat.value * widthScale + 'px'}, animationTime);
     });
 
   };
 
   History.getParticipantInfoFromId($stateParams.participantId).then(function(res) {
     $scope.participantInfo = res.data;
-    console.log($scope.participantInfo);
   }).then(function() {
-
     return History.getHistoryByParticipantId($stateParams.participantId);
-
   }).then(function(res) {
     $scope.eventHistory = res.data.filter(function(item) {
       return (item.event.hasOwnProperty('name'));
       // add condition:
       // && moment(item.event.start_time).diff(moment()) < 0
     });
+    //Then call functions with fetched info
     computeStats();
     drawChart();
     console.log($scope.stats);
