@@ -281,6 +281,17 @@ exports.checkinUser = function(deviceId) {
 
 // SYNC HELPERS
 
+   // For every event in the list that is confirmed
+        // Run an upsert on that gcal ID in the events table
+        // For every attendee
+          // Run an upsert on that attendee email
+        // For every attendee
+          // Run an upsert on their event_participant record
+      // For every event deleted in calendar
+        // If it’s recurring and in the future, delete all future instances
+        // if they have no status, delete them
+
+// Update an event record based on gcal api event info
 exports.upsertEvent = function(event) {
   return new models.Event({gcal_id: event.gcal_id})
     .fetch()
@@ -294,4 +305,3 @@ exports.upsertEvent = function(event) {
       }
     });
 }
-

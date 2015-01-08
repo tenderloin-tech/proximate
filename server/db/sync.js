@@ -93,7 +93,8 @@ exports.sync = function() {
         recurring_event_id: item.recurringEventId,
         start_time: item.start.dateTime,
         updated: item.updated,
-        status: item.status
+        status: item.status,
+        admin_id: adminParams.id
       }
     });
   }
@@ -102,6 +103,10 @@ exports.sync = function() {
   var syncEvents = function(events) {
     _.each(formatEventsForDb(events), function(event) {
       helpers.upsertEvent(event);
+    });
+
+    _.each(events.attendees, function(participant) {
+      console.log('participant', participant);
     });
   }
 
@@ -132,5 +137,6 @@ exports.sync = function() {
     });
 
 }
+
 
 exports.sync();
