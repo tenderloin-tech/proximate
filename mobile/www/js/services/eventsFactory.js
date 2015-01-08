@@ -17,7 +17,7 @@ angular.module('proximate.services')
       url: webServer.url + '/api/devices/' + Settings.data.deviceId +
         '/events/' + eventId + '/status'
     }).then(function(res) {
-      return res.data[0];
+      return res.data;
     });
   };
 
