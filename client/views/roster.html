@@ -18,7 +18,7 @@
           <th class="left align">Participant</th>
           <th class="left align">Email</th>
           <th class="left align">Status</th>
-          <th class="left align"></th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -41,8 +41,8 @@
             </div>
           </td>
           <td data-title="'Actions'" width="200">
-            <a ng-if="!data.$edit" href="" class="btn btn-default btn-xs" ng-click="data.$edit = true">Edit</a>
-            <a ng-if="data.$edit" href="" class="btn btn-primary btn-xs" ng-click="data.$edit = false; postParticipantStatus(data.id, data._pivot_event_id, data._pivot_status)" >Save</a>
+            <a ng-if="!data.$edit" href="" ng-click="data.$edit = true">Edit</a>
+            <a ng-if="data.$edit" href="" ng-click="data.$edit = false; updateParticipantStatus(data.id, data._pivot_event_id, data._pivot_status)" >Save</a>
           </td>
         </tr>
       </tbody>
