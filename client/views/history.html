@@ -22,7 +22,7 @@
   <div class="events content">
     <h1>Attendance history for <i>{{participantInfo.name}}</i></h1>
     <div class="chart">
-      Cool chart goes here
+      <div id="chart"></div>
     </div>
     <table class="ui celled table sortable">
       <thead>
@@ -33,13 +33,12 @@
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="data in eventsData | CurrentEvents:current">
-          <td class="username">{{data.start_time | date:'MMM d, y, h:mm:ss a'}}</td>
-          <td class="participantStatus"><a href="#">{{data.name}}</a></td>
-          <td class="participantStatus">Meow</td>
+        <tr ng-repeat="data in eventHistory">
+          <td class="username">{{data.event.start_time | date:'MMM d, y, h:mm a'}}</td>
+          <td class="participantStatus">{{data.event.name}}</td>
+          <td class="participantStatus" ng-class="{'positive': data.status === 'ontime', 'negative': data.status === 'late', 'warning': data.status === 'null'}">{{data.status}}</td>
         </tr>
       </tbody>
     </table>
-    <pre>{{data}}</pre>
   </div>
 </div>

@@ -248,6 +248,28 @@ ul {
   margin: 140px 0 0 0px !important;
 }
 
+#chart div {
+  text-align: left;
+  padding: 3px;
+  margin: 2px;
+  height: 20px;
+}
+
+#history-stats-ontime {
+  color: #4F8A10;
+  background-color: #DFF2BF;
+}
+
+#history-stats-late {
+  color: #9F6000;
+  background-color: #FEEFB3;
+}
+
+#history-stats-absent {
+  color: #D8000C;
+  background-color: #FFBABA;
+}
+
 /*
   We're using CSS transitions for when
   the enter and move events are triggered

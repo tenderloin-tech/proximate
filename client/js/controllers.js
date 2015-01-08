@@ -8,6 +8,49 @@ angular.module('proximate.controllers', [])
 
   //get info about participant and populate view
   $scope.participantInfo = {};
+  $scope.eventHistory = {};
+  $scope.stats = [
+    { name: 'ontime', label:'On Time', id: 'history-stats-ontime', value: 0},
+    { name: 'late', label:'Late', id: 'history-stats-late', value: 0},
+    { name: null, label:'Absent', id: 'history-stats-absent', value: 0},
+  ];
+
+  var computeStats = function() {
+
+    $scope.eventHistory.forEach(function(event){
+      $scope.stats.forEach(function(item){
+        if (item.name === event.status) {
+          item.value++;
+        }
+      });
+    });
+  };
+
+  var drawChart = function() {
+
+    //var maxWidth = $('table').css('width');
+
+    var scaleX = d3.scale.linear()
+            .domain([0, $scope.eventHistory.length])
+            .range([0, 1000]);
+
+    d3.select('#chart')
+      .selectAll('div')
+      .data($scope.stats)
+      .enter()
+      .append('div')
+        .style('width', 0)
+        .text(function(d) {
+          return d.label + ': ' + d.value;
+        })
+        .attr('id', function(d) {
+          return d.id;
+        })
+        .transition()
+          .delay(function(d, i) { return i * 100})
+          .duration(1000)
+          .style('width', function(d) { return scaleX(d.value) + "px"; })
+  };
 
   History.getParticipantInfoFromId($stateParams.participantId).then(function(res) {
     $scope.participantInfo = res.data;
@@ -17,9 +60,13 @@ angular.module('proximate.controllers', [])
     return History.getHistoryByParticipantId($stateParams.participantId);
 
   }).then(function(res){
-    console.log('Events', res.data);
+    $scope.eventHistory = res.data.filter(function(item) {
+      return item.event.hasOwnProperty('name');
+    });
+    computeStats();
+    drawChart();
+    console.log($scope.stats);
   });
-
 
  })
 
