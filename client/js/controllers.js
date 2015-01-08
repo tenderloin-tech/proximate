@@ -10,15 +10,15 @@ angular.module('proximate.controllers', [])
   $scope.participantInfo = {};
   $scope.eventHistory = {};
   $scope.stats = [
-    { name: 'ontime', label:'On Time', id: 'history-stats-ontime', value: 0},
-    { name: 'late', label:'Late', id: 'history-stats-late', value: 0},
-    { name: null, label:'Absent', id: 'history-stats-absent', value: 0},
+    {name: 'ontime', label:'On Time', id: 'history-stats-ontime', value: 0},
+    {name: 'late', label:'Late', id: 'history-stats-late', value: 0},
+    {name: null, label:'Absent', id: 'history-stats-absent', value: 0},
   ];
 
   var computeStats = function() {
 
-    $scope.eventHistory.forEach(function(event){
-      $scope.stats.forEach(function(item){
+    $scope.eventHistory.forEach(function(event) {
+      $scope.stats.forEach(function(item) {
         if (item.name === event.status) {
           item.value++;
         }
@@ -28,57 +28,39 @@ angular.module('proximate.controllers', [])
 
   var drawChart = function() {
 
+    // var maxWidth = $('table').css('width');
+
     $scope.stats.forEach(function(stat) {
       var nameForClass = stat.name === null ? 'absent' : stat.name;
+      if (stat.value === 0) {
+        $('#history-stats-' + nameForClass).css('display', 'none');
+      }
       $('#history-stats-' + nameForClass)
         .append('<span>' + nameForClass + ': <strong>' + stat.value + '</strong></span>')
         .animate({width: stat.value * 100 + 'px'}, 1000);
-      console.log('Setting width to stat value: ' + stat.value);
     });
 
-
-    // var maxWidth = $('table').css('width');
-    var maxWidth = 1500;
-
-    var scaleX = d3.scale.linear()
-            .domain([0, $scope.eventHistory.length])
-            .range([0, maxWidth]);
-
-    // d3.select('#chart')
-    //   .selectAll('div')
-    //   .data($scope.stats)
-    //   .enter()
-    //   .append('div')
-    //     .style('width', 0)
-    //     .text(function(d) {
-    //       return d.label + ': ' + d.value;
-    //     })
-    //     .attr('id', function(d) {
-    //       return d.id;
-    //     })
-    //     .transition()
-    //       .delay(function(d, i) { return i * 100})
-    //       .duration(1000)
-    //       .style('width', function(d) { return scaleX(d.value) + "px"; })
   };
 
   History.getParticipantInfoFromId($stateParams.participantId).then(function(res) {
     $scope.participantInfo = res.data;
     console.log($scope.participantInfo);
-  }).then(function(){
+  }).then(function() {
 
     return History.getHistoryByParticipantId($stateParams.participantId);
 
-  }).then(function(res){
+  }).then(function(res) {
     $scope.eventHistory = res.data.filter(function(item) {
-      return item.event.hasOwnProperty('name');
+      return (item.event.hasOwnProperty('name'));
+      // add condition:
+      // && moment(item.event.start_time).diff(moment()) < 0
     });
     computeStats();
     drawChart();
     console.log($scope.stats);
   });
 
- })
+})
 
 .controller('BeaconsCtrl', function($scope, Populate) {
 

@@ -289,7 +289,7 @@ module.exports = function(app) {
     var participantId = req.params.participantId;
 
     helpers.getParticipantInfo(participantId)
-      .then(function(model){
+      .then(function(model) {
         res.status(200).json(model.toJSON());
       })
       .catch(function(error) {
