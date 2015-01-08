@@ -50,7 +50,7 @@ angular.module('proximate.services', [])
   return {
     getParticipantInfoFromId: getParticipantInfoFromId,
     getHistoryByParticipantId: getHistoryByParticipantId
-  }
+  };
 })
 
 .factory('Populate', function($http) {
