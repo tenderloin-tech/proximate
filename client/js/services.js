@@ -88,6 +88,18 @@ angular.module('proximate.services', [])
     });
   };
 
+  var updateParticipantStatus = function(participantId, eventId, status) {
+    return $http({
+      method: 'Post',
+      url: '/api/participant/updateStatus',
+      data: {
+        participantId: participantId,
+        eventId: eventId,
+        status: status
+      },
+    });
+  };
+
   return {
     adminId: adminId,
     getParticipants: getParticipants,
@@ -95,7 +107,8 @@ angular.module('proximate.services', [])
     getAdminName: getAdminName,
     getEventsByAdminId: getEventsByAdminId,
     getBeaconsByAdminId: getBeaconsByAdminId,
-    postNewBeacon: postNewBeacon
+    postNewBeacon: postNewBeacon,
+    updateParticipantStatus: updateParticipantStatus
   };
 
 })
@@ -147,10 +160,8 @@ angular.module('proximate.services', [])
     var filteredResults = [];
     if (participants) {
       participants.forEach(function(participant) {
-        for (var i = 0; i < $rootScope.arrivedParticipants.length; i++) {
-          if (participant.id === $rootScope.arrivedParticipants[i].id) {
-            return;
-          }
+        if (participant._pivot_status === 'ontime') {
+          return;
         }
         filteredResults.push(participant);
       });

@@ -3,7 +3,8 @@ angular.module('proximate',
   'proximate.controllers',
   'proximate.services',
   'angularMoment',
-  'ngAnimate'
+  'ngAnimate',
+  'ngTable'
   ])
 
 .config(function($stateProvider, $urlRouterProvider) {
@@ -43,6 +44,7 @@ angular.module('proximate',
 
 .run(function($rootScope, PubNub, Populate) {
   $rootScope.participantData = [];
+
   // Fetch the participant and event data from the server
   Populate.getCurrentEvent(Populate.adminId).then(function(eventData) {
     $rootScope.eventData = eventData;
@@ -52,6 +54,10 @@ angular.module('proximate',
   }).catch(function(err) {
     console.log(err);
   });
+
+  $rootScope.updateParticipantStatus = function(participantId, eventId, participantStatus) {
+    Populate.updateParticipantStatus(participantId, eventId, participantStatus);
+  };
 
   // Fetch admin name for a given adminId
   Populate.getAdminName(Populate.adminId).then(function(adminInformation) {
