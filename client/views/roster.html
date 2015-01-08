@@ -32,7 +32,12 @@
           <td data-title="'Status'" ng-class="{'positive': data._pivot_status === 'ontime', 'negative': data._pivot_status === 'late', 'warning': data._pivot_Status === 'null'}">
             <span ng-if="!data.$edit">{{data._pivot_status}}</span>
             <div ng-if="data.$edit">
-              <input class="form-control" type="text" ng-model="data._pivot_status" />
+              <select class="form-control" ng-model="data._pivot_status">
+                 <option value="late">Late</option>
+                 <option value="ontime">Ontime</option>
+                 <option value="excused">Excused</option>
+                 <option value="absent">Absent</option>
+              </select>
             </div>
           </td>
           <td data-title="'Actions'" width="200">
