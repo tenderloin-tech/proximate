@@ -25,7 +25,7 @@
     <div class="status">
       <ul>
         <li ng-repeat="data in participantData | removeArrivedParticipants" class="repeated-item">
-         <a href="#">{{data.name}}</a>
+         <a ng-click="postParticipantStatus(data.id, data._pivot_event_id, 'ontime', 'refresh')">{{data.name}}</a>
         </li>
       </ul>
     </div>

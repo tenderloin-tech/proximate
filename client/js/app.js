@@ -44,18 +44,28 @@ angular.module('proximate',
 
 .run(function($rootScope, PubNub, Populate) {
   $rootScope.participantData = [];
-  // Fetch the participant and event data from the server
-  Populate.getCurrentEvent(Populate.adminId).then(function(eventData) {
-    $rootScope.eventData = eventData;
-    return Populate.getParticipants(eventData.data[0].id);
-  }).then(function(participantData) {
-    $rootScope.participantData = participantData.data[0].participants;
-  }).catch(function(err) {
-    console.log(err);
-  });
 
-  $rootScope.postParticipantStatus = function(participantId, eventId, participantStatus) {
-    Populate.updateParticipantStatus(participantId, eventId, participantStatus);
+  $rootScope.getEvent = function() {
+    // Fetch the participant and event data from the server
+    Populate.getCurrentEvent(Populate.adminId).then(function(eventData) {
+      $rootScope.eventData = eventData;
+      return Populate.getParticipants(eventData.data[0].id);
+    }).then(function(participantData) {
+      $rootScope.participantData = participantData.data[0].participants;
+    }).catch(function(err) {
+      console.log(err);
+    });
+  };
+
+  $rootScope.getEvent();
+
+  $rootScope.postParticipantStatus = function(participantId, eventId, participantStatus, refresh) {
+    Populate.updateParticipantStatus(participantId, eventId, participantStatus)
+    .then(function(refresh) {
+      if (refresh) {
+        $rootScope.getEvent();
+      }
+    });
   };
 
   // Fetch admin name for a given adminId
