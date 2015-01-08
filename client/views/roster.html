@@ -24,7 +24,7 @@
       <tbody>
         <tr ng-repeat="data in participantData">
           <td data-title="'Name'">
-            <span>{{data.name}}</span>
+            <span><a ng-click="showHistory(data.id)">{{data.name}}</a></span>
           </td>
           <td data-title="'Email'">
             <span>{{data.email}}</span>

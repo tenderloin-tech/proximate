@@ -28,28 +28,38 @@ angular.module('proximate.controllers', [])
 
   var drawChart = function() {
 
-    //var maxWidth = $('table').css('width');
+    $scope.stats.forEach(function(stat) {
+      var nameForClass = stat.name === null ? 'absent' : stat.name;
+      $('#history-stats-' + nameForClass)
+        .append('<span>' + nameForClass + '</span>')
+        .animate({width: stat.value * 100 + 'px'}, 1000);
+      console.log('Setting width to stat value: ' + stat.value);
+    });
+
+
+    // var maxWidth = $('table').css('width');
+    var maxWidth = 1500;
 
     var scaleX = d3.scale.linear()
             .domain([0, $scope.eventHistory.length])
-            .range([0, 1000]);
+            .range([0, maxWidth]);
 
-    d3.select('#chart')
-      .selectAll('div')
-      .data($scope.stats)
-      .enter()
-      .append('div')
-        .style('width', 0)
-        .text(function(d) {
-          return d.label + ': ' + d.value;
-        })
-        .attr('id', function(d) {
-          return d.id;
-        })
-        .transition()
-          .delay(function(d, i) { return i * 100})
-          .duration(1000)
-          .style('width', function(d) { return scaleX(d.value) + "px"; })
+    // d3.select('#chart')
+    //   .selectAll('div')
+    //   .data($scope.stats)
+    //   .enter()
+    //   .append('div')
+    //     .style('width', 0)
+    //     .text(function(d) {
+    //       return d.label + ': ' + d.value;
+    //     })
+    //     .attr('id', function(d) {
+    //       return d.id;
+    //     })
+    //     .transition()
+    //       .delay(function(d, i) { return i * 100})
+    //       .duration(1000)
+    //       .style('width', function(d) { return scaleX(d.value) + "px"; })
   };
 
   History.getParticipantInfoFromId($stateParams.participantId).then(function(res) {
@@ -88,7 +98,11 @@ angular.module('proximate.controllers', [])
   };
 })
 
-.controller('RosterCtrl', function() {
+.controller('RosterCtrl', function($scope, $state) {
+
+  $scope.showHistory = function(participantId) {
+    $state.go('history', {participantId: participantId});
+  };
 
 })
 

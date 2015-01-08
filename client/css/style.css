@@ -248,11 +248,26 @@ ul {
   margin: 140px 0 0 0px !important;
 }
 
+#chart {
+  padding: 10px 0 10px;
+  border-radius: 5px;
+}
+
 #chart div {
   text-align: left;
   padding: 3px;
-  margin: 2px;
-  height: 20px;
+  margin: 4px;
+  height: 25px;
+}
+
+.history-stats {
+  width: 0px;
+  height: 30px;
+  margin: 1px;
+}
+
+.history-stats span{
+  margin-left: 5px;
 }
 
 #history-stats-ontime {
