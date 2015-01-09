@@ -21,7 +21,13 @@ angular.module('proximate',
     .state('roster', {
       templateUrl: 'views/roster.html',
       controller: 'RosterCtrl',
-      url: '/roster'
+      url: '/events/:eventId/roster'
+    })
+
+    .state('currentRoster', {
+      templateUrl: 'views/roster.html',
+      controller: 'RosterCtrl',
+      url: '/events/current/roster'
     })
 
     .state('events', {
@@ -57,16 +63,12 @@ angular.module('proximate',
   // Fetch the participant and event data from the server
   Populate.getCurrentEvent(Populate.adminId).then(function(eventData) {
     $rootScope.eventData = eventData;
-    return Populate.getParticipants(eventData.data[0].id);
+    return Populate.getParticipants(eventData.data.id);
   }).then(function(participantData) {
     $rootScope.participantData = participantData.data[0].participants;
   }).catch(function(err) {
     console.log(err);
   });
-
-  $rootScope.updateParticipantStatus = function(participantId, eventId, participantStatus) {
-    Populate.updateParticipantStatus(participantId, eventId, participantStatus);
-  };
 
   // Fetch admin name for a given adminId
   Populate.getAdminName(Populate.adminId).then(function(adminInformation) {

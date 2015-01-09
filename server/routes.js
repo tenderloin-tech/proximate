@@ -224,9 +224,9 @@ module.exports = function(app) {
     var adminId = req.params.adminId;
 
     helpers.getCurrentEventByAdmin(adminId)
-      .then(function(event) {
-        if (event.length > 0) {
-          res.status(200).json(event.toJSON());
+      .then(function(events) {
+        if (events.length > 0) {
+          res.status(200).json(events.at(0).toJSON());
         } else {
           res.status(404).send('No current event found for this admin ');
         }

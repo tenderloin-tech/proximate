@@ -89,11 +89,44 @@ angular.module('proximate.controllers', [])
   };
 })
 
-.controller('RosterCtrl', function($scope, $state, $stateParams) {
+.controller('RosterCtrl', function($scope, $state, $stateParams, Populate) {
+
+  console.log($stateParams.eventId);
+  console.log(typeof $stateParams.eventId);
+
+  var eventId = $stateParams.eventId;
+
+  console.log(eventId);
+
+  $scope.getParticipants = function() {
+    if (eventId === 'current') {
+      Populate.getCurrentEvent(Populate.adminId).then(function(eventData) {
+        $scope.event = eventData.data;
+        return Populate.getParticipants(eventData.data.id);
+      }).then(function(participantData) {
+        $scope.participants = participantData.data[0].participants;
+      }).catch(function(err) {
+        console.log(err);
+      });
+    } else {
+      Populate.getParticipants(eventId).then(function(participantData) {
+        $scope.event = participantData.data[0];
+        $scope.participants = participantData.data[0].participants;
+      }).catch(function(error) {
+        console.log(error);
+      })
+    };
+  };
 
   $scope.showParticipantHistory = function(participantId) {
     $state.go('participant', {participantId: participantId});
   };
+
+  $scope.updateParticipantStatus = function(participantId, eventId, participantStatus) {
+    Populate.updateParticipantStatus(participantId, eventId, participantStatus);
+  };
+
+  $scope.getParticipants();
 
 })
 

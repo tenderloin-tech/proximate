@@ -2,8 +2,8 @@
   <ng-include src="'/views/partials/topnav.html'"></ng-include>
   <ng-include src="'/views/partials/sidebar.html'"></ng-include>
   <div class="events content">
-    <h1>{{eventData.data[0].name}}</h1>
-    <p class="admin-time">{{eventData.data[0].start_time | date:'h:mm a, MMMM dd, yyyy'}}</p>
+    <h1>{{event.name}}</h1>
+    <p class="admin-time">{{event.start_time | date:'h:mm a, MMMM dd, yyyy'}}</p>
     <table ng-table="tableParams" class="ui celled table sortable">
       <thead>
         <tr>
@@ -14,7 +14,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="data in participantData">
+        <tr ng-repeat="data in participants">
           <td data-title="'Name'">
             <span><a ng-click="showParticipantHistory(data.id)">{{data.name}}</a></span>
           </td>
@@ -34,7 +34,7 @@
           </td>
           <td data-title="'Actions'" width="200">
             <a ng-if="!data.$edit" href="" ng-click="data.$edit = true">Edit</a>
-            <a ng-if="data.$edit" href="" ng-click="data.$edit = false; updateParticipantStatus(data.id, data._pivot_event_id, data._pivot_status)" >Save</a>
+            <a ng-if="data.$edit" href="" ng-click="data.$edit = false; updateParticipantStatus(data.id, data._pivot_event_id, data._pivot_status)">Save</a>
           </td>
         </tr>
       </tbody>
