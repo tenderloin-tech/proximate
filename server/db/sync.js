@@ -58,6 +58,8 @@ exports.sync = function() {
 
   }
 
+  // HELPERS TO FORMAT AND FILTER FETCHED EVENTS
+
   // Check for proximate in the attendee list
   var hasProximate = function(attendeeList) {
     return _.some(attendeeList, function(item) {
@@ -84,8 +86,33 @@ exports.sync = function() {
     return _.every(conditions,function(val) { return val; });
   }
 
+  var filterAttendees = function(attendees, participantIds) {
+    return _.chain(attendees)
+    .filter(function(attendee) {
+      return (attendee !== undefined && !attendee.self && attendee.email !== 'attendance@proximate.io');
+    })
+    .map(function(attendee) {
+      var matchingRecord = _.find(participantIds, function(participant) {
+        return participant.email === attendee.email;
+      });
+      return {
+        participant_id: matchingRecord.participant_id,
+        email: attendee.email,
+        name: attendee.displayName || null,
+        gcal_response_status: attendee.responseStatus
+      }
+    })
+    .value();
+  }
+
   // Map gcal data to database fields and admin info before inserting
-  var formatEvents = function(event) {
+  var formatEvents = function(events, participantIds) {
+
+    return _.chain(events)
+    .uniq(function(event) {
+      return event.id
+    })
+    .map(function(event) {
       return {
         gcal_id: event.id,
         name: event.summary,
@@ -95,32 +122,15 @@ exports.sync = function() {
         start_time: event.start.dateTime,
         updated: event.updated,
         status: event.status,
-        admin_id: adminParams.id
+        admin_id: adminParams.id,
+        attendees: filterAttendees(event.attendees, participantIds)
       }
+    })
+    .value();
+
   }
 
-  //Filter attendees and reformat to match db field names
-  var formatAttendees = function(attendees) {
-    return _.chain(attendees)
-      .filter(function(attendee) {
-        if(attendee.self || attendee.email === 'attendance@proximate.io') {
-          return false;
-        }
-        return true;
-      })
-      .map(function(attendee) {
-        return [{
-          email: attendee.email,
-          name: attendee.displayName || null
-        },{
-          gcal_response_status: attendee.responseStatus
-        }]
-      })
-      .value();
-  }
-
-  // NOT USING TWOPULLS
-  // Filter attendees and reformat to match db field names
+  // OLD ATTENDEE FILTER FUNCTION
   // var formatAttendees = function(attendees) {
   //   return _.chain(attendees)
   //     .filter(function(attendee) {
@@ -130,85 +140,84 @@ exports.sync = function() {
   //       return true;
   //     })
   //     .map(function(attendee) {
-  //       return {
+  //       return [{
   //         email: attendee.email,
   //         name: attendee.displayName || null
-  //       }
+  //       },{
+  //         gcal_response_status: attendee.responseStatus
+  //       }]
   //     })
   //     .value();
   // }
 
-  // Format event_participant info an map to db fields
+  // FUNCTIONS TO FILTER PARTICIPANT INFORMATION
 
-  var formatStatus = function(eventId, attendeeInfo) {
-    // console.log('eventId', eventId);
-    // console.log('attendeeInfo', attendeeInfo);
-    // participantIds = _.chain(attendeeInfo)
-    // .map(function(attendee) {
-    //   return formatStatus(attendee.attributes, ;
+  var formatAttendees = function(events) {
+
+    var attendees = _.pluck(events, 'attendees');
+
+    attendees = _.chain(attendees)
+    .flatten()
+    .filter(function(attendee) {
+      return (attendee !== undefined && !attendee.self && attendee.email !== 'attendance@proximate.io');
+    })
+    .uniq(function(attendee) {
+      return attendee.email;
+    })
+    .map(function(attendee) {
+      return {
+        email: attendee.email,
+        name: attendee.displayName || null
+      }
+    })
+    .value()
+
+    return attendees;
+
+  }
+
+
+  var formatEventParticipants = function(eventRecords, participantIds, fetchedEvents) {
+    // console.log('event record', eventRecords[0]);
+    // console.log('participant id', participantIds[0]);
+    // console.log('fetched events', fetchedEvents[0]);
+      // We have the eventRecords which has gcal_id and event_id
+      // We have participant_ids which has email and participant_id
+      // We have fetched events which maps attendees to events via gcal id
+
+    // We want {eventRecords.attributes.id, participantIds.id, fetchedEvents.attendees[0...n]}
+
+    // Extract the event ID and gcal ID from the db records
+    // var eventsParticipants = _.map(eventRecords, function(eventRecord) {
+    //   return {
+    //     event_id: eventRecord.attributes.id,
+    //     gcal_id: eventRecord.attributes.gcal_id,
+    //   }
+    // });
+
+    // console.log(eventsParticipants);
+
+    // // Add fetchedEvents.attendees if gcal id matches
+    // eventsParticipants = _.map(eventsParticipants, function(eventParticipant) {
+    //   fetchedEvent = _.find(fetchedEvents, function(fetchedEvent) {
+    //     return fetchedEvent.id === eventParticipant.gcal_id;
+    //   });
+    //   eventParticipant.attendees = filterAttendees(fetchedEvent.attendees,);
+    //   return eventParticipant;
     // })
-    // .uniq()
-    // .value();
+
+    //console.log('events_participants', eventsParticipants);
+    // EventsParticipants
+      // Return {eventRecords.attributes.id: {attendees: fetchedEvents.attendees}} on fetchedEvents.id = eventRecords.gcal_id
+
+
   }
 
-  // Accept events that have attendees
-    // These attendee records have a response status for a given event
-    // We want to update the event in question and get an id for the event db record
-    // Next we want to update any participant records in the db
-    // Finally, once those participant records come back with an ID we want to combine them...
-      // back again with their response status for this event and write
+  // CONTROL FLOW FOR SYNC OPERATIONS
 
-  // Loop through every filtered event and update db
-  var updateDb = function(events) {
-    _.each(events, function(event) {
-      var formattedEvent = formatEvents(event);
-      var formattedAttendees = formatAttendees(event.attendees);
-      var eventId;
-      var participantIds;
-      var formattedStatus;
-
-      // Update the event record for this event and save the event_id from db
-      helpers.upsertEvent(formattedEvent)
-      // Loop through formatted attendees and update participant records in db
-      .then(function(eventInfo) {
-        eventId = eventInfo.attributes.id;
-        // Each db call must finish before the next to avoid duplicates
-        return mapSeries(formattedAttendees, function(attendee) {
-          return helpers.upsertParticipant(attendee[0]);
-        });
-      })
-      .then(function(attendeeInfo) {
-        // Join formatted attendee info with event_id and participant_id from db
-        eventsParticipants = _.map(formattedAttendees, function(formattedAttendee) {
-          var matchedRecord = _.find(attendeeInfo, function(attendee) {
-            return formattedAttendee[0].email === attendee.attributes.email;
-          });
-          return {
-            event_id: eventId,
-            participant_id: matchedRecord.attributes.id,
-            gcal_response_status: formattedAttendee[1].gcal_response_status
-          }
-        })
-
-
-
-        // Update event participant info
-        return mapSeries(eventsParticipants, helpers.upsertEventParticipant);
-
-      // return promise.all(
-      //   _.map(eventsParticipants, function(eventParticipant) {
-      //     return helpers.upsertEventParticipant(eventParticipant);
-      // }))
-      // .then(function(eventParticipantInfo) {
-      //   //console.log('event participant info', eventParticipantInfo);
-
-      // });
-        //console.log('events participants', events_participants);
-
-
-      });
-    });
-  }
+  // Closure scope var to store result of db/api calls
+  var fetchedEvents;
+  var participantIds;
 
   auth.authenticate(adminParams.email)
     .then(getCalendars)
@@ -222,19 +231,44 @@ exports.sync = function() {
     })
     .then(function(events) {
       // Flatten and apply the filters defined above
-      var events =
+      fetchedEvents =
         _.chain(events)
         .flatten()
         .filter(function(event) {
           return isValid(event);
         })
         .value()
-      // Take our filtered list of events and insert into db
-      return updateDb(events);
+
+      // Update the participants table with a formatted group of participants
+      var formattedAttendees = formatAttendees(fetchedEvents);
+      return promise.all(_.map(formattedAttendees, helpers.upsertParticipant));
     })
-    .catch(function(error) {
-      console.log('Error syncing calendar', error);
-    });
+    .then(function(participantRecords) {
+      // Store participant ids to access later once db operation is complete
+      participantIds = _.map(participantRecords, function(participant) {
+        return {
+          participant_id: participant.attributes.id,
+          email: participant.attributes.email }
+      });
+
+      // Now update all the event records
+
+      var formattedEvents = formatEvents(fetchedEvents, participantIds);
+      //console.log('single event for insertion', formattedEvents[8]);
+      //console.log('single event attendees insertion', formattedEvents[8].attendees, '\n');
+      return promise.all(_.map(formattedEvents, helpers.upsertEvent));
+    })
+    .then(function(eventRecords) {
+      //console.log('one event record after insert', eventRecords[0]);
+    //   //Finally update the event status
+
+    //   var formattedEventParticipants = formatEventParticipants(eventRecords, participantIds, fetchedEvents);
+
+    //   //_.each(eventRecords, function(record) { console.log('record', record) });
+    })
+    // .catch(function(error) {
+    //   console.log('Error syncing calendar', error);
+    // });
 
 }
 
@@ -242,47 +276,3 @@ exports.sync = function() {
 exports.sync();
 
 
-// Before insert
-
-// formatted attendees [ [ { email: 'sgtonkin@gmail.com', name: 'Sebastian Tonkin' },
-//     { gcal_response_status: 'needsAction' } ],
-//   [ { email: 'avidunn@gmail.com', name: 'Avi Dunn' },
-//     { gcal_response_status: 'needsAction' } ],
-//   [ { email: 'poison5151@gmail.com', name: 'Valentyn Boginskey' },
-//     { gcal_response_status: 'needsAction' } ],
-//   [ { email: 'derek.barncard@gmail.com',
-//       name: 'Derek Ryan Barncard' },
-//     { gcal_response_status: 'accepted' } ] ]
-
-// After db
-
-// { attributes:
-// { email: 'sgtonkin@gmail.com',
-//        id: 68,
-//        name: 'Sebastian Tonkin',
-//        device_id: null },
-//     _previousAttributes:
-//      { email: 'sgtonkin@gmail.com',
-//        id: 68,
-//        name: 'Sebastian Tonkin',
-//        device_id: null },
-//     changed: {},
-//     relations: {},
-//     cid: 'c116',
-//     _knex: null,
-//     id: 68 },
-//   { attributes:
-//      { email: 'avidunn@gmail.com',
-//        id: 39,
-//        name: 'Avi Dunn',
-//        device_id: null },
-//     _previousAttributes:
-//      { email: 'avidunn@gmail.com',
-//        id: 39,
-//        name: 'Avi Dunn',
-//        device_id: null },
-//     changed: {},
-//     relations: {},
-//     cid: 'c117',
-//     _knex: null,
-//     id: 39 },

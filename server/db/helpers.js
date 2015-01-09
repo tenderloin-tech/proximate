@@ -1,5 +1,7 @@
 var models = require('../models');
 var moment = require('moment');
+var _ = require('underscore');
+var mapSeries = require('promise-map-series');
 
 // POST HELPERS
 
@@ -281,18 +283,14 @@ exports.checkinUser = function(deviceId) {
 
 // SYNC HELPERS
 
-   // For every event in the list that is confirmed
-        // Run an upsert on that gcal ID in the events table
-        // For every attendee
-          // Run an upsert on that attendee email
-        // For every attendee
-          // Run an upsert on their event_participant record
-      // For every event deleted in calendar
-        // If it’s recurring and in the future, delete all future instances
-        // if they have no status, delete them
-
-// Update an event record based on gcal api event info
+// Update an event record, and event participant record based on gcal api event info
 exports.upsertEvent = function(event) {
+
+  var attendees = event.attendees;
+  delete event.attendees;
+
+  console.log('attendees', attendees);
+
   return new models.Event({gcal_id: event.gcal_id})
     .fetch()
     .then(function(model) {
@@ -303,34 +301,51 @@ exports.upsertEvent = function(event) {
         //console.log('saving new event');
         return models.Event.forge(event).save();
       }
+    })
+    .then(function(eventRecord) {
+      console.log('eventRecord', eventRecord);
+      if(attendees.length > 0) {
+        var eventParticipants = _.map(attendees, function(attendee) {
+          return {
+            event_id: eventRecord.attributes.id,
+            gcal_id: eventRecord.attributes.gcal_id,
+            participant_id: attendee.participant_id,
+            gcal_response_status: attendee.gcal_response_status
+          }
+        });
+
+        return mapSeries(eventParticipants, function(eventParticipant) {
+          return new models.EventParticipant(eventParticipant)
+            .fetch()
+            .then(function(model) {
+              if(model) {
+                console.log('updating status', eventParticipant);
+                return model.save(status);
+              } else {
+                console.log('saving new status', eventParticipant);
+                return models.EventParticipant.forge(eventParticipant).save();
+              }
+            });
+        });
+      }
     });
+
 }
 
 exports.upsertParticipant = function(participant) {
-  console.log('participant email', participant.email);
   return new models.Participant({email: participant.email})
     .fetch()
     .then(function(model) {
       if(model) {
-        console.log('updating participant', participant.email);
+        //console.log('updating participant', participant.email);
         return model.save(participant);
       } else {
-        console.log('saving new participant', participant.email);
+        //console.log('saving new participant', participant.email);
         return models.Participant.forge(participant).save();
       }
     });
 }
 
 exports.upsertEventParticipant = function(status) {
-  return new models.EventParticipant({event_id: status.event_id, participant_id: status.participant_id})
-    .fetch()
-    .then(function(model) {
-      if(model) {
-        console.log('updating status');
-        return model.save(status);
-      } else {
-        console.log('saving new status');
-        return models.EventParticipant.forge(status).save();
-      }
-    });
+
 }
