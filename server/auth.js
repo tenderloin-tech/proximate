@@ -14,6 +14,7 @@ var client = exports.client = new auth.OAuth2(
 );
 
 // Authenticate existing user
+// TODO: Refactor using Promise.method
 exports.authenticate = function(email) {
   return helpers.getAdminTokens(email)
     .then(function(tokens) {
