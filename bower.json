@@ -28,7 +28,6 @@
     "semantic-ui-menu": "~1.0.0",
     "semantic-ui-form": "~1.0.0",
     "ng-table": "~0.3.3",
-    "underscore": "~1.7.0",
-    "d3": "~3.5.3"
+    "underscore": "~1.7.0"
   }
 }

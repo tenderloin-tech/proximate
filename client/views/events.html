@@ -1,24 +1,6 @@
 <div class="admin">
-  <div class="logo">
-    <ul class="nav">
-      <li>Proximate</li>
-    </ul>
-  </div>
-  <div class="userinfo">
-    <ul class="nav">
-      <li><a href="#">{{adminInformation.data.name}}</a></li>
-    </ul>
-  </div>
-  <div class="ui vertical menu">
-    <a class="active item">
-      Events
-      <div class="ui"></div>
-    </a>
-    <a class="item" href="/#/beacons">
-      Beacons
-      <div class="ui"></div>
-    </a>
-  </div>
+  <ng-include src="'/views/partials/topnav.html'"></ng-include>
+  <ng-include src="'/views/partials/sidebar.html'"></ng-include>
   <div class="events content">
     <h1>{{eventData.data[0].name}}{{eventData.data[0].start_time | date:' M/d/yy h:mm a'}}</h1>
     <h3>
