@@ -8,6 +8,10 @@ var helpers = require('./db/helpers');
 module.exports = function(app) {
 
   /* Client routes */
+  app.use('/test', auth.authClient);
+  app.get('/test', function(req, res) {
+    res.status(200).send('ok');
+  })
 
   app.get('/', function(req, res) {
     // Create anti-CSRF token
