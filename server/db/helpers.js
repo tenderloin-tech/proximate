@@ -297,11 +297,25 @@ exports.upsertEvent = function(event) {
     .fetch()
     .then(function(model) {
       if(model) {
-        console.log('updating record');
+        console.log('updating event');
         return model.save(event);
       } else {
-        console.log('saving new record');
+        console.log('saving new event');
         return models.Event.forge(event).save();
+      }
+    });
+}
+
+exports.upsertParticipant = function(participant) {
+  return new models.Participant({email: participant.email})
+    .fetch()
+    .then(function(model) {
+      if(model) {
+        console.log('updating participant', participant.email);
+        return model.save(participant);
+      } else {
+        console.log('saving new participant', participant.email);
+        return models.Participant.forge(participant).save();
       }
     });
 }

@@ -83,31 +83,64 @@ exports.sync = function() {
     return _.every(conditions,function(val) { return val; });
   }
 
-  var formatEventsForDb = function(events) {
-    return _.map(events, function(item) {
+  // Map gcal data to database fields and admin info before inserting
+  var formatEvents = function(event) {
       return {
-        gcal_id: item.id,
-        name: item.summary,
-        location: item.location,
-        htmlLink: item.htmlLink,
-        recurring_event_id: item.recurringEventId,
-        start_time: item.start.dateTime,
-        updated: item.updated,
-        status: item.status,
+        gcal_id: event.id,
+        name: event.summary,
+        location: event.location,
+        htmlLink: event.htmlLink,
+        recurring_event_id: event.recurringEventId,
+        start_time: event.start.dateTime,
+        updated: event.updated,
+        status: event.status,
         admin_id: adminParams.id
       }
-    });
   }
 
-  // Pull out the event into and upsert it
-  var syncEvents = function(events) {
-    _.each(formatEventsForDb(events), function(event) {
-      helpers.upsertEvent(event);
+  // Filter attendees and reformat to match db field names
+  var formatAttendees = function(attendees) {
+    return _.chain(attendees)
+      .filter(function(attendee) {
+        if(attendee.self || attendee.email === 'attendance@proximate.io') {
+          return false;
+        }
+        return true;
+      })
+      .map(function(attendee) {
+        return {
+          email: attendee.email,
+          name: attendee.displayName || null
+        }
+      })
+      .value();
+  }
+
+  // Pull out the event info
+  var updateDb = function(events) {
+    // Format participants for insertion
+    var participants = _.map(events, function(event) {
+      return formatAttendees(event.attendees);
+    })
+
+
+    // Format events for insertion and insert them
+    _.each(events, function(event) {
+      var formattedEvent = formatEvents(event);
+      helpers.upsertEvent(formattedEvent);
     });
 
-    _.each(events.attendees, function(participant) {
-      console.log('participant', participant);
-    });
+    // Clear duplicates from participants and insert them
+    _.chain(participants)
+      .flatten()
+      .uniq(false, function(participant) {
+        return participant.email;
+      })
+      .each(function(participant) {
+        helpers.upsertParticipant(participant);
+      });
+
+
   }
 
   auth.authenticate(adminParams.email)
@@ -130,7 +163,7 @@ exports.sync = function() {
         })
         .value()
       // Update the events in the db
-      syncEvents(events);
+      return updateDb(events);
     })
     .catch(function(error) {
       console.log('Error syncing calendar', error);
