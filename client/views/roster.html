@@ -4,7 +4,8 @@
   <div class="events content">
     <h1>{{eventData.data[0].name}}</h1>
     <p class="admin-time">{{eventData.data[0].start_time | date:'h:mm a, MMMM dd, yyyy'}}</p>
-    <table ng-table="tableParams" class="ui celled table sortable">
+    <a ng-mousedown="csv.generate()" ng-href="{{csv.link()}}" download="test.csv">Export to CSV</a>
+    <table ng-table="tableParams" export-csv="csv" class="ui celled table sortable">
       <thead>
         <tr>
           <th class="left align">Participant</th>
