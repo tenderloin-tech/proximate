@@ -248,6 +248,48 @@ ul {
   margin: 140px 0 0 0px !important;
 }
 
+#chart {
+  padding: 10px 0 10px;
+  border-radius: 5px;
+}
+
+#chart div {
+  text-align: left;
+  padding: 3px;
+  margin: 4px;
+  height: 25px;
+}
+
+.history-stats {
+  width: 0px;
+  height: 30px;
+  margin: 1px;
+}
+
+.history-stats span{
+  margin-left: 5px;
+}
+
+.history-stats strong{
+  margin-left: 2px;
+  font-size: 1.2em;
+}
+
+#history-stats-ontime {
+  color: #4F8A10;
+  background-color: #DFF2BF;
+}
+
+#history-stats-late {
+  color: #9F6000;
+  background-color: #FEEFB3;
+}
+
+#history-stats-absent {
+  color: #D8000C;
+  background-color: #FFBABA;
+}
+
 /*
   We're using CSS transitions for when
   the enter and move events are triggered

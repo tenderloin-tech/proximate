@@ -187,6 +187,21 @@ module.exports = function(app) {
 
   });
 
+  // Return a list of events with associated statuses for a participant
+  app.get('/api/participants/:participantId/history', function(req, res) {
+
+    var participantId = req.params.participantId;
+
+    helpers.getParticipantEventHistory(participantId)
+      .then(function(model) {
+        res.status(200).json(model.toJSON());
+      })
+      .catch(function(error) {
+        res.status(404).send('Unable to fetch events for this participant ' + error);
+      });
+
+  });
+
   // Get event participants for a given eventId
   app.get('/api/events/:eventId/participants', function(req, res) {
 
@@ -208,11 +223,12 @@ module.exports = function(app) {
     var participantId = req.params.participantId;
 
     helpers.getCurrentEvent(participantId)
-      .then(function(event) {
-        if (event.length > 0) {
-          res.status(200).json(event.toJSON());
+      .then(function(events) {
+        if (events.length > 0) {
+          res.status(200).json(events.at(0).toJSON());
         } else {
           res.status(404).send('No current event found for this participant ');
+          return;
         }
       })
       .catch(function(error) {
@@ -265,6 +281,20 @@ module.exports = function(app) {
       })
       .catch(function(error) {
         res.status(404).send('Unable to fetch admin name ' + error);
+      });
+  });
+
+  // Get the participant info for a given participlant ID
+  app.get('/api/participants/:participantId', function(req, res) {
+
+    var participantId = req.params.participantId;
+
+    helpers.getParticipantInfo(participantId)
+      .then(function(model) {
+        res.status(200).json(model.toJSON());
+      })
+      .catch(function(error) {
+        res.status(404).send('Unable to fetch participant info ' + error);
       });
   });
 
