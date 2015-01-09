@@ -2,7 +2,7 @@
   <ng-include src="'/views/partials/topnav.html'"></ng-include>
   <ng-include src="'/views/partials/sidebar.html'"></ng-include>
   <div class="events content">
-    <h1>{{eventData.data.name}}{{eventData.data[0].start_time | date:' M/d/yy h:mm a'}}</h1>
+    <h1>{{currentEvent.data.name}}{{currentEvent.data.start_time | date:' M/d/yy h:mm a'}}</h1>
     <h3>
       <a ui-sref="projector">Projector View</a>
       <a href="#" ng-click="getEventRoster($event, 'current')">Roster</a>

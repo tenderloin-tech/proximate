@@ -58,14 +58,14 @@ angular.module('proximate',
 })
 
 .run(function($rootScope, PubNub, Populate) {
-  $rootScope.participantData = [];
+  $rootScope.currentEventParticipants = [];
 
   // Fetch the participant and event data from the server
   Populate.getCurrentEvent(Populate.adminId).then(function(eventData) {
-    $rootScope.eventData = eventData;
+    $rootScope.currentEvent = eventData;
     return Populate.getParticipants(eventData.data.id);
   }).then(function(participantData) {
-    $rootScope.participantData = participantData.data[0].participants;
+    $rootScope.currentEventParticipants = participantData.data[0].participants;
   }).catch(function(err) {
     console.log(err);
   });
@@ -89,8 +89,9 @@ angular.module('proximate',
         status: message.checkinStatus
       });
       // Find the correct participant in participantData and update their status
-      $rootScope.$apply($rootScope.participantData.some(function(participant) {
+      $rootScope.$apply($rootScope.currentEventParticipants.some(function(participant) {
         if (participant.id === message.participantId) {
+          console.log('Setting status :', message);
           participant._pivot_status = message.checkinStatus;
           return true;
         }

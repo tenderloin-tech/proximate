@@ -89,25 +89,23 @@ angular.module('proximate.controllers', [])
   };
 })
 
-.controller('RosterCtrl', function($scope, $state, $stateParams, Populate) {
-
-  console.log($stateParams.eventId);
-  console.log(typeof $stateParams.eventId);
+.controller('RosterCtrl', function($scope, $rootScope, $state, $stateParams, Populate) {
 
   var eventId = $stateParams.eventId;
 
-  console.log(eventId);
-
   $scope.getParticipants = function() {
+    // If the specified event is 'current', populate with the latest event, applying to rootScope
+    // as well for sharing with the projector view
     if (eventId === 'current') {
       Populate.getCurrentEvent(Populate.adminId).then(function(eventData) {
-        $scope.event = eventData.data;
+        $scope.event = $rootScope.currentEvent = eventData.data;
         return Populate.getParticipants(eventData.data.id);
       }).then(function(participantData) {
-        $scope.participants = participantData.data[0].participants;
+        $scope.participants = $rootScope.currentEventParticipants = participantData.data[0].participants;
       }).catch(function(err) {
         console.log(err);
       });
+      // Or proceed to get event by id
     } else {
       Populate.getParticipants(eventId).then(function(participantData) {
         $scope.event = participantData.data[0];
@@ -118,6 +116,7 @@ angular.module('proximate.controllers', [])
     };
   };
 
+  // Click handler for getting event participation history
   $scope.showParticipantHistory = function(participantId) {
     $state.go('participant', {participantId: participantId});
   };
