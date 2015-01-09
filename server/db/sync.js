@@ -4,6 +4,7 @@ var auth = require('../auth');
 var helpers = require('./helpers');
 var _ = require('underscore');
 var moment = require('moment');
+var mapSeries = require('promise-map-series')
 
 exports.sync = function() {
 
@@ -98,7 +99,7 @@ exports.sync = function() {
       }
   }
 
-  // Filter attendees and reformat to match db field names
+  //Filter attendees and reformat to match db field names
   var formatAttendees = function(attendees) {
     return _.chain(attendees)
       .filter(function(attendee) {
@@ -118,6 +119,25 @@ exports.sync = function() {
       .value();
   }
 
+  // NOT USING TWOPULLS
+  // Filter attendees and reformat to match db field names
+  // var formatAttendees = function(attendees) {
+  //   return _.chain(attendees)
+  //     .filter(function(attendee) {
+  //       if(attendee.self || attendee.email === 'attendance@proximate.io') {
+  //         return false;
+  //       }
+  //       return true;
+  //     })
+  //     .map(function(attendee) {
+  //       return {
+  //         email: attendee.email,
+  //         name: attendee.displayName || null
+  //       }
+  //     })
+  //     .value();
+  // }
+
   // Format event_participant info an map to db fields
 
   var formatStatus = function(eventId, attendeeInfo) {
@@ -131,17 +151,15 @@ exports.sync = function() {
     // .value();
   }
 
-  // Pull out the event info
+  // Accept events that have attendees
+    // These attendee records have a response status for a given event
+    // We want to update the event in question and get an id for the event db record
+    // Next we want to update any participant records in the db
+    // Finally, once those participant records come back with an ID we want to combine them...
+      // back again with their response status for this event and write
+
+  // Loop through every filtered event and update db
   var updateDb = function(events) {
-    // Format events for insertion and insert them
-
-    // Accept events that have attendees
-      // These attendee records have a response status for a given event
-      // We want to update the event in question and get an id for the event db record
-      // Next we want to update any participant records in the db
-      // Finally, once those participant records come back with an ID we want to combine them...
-        // back again with their response status for this event and write
-
     _.each(events, function(event) {
       var formattedEvent = formatEvents(event);
       var formattedAttendees = formatAttendees(event.attendees);
@@ -149,74 +167,47 @@ exports.sync = function() {
       var participantIds;
       var formattedStatus;
 
+      // Update the event record for this event and save the event_id from db
       helpers.upsertEvent(formattedEvent)
+      // Loop through formatted attendees and update participant records in db
       .then(function(eventInfo) {
         eventId = eventInfo.attributes.id;
-
-        // console.log('eventId', eventId);
-        // console.log('formatted attendees', formattedAttendees)
-
-        return promise.all(
-          _.map(formattedAttendees, function(attendee) {
-            console.log('attendee', attendee);
-            return helpers.upsertParticipant(attendee[0]);
-        }));
+        // Each db call must finish before the next to avoid duplicates
+        return mapSeries(formattedAttendees, function(attendee) {
+          return helpers.upsertParticipant(attendee[0]);
+        });
       })
       .then(function(attendeeInfo) {
-
-        // console.log('attendee info after db', attendeeInfo, "\n");
-
-        // Loop through each formatted attendee
-        // Find a record in attendeee info where the emails match
-        // Once you find that, add a new value to it that matches what we want to insert including eventId and participant id
-        // insert it
-
-        events_participants = _.map(formattedAttendees, function(formattedAttendee) {
+        // Join formatted attendee info with event_id and participant_id from db
+        eventsParticipants = _.map(formattedAttendees, function(formattedAttendee) {
           var matchedRecord = _.find(attendeeInfo, function(attendee) {
-            // console.log('attendee', attendee, '\n');
-            // console.log('formatted email', formattedAttendee[0].email);
-            // console.log('attendee email', attendee.attributes.email);
             return formattedAttendee[0].email === attendee.attributes.email;
           });
-
           return {
             event_id: eventId,
-            participantId: matchedRecord.attributes.id,
+            participant_id: matchedRecord.attributes.id,
             gcal_response_status: formattedAttendee[1].gcal_response_status
           }
-
-          // console.log('matchedRecord', matchedRecord);
-          // console.log('formattedAttendee', formattedAttendee, '\n');
-
-
         })
 
-        console.log('events participants', events_participants);
 
 
+        // Update event participant info
+        return mapSeries(eventsParticipants, helpers.upsertEventParticipant);
 
-        // Combine the id field of this array with formattedAttendees based on a match on email
+      // return promise.all(
+      //   _.map(eventsParticipants, function(eventParticipant) {
+      //     return helpers.upsertEventParticipant(eventParticipant);
+      // }))
+      // .then(function(eventParticipantInfo) {
+      //   //console.log('event participant info', eventParticipantInfo);
 
-        // var formattedStatus = formatStatus(eventId, attendeeInfo);
-
-        // For each participant ID, create or update an events_participants record
+      // });
+        //console.log('events participants', events_participants);
 
 
       });
     });
-
-    // Clear duplicates from participants and insert them
-    // _.chain(participants)
-    //   .flatten()
-    //   .uniq(false, function(participant) {
-    //     return participant.email;
-    //   })
-    //   .each(function(participant) {
-    //     helpers.upsertParticipant(participant);
-    //   });
-
-
-
   }
 
   auth.authenticate(adminParams.email)

@@ -297,16 +297,17 @@ exports.upsertEvent = function(event) {
     .fetch()
     .then(function(model) {
       if(model) {
-        console.log('updating event');
+        //console.log('updating event');
         return model.save(event);
       } else {
-        console.log('saving new event');
+        //console.log('saving new event');
         return models.Event.forge(event).save();
       }
     });
 }
 
 exports.upsertParticipant = function(participant) {
+  console.log('participant email', participant.email);
   return new models.Participant({email: participant.email})
     .fetch()
     .then(function(model) {
@@ -316,6 +317,20 @@ exports.upsertParticipant = function(participant) {
       } else {
         console.log('saving new participant', participant.email);
         return models.Participant.forge(participant).save();
+      }
+    });
+}
+
+exports.upsertEventParticipant = function(status) {
+  return new models.EventParticipant({event_id: status.event_id, participant_id: status.participant_id})
+    .fetch()
+    .then(function(model) {
+      if(model) {
+        console.log('updating status');
+        return model.save(status);
+      } else {
+        console.log('saving new status');
+        return models.EventParticipant.forge(status).save();
       }
     });
 }
