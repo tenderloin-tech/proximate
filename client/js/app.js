@@ -75,11 +75,6 @@ angular.module('proximate',
     $rootScope.adminInformation = adminInformation;
   });
 
-  // Fetch events data for given adminId
-  Populate.getEventsByAdminId(Populate.adminId).then(function(eventsData) {
-    $rootScope.eventsData = eventsData.data;
-  });
-
   $rootScope.arrivedParticipants = [];
   // Listen for checkin confirmations and add these to arrivedParticipants
   PubNub.subscribe('checkins', function(message) {

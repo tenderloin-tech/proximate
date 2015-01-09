@@ -1,13 +1,19 @@
 
 angular.module('proximate.controllers', [])
 
-.controller('EventsCtrl', function($scope, $state) {
+.controller('EventsCtrl', function($scope, $state, Populate) {
   $scope.current = true;
 
+  // Click handler for getting roster for a single event
   $scope.getEventRoster = function(event, eventId) {
     event.preventDefault();
     $state.go('roster', {eventId: eventId});
   };
+
+  // Fetch events data for given adminId
+  Populate.getEventsByAdminId(Populate.adminId).then(function(eventsData) {
+    $scope.events = eventsData.data;
+  });
 
 })
 

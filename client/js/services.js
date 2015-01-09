@@ -161,15 +161,13 @@ angular.module('proximate.services', [])
     var now = moment();
     if (events) {
       events.forEach(function(event) {
-        for (var i = 0; i < $rootScope.eventsData.length; i++) {
-          if (current) {
-            if (moment(event.start_time).diff(now) < 0) {
-              return;
-            }
-          } else {
-            if (moment(event.start_time).diff(now) >= 0) {
-              return;
-            }
+        if (current) {
+          if (moment(event.start_time).diff(now) < 0) {
+            return;
+          }
+        } else {
+          if (moment(event.start_time).diff(now) >= 0) {
+            return;
           }
         }
         filteredResults.push(event);
