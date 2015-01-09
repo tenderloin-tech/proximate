@@ -192,7 +192,7 @@ module.exports = function(app) {
 
     var participantId = req.params.participantId;
 
-    helpers.getEventHistory(participantId)
+    helpers.getParticipantEventHistory(participantId)
       .then(function(model) {
         res.status(200).json(model.toJSON());
       })

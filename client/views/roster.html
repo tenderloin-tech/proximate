@@ -1,6 +1,7 @@
 <div class="admin">
   <ng-include src="'/views/partials/topnav.html'"></ng-include>
-  <div class="content">
+  <ng-include src="'/views/partials/sidebar.html'"></ng-include>
+  <div class="events content">
     <h1>{{eventData.data[0].name}}</h1>
     <p class="admin-time">{{eventData.data[0].start_time | date:'h:mm a, MMMM dd, yyyy'}}</p>
     <table ng-table="tableParams" class="ui celled table sortable">
@@ -15,7 +16,7 @@
       <tbody>
         <tr ng-repeat="data in participantData">
           <td data-title="'Name'">
-            <span><a ng-click="showHistory(data.id)">{{data.name}}</a></span>
+            <span><a ng-click="showParticipantHistory(data.id)">{{data.name}}</a></span>
           </td>
           <td data-title="'Email'">
             <span>{{data.email}}</span>

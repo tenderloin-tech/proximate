@@ -29,10 +29,10 @@ angular.module('proximate',
       url: '/events'
     })
 
-    .state('history', {
-      templateUrl: 'views/history.html',
-      controller: 'HistoryCtrl',
-      url: '/history/:participantId'
+    .state('participant', {
+      templateUrl: 'views/participant.html',
+      controller: 'ParticipantCtrl',
+      url: '/participant/:participantId'
     })
 
     .state('beaconsSummary', {

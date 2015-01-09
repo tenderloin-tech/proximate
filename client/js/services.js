@@ -29,7 +29,7 @@ angular.module('proximate.services', [])
 
 })
 
-.factory('History', function($http, $rootScope) {
+.factory('Participant', function($http, $rootScope) {
 
   var getParticipantInfoFromId = function(participantId) {
     var url = '/api/participants/' + participantId;

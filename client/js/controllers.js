@@ -10,7 +10,7 @@ angular.module('proximate.controllers', [])
 
 })
 
-.controller('HistoryCtrl', function($scope, $stateParams, $rootScope, History) {
+.controller('ParticipantCtrl', function($scope, $stateParams, $rootScope, Participant) {
 
   // Init values for scope, setting params for status values
   $scope.participantInfo = {};
@@ -54,10 +54,10 @@ angular.module('proximate.controllers', [])
 
   };
 
-  History.getParticipantInfoFromId($stateParams.participantId).then(function(res) {
+  Participant.getParticipantInfoFromId($stateParams.participantId).then(function(res) {
     $scope.participantInfo = res.data;
   }).then(function() {
-    return History.getHistoryByParticipantId($stateParams.participantId);
+    return Participant.getHistoryByParticipantId($stateParams.participantId);
   }).then(function(res) {
     $scope.eventHistory = res.data.filter(function(item) {
       return (item.event.hasOwnProperty('name') &&
@@ -90,8 +90,8 @@ angular.module('proximate.controllers', [])
 
 .controller('RosterCtrl', function($scope, $state, $stateParams) {
 
-  $scope.showHistory = function(participantId) {
-    $state.go('history', {participantId: participantId});
+  $scope.showParticipantHistory = function(participantId) {
+    $state.go('participant', {participantId: participantId});
   };
 
 })

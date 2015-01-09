@@ -121,7 +121,7 @@ exports.getEvents = function(participantId) {
 
 };
 
-exports.getEventHistory = function(participantId) {
+exports.getParticipantEventHistory = function(participantId) {
 
   return new models.EventsParticipants()
     .query({where: {participant_id: participantId}})
