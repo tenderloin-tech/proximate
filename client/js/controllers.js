@@ -1,7 +1,13 @@
 angular.module('proximate.controllers', [])
 
-.controller('EventsCtrl', function($scope) {
+.controller('EventsCtrl', function($scope, $state) {
   $scope.current = true;
+
+  $scope.getEventRoster = function(event, eventId) {
+    event.preventDefault();
+    $state.go('roster', {eventId: eventId});
+  };
+
 })
 
 .controller('HistoryCtrl', function($scope, $stateParams, $rootScope, History) {
@@ -25,6 +31,7 @@ angular.module('proximate.controllers', [])
         }
       });
     });
+
   };
 
   var drawChart = function() {
@@ -39,7 +46,7 @@ angular.module('proximate.controllers', [])
       if (stat.value === 0) {
         $('#history-stats-' + nameForClass).css('display', 'none');
       }
-      // Otherwsie append and animate
+      // Otherwise append and animate
       $('#history-stats-' + nameForClass)
         .append('<span>' + nameForClass + ': <strong>' + stat.value + '</strong></span>')
         .animate({width: stat.value * widthScale + 'px'}, animationTime);
@@ -59,7 +66,6 @@ angular.module('proximate.controllers', [])
     //Then call functions with fetched info
     computeStats();
     drawChart();
-    console.log($scope.stats);
   });
 
 })
@@ -82,7 +88,7 @@ angular.module('proximate.controllers', [])
   };
 })
 
-.controller('RosterCtrl', function($scope, $state) {
+.controller('RosterCtrl', function($scope, $state, $stateParams) {
 
   $scope.showHistory = function(participantId) {
     $state.go('history', {participantId: participantId});
