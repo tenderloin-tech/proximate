@@ -98,7 +98,7 @@ var verifyJWT = function(token, keys) {
 };
 
 // Authenticate existing user for server-side use
-exports.authenticate = function(email) {
+exports.authenticate = promise.method(function(email) {
   return helpers.getAdminTokens(email)
     .then(function(tokens) {
       if (tokens.expiry_date < Date.now()) {
@@ -107,17 +107,14 @@ exports.authenticate = function(email) {
         return client.refreshAccessTokenAsync();
       } else {
         // Access token is valid
-        return new promise(function(resolve, reject) {
-          client.setCredentials({access_token: tokens.access_token});
-          resolve();
-        });
+        return client.setCredentials({access_token: tokens.access_token});
       }
     }).then(function(tokens) {
       if (tokens) {
         return helpers.updateAdminTokens(email, '', tokens);
       }
     });
-};
+});
 // Authenticate request from client
 exports.authClient = function(req, res, next) {
   var token;

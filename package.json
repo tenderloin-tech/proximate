@@ -43,7 +43,6 @@
     "moment": "^2.8.4",
     "morgan": "^1.5.0",
     "mysql": "^2.5.4",
-    "promise-map-series": "^0.2.1",
     "pubnub": "^3.7.5",
     "request": "^2.51.0",
     "underscore": "^1.7.0"

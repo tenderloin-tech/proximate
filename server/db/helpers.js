@@ -1,7 +1,7 @@
 var models = require('../models');
 var moment = require('moment');
 var _ = require('underscore');
-var mapSeries = require('promise-map-series');
+var promise = require('bluebird');
 
 // POST HELPERS
 
@@ -286,43 +286,37 @@ exports.checkinUser = function(deviceId) {
 // Update an event record, and event participant record based on gcal api event info
 exports.upsertEvent = function(event) {
 
+  // We want attendees in scope, but we need to remove them before event upsert
   var attendees = event.attendees;
   delete event.attendees;
-
-  console.log('attendees', attendees);
 
   return new models.Event({gcal_id: event.gcal_id})
     .fetch()
     .then(function(model) {
-      if(model) {
-        //console.log('updating event');
+      if (model) {
         return model.save(event);
       } else {
-        //console.log('saving new event');
         return models.Event.forge(event).save();
       }
     })
     .then(function(eventRecord) {
-      console.log('eventRecord', eventRecord);
-      if(attendees.length > 0) {
+    // Perform final format of attendee info and upsert into event_participants
+      if (attendees.length > 0) {
         var eventParticipants = _.map(attendees, function(attendee) {
           return {
             event_id: eventRecord.attributes.id,
             gcal_id: eventRecord.attributes.gcal_id,
             participant_id: attendee.participant_id,
             gcal_response_status: attendee.gcal_response_status
-          }
+          };
         });
-
-        return mapSeries(eventParticipants, function(eventParticipant) {
+        return promise.map(eventParticipants, function(eventParticipant) {
           return new models.EventParticipant(eventParticipant)
             .fetch()
             .then(function(model) {
-              if(model) {
-                console.log('updating status', eventParticipant);
-                return model.save(status);
+              if (model) {
+                return model.save(eventParticipant);
               } else {
-                console.log('saving new status', eventParticipant);
                 return models.EventParticipant.forge(eventParticipant).save();
               }
             });
@@ -330,22 +324,19 @@ exports.upsertEvent = function(event) {
       }
     });
 
-}
+};
 
+// Upsert participant info from gcal sync
 exports.upsertParticipant = function(participant) {
+
   return new models.Participant({email: participant.email})
     .fetch()
     .then(function(model) {
-      if(model) {
-        //console.log('updating participant', participant.email);
+      if (model) {
         return model.save(participant);
       } else {
-        //console.log('saving new participant', participant.email);
         return models.Participant.forge(participant).save();
       }
     });
-}
 
-exports.upsertEventParticipant = function(status) {
-
-}
+};

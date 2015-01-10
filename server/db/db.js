@@ -68,6 +68,7 @@ if (config.resetDatabaseOnLoad) {
       t.integer('participant_id').notNullable();
       t.string('status');
       t.string('gcal_response_status');
+      t.string('gcal_id');
       t.dateTime('checkin_time');
     });
   })
