@@ -43,12 +43,6 @@ angular.module('proximate.auth', [])
         }).then(function(result) {
           $window.sessionStorage.idToken = authResult.id_token;
           // Render events view
-          $http({
-            method: 'GET',
-            url: 'test'
-          }).then(function(res) {
-            console.log(res);
-          });
           $state.go('events');
         }).catch(function(err) {
           console.log(err);

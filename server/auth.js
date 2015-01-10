@@ -24,7 +24,7 @@ var jws = require('jws');
 var module = require('module');
 // This overrides the cached jws module with our shimmed version
 // The jsonwebtoken module will now use the shim when it executes require('jws')
-module._cache[require.resolve('jws')]['exports'] = require('jws-jwk').shim();
+module._cache[require.resolve('jws')].exports = require('jws-jwk').shim();
 var jwt = require('jsonwebtoken');
 // End dragons
 var request = require('request');
@@ -45,31 +45,40 @@ var client = exports.client = new auth.OAuth2(
 );
 
 // Set up storage of google JWK set
-var jwkSet = {};
+var jwkSet;
 
 // Fetch new public key set from google
-var refreshJWKS = function() {
+var getJWKSet = promise.method(function(refresh) {
+  refresh = refresh || false;
   // This URL will not change
   var discoveryDocUrl = 'https://accounts.google.com/.well-known/openid-configuration';
 
-  return request.getAsync({url: discoveryDocUrl, json: true})
-    .spread(function(response, body) {
-      // Get google public key endpoint
-      return body.jwks_uri;
-    }).then(function(certUrl) {
-      // Retrieve public keys
-      return request.getAsync({url: certUrl, json: true});
-    }).spread(function(response, body) {
-      // Save set of keys in variable
-      jwkSet = body;
-      return jwkSet;
-    }).catch(function(err) {
-      console.log('Error refreshing Google public keys');
-    });
+  if (!jwkSet || refresh) {
+    return request.getAsync({url: discoveryDocUrl, json: true})
+      .spread(function(response, body) {
+        // Get google public key endpoint
+        return body.jwks_uri;
+      }).then(function(certUrl) {
+        // Retrieve public keys
+        return request.getAsync({url: certUrl, json: true});
+      }).spread(function(response, body) {
+        // Save set of keys in variable
+        jwkSet = body;
+        return jwkSet;
+      }).catch(function(err) {
+        console.log('Unable to refresh Google public keys');
+        throw new Error();
+      });
+  } else {
+    return jwkSet;
+  }
+});
+
+var verifyJWT = function(token, keys) {
+  return jwt.verifyAsync(token, keys, {aud: config.google.clientId, iss: 'accounts.google.com'});
 };
 
 // Authenticate existing user for server-side use
-// TODO: Refactor using Promise.method
 exports.authenticate = function(email) {
   return helpers.getAdminTokens(email)
     .then(function(tokens) {
@@ -112,17 +121,29 @@ exports.authClient = function(req, res, next) {
     return res.status(401).send('No authorization token found');
   }
 
-  // TODO: only refresh public keys if necessary
-  refreshJWKS().then(function(keys) {
+  getJWKSet().then(function(keys) {
     // Verify token signature
-    return jwt.verifyAsync(token, keys, {aud: config.google.clientId, iss: 'accounts.google.com'});
+    return verifyJWT(token, keys);
+  }).catch(function(err) {
+    if (err.name === 'JsonWebTokenError' && err.message === 'invalid signature') {
+      // Fetch a new set of public keys in case the current ones are expired
+      return getJWKSet(true);
+    } else {
+      console.log('Unable to verify token authenticity');
+      throw new Error();
+    }
+  }).then(function(keys) {
+    // New keys were fetched and we should try again
+    return verifyJWT(token, keys);
   }).then(function(payload) {
     payload = JSON.parse(payload);
     // At this point, token is signed by Google
     console.log('Authenticated', payload.email);
+    // Attach payload to user property of req for next middleware in stack
+    req.user = payload;
     next();
   }).catch(function(err) {
-    if (err.name = 'TokenExpiredError') {
+    if (err.name === 'TokenExpiredError') {
       return res.status(401).send('Token expired');
     } else {
       return res.status(401).send('Authentication error');
