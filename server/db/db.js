@@ -6,6 +6,7 @@ var knex = require('knex')({
 var bookshelf = require('bookshelf')(knex);
 module.exports = bookshelf;
 var seed = require('./seed');
+var sync = require('./sync');
 
 if (config.resetDatabaseOnLoad) {
   // Drop any existing db tables to ensure increment values reset
@@ -35,6 +36,7 @@ if (config.resetDatabaseOnLoad) {
       t.string('refresh_token');
       t.string('access_token');
       t.bigInteger('token_expiry');
+      t.dateTime('last_sync');
       t.dateTime('created_at');
     });
   })
@@ -51,9 +53,12 @@ if (config.resetDatabaseOnLoad) {
       t.increments('id').primary();
       t.string('gcal_id');
       t.text('name');
-      t.text('location');
+      t.string('location');
+      t.string('htmlLink');
       t.string('recurring_event_id');
       t.dateTime('start_time');
+      t.dateTime('updated');
+      t.string('status');
       t.integer('admin_id').notNullable();
     });
   })
@@ -64,6 +69,7 @@ if (config.resetDatabaseOnLoad) {
       t.integer('participant_id').notNullable();
       t.string('status');
       t.string('gcal_response_status');
+      t.string('gcal_id');
       t.dateTime('checkin_time');
     });
   })
