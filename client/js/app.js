@@ -9,13 +9,16 @@ angular.module('proximate',
   ])
 
 .config(function($stateProvider, $urlRouterProvider, $httpProvider) {
-  $urlRouterProvider.otherwise('/events');
+  $urlRouterProvider.otherwise('/admin/events');
 
   $stateProvider
 
     .state('admin', {
       templateUrl: 'views/admin.html',
-      url: '/admin'
+      url: '/admin',
+      controller: function($state) {
+        $state.transitionTo('admin.events');
+      }
     })
 
     .state('admin.events', {
@@ -53,37 +56,6 @@ angular.module('proximate',
       controller: 'ProjectorCtrl',
       url: '/projector'
     })
-
-
-    // .state('roster', {
-    //   templateUrl: 'views/roster.html',
-    //   controller: 'RosterCtrl',
-    //   url: '/events/:eventId/roster'
-    // })
-
-    // .state('currentRoster', {
-    //   templateUrl: 'views/roster.html',
-    //   controller: 'RosterCtrl',
-    //   url: '/events/current/roster'
-    // })
-
-    // .state('events', {
-    //   templateUrl: 'views/events.html',
-    //   controller: 'EventsCtrl',
-    //   url: '/events'
-    // })
-
-    // .state('participant', {
-    //   templateUrl: 'views/participant.html',
-    //   controller: 'ParticipantCtrl',
-    //   url: '/participant/:participantId'
-    // })
-
-    // .state('beaconsSummary', {
-    //   templateUrl: 'views/beacons.html',
-    //   controller: 'BeaconsCtrl',
-    //   url: '/beacons'
-    // })
 
     .state('login', {
       templateUrl: 'views/login.html',
