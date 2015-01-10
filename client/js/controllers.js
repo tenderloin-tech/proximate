@@ -128,9 +128,7 @@ angular.module('proximate.controllers', [])
     $state.go('admin.participant', {participantId: participantId});
   };
 
-  $scope.updateParticipantStatus = function(participantId, eventId, participantStatus) {
-    Populate.updateParticipantStatus(participantId, eventId, participantStatus);
-  };
+  $scope.updateParticipantStatus = Populate.updateParticipantStatus;
 
   $scope.getParticipants();
 

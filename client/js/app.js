@@ -15,10 +15,7 @@ angular.module('proximate',
 
     .state('admin', {
       templateUrl: 'views/admin.html',
-      url: '/admin',
-      controller: function($state) {
-        $state.transitionTo('admin.events');
-      }
+      url: '/admin'
     })
 
     .state('admin.events', {
@@ -39,7 +36,7 @@ angular.module('proximate',
       url: '/events/current/roster'
     })
 
-    .state('admin.beaconsSummary', {
+    .state('admin.beacons', {
       templateUrl: 'views/partials/beacons.template.html',
       controller: 'BeaconsCtrl',
       url: '/beacons'
@@ -96,7 +93,6 @@ angular.module('proximate',
       // Find the correct participant in participantData and update their status
       $rootScope.$apply($rootScope.data.currentEventParticipants.some(function(participant) {
         if (participant.id === message.participantId) {
-          console.log('Setting status :', message);
           participant._pivot_status = message.checkinStatus;
           return true;
         }
