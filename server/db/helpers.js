@@ -284,7 +284,7 @@ exports.checkinUser = function(deviceId) {
 // SYNC HELPERS
 
 // Update an event record, and event participant record based on gcal api event info
-exports.upsertEvent = function(event) {
+exports.upsertEventAndStatus = function(event) {
 
   // We want attendees in scope, but we need to remove them before event upsert
   var attendees = event.attendees;
