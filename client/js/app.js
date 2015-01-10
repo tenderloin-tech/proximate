@@ -1,5 +1,6 @@
 angular.module('proximate',
   ['ui.router',
+  'proximate.auth',
   'proximate.controllers',
   'proximate.services',
   'angularMoment',
@@ -7,7 +8,7 @@ angular.module('proximate',
   'ngTable'
   ])
 
-.config(function($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
   $urlRouterProvider.otherwise('/events');
 
   $stateProvider
@@ -46,6 +47,8 @@ angular.module('proximate',
       controller: 'LoginCtrl',
       url: '/login'
     });
+
+  $httpProvider.interceptors.push('authInterceptor');
 })
 
 .run(function($rootScope, PubNub, Populate) {

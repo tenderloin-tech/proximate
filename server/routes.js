@@ -7,16 +7,8 @@ var helpers = require('./db/helpers');
 
 module.exports = function(app) {
 
-  /* Client routes */
-
-  app.get('/', function(req, res) {
-    // Create anti-CSRF token
-    var stateToken = crypto.randomBytes(48).toString('hex');
-    // Render template with token
-    res.render('index', {state: stateToken});
-    // Store token in session
-    req.session.state = stateToken;
-  });
+  // Set up authenticated routes
+  app.use('/api/token', auth.authClient);
 
   /* API routes */
 
@@ -24,24 +16,13 @@ module.exports = function(app) {
 
   // Receive one-time Google+ authorization code
   app.post('/api/token', function(req, res) {
-    // Confirm anti-CSRF token validity
-    console.log('Checking CSRF state token ...');
-    console.log('Server: ', req.session.state);
-    console.log('Client: ', req.body.state);
-
-    if (!req.session.state || !req.body.state || req.session.state !== req.body.state) {
-      res.status(401).send('Authentication error');
-      return;
-    }
-    // State token is valid
-
     // Exchange one-time code for tokens
-    var ret = auth.client.getToken(req.body.code, function(err, tokens) {
+    auth.client.getToken(req.body.code, function(err, tokens) {
       if (err) {
         console.log('Unable to exchange code for tokens: ', err);
         res.status(401).send('Authentication error');
       } else {
-        console.log('Received tokens: ', tokens);
+        console.log('Received server-side tokens');
         auth.client.setCredentials(tokens);
         // Retrieve authenticated user's e-mail address
         var plus = require('googleapis').plus({version: 'v1', auth: auth.client});
