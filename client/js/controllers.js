@@ -1,7 +1,7 @@
 
 angular.module('proximate.controllers', [])
 
-.controller('EventsCtrl', function($scope, $state, Populate) {
+.controller('EventsCtrl', function($scope, $rootScope, $state, Populate) {
   $scope.current = true;
 
   // Click handler for getting roster for a single event
@@ -13,6 +13,11 @@ angular.module('proximate.controllers', [])
   // Fetch events data for given adminId
   Populate.getEventsByAdminId(Populate.adminId).then(function(eventsData) {
     $scope.events = eventsData.data;
+  });
+
+  $scope.$on('$stateChangeSuccess', function() {
+    console.log($rootScope.currentEvent);
+    console.log('rootBeer: ', $rootScope);
   });
 
 })
@@ -104,10 +109,11 @@ angular.module('proximate.controllers', [])
     // as well for sharing with the projector view
     if (eventId === 'current') {
       Populate.getCurrentEvent(Populate.adminId).then(function(eventData) {
-        $scope.event = $rootScope.currentEvent = eventData.data;
+        $scope.event = $rootScope.data.currentEvent = eventData.data;
         return Populate.getParticipants(eventData.data.id);
       }).then(function(participantData) {
-        $scope.participants = $rootScope.currentEventParticipants = participantData.data[0].participants;
+        $rootScope.data.currentEventParticipants = participantData.data[0].participants;
+        $scope.participants = $rootScope.data.currentEventParticipants;
       }).catch(function(err) {
         console.log(err);
       });
@@ -118,8 +124,8 @@ angular.module('proximate.controllers', [])
         $scope.participants = participantData.data[0].participants;
       }).catch(function(error) {
         console.log(error);
-      })
-    };
+      });
+    }
   };
 
   // Click handler for getting event participation history
