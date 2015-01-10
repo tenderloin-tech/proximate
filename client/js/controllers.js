@@ -7,17 +7,12 @@ angular.module('proximate.controllers', [])
   // Click handler for getting roster for a single event
   $scope.getEventRoster = function(event, eventId) {
     event.preventDefault();
-    $state.go('roster', {eventId: eventId});
+    $state.go('admin.roster', {eventId: eventId});
   };
 
   // Fetch events data for given adminId
   Populate.getEventsByAdminId(Populate.adminId).then(function(eventsData) {
     $scope.events = eventsData.data;
-  });
-
-  $scope.$on('$stateChangeSuccess', function() {
-    console.log($rootScope.currentEvent);
-    console.log('rootBeer: ', $rootScope);
   });
 
 })
@@ -130,7 +125,7 @@ angular.module('proximate.controllers', [])
 
   // Click handler for getting event participation history
   $scope.showParticipantHistory = function(participantId) {
-    $state.go('participant', {participantId: participantId});
+    $state.go('admin.participant', {participantId: participantId});
   };
 
   $scope.updateParticipantStatus = function(participantId, eventId, participantStatus) {

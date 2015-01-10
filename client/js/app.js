@@ -12,41 +12,78 @@ angular.module('proximate',
   $urlRouterProvider.otherwise('/events');
 
   $stateProvider
+
+    .state('admin', {
+      templateUrl: 'views/admin.html',
+      url: '/admin'
+    })
+
+    .state('admin.events', {
+      templateUrl: 'views/partials/events.template.html',
+      controller: 'EventsCtrl',
+      url: '/events'
+    })
+
+    .state('admin.roster', {
+      templateUrl: 'views/partials/roster.template.html',
+      controller: 'RosterCtrl',
+      url: '/events/:eventId/roster'
+    })
+
+    .state('admin.currentRoster', {
+      templateUrl: 'views/partials/roster.template.html',
+      controller: 'RosterCtrl',
+      url: '/events/current/roster'
+    })
+
+    .state('admin.beaconsSummary', {
+      templateUrl: 'views/partials/beacons.template.html',
+      controller: 'BeaconsCtrl',
+      url: '/beacons'
+    })
+
+    .state('admin.participant', {
+      templateUrl: 'views/partials/participant.template.html',
+      controller: 'ParticipantCtrl',
+      url: '/participant/:participantId'
+    })
+
     .state('projector', {
       templateUrl: 'views/projectorView.html',
       controller: 'ProjectorCtrl',
       url: '/projector'
     })
 
-    .state('roster', {
-      templateUrl: 'views/roster.html',
-      controller: 'RosterCtrl',
-      url: '/events/:eventId/roster'
-    })
 
-    .state('currentRoster', {
-      templateUrl: 'views/roster.html',
-      controller: 'RosterCtrl',
-      url: '/events/current/roster'
-    })
+    // .state('roster', {
+    //   templateUrl: 'views/roster.html',
+    //   controller: 'RosterCtrl',
+    //   url: '/events/:eventId/roster'
+    // })
 
-    .state('events', {
-      templateUrl: 'views/events.html',
-      controller: 'EventsCtrl',
-      url: '/events'
-    })
+    // .state('currentRoster', {
+    //   templateUrl: 'views/roster.html',
+    //   controller: 'RosterCtrl',
+    //   url: '/events/current/roster'
+    // })
 
-    .state('participant', {
-      templateUrl: 'views/participant.html',
-      controller: 'ParticipantCtrl',
-      url: '/participant/:participantId'
-    })
+    // .state('events', {
+    //   templateUrl: 'views/events.html',
+    //   controller: 'EventsCtrl',
+    //   url: '/events'
+    // })
 
-    .state('beaconsSummary', {
-      templateUrl: 'views/beacons.html',
-      controller: 'BeaconsCtrl',
-      url: '/beacons'
-    })
+    // .state('participant', {
+    //   templateUrl: 'views/participant.html',
+    //   controller: 'ParticipantCtrl',
+    //   url: '/participant/:participantId'
+    // })
+
+    // .state('beaconsSummary', {
+    //   templateUrl: 'views/beacons.html',
+    //   controller: 'BeaconsCtrl',
+    //   url: '/beacons'
+    // })
 
     .state('login', {
       templateUrl: 'views/login.html',
