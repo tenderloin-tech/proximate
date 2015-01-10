@@ -1,5 +1,4 @@
 var express = require('express');
-var session = require('express-session');
 var bodyparser = require('body-parser');
 var morgan = require('morgan');
 
@@ -20,16 +19,8 @@ var app = express();
 
 var port = process.env.PORT || 8080;
 
-app.set('views', __dirname + '/views');
-app.set('view engine', 'ejs');
-
 app.use(morgan('dev'));
 app.use(bodyparser.json());
-app.use(session({
-  secret: config.expressSession.secret,
-  resave: false,
-  saveUninitialized: false
-}));
 app.use(express.static(__dirname + '/../client'));
 app.use(allowCrossDomain);
 

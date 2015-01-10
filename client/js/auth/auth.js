@@ -29,22 +29,24 @@ angular.module('proximate.auth', [])
     },
 
     signinCallback: function(authResult) {
-      console.log('Received client tokens: ', authResult);
       if (authResult.code && authResult.id_token) {
+        console.log('Received client-side tokens');
+        // Assume this is valid
+        $window.sessionStorage.idToken = authResult.id_token;
         // Send the code to the server
         $http({
           method: 'POST',
           url: 'api/token',
           data: {
             code: authResult.code,
-            idToken: authResult.id_token,
-            state: stateToken
+            idToken: authResult.id_token
           },
         }).then(function(result) {
-          $window.sessionStorage.idToken = authResult.id_token;
           // Render events view
           $state.go('events');
         }).catch(function(err) {
+          // Server rejected this token, unset it
+          delete $window.sessionStorage.idToken
           console.log(err);
         });
       } else if (authResult.error) {
