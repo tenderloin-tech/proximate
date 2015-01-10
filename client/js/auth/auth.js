@@ -46,7 +46,7 @@ angular.module('proximate.auth', [])
           $state.go('events');
         }).catch(function(err) {
           // Server rejected this token, unset it
-          delete $window.sessionStorage.idToken
+          delete $window.sessionStorage.idToken;
           console.log(err);
         });
       } else if (authResult.error) {

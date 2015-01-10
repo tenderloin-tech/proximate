@@ -75,20 +75,26 @@ var getJWKSet = promise.method(function(refresh) {
 });
 
 var verifyJWT = function(token, keys) {
-  return jwt.verifyAsync(token, keys, {aud: config.google.clientId, iss: 'accounts.google.com'})
+  return jwt.verifyAsync(token, keys, {
+    aud: config.google.clientId,
+    iss: 'accounts.google.com'
+  })
     .catch(function(err) {
       if (err.name === 'JsonWebTokenError' && err.message === 'invalid signature') {
         // Fetch a new set of public keys in case the current ones are expired
         return getJWKSet(true)
           // ... and try again
           .then(function(keys) {
-            return jwt.verifyAsync(token, keys, {aud: config.google.clientId, iss: 'accounts.google.com'});
+            return jwt.verifyAsync(token, keys, {
+              aud: config.google.clientId,
+              iss: 'accounts.google.com'
+            });
           });
       } else {
         console.log('Unable to verify token authenticity');
         throw new Error();
       }
-    })
+    });
 };
 
 // Authenticate existing user for server-side use
