@@ -62,10 +62,17 @@ exports.sync = function() {
 
   // HELPERS TO FORMAT AND FILTER FETCHED EVENTS
 
+  var proximateTestRegex = function(string) {
+    if (string) {
+      return /proximate\.io/i.test(string);
+    }
+    return false;
+  };
+
   // Check for proximate in the attendee list
   var hasProximate = function(attendeeList) {
     return _.some(attendeeList, function(item) {
-      return item.email === 'attendance@proximate.io';
+      return proximateTestRegex(item.email);
     });
   };
 
@@ -92,7 +99,7 @@ exports.sync = function() {
     .filter(function(attendee) {
       return (attendee !== undefined &&
         !attendee.self &&
-        attendee.email !== 'attendance@proximate.io');
+        !proximateTestRegex(attendee.email));
     })
     // Join any attendee records for the event with the participantIds returns from the db
     .map(function(attendee) {
@@ -143,7 +150,7 @@ exports.sync = function() {
       .filter(function(attendee) {
         return (attendee !== undefined &&
           !attendee.self &&
-          attendee.email !== 'attendance@proximate.io');
+          !proximateTestRegex(attendee.email));
       })
       .uniq(function(attendee) {
         return attendee.email;
@@ -199,17 +206,16 @@ exports.sync = function() {
 
       // Update the events and events_participants tables
       var formattedEvents = formatEvents(fetchedEvents, participantIds);
-      return promise.all(_.map(formattedEvents, helpers.upsertEvent));
+      return promise.all(_.map(formattedEvents, helpers.upsertEventAndStatus));
     })
     .then(function(eventRecords) {
       console.log('created/updated', eventRecords.length, 'event records');
 
-      var statusRecordCount = 0;
-      _.each(eventRecords, function(eventRecord) {
+      var statusRecordCount = _.reduce(eventRecords, function(memo, eventRecord) {
         if (eventRecord) {
-          statusRecordCount += eventRecord.length;
+          return memo += eventRecord.attendees.length;
         }
-      });
+      }, 0);
       console.log('created/updated', statusRecordCount, 'status records');
     })
     .catch(function(error) {
@@ -217,5 +223,3 @@ exports.sync = function() {
     });
 
 };
-
-exports.sync();

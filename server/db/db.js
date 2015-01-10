@@ -36,6 +36,7 @@ if (config.resetDatabaseOnLoad) {
       t.string('refresh_token');
       t.string('access_token');
       t.bigInteger('token_expiry');
+      t.dateTime('last_sync');
       t.dateTime('created_at');
     });
   })
