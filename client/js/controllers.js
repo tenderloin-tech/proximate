@@ -1,13 +1,19 @@
 
 angular.module('proximate.controllers', [])
 
-.controller('EventsCtrl', function($scope, $state) {
+.controller('EventsCtrl', function($scope, $rootScope, $state, Populate) {
   $scope.current = true;
 
+  // Click handler for getting roster for a single event
   $scope.getEventRoster = function(event, eventId) {
     event.preventDefault();
-    $state.go('roster', {eventId: eventId});
+    $state.go('admin.roster', {eventId: eventId});
   };
+
+  // Fetch events data for given adminId
+  Populate.getEventsByAdminId(Populate.adminId).then(function(eventsData) {
+    $scope.events = eventsData.data;
+  });
 
 })
 
@@ -89,11 +95,42 @@ angular.module('proximate.controllers', [])
   };
 })
 
-.controller('RosterCtrl', function($scope, $state, $stateParams) {
+.controller('RosterCtrl', function($scope, $rootScope, $state, $stateParams, Populate) {
 
-  $scope.showParticipantHistory = function(participantId) {
-    $state.go('participant', {participantId: participantId});
+  var eventId = $stateParams.eventId;
+
+  $scope.getParticipants = function() {
+    // If the specified event is 'current', populate with the latest event, applying to rootScope
+    // as well for sharing with the projector view
+    if (eventId === 'current') {
+      Populate.getCurrentEvent(Populate.adminId).then(function(eventData) {
+        $scope.event = $rootScope.data.currentEvent = eventData.data;
+        return Populate.getParticipants(eventData.data.id);
+      }).then(function(participantData) {
+        $rootScope.data.currentEventParticipants = participantData.data[0].participants;
+        $scope.participants = $rootScope.data.currentEventParticipants;
+      }).catch(function(err) {
+        console.log(err);
+      });
+      // Or proceed to get event by id
+    } else {
+      Populate.getParticipants(eventId).then(function(participantData) {
+        $scope.event = participantData.data[0];
+        $scope.participants = participantData.data[0].participants;
+      }).catch(function(error) {
+        console.log(error);
+      });
+    }
   };
+
+  // Click handler for getting event participation history
+  $scope.showParticipantHistory = function(participantId) {
+    $state.go('admin.participant', {participantId: participantId});
+  };
+
+  $scope.updateParticipantStatus = Populate.updateParticipantStatus;
+
+  $scope.getParticipants();
 
 })
 

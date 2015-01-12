@@ -1,0 +1,24 @@
+<div class="events content">
+  <h1>Attendance history for <i>{{participantInfo.name}}</i></h1>
+  <div id="chart" class="chart">
+    <div id="history-stats-ontime" class="history-stats"></div>
+    <div id="history-stats-late" class="history-stats"></div>
+    <div id="history-stats-absent" class="history-stats"></div>
+  </div>
+  <table class="ui celled table sortable">
+    <thead>
+      <tr>
+        <th class="left align">Date</th>
+        <th class="left align">Event Name</th>
+        <th class="left align">Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="data in eventHistory">
+        <td class="username">{{data.event.start_time | date:'MMM d, y, h:mm a'}}</td>
+        <td class="participantStatus">{{data.event.name}}</td>
+        <td class="participantStatus" ng-class="{'positive': data.status === 'ontime', 'negative': data.status === 'late', 'warning': data.status === 'null'}">{{data.status}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
