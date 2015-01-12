@@ -62,6 +62,23 @@ exports.sync = function() {
 
   // HELPERS TO FORMAT AND FILTER FETCHED EVENTS
 
+  // Count status changes from return value of upsert event helper
+  var countStatusChanges = function(eventRecords) {
+    var statusRecords;
+
+    if (eventRecords) {
+      statusRecords = _.chain(eventRecords)
+        .flatten()
+        .filter(function(eventRecord) {
+          return !!eventRecord;
+        })
+        .pluck('attributes')
+        .value();
+    }
+    return (statusRecords) ? statusRecords.length : 0;
+  };
+
+  // Filter for events that have *@proximate in attendee list
   var proximateTestRegex = function(string) {
     if (string) {
       return /proximate\.io/i.test(string);
@@ -209,14 +226,10 @@ exports.sync = function() {
       return promise.all(_.map(formattedEvents, helpers.upsertEventAndStatus));
     })
     .then(function(eventRecords) {
+      // Log the results of our update if successful
       console.log('created/updated', eventRecords.length, 'event records');
-
-      var statusRecordCount = _.reduce(eventRecords, function(memo, eventRecord) {
-        if (eventRecord) {
-          return memo += eventRecord.attendees.length;
-        }
-      }, 0);
-      console.log('created/updated', statusRecordCount, 'status records');
+      var statusChangeCount = countStatusChanges(eventRecords);
+      console.log('created/updated', statusChangeCount, 'status records');
     })
     .catch(function(error) {
       console.log('Error syncing calendar for', adminParams.email, error);
