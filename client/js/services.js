@@ -149,7 +149,7 @@ angular.module('proximate.services', [])
   var postNewBeacon = function(adminId, identifier, uuid, major, minor) {
     return $http({
       method: 'POST',
-      url: '/api/beacon/upsert',
+      url: '/api/beacons',
       data: {
         adminId: adminId,
         identifier: identifier,
@@ -171,7 +171,7 @@ angular.module('proximate.services', [])
   var updateParticipantStatus = function(participantId, eventId, status) {
     return $http({
       method: 'Post',
-      url: '/api/participant/updateStatus',
+      url: '/api/participant/status',
       data: {
         participantId: participantId,
         eventId: eventId,

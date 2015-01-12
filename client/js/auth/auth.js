@@ -43,7 +43,7 @@ angular.module('proximate.auth', [])
           },
         }).then(function(result) {
           // Render events view
-          $state.go('events');
+          $state.go('admin.events');
         }).catch(function(err) {
           // Server rejected this token, unset it
           delete $window.sessionStorage.idToken;

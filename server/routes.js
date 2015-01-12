@@ -9,7 +9,12 @@ var sync = require('./db/sync');
 module.exports = function(app) {
 
   // Set up authenticated routes
-  app.use('/api/token', auth.authClient);
+  app.use([
+    '/api/token',
+    '/api/beacons',
+    '/api/participant/status',
+    '/api/admins/*/beacons'
+  ], auth.authClient);
 
   /* API routes */
 
@@ -61,30 +66,7 @@ module.exports = function(app) {
 
   });
 
-  app.post('/api/admin/upsert', function(req, res) {
-
-    var adminId = req.body.id;
-
-    var adminInfo = {
-      email: req.body.email,
-      name: req.body.name,
-    };
-
-    if (!adminId) {
-      adminInfo.created_at = moment().format('YYYY-MM-DD HH:mm:ss');
-    }
-
-    helpers.upsert('Admin', adminInfo, adminId)
-      .then(function(admin) {
-        res.status(201).send(admin.toJSON());
-      })
-      .catch(function(error) {
-        res.status(404).send('Error updating admin info' + error);
-      });
-
-  });
-
-  app.post('/api/beacon/upsert', function(req, res) {
+  app.post('/api/beacons', function(req, res) {
 
     var beaconId = req.body.id;
     var beaconInfo = {
@@ -105,7 +87,7 @@ module.exports = function(app) {
 
   });
 
-  app.post('/api/participant/updateStatus', function(req, res) {
+  app.post('/api/participant/status', function(req, res) {
 
     var participantInfo = {
       participant_id: req.body.participantId,
