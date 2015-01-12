@@ -87,7 +87,7 @@ exports.seedTables = function() {
       admin_id: 1
     }, {
       name: 'Kickoff',
-      start_time: '2015-01-09 09:00:00',
+      start_time: '2015-01-12 11:30:00',
       admin_id: 1
     }
   ]);

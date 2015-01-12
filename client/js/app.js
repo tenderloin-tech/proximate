@@ -30,12 +30,6 @@ angular.module('proximate',
       url: '/events/:eventId/roster'
     })
 
-    .state('admin.currentRoster', {
-      templateUrl: 'views/partials/roster.template.html',
-      controller: 'RosterCtrl',
-      url: '/events/current/roster'
-    })
-
     .state('admin.beacons', {
       templateUrl: 'views/partials/beacons.template.html',
       controller: 'BeaconsCtrl',
@@ -49,7 +43,7 @@ angular.module('proximate',
     })
 
     .state('projector', {
-      templateUrl: 'views/projectorView.html',
+      templateUrl: 'views/projector.html',
       controller: 'ProjectorCtrl',
       url: '/projector'
     })
