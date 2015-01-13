@@ -5,8 +5,7 @@ angular.module('proximate',
   'proximate.services',
   'angularMoment',
   'ngAnimate',
-  'ngTable',
-  'ngTableExport'
+  'ngTable'
   ])
 
 .config(function($stateProvider, $urlRouterProvider, $httpProvider) {
