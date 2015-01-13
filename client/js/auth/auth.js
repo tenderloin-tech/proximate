@@ -73,7 +73,9 @@ angular.module('proximate.auth', [])
       'clientid': googleKeys.clientId,
       'scope': 'email profile https://www.googleapis.com/auth/calendar.readonly',
       'cookiepolicy': 'single_host_origin',
-      'accesstype': 'offline'
+      'accesstype': 'offline',
+      'width': 'wide',
+      'height': 'tall'
     });
   };
   // Load the G+ API
