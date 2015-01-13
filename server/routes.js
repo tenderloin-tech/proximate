@@ -9,7 +9,13 @@ var sync = require('./db/sync');
 module.exports = function(app) {
 
   // Set up authenticated routes
-  app.use('/api/token', auth.authClient);
+  app.use([
+    '/api/token',
+    '/api/beacons',
+    '/api/participant/status',
+    '/api/admin',
+    '/api/admins/*/beacons'
+  ], auth.authClient);
 
   /* API routes */
 
@@ -32,7 +38,7 @@ module.exports = function(app) {
             data.emails.some(function(email) {
               if (email.type === 'account') {
                 helpers.updateAdminTokens(email.value, data.displayName, tokens);
-                res.status(200).send();
+                res.status(200).json({name: data.displayName, email: email.value});
                 return true;
               }
             });
@@ -61,30 +67,7 @@ module.exports = function(app) {
 
   });
 
-  app.post('/api/admin/upsert', function(req, res) {
-
-    var adminId = req.body.id;
-
-    var adminInfo = {
-      email: req.body.email,
-      name: req.body.name,
-    };
-
-    if (!adminId) {
-      adminInfo.created_at = moment().format('YYYY-MM-DD HH:mm:ss');
-    }
-
-    helpers.upsert('Admin', adminInfo, adminId)
-      .then(function(admin) {
-        res.status(201).send(admin.toJSON());
-      })
-      .catch(function(error) {
-        res.status(404).send('Error updating admin info' + error);
-      });
-
-  });
-
-  app.post('/api/beacon/upsert', function(req, res) {
+  app.post('/api/beacons', function(req, res) {
 
     var beaconId = req.body.id;
     var beaconInfo = {
@@ -105,7 +88,7 @@ module.exports = function(app) {
 
   });
 
-  app.post('/api/participant/updateStatus', function(req, res) {
+  app.post('/api/participant/status', function(req, res) {
 
     var participantInfo = {
       participant_id: req.body.participantId,
@@ -149,7 +132,7 @@ module.exports = function(app) {
           .uniq()
           .value();
 
-        res.json(beacons);
+        res.status(200).json(beacons);
       });
 
   });
@@ -217,6 +200,16 @@ module.exports = function(app) {
         res.status(404).send('Error fetching events for this participant ' + error);
       });
 
+  });
+
+  // Get admin ID from email
+  app.get('/api/admin', function(req, res) {
+    helpers.getAdminFromEmail(req.query.email)
+      .then(function(admin) {
+        res.status(200).json(admin.id);
+      }).catch(function(error) {
+        res.status(404).send('Error retrieving admin id');
+      });
   });
 
   app.get('/api/admins/:adminId/events/current', function(req, res) {

@@ -38,9 +38,7 @@ angular.module('proximate.services', [])
       url: url
     })
     .then(function(res) {
-      if (res.status === 200) {
-        return res;
-      }
+      return res;
     })
     .catch(function(error) {
       console.log('Error getting participant information');
@@ -54,9 +52,7 @@ angular.module('proximate.services', [])
       url: url
     })
     .then(function(res) {
-      if (res.status === 200) {
-        return res;
-      }
+      return res;
     })
     .catch(function(error) {
       console.log('Error getting participant history');
@@ -70,133 +66,108 @@ angular.module('proximate.services', [])
 })
 
 .factory('Populate', function($http) {
-
-  var adminId = 1;
-  // get event participants for a given eventID
-  var getParticipants = function(eventID) {
-    var url = 'api/events/' + eventID + '/participants';
-    return $http({
-      method: 'GET',
-      url: url,
-    })
-    .then(function(res) {
-      if (res.status === 200) {
-        return res;
-      }
-    })
-    .catch(function(error) {
-      console.log('Error getting event participants');
-    });
-  };
-
-  // get current event ID
-  var getCurrentEvent = function(adminId) {
-    var url = '/api/admins/' + adminId + '/events/current';
-    return $http({
-      method: 'GET',
-      url: url,
-    })
-    .then(function(res) {
-      if (res.status === 200) {
-        return res;
-      }
-    })
-    .catch(function(error) {
-      console.log('Error getting current event');
-    });
-  };
-
-  var getAdminName = function(adminId) {
-    var url = '/api/admins/' + adminId;
-    return $http({
-      method: 'GET',
-      url: url,
-    });
-  };
-
-  var getEventsByAdminId = function(adminId) {
-    var url = 'api/admins/' + adminId + '/events';
-    return $http({
-      method: 'GET',
-      url: url,
-    })
-    .then(function(res) {
-      if (res.status === 200) {
-        return res;
-      }
-    })
-    .catch(function(error) {
-      console.log('Error getting events');
-    });
-  };
-
-  var getBeaconsByAdminId = function(adminId) {
-    var url = '/api/admins/' + adminId + '/beacons';
-    return $http({
-      method: 'GET',
-      url: url
-    })
-    .then(function(res) {
-      if (res.status === 200) {
-        return res;
-      }
-    })
-    .catch(function(error) {
-      console.log('Error getting beacons');
-    });
-  };
-
-  var postNewBeacon = function(adminId, identifier, uuid, major, minor) {
-    return $http({
-      method: 'POST',
-      url: '/api/beacon/upsert',
-      data: {
-        adminId: adminId,
-        identifier: identifier,
-        uuid: uuid,
-        major: major,
-        minor: minor
-      },
-    })
-    .then(function(res) {
-      if (res.status === 201) {
-        return res;
-      }
-    })
-    .catch(function(error) {
-      console.log('Error adding new beacon');
-    });
-  };
-
-  var updateParticipantStatus = function(participantId, eventId, status) {
-    return $http({
-      method: 'Post',
-      url: '/api/participant/updateStatus',
-      data: {
-        participantId: participantId,
-        eventId: eventId,
-        status: status
-      },
-    })
-    .then(function(res) {
-      if (res.status === 201) {
-        return res;
-      }
-    })
-    .catch(function(error) {
-      console.log('Error updating participant status');
-    });
-  };
+  var adminId;
 
   return {
     adminId: adminId,
-    getParticipants: getParticipants,
-    getCurrentEvent: getCurrentEvent,
-    getAdminName: getAdminName,
-    getEventsByAdminId: getEventsByAdminId,
-    getBeaconsByAdminId: getBeaconsByAdminId,
-    postNewBeacon: postNewBeacon,
-    updateParticipantStatus: updateParticipantStatus
+
+    getAdminId: function(email) {
+      var url = 'api/admin';
+      return $http({
+        method: 'GET',
+        url: url,
+        params: {email: email}
+      }).then(function(res) {
+        adminId = res.data;
+        return adminId;
+      }).catch(function(err) {
+        console.log('Error getting admin id');
+      });
+    },
+
+    // get event participants for a given eventID
+    getEventWithParticipants: function(eventID) {
+      var url = 'api/events/' + eventID + '/participants';
+      return $http({
+        method: 'GET',
+        url: url,
+      }).then(function(res) {
+        return res.data;
+      }).catch(function(error) {
+        console.log('Error getting event participants');
+      });
+    },
+
+    // get current event ID
+    getCurrentEvent: function(adminId) {
+      var url = '/api/admins/' + adminId + '/events/current';
+      return $http({
+        method: 'GET',
+        url: url,
+      }).then(function(res) {
+        return res.data;
+      }).catch(function(error) {
+        console.log('Error getting current event');
+      });
+    },
+
+    getEventsByAdminId: function(adminId) {
+      var url = 'api/admins/' + adminId + '/events';
+      return $http({
+        method: 'GET',
+        url: url,
+      }).then(function(res) {
+        return res.data;
+      }).catch(function(error) {
+        console.log('Error getting events');
+      });
+    },
+
+    getBeaconsByAdminId: function(adminId) {
+      var url = '/api/admins/' + adminId + '/beacons';
+      return $http({
+        method: 'GET',
+        url: url
+      }).then(function(res) {
+        return res.data;
+      }).catch(function(error) {
+        console.log('Error getting beacons');
+      });
+    },
+
+    postNewBeacon: function(adminId, beacon) {
+      return $http({
+        method: 'POST',
+        url: '/api/beacons',
+        data: {
+          adminId: adminId,
+          identifier: beacon.identifier,
+          uuid: beacon.uuid,
+          major: beacon.major,
+          minor: beacon.minor
+        },
+      }).then(function(res) {
+        return res.data;
+      }).catch(function(error) {
+        console.log('Error adding new beacon');
+      });
+    },
+
+    updateParticipantStatus: function(participantId, eventId, status) {
+      return $http({
+        method: 'POST',
+        url: '/api/participant/status',
+        data: {
+          participantId: participantId,
+          eventId: eventId,
+          status: status
+        },
+      }).then(function(res) {
+        return res.data;
+      }).catch(function(error) {
+        console.log('Error updating participant status');
+      });
+    }
   };
 
 })
@@ -219,17 +190,17 @@ angular.module('proximate.services', [])
   };
 })
 
-.filter('CurrentEvents', function($rootScope) {
-  return function(events, current) {
+.filter('filterByTime', function() {
+  return function(events, time) {
     var filteredResults = [];
     var now = moment();
     if (events) {
       events.forEach(function(event) {
-        if (current) {
+        if (time === 'future') {
           if (moment(event.start_time).diff(now) < 0) {
             return;
           }
-        } else {
+        } else if (time === 'past') {
           if (moment(event.start_time).diff(now) >= 0) {
             return;
           }
@@ -241,7 +212,7 @@ angular.module('proximate.services', [])
   };
 })
 
-.filter('removeArrivedParticipants', function($rootScope) {
+.filter('removeArrivedParticipants', function() {
   return function(participants) {
     var filteredResults = [];
     if (participants) {

@@ -32,6 +32,14 @@ exports.getAdminTokens = function(email) {
 
 };
 
+exports.getAdminFromEmail = function(email) {
+  return new models.Admin({email: email})
+    .fetch({require: true})
+    .then(function(model) {
+      return model;
+    });
+};
+
 exports.updateAdminTokens = function(email, name, tokens) {
 
   return new models.Admin({email: email})
@@ -167,11 +175,10 @@ exports.getEventsByAdminId = function(adminId) {
 
 exports.getEventParticipants = function(eventId) {
 
-  return new models.Events()
-    .query({where:{id: eventId}})
+  return new models.Event({id: eventId})
     .fetch({withRelated: ['participants'], require: true})
-    .then(function(collection) {
-      return collection;
+    .then(function(model) {
+      return model;
     });
 
 };

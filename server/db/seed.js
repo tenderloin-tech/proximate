@@ -3,7 +3,7 @@ var models = require('../models');
 
 exports.seedTables = function() {
 
-  models.Admin.forge({name: 'Pira'}).save();
+  // models.Admin.forge({name: 'Pira'}).save();
 
   var participants = models.Participants.forge([
     {email: 'tantai.john@gmail.com', name: 'John Tan', device_id: '999'},
@@ -71,23 +71,19 @@ exports.seedTables = function() {
       admin_id: 1
     }, {
       name: 'Kickoff',
-      start_time: '2015-01-05 09:00:00',
+      start_time: '2015-01-12 09:00:00',
       admin_id: 1
     }, {
       name: 'Kickoff',
-      start_time: '2015-01-06 09:00:00',
+      start_time: '2015-01-13 09:00:00',
       admin_id: 1
     }, {
       name: 'Kickoff',
-      start_time: '2015-01-07 09:00:00',
+      start_time: '2015-01-14 09:00:00',
       admin_id: 1
     }, {
       name: 'Kickoff',
-      start_time: '2015-01-08 09:00:00',
-      admin_id: 1
-    }, {
-      name: 'Kickoff',
-      start_time: '2015-01-12 11:30:00',
+      start_time: '2015-01-15 09:00:00',
       admin_id: 1
     }
   ]);
