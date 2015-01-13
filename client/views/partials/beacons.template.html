@@ -1,17 +1,18 @@
+
 <div class="events content">
   <h1>Input Beacon Information</h1>
   <form novalidate class="simple-form ui form">
     Identifier:
-    <input type="text" ng-model="user.identifier" />
+    <input type="text" ng-model="beacon.identifier" />
     <br />
     UUID:
-    <input type="text" ng-model="user.uuid" />
+    <input type="text" ng-model="beacon.uuid" />
     <br />
     Major:
-    <input type="number" ng-model="user.major" /><br />
+    <input type="number" ng-model="beacon.major" /><br />
     Minor:
-    <input type="number" ng-model="user.minor" /><br />
-    <input class="ui submit button" type="submit" ng-click="postBeacons(user)" value="submit" />
+    <input type="number" ng-model="beacon.minor" /><br />
+    <input class="ui submit button" type="submit" ng-click="addBeacon(beacon)" value="submit" />
   </form>
   <hr>
   <h3>My Beacons</h3>
@@ -25,11 +26,11 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="data in beaconsData">
-        <td class="username">{{data.identifier}}</td>
-        <td class="mail">{{data.uuid}}</td>
-        <td class="participantStatus">{{data.major}}</td>
-        <td class="participantStatus">{{data.minor}}</td>
+      <tr ng-repeat="beacon in beaconsData">
+        <td class="username">{{beacon.identifier}}</td>
+        <td class="mail">{{beacon.uuid}}</td>
+        <td class="participantStatus">{{beacon.major}}</td>
+        <td class="participantStatus">{{beacon.minor}}</td>
       </tr>
     </tbody>
   </table>
