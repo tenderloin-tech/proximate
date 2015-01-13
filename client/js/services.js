@@ -36,6 +36,14 @@ angular.module('proximate.services', [])
     return $http({
       method: 'GET',
       url: url
+    })
+    .then(function(res) {
+      if (res.status === 200) {
+        return res;
+      }
+    })
+    .catch(function(error) {
+      console.log('Error getting participant information');
     });
   };
 
@@ -44,6 +52,14 @@ angular.module('proximate.services', [])
     return $http({
       method: 'GET',
       url: url
+    })
+    .then(function(res) {
+      if (res.status === 200) {
+        return res;
+      }
+    })
+    .catch(function(error) {
+      console.log('Error getting participant history');
     });
   };
 
@@ -62,6 +78,14 @@ angular.module('proximate.services', [])
     return $http({
       method: 'GET',
       url: url,
+    })
+    .then(function(res) {
+      if (res.status === 200) {
+        return res;
+      }
+    })
+    .catch(function(error) {
+      console.log('Error getting event participants');
     });
   };
 
@@ -71,6 +95,14 @@ angular.module('proximate.services', [])
     return $http({
       method: 'GET',
       url: url,
+    })
+    .then(function(res) {
+      if (res.status === 200) {
+        return res;
+      }
+    })
+    .catch(function(error) {
+      console.log('Error getting current event');
     });
   };
 
@@ -87,6 +119,14 @@ angular.module('proximate.services', [])
     return $http({
       method: 'GET',
       url: url,
+    })
+    .then(function(res) {
+      if (res.status === 200) {
+        return res;
+      }
+    })
+    .catch(function(error) {
+      console.log('Error getting events');
     });
   };
 
@@ -95,6 +135,14 @@ angular.module('proximate.services', [])
     return $http({
       method: 'GET',
       url: url
+    })
+    .then(function(res) {
+      if (res.status === 200) {
+        return res;
+      }
+    })
+    .catch(function(error) {
+      console.log('Error getting beacons');
     });
   };
 
@@ -109,6 +157,14 @@ angular.module('proximate.services', [])
         major: major,
         minor: minor
       },
+    })
+    .then(function(res) {
+      if (res.status === 201) {
+        return res;
+      }
+    })
+    .catch(function(error) {
+      console.log('Error adding new beacon');
     });
   };
 
@@ -121,6 +177,14 @@ angular.module('proximate.services', [])
         eventId: eventId,
         status: status
       },
+    })
+    .then(function(res) {
+      if (res.status === 201) {
+        return res;
+      }
+    })
+    .catch(function(error) {
+      console.log('Error updating participant status');
     });
   };
 
