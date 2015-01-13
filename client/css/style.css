@@ -73,7 +73,7 @@ ul {
 }
 
 .nav li a:hover {
-  opacity: 1;
+  opacity: .9;
 }
 
 .rightMenu {
