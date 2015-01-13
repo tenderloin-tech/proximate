@@ -148,7 +148,7 @@ angular.module('proximate.controllers', [])
   // post beacon data
   $scope.beaconData = {};
   $scope.addBeacon = function(beacon) {
-    Populate.postNewBeacon($scope.adminId, beacon.identifier, beacon.uuid, beacon.major, beacon.minor)
+    Populate.postNewBeacon($scope.adminId, beacon)
       // TODO: fix this.
       .then($scope.getBeacons());
   };

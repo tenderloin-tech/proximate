@@ -76,7 +76,7 @@ angular.module('proximate.services', [])
     adminId: adminId,
 
     getAdminId: function(email) {
-      var url = 'api/admin'
+      var url = 'api/admin';
       return $http({
         method: 'GET',
         url: url,
@@ -138,16 +138,16 @@ angular.module('proximate.services', [])
       });
     },
 
-    postNewBeacon: function(adminId, identifier, uuid, major, minor) {
+    postNewBeacon: function(adminId, beacon) {
       return $http({
         method: 'POST',
         url: '/api/beacons',
         data: {
           adminId: adminId,
-          identifier: identifier,
-          uuid: uuid,
-          major: major,
-          minor: minor
+          identifier: beacon.identifier,
+          uuid: beacon.uuid,
+          major: beacon.major,
+          minor: beacon.minor
         },
       }).then(function(res) {
         return res.data;
