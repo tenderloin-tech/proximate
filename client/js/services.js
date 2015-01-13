@@ -70,9 +70,24 @@ angular.module('proximate.services', [])
 })
 
 .factory('Populate', function($http) {
+  var adminId;
 
   return {
-    adminId: 1,
+    adminId: adminId,
+
+    getAdminId: function(email) {
+      var url = 'api/admin'
+      return $http({
+        method: 'GET',
+        url: url,
+        params: {email: email}
+      }).then(function(res) {
+        return res.data;
+      }).catch(function(err) {
+        console.log('Error getting admin id');
+      });
+    },
+
     // get event participants for a given eventID
     getEventWithParticipants: function(eventID) {
       var url = 'api/events/' + eventID + '/participants';
@@ -80,9 +95,7 @@ angular.module('proximate.services', [])
         method: 'GET',
         url: url,
       }).then(function(res) {
-        if (res.status === 200) {
-          return res;
-        }
+        return res.data;
       }).catch(function(error) {
         console.log('Error getting event participants');
       });
@@ -95,9 +108,7 @@ angular.module('proximate.services', [])
         method: 'GET',
         url: url,
       }).then(function(res) {
-        if (res.status === 200) {
-          return res;
-        }
+        return res.data;
       }).catch(function(error) {
         console.log('Error getting current event');
       });
@@ -109,9 +120,7 @@ angular.module('proximate.services', [])
         method: 'GET',
         url: url,
       }).then(function(res) {
-        if (res.status === 200) {
-          return res;
-        }
+        return res.data;
       }).catch(function(error) {
         console.log('Error getting events');
       });
@@ -123,9 +132,7 @@ angular.module('proximate.services', [])
         method: 'GET',
         url: url
       }).then(function(res) {
-        if (res.status === 200) {
-          return res;
-        }
+        return res.data;
       }).catch(function(error) {
         console.log('Error getting beacons');
       });
@@ -143,9 +150,7 @@ angular.module('proximate.services', [])
           minor: minor
         },
       }).then(function(res) {
-        if (res.status === 201) {
-          return res;
-        }
+        return res.data;
       }).catch(function(error) {
         console.log('Error adding new beacon');
       });
@@ -153,7 +158,7 @@ angular.module('proximate.services', [])
 
     updateParticipantStatus: function(participantId, eventId, status) {
       return $http({
-        method: 'Post',
+        method: 'POST',
         url: '/api/participant/status',
         data: {
           participantId: participantId,
@@ -161,9 +166,7 @@ angular.module('proximate.services', [])
           status: status
         },
       }).then(function(res) {
-        if (res.status === 201) {
-          return res;
-        }
+        return res.data;
       }).catch(function(error) {
         console.log('Error updating participant status');
       });

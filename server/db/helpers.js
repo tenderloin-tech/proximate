@@ -32,6 +32,14 @@ exports.getAdminTokens = function(email) {
 
 };
 
+exports.getAdminFromEmail = function(email) {
+  return new models.Admin({email: email})
+    .fetch({require: true})
+    .then(function(model) {
+      return model;
+    });
+};
+
 exports.updateAdminTokens = function(email, name, tokens) {
 
   return new models.Admin({email: email})

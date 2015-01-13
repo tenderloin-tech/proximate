@@ -27,11 +27,11 @@ angular.module('proximate.controllers', [])
 
   // Fetch the participant and event data from the server
   $scope.getCurrentEventData = function() {
-    Populate.getCurrentEvent(Populate.adminId).then(function(eventData) {
-      $scope.setCurrentEvent(eventData.data);
+    Populate.getCurrentEvent($scope.adminId).then(function(eventData) {
+      $scope.setCurrentEvent(eventData);
       return Populate.getEventWithParticipants($scope.currentEvent.id);
     }).then(function(eventData) {
-      $scope.setCurrentEventParticipants(eventData.data.participants);
+      $scope.setCurrentEventParticipants(eventData.participants);
     }).catch(function(err) {
       console.log(err);
     });
@@ -48,15 +48,19 @@ angular.module('proximate.controllers', [])
   };
 
   // Set the username and fetch current event data on user login
-  $rootScope.$on('auth-login-success', function() {
+  $rootScope.$on('auth-login-success', function(event, email) {
     $scope.username = $window.sessionStorage.name;
-    $scope.getCurrentEventData();
+
+    Populate.getAdminId(email).then(function(adminId) {
+      $scope.adminId = adminId;
+      $scope.getCurrentEventData();
+    });
+
   });
 
 })
 
 .controller('EventsCtrl', function($scope, $state, Populate) {
-  // $scope.current = true;
 
   // Click handler for getting roster for a single event
   $scope.getEventRoster = function(event, eventId) {
@@ -65,8 +69,8 @@ angular.module('proximate.controllers', [])
   };
 
   // Fetch events data for given adminId
-  Populate.getEventsByAdminId(Populate.adminId).then(function(eventsData) {
-    $scope.events = eventsData.data;
+  Populate.getEventsByAdminId($scope.adminId).then(function(eventsData) {
+    $scope.events = eventsData;
   });
 
 })
@@ -136,15 +140,16 @@ angular.module('proximate.controllers', [])
   $scope.beaconsData = [];
   // get beacons for given adminID
   $scope.getBeacons = function() {
-    Populate.getBeaconsByAdminId(Populate.adminId).then(function(beaconData) {
-      $scope.beaconsData = beaconData.data;
+    Populate.getBeaconsByAdminId($scope.adminId).then(function(beaconData) {
+      $scope.beaconsData = beaconData;
     });
   };
   $scope.getBeacons();
   // post beacon data
   $scope.beaconData = {};
   $scope.addBeacon = function(beacon) {
-    Populate.postNewBeacon(Populate.adminId, beacon.identifier, beacon.uuid, beacon.major, beacon.minor)
+    Populate.postNewBeacon($scope.adminId, beacon.identifier, beacon.uuid, beacon.major, beacon.minor)
+      // TODO: fix this.
       .then($scope.getBeacons());
   };
 })
@@ -162,8 +167,8 @@ angular.module('proximate.controllers', [])
       // Or proceed to get event by id
     } else {
       Populate.getEventWithParticipants(eventId).then(function(eventData) {
-        $scope.event = eventData.data;
-        $scope.participants = eventData.data.participants;
+        $scope.event = eventData;
+        $scope.participants = eventData.participants;
       }).catch(function(error) {
         console.log(error);
       });

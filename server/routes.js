@@ -13,6 +13,7 @@ module.exports = function(app) {
     '/api/token',
     '/api/beacons',
     '/api/participant/status',
+    '/api/admin',
     '/api/admins/*/beacons'
   ], auth.authClient);
 
@@ -199,6 +200,16 @@ module.exports = function(app) {
         res.status(404).send('Error fetching events for this participant ' + error);
       });
 
+  });
+
+  // Get admin ID from email
+  app.get('/api/admin', function(req, res) {
+    helpers.getAdminFromEmail(req.query.email)
+      .then(function(admin) {
+        res.status(200).json(admin.id);
+      }).catch(function(error) {
+        res.status(404).send('Error retrieving admin id');
+      });
   });
 
   app.get('/api/admins/:adminId/events/current', function(req, res) {
