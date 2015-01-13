@@ -38,9 +38,7 @@ angular.module('proximate.services', [])
       url: url
     })
     .then(function(res) {
-      if (res.status === 200) {
-        return res;
-      }
+      return res;
     })
     .catch(function(error) {
       console.log('Error getting participant information');
@@ -54,9 +52,7 @@ angular.module('proximate.services', [])
       url: url
     })
     .then(function(res) {
-      if (res.status === 200) {
-        return res;
-      }
+      return res;
     })
     .catch(function(error) {
       console.log('Error getting participant history');
@@ -82,7 +78,8 @@ angular.module('proximate.services', [])
         url: url,
         params: {email: email}
       }).then(function(res) {
-        return res.data;
+        adminId = res.data;
+        return adminId;
       }).catch(function(err) {
         console.log('Error getting admin id');
       });

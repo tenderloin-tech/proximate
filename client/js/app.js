@@ -57,7 +57,7 @@ angular.module('proximate',
   $httpProvider.interceptors.push('authInterceptor');
 })
 
-.run(function($rootScope, $state, Auth, PubNub, Populate) {
+.run(function($rootScope, $state, Auth) {
   // Redirect to login if user is not authenticated
   $rootScope.$on('$stateChangeStart', function(event, next) {
     if (next.name !== 'login' && !Auth.isAuth()) {
