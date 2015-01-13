@@ -1,33 +1,16 @@
-<div class="container">
+<div class="container projector">
   <div class="background"></div>
   <div class="leftMenu">
     <ul class="nav">
       <li><a href="#"><img class="projector-logo" src="img/proximate_v2_bonewhite.png"></a></li>
     </ul>
   </div>
-<!--   <div class="rightMenu ui">
-    <ul class="nav">
-      <li><a href="#">Other stuff</a></li>
-    </ul>
-  </div> -->
-<!--   <div class="rightMenu">
-
-    <div class="ui inline top right floating dropdown" tabindex="0">
-    <div class="text">today</div>
-    <i class="dropdown icon"></i>
-    <div class="menu" tabindex="-1">
-      <div class="item active selected" data-text="today">Today</div>
-      <div class="item" data-text="this week">This Week</div>
-      <div class="item" data-text="this month">This Month</div>
-    </div>
-    </div>
-  </div> -->
   <div class="rightMenu">
     <div class="highlight"></div>
-    <div class="admin-name">Sebastian Tonkin</div>
+    <div class="admin-name" ng-click="rightMenuClick($event)">Sebastian Tonkin</div>
     <div class="subMenu">
-      <div class="item" ui-sref="admin.events" data-value="2">Admin</div>
-      <div class="item" data-value="3">Logout</div>
+      <div class="item" ui-sref="admin.events" data-value="2"><i class="configure icon"></i> Dashboard</div>
+      <div class="item" data-value="3"><i class="sign out icon"></i> Logout</div>
     </div>
   </div>
   <div class="event" ng-switch="timeDiffFromEvent">

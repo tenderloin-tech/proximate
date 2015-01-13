@@ -25,6 +25,43 @@ angular.module('proximate.controllers', [])
     }
   });
 
+  /**** SETUP FOR RIGHT (ADMIN) MENU HANDLERS AND LISTENERS ****/
+
+  // Fires on right menu clicks to handle opening and closing of right menu
+  $scope.rightMenuClick = function(e) {
+      if (!$('.subMenu').hasClass('show')){
+        openRightMenu();
+      } else {
+        closeRightMenu();
+      }
+
+  };
+
+  // Detects clicks on the page outside the menu, and determines if the right menu is open
+  // If it is, we close it.
+  $('body').click(function(e) {
+    if (!$(e.target).hasClass('admin-name') &&
+        !$(e.target).hasClass('item') &&
+        $('.admin-name').hasClass('menuOpen')) {
+        closeRightMenu();
+    }
+  });
+
+  // Utility function for opening right menu
+  function openRightMenu() {
+    $('.subMenu').addClass('show');
+    $('.admin-name').addClass('menuOpen');
+    $('.rightMenu .highlight').addClass('menuOpen');
+  };
+
+  // Utility function for closing right menu
+  function closeRightMenu() {
+    $('.subMenu').removeClass('show');
+    $('.admin-name').removeClass('menuOpen');
+    $('.rightMenu .highlight').removeClass('menuOpen');
+  };
+
+
   // Fetch the participant and event data from the server
   $scope.getCurrentEventData = function() {
     Populate.getCurrentEvent($scope.adminId).then(function(eventData) {
@@ -212,6 +249,5 @@ angular.module('proximate.controllers', [])
     } else {
       $scope.timeDiffFromEvent = false;
     }
-  }, 1000);
 
 });
