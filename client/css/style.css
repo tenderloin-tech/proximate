@@ -59,11 +59,17 @@ ul {
   display: inline-block;
 }
 
+
 .nav li a {
   text-decoration: none;
-  opacity: .8;
+  opacity: .6;
   color: #fff;
   width: 100px;
+}
+
+.nav li img {
+  height: 45px;
+  width: 45px;
 }
 
 .nav li a:hover {
@@ -74,8 +80,70 @@ ul {
   position: absolute;
   top: 2%;
   right: 2%;
-  width: 100px;
+  width: auto;
+  height: 100px;
   text-align: right;
+}
+
+.rightMenu .admin-name {
+  opacity: .6;
+}
+
+.rightMenu .admin-name:hover {
+  cursor: pointer;
+  opacity: .7;
+}
+
+.rightMenu .admin-name.menuOpen {
+  opacity: 1;
+}
+
+.rightMenu .highlight {
+  position: absolute;
+  top: -15px;
+  right: 2%;
+  height: 2px;
+  background-color: rgba(236,240,241, 0);
+  width: 95%;
+}
+
+.rightMenu .highlight.menuOpen {
+  background-color: rgba(236,240,241, .9);
+}
+
+.subMenu {
+  color: #34495E;
+  position: absolute;
+  text-align: left;
+  line-height: 2em;
+  text-shadow: none;
+  box-shadow: 1px 1px 25px #000000;
+  width: 130%;
+  height: 95px;
+  background-color: rgba(236,240,241, 0);
+  right: 5px;
+  margin-top: 15px;
+  border-radius: 2px;
+  opacity: 0;
+  z-index: 20;
+}
+
+.subMenu.show {
+  opacity: 1;
+  background-color: rgba(236,240,241, .9);
+}
+
+.subMenu .item {
+  padding-top: 15px;
+  padding-left: 15px;
+  padding-right: 10px;
+  /*padding: 15px 6px 4px 4px;*/
+  width: 85%;
+}
+
+.subMenu .item:hover{
+  color: white;
+  background-color: rgba(39,58,71, .1);
 }
 
 .event h3 {
@@ -132,7 +200,7 @@ ul {
 }
 
 .status {
-  background-color: #fff;
+  background-color: #ECF0F1;
   width: 75%;
   color: #333;
   margin: 0 auto;
