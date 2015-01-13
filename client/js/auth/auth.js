@@ -59,6 +59,7 @@ angular.module('proximate.auth', [])
 
     signOut: function() {
       delete $window.sessionStorage.idToken;
+      $state.go('login');
     }
 
   };

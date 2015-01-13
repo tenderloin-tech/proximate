@@ -1,7 +1,7 @@
 
 angular.module('proximate.controllers', [])
 
-.controller('AppCtrl', function($scope, $rootScope, $window, Auth, Populate, PubNub) {
+.controller('AppCtrl', function($scope, $rootScope, $window, Populate, PubNub, Auth) {
 
   // Initialize scope variables
   $scope.arrivedParticipants = [];
@@ -61,6 +61,7 @@ angular.module('proximate.controllers', [])
     $('.rightMenu .highlight').removeClass('menuOpen');
   };
 
+  $scope.signOut = Auth.signOut;
 
   // Fetch the participant and event data from the server
   $scope.getCurrentEventData = function() {
@@ -250,4 +251,5 @@ angular.module('proximate.controllers', [])
       $scope.timeDiffFromEvent = false;
     }
 
+  });
 });
