@@ -11,21 +11,21 @@
     </ul>
   </div>
   <div class="event">
-    <h3 ng-show="timeDiffLessThanHourBefore">{{data.currentEvent.name}} Starts In</h3>
-    <h3 ng-show="timeDiffMoreThanHourBefore">{{data.currentEvent.name}} Starts At</h3>
-    <h3 ng-show="timeDiffAfter">{{data.currentEvent.name}} Started At</h3>
+    <h3 ng-show="timeDiffLessThanHourBefore">{{currentEvent.name}} Starts In</h3>
+    <h3 ng-show="timeDiffMoreThanHourBefore">{{currentEvent.name}} Starts At</h3>
+    <h3 ng-show="timeDiffAfter">{{currentEvent.name}} Started At</h3>
   </div>
   <div class="time">
-     <h1 ng-show="timeDiffLessThanHourBefore">{{data.currentEvent.start_time | date:"h:mm a"}}</h1>
-     <h1 ng-show="timeDiffMoreThanHourBefore">{{data.currentEvent.start_time | fromNow:clock}}</h1>
-     <h1 ng-show="timeDiffAfter">{{data.currentEvent.start_time | date:"h:mm a"}}</h1>
+     <h1 ng-show="timeDiffLessThanHourBefore">{{currentEvent.start_time | date:"h:mm a"}}</h1>
+     <h1 ng-show="timeDiffMoreThanHourBefore">{{currentEvent.start_time | fromNow:clock}}</h1>
+     <h1 ng-show="timeDiffAfter">{{currentEvent.start_time | date:"h:mm a"}}</h1>
 
   </div>
   <div class="participants">
     <div class="status">
       <ul>
-        <li ng-repeat="data in data.currentEventParticipants | removeArrivedParticipants" class="repeated-item">
-         <a>{{data.name}}</a>
+        <li ng-repeat="participant in currentEventParticipants | removeArrivedParticipants" class="repeated-item">
+         <a>{{participant.name}}</a>
         </li>
       </ul>
     </div>

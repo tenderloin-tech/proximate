@@ -167,11 +167,10 @@ exports.getEventsByAdminId = function(adminId) {
 
 exports.getEventParticipants = function(eventId) {
 
-  return new models.Events()
-    .query({where:{id: eventId}})
+  return new models.Event({id: eventId})
     .fetch({withRelated: ['participants'], require: true})
-    .then(function(collection) {
-      return collection;
+    .then(function(model) {
+      return model;
     });
 
 };

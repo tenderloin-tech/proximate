@@ -37,7 +37,7 @@ module.exports = function(app) {
             data.emails.some(function(email) {
               if (email.type === 'account') {
                 helpers.updateAdminTokens(email.value, data.displayName, tokens);
-                res.status(200).send();
+                res.status(200).json({name: data.displayName, email: email.value});
                 return true;
               }
             });
@@ -131,7 +131,7 @@ module.exports = function(app) {
           .uniq()
           .value();
 
-        res.json(beacons);
+        res.status(200).json(beacons);
       });
 
   });

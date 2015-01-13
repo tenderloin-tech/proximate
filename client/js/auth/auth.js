@@ -21,7 +21,7 @@ angular.module('proximate.auth', [])
   };
 })
 
-.factory('Auth', function($http, $state, $window) {
+.factory('Auth', function($http, $rootScope, $state, $window) {
   return {
 
     isAuth: function() {
@@ -41,8 +41,11 @@ angular.module('proximate.auth', [])
             code: authResult.code,
             idToken: authResult.id_token
           },
-        }).then(function(result) {
+        }).then(function(res) {
+          $window.sessionStorage.name = res.data.name;
+          $window.sessionStorage.email = res.data.email;
           // Render events view
+          $rootScope.$broadcast('auth-login-success');
           $state.go('admin.events');
         }).catch(function(err) {
           // Server rejected this token, unset it
