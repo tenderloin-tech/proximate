@@ -59,9 +59,9 @@ body {
 
 .login .login-box{
   opacity: .95;
-  width: 75%;
+  width: 90%;
   text-align: center;
-  margin: 10% auto;
+  margin: 2% auto;
   padding: 30px 18px;
   -webkit-box-shadow: 2px 2px 1px 0px rgba(0,0,0,0.33);
   -moz-box-shadow: 2px 2px 1px 0px rgba(0,0,0,0.33);
@@ -69,8 +69,8 @@ body {
 }
 
 .login img {
-  width: 40%;
-  height: 40%;
+  width: 37%;
+  height: 37%;
 }
 
 .login .box-container {
