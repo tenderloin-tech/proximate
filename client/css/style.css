@@ -154,6 +154,7 @@ ul {
 .subMenu .item:hover {
   color: white;
   background-color: rgba(39,58,71, 1);
+  width: 87%;
 }
 
 .subMenu .item:nth-of-type(1) {
