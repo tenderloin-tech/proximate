@@ -1,29 +1,29 @@
 <ion-view view-title="Splash">
   <ion-content class="splash padding">
-    <div class="row">
-      <div class="col">
-
+    <div class="login">
+      <div class="login-box">
+        <img src="img/proximate-blueOnWhite2.png">
+        <h1>proximate<span class="io">.io</span></h1>
+        <h4>AUTOMATED ATTENDANCE</h4>
+<!--         <div class='divider'></div> -->
       </div>
-      <div class="col">
-        <img class="logo-image" src="img/proximate_v1_white.png">
+      <div class="box-container">
+        <div class="input-box">
+          <span><i class="icon ion-at"></i></span>
+          <input ng-model="data.email" type="email" placeholder="email" class="register">
+        </div>
+        <div class="input-box">
+            <span><i class="icon ion-lock-combination"></i></span>
+            <input ng-model="data.password" type="password" placeholder="password" class="register">
+        </div>
       </div>
-      <div class="col">
-
+      <div class="input-button">
+        <div class="login-button" ng-click="register()">login</div>
+<!--         <button ng-click="register()" class="button button-block">
+          Login
+        </button> -->
       </div>
+      <div class="splash-error" ng-show="error">{{error}}</div>
     </div>
-    <div class="list">
-      <label class="item item-input item-floating-label test">
-        <span class="input-label register">email</span>
-        <input ng-model="data.email" type="email" placeholder="Please enter your email" class="register">
-      </label>
-      <label class="item item-input item-floating-label">
-        <span class="input-label register">password</span>
-        <input ng-model="data.password" type="password" placeholder="Please enter your password" class="register">
-      </label>
-      <button ng-click="register()" class="button button-block button-positive">
-        Login
-      </button>
-    </div>
-    <div class="splash-error" ng-show="error">{{error}}</div>
   </ion-content>
 </ion-view>
