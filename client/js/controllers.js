@@ -202,11 +202,9 @@ angular.module('proximate.controllers', [])
 
 .controller('ProjectorCtrl', function($scope, $interval) {
 
-  $scope.getCurrentEventData();
-  $scope.event = $scope.currentEvent;
   $scope.timeDiffFromEvent = null;
   $interval(function() {
-    var timeDiff = moment($scope.event.start_time).diff(moment(), 'seconds');
+    var timeDiff = moment($scope.currentEvent.start_time).diff(moment(), 'seconds');
     if (timeDiff > 0 && timeDiff >= 3600) {
       $scope.timeDiffFromEvent = null;
     } else if (timeDiff > 0 && timeDiff < 3600) {
@@ -215,6 +213,5 @@ angular.module('proximate.controllers', [])
       $scope.timeDiffFromEvent = false;
     }
   }, 1000);
-  $scope.participants = $scope.currentEventParticipants;
 
 });
