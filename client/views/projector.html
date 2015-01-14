@@ -9,8 +9,8 @@
     <div class="highlight"></div>
     <div class="admin-name" ng-click="rightMenuClick($event)">{{username}}</div>
     <div class="subMenu">
-      <div class="item" data-value="2" ui-sref="admin.events"><i class="configure icon"></i> Dashboard</div>
-      <div class="item" data-value="3" ng-click="signOut()"><i class="sign out icon"></i> Logout</div>
+      <div class="item" ui-sref="admin.events"><i class="configure icon"></i> Dashboard</div>
+      <div class="item" ng-click="signOut()"><i class="sign out icon"></i> Logout</div>
     </div>
   </div>
   <div class="event" ng-switch="timeDiffFromEvent">
