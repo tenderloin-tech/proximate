@@ -56,7 +56,7 @@ angular.module('proximate.controllers', [])
       .then(function(adminId) {
         $scope.adminId = adminId;
         $scope.getCurrentEventData();
-    });
+      });
   };
 
   // Get admin and event info on user login
@@ -166,7 +166,7 @@ angular.module('proximate.controllers', [])
   var eventId = $stateParams.eventId;
 
   // This function pulls current event info from the AppCtrl scope
-  $scope.setScopeVars = function () {
+  $scope.setScopeVars = function() {
     $scope.event = $scope.currentEvent;
     $scope.participants = $scope.currentEventParticipants;
   };

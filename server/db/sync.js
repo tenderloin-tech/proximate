@@ -187,12 +187,12 @@ module.exports = function(adminId) {
   var fetchedEvents;
   var participantIds;
   // Remainder of admin parameters will be fetched from DB
-  var adminParams = { id: adminId };
+  var adminParams = {id: adminId};
 
   return helpers.getAdminName(adminId)
     .then(function(admin) {
       adminParams.email = admin.get('email');
-      adminParams.lastSync = admin.get('lastSync');
+      adminParams.lastSync = moment(admin.get('lastSync')).format('YYYY-MM-DDTHH:mm:ssZ');
     })
     .then(function() {
       return auth.authenticate(adminParams.email);
@@ -239,6 +239,10 @@ module.exports = function(adminId) {
       console.log('created/updated', eventRecords.length, 'event records');
       var statusChangeCount = countStatusChanges(eventRecords);
       console.log('created/updated', statusChangeCount, 'status records');
+    }).then(function() {
+      return helpers.upsert('Admin', {
+        last_sync: moment().format('YYYY-MM-DD HH:mm:ss')
+      }, adminParams.id);
     })
     .catch(function(error) {
       console.log('Error syncing calendar for', adminParams.email, error);

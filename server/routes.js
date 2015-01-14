@@ -1,5 +1,4 @@
 var crypto = require('crypto');
-var moment = require('moment');
 
 var auth = require('./auth');
 var models = require('./models');
@@ -218,7 +217,7 @@ module.exports = function(app) {
 
     sync(adminId)
       .then(function() {
-        return helpers.getCurrentEventByAdmin(adminId)
+        return helpers.getCurrentEventByAdmin(adminId);
       })
       .then(function(events) {
         if (events.length > 0) {
