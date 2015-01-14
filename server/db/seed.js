@@ -3,7 +3,7 @@ var models = require('../models');
 
 exports.seedTables = function() {
 
-  // models.Admin.forge({name: 'Pira'}).save();
+  models.Admin.forge({name: 'Pira'}).save();
 
   var participants = models.Participants.forge([
     {email: 'tantai.john@gmail.com', name: 'John Tan', device_id: '999'},

@@ -1,7 +1,7 @@
 
 angular.module('proximate.controllers', [])
 
-.controller('AppCtrl', function($scope, $rootScope, $window, Populate, PubNub) {
+.controller('AppCtrl', function($scope, $rootScope, $window, Auth, Populate, PubNub) {
 
   // Initialize scope variables
   $scope.arrivedParticipants = [];
@@ -32,6 +32,7 @@ angular.module('proximate.controllers', [])
       return Populate.getEventWithParticipants($scope.currentEvent.id);
     }).then(function(eventData) {
       $scope.setCurrentEventParticipants(eventData.participants);
+      $scope.$broadcast('current-event-updated');
     }).catch(function(err) {
       console.log(err);
     });
@@ -47,17 +48,22 @@ angular.module('proximate.controllers', [])
     $scope.currentEventParticipants = currentEventParticipants;
   };
 
-  // Set the username and fetch current event data on user login
-  $rootScope.$on('auth-login-success', function(event, email) {
+  // Set the username and fetch current event data
+  $scope.getAdminAndEventInfo = function() {
     $scope.username = $window.sessionStorage.name;
 
-    Populate.getAdminId(email).then(function(adminId) {
-      $scope.adminId = adminId;
-      $scope.getCurrentEventData();
-    });
+    Populate.getAdminId($window.sessionStorage.email)
+      .then(function(adminId) {
+        $scope.adminId = adminId;
+        $scope.getCurrentEventData();
+      });
+  };
 
-  });
+  // Get admin and event info on user login
+  $rootScope.$on('auth-login-success', $scope.getAdminAndEventInfo);
 
+  // Fetch relevant info again in case the controller is reloaded
+  if (Auth.isAuth()) { $scope.getAdminAndEventInfo(); }
 })
 
 .controller('EventsCtrl', function($scope, $state, Populate) {
@@ -159,13 +165,20 @@ angular.module('proximate.controllers', [])
 
   var eventId = $stateParams.eventId;
 
+  // This function pulls current event info from the AppCtrl scope
+  $scope.setScopeVars = function() {
+    $scope.event = $scope.currentEvent;
+    $scope.participants = $scope.currentEventParticipants;
+  };
+
   $scope.getParticipants = function() {
     // If the specified event is 'current', populate with the latest event
     if (eventId === 'current') {
-      $scope.getCurrentEventData();
-      $scope.event = $scope.currentEvent;
-      $scope.participants = $scope.currentEventParticipants;
-      // Or proceed to get event by id
+      $scope.setScopeVars();
+      $scope.$on('current-event-updated', function() {
+        $scope.setScopeVars();
+      });
+    // Or proceed to get event by id
     } else {
       Populate.getEventWithParticipants(eventId).then(function(eventData) {
         $scope.event = eventData;
@@ -189,11 +202,9 @@ angular.module('proximate.controllers', [])
 
 .controller('ProjectorCtrl', function($scope, $interval) {
 
-  $scope.getCurrentEventData();
-  $scope.event = $scope.currentEvent;
   $scope.timeDiffFromEvent = null;
   $interval(function() {
-    var timeDiff = moment($scope.event.start_time).diff(moment(), 'seconds');
+    var timeDiff = moment($scope.currentEvent.start_time).diff(moment(), 'seconds');
     if (timeDiff > 0 && timeDiff >= 3600) {
       $scope.timeDiffFromEvent = null;
     } else if (timeDiff > 0 && timeDiff < 3600) {
@@ -202,6 +213,5 @@ angular.module('proximate.controllers', [])
       $scope.timeDiffFromEvent = false;
     }
   }, 1000);
-  $scope.participants = $scope.currentEventParticipants;
 
 });

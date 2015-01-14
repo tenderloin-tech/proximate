@@ -1,5 +1,4 @@
 var crypto = require('crypto');
-var moment = require('moment');
 
 var auth = require('./auth');
 var models = require('./models');
@@ -216,7 +215,10 @@ module.exports = function(app) {
 
     var adminId = req.params.adminId;
 
-    helpers.getCurrentEventByAdmin(adminId)
+    sync(adminId)
+      .then(function() {
+        return helpers.getCurrentEventByAdmin(adminId);
+      })
       .then(function(events) {
         if (events.length > 0) {
           res.status(200).json(events.at(0).toJSON());

@@ -11,19 +11,19 @@
     </ul>
   </div>
   <div class="event" ng-switch="timeDiffFromEvent">
-    <h3 ng-switch-when="null">{{event.name}} Starts At</h3>
-    <h3 ng-switch-when="true">{{event.name}} Starts</h3>
-    <h3 ng-switch-when="false">{{event.name}} Started</h3>
+    <h3 ng-switch-when="null">{{currentEvent.name}} Starts At</h3>
+    <h3 ng-switch-when="true">{{currentEvent.name}} Starts</h3>
+    <h3 ng-switch-when="false">{{currentEvent.name}} Started</h3>
   </div>
   <div class="time" ng-switch="timeDiffFromEvent">
-    <h1 ng-switch-when="null">{{event.start_time | date:"h:mm a"}}</h1>
-    <h1 ng-switch-when="true">{{event | fromNow}}</h1>
-    <h1 ng-switch-when="false">{{event | fromNow}}</h1>
+    <h1 ng-switch-when="null">{{currentEvent.start_time | date:"h:mm a"}}</h1>
+    <h1 ng-switch-when="true">{{currentEvent | fromNow}}</h1>
+    <h1 ng-switch-when="false">{{currentEvent | fromNow}}</h1>
   </div>
   <div class="participants">
     <div class="status">
       <ul>
-        <li ng-repeat="participant in participants | removeArrivedParticipants" class="repeated-item">
+        <li ng-repeat="participant in currentEventParticipants | removeArrivedParticipants" class="repeated-item">
          <a>{{participant.name}}</a>
         </li>
       </ul>

@@ -5,16 +5,10 @@ var helpers = require('./helpers');
 var _ = require('underscore');
 var moment = require('moment');
 
-exports.sync = function() {
+module.exports = function(adminId) {
 
   // Define calendar API and admin info
   var calendar = require('googleapis').calendar({version: 'v3', auth: auth.client});
-
-  var adminParams = {
-    id: 1,
-    email: 'sgtonkin@gmail.com',
-    lastSync: '2015-01-01T09:41:00.735-04:00'
-  };
 
   // Get the calendar IDs for all gcal calendars this admin email owns
   var getCalendars = function() {
@@ -44,8 +38,7 @@ exports.sync = function() {
       orderBy: 'starttime',
       sortorder: 'descending',
       showDeleted: true,
-      singleEvents: true,
-      updatedMin: adminParams.lastSync
+      singleEvents: true
     };
 
     return new promise(function(resolve, reject) {
@@ -186,8 +179,16 @@ exports.sync = function() {
   // Closure scope var to store result of db/api calls
   var fetchedEvents;
   var participantIds;
+  // Remainder of admin parameters will be fetched from DB
+  var adminParams = {id: adminId};
 
-  auth.authenticate(adminParams.email)
+  return helpers.getAdminName(adminId)
+    .then(function(admin) {
+      adminParams.email = admin.get('email');
+    })
+    .then(function() {
+      return auth.authenticate(adminParams.email);
+    })
     .then(getCalendars)
     .then(function(calendarIds) {
       // Get the gcal event data from all calendars into one array
@@ -233,6 +234,7 @@ exports.sync = function() {
     })
     .catch(function(error) {
       console.log('Error syncing calendar for', adminParams.email, error);
+      throw new Error();
     });
 
 };

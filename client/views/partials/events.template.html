@@ -13,9 +13,9 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="data in events | filterByTime:'future'">
-        <td class="username">{{data.start_time | date:'MMM d, y, h:mm:ss a'}}</td>
-        <td class="participantStatus"><a href="#" ng-click="getEventRoster($event, data.id)">{{data.name}}</a></td>
+      <tr ng-repeat="event in events | filterByTime:'future'">
+        <td class="username">{{event.start_time | date:'MMM d, y, h:mm:ss a'}}</td>
+        <td class="participantStatus"><a href="#" ng-click="getEventRoster($event, event.id)">{{event.name}}</a></td>
       </tr>
     </tbody>
   </table>
@@ -29,9 +29,9 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="data in events | filterByTime:'past'">
-        <td class="username">{{data.start_time | date:'MMM d, y, h:mm:ss a'}}</td>
-        <td class="participantStatus"><a href="#" ng-click="getEventRoster($event, data.id)">{{data.name}}</a></td>
+      <tr ng-repeat="event in events | filterByTime:'past'">
+        <td class="username">{{event.start_time | date:'MMM d, y, h:mm:ss a'}}</td>
+        <td class="participantStatus"><a href="#" ng-click="getEventRoster($event, event.id)">{{event.name}}</a></td>
       </tr>
     </tbody>
   </table>
