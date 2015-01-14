@@ -15,7 +15,7 @@
     <tbody>
       <tr ng-repeat="data in events | filterByTime:'future'">
         <td class="username">{{data.start_time | date:'MMM d, y, h:mm:ss a'}}</td>
-        <td class="participantStatus"><a href="#" ng-click="getEventRoster($event, 'current')">{{data.name}}</a></td>
+        <td class="participantStatus"><a href="#" ng-click="getEventRoster($event, data.id)">{{data.name}}</a></td>
       </tr>
     </tbody>
   </table>
