@@ -141,17 +141,25 @@ angular.module('proximate.controllers', [])
   // get beacons for given adminID
   $scope.getBeacons = function() {
     Populate.getBeaconsByAdminId($scope.adminId).then(function(beaconData) {
+      console.log('beacondata', beaconData);
       $scope.beaconsData = beaconData;
     });
   };
   $scope.getBeacons();
   // post beacon data
-  $scope.beaconData = {};
   $scope.addBeacon = function(beacon) {
+    // console.log('beacon',beacon);
     Populate.postNewBeacon($scope.adminId, beacon)
+    .then(function() {
+      // console.log(res);
+      $scope.beaconsData.push(beacon);
+    });
+    // $scope.$apply();
       // TODO: fix this.
-      .then($scope.getBeacons());
+      // .then($scope.getBeacons());
+      // console.log('beacon data', $scope.beaconsData);
   };
+
 })
 
 .controller('RosterCtrl', function($scope, $rootScope, $state, $stateParams, Populate) {
@@ -186,15 +194,21 @@ angular.module('proximate.controllers', [])
 
 })
 
-.controller('ProjectorCtrl', function($scope) {
+.controller('ProjectorCtrl', function($scope, $interval) {
 
-  var updateClock = function() {
-    $scope.clock = new Date();
-  };
-
-  var timer = setInterval(function() {
-    $scope.$apply(updateClock);
+  $scope.getCurrentEventData();
+  $scope.event = $scope.currentEvent;
+  $scope.timeDiffFromEvent = null;
+  $interval(function() {
+    var timeDiff = moment($scope.event.start_time).diff(moment(), 'seconds');
+    if (timeDiff > 0 && timeDiff >= 3600) {
+      $scope.timeDiffFromEvent = null;
+    } else if (timeDiff > 0 && timeDiff < 3600) {
+      $scope.timeDiffFromEvent = true;
+    } else {
+      $scope.timeDiffFromEvent = false;
+    }
   }, 1000);
-  updateClock();
+  $scope.participants = $scope.currentEventParticipants;
 
 });
