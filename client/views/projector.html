@@ -1,14 +1,17 @@
-<div class="container">
+<div class="container projector">
   <div class="background"></div>
   <div class="leftMenu">
     <ul class="nav">
-      <li><a href="#">Links</a></li>
+      <li><a href="#"><img class="projector-logo" src="img/proximate_v2_bonewhite.png"></a></li>
     </ul>
   </div>
   <div class="rightMenu">
-    <ul class="nav">
-      <li><a href="#">Other stuff</a></li>
-    </ul>
+    <div class="highlight"></div>
+    <div class="admin-name" ng-click="rightMenuClick($event)">{{username}}</div>
+    <div class="subMenu">
+      <div class="item" ui-sref="admin.events"><i class="configure icon"></i> Dashboard</div>
+      <div class="item" ng-click="signOut()"><i class="sign out icon"></i> Logout</div>
+    </div>
   </div>
   <div class="event" ng-switch="timeDiffFromEvent">
     <h3 ng-switch-when="null">{{currentEvent.name}} Starts At</h3>

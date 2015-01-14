@@ -59,23 +59,114 @@ ul {
   display: inline-block;
 }
 
+
 .nav li a {
   text-decoration: none;
-  opacity: .8;
+  opacity: .6;
   color: #fff;
   width: 100px;
 }
 
+.nav li img {
+  height: 45px;
+  width: 45px;
+}
+
 .nav li a:hover {
-  opacity: 1;
+  opacity: .9;
 }
 
 .rightMenu {
   position: absolute;
   top: 2%;
   right: 2%;
-  width: 100px;
+  width: auto;
+  height: 100px;
   text-align: right;
+}
+
+.rightMenu .admin-name {
+  opacity: .6;
+}
+
+.rightMenu .admin-name:hover {
+  cursor: pointer;
+  opacity: .7;
+}
+
+.rightMenu .admin-name.menuOpen {
+  opacity: 1;
+}
+
+.rightMenu .highlight {
+  position: absolute;
+  top: -15px;
+  right: 1%;
+  height: 2px;
+  background-color: rgba(236,240,241, 0);
+  width: 95%;
+}
+
+.rightMenu .highlight.menuOpen {
+  background-color: rgba(236,240,241, .9);
+}
+
+.subMenu {
+  color: #34495E;
+  position: absolute;
+  text-align: left;
+  border: 1px solid rgba(211,211,211, .2);
+  text-shadow: none;
+  -webkit-box-shadow: 2px 2px 1px 0px rgba(0,0,0,0.33);
+  -moz-box-shadow: 2px 2px 1px 0px rgba(0,0,0,0.33);
+  box-shadow: 2px 2px 1px 0px rgba(0,0,0,0.1);
+  width: 130%;
+  height: auto;
+  background-color: rgba(255,255,255, 0);
+  right: 1%;
+  margin-top: 15px;
+  border-radius: 2px;
+  opacity: 0;
+  z-index: 20;
+}
+
+.subMenu.show {
+  opacity: 1;
+  background-color: rgba(255,255,255, .9);
+}
+
+.subMenu .item {
+  padding-top: 10px;
+  padding-left: 15px;
+  padding-right: 10px;
+  padding-bottom: 10px;
+  width: 85%;
+}
+
+.subMenu i {
+  color: rgba(39,58,71, .5);
+}
+
+.subMenu .item:hover i {
+  color: white;
+}
+
+.subMenu .item:hover {
+  color: white;
+  background-color: rgba(39,58,71, 1);
+  width: 87%;
+}
+
+.subMenu .item:nth-of-type(1) {
+  border-radius: 2px 2px 0 0;
+}
+
+.subMenu .item:nth-of-type(2) {
+  border-radius: 0 0 2px 2px;
+}
+
+.subMenu .item.singleitem {
+  border-radius: 2px 2px 2px 2px;
 }
 
 .event h3 {
@@ -132,7 +223,7 @@ ul {
 }
 
 .status {
-  background-color: #fff;
+  background-color: #ECF0F1;
   width: 75%;
   color: #333;
   margin: 0 auto;
@@ -276,14 +367,6 @@ ul {
   top: 2%;
   left: 2%;
   width: 100px;
-}
-
-.userinfo {
-  position: absolute;
-  top: 2%;
-  right: 2%;
-  width: 100px;
-  text-align: right;
 }
 
 .events {
