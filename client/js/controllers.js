@@ -29,11 +29,11 @@ angular.module('proximate.controllers', [])
 
   // Fires on right menu clicks to handle opening and closing of right menu
   $scope.rightMenuClick = function(e) {
-      if (!$('.subMenu').hasClass('show')){
-        openRightMenu();
-      } else {
-        closeRightMenu();
-      }
+    if (!$('.subMenu').hasClass('show')) {
+      openRightMenu();
+    } else {
+      closeRightMenu();
+    }
 
   };
 
@@ -43,7 +43,7 @@ angular.module('proximate.controllers', [])
     if (!$(e.target).hasClass('admin-name') &&
         !$(e.target).hasClass('item') &&
         $('.admin-name').hasClass('menuOpen')) {
-        closeRightMenu();
+      closeRightMenu();
     }
   });
 
@@ -52,14 +52,14 @@ angular.module('proximate.controllers', [])
     $('.subMenu').addClass('show');
     $('.admin-name').addClass('menuOpen');
     $('.rightMenu .highlight').addClass('menuOpen');
-  };
+  }
 
   // Utility function for closing right menu
   function closeRightMenu() {
     $('.subMenu').removeClass('show');
     $('.admin-name').removeClass('menuOpen');
     $('.rightMenu .highlight').removeClass('menuOpen');
-  };
+  }
 
   $scope.signOut = Auth.signOut;
 
