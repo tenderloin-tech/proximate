@@ -141,23 +141,16 @@ angular.module('proximate.controllers', [])
   // get beacons for given adminID
   $scope.getBeacons = function() {
     Populate.getBeaconsByAdminId($scope.adminId).then(function(beaconData) {
-      console.log('beacondata', beaconData);
       $scope.beaconsData = beaconData;
     });
   };
   $scope.getBeacons();
   // post beacon data
   $scope.addBeacon = function(beacon) {
-    // console.log('beacon',beacon);
     Populate.postNewBeacon($scope.adminId, beacon)
     .then(function() {
-      // console.log(res);
       $scope.beaconsData.push(beacon);
     });
-    // $scope.$apply();
-      // TODO: fix this.
-      // .then($scope.getBeacons());
-      // console.log('beacon data', $scope.beaconsData);
   };
 
 })
