@@ -205,7 +205,7 @@ angular.module('proximate.services', [])
 .filter('removeArrivedParticipants', function() {
   return function(participants) {
     var filteredResults = [];
-    if (participants) {
+    if (Array.isArray(participants)) {
       participants.forEach(function(participant) {
         if (participant._pivot_status === 'ontime') {
           return;
