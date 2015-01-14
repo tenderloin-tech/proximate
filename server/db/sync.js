@@ -5,8 +5,6 @@ var helpers = require('./helpers');
 var _ = require('underscore');
 var moment = require('moment');
 
-// TODO: this should write last_sync
-
 module.exports = function(adminId) {
 
   // Define calendar API and admin info
@@ -40,13 +38,8 @@ module.exports = function(adminId) {
       orderBy: 'starttime',
       sortorder: 'descending',
       showDeleted: true,
-      singleEvents: true,
-      // updatedMin: adminParams.lastSync
+      singleEvents: true
     };
-
-    if (adminParams.lastSync) {
-      params.updatedMin = adminParams.lastSync;
-    }
 
     return new promise(function(resolve, reject) {
       calendar.events.list(params, function(err, data) {
@@ -192,7 +185,6 @@ module.exports = function(adminId) {
   return helpers.getAdminName(adminId)
     .then(function(admin) {
       adminParams.email = admin.get('email');
-      adminParams.lastSync = moment(admin.get('lastSync')).format('YYYY-MM-DDTHH:mm:ssZ');
     })
     .then(function() {
       return auth.authenticate(adminParams.email);
@@ -239,10 +231,6 @@ module.exports = function(adminId) {
       console.log('created/updated', eventRecords.length, 'event records');
       var statusChangeCount = countStatusChanges(eventRecords);
       console.log('created/updated', statusChangeCount, 'status records');
-    }).then(function() {
-      return helpers.upsert('Admin', {
-        last_sync: moment().format('YYYY-MM-DD HH:mm:ss')
-      }, adminParams.id);
     })
     .catch(function(error) {
       console.log('Error syncing calendar for', adminParams.email, error);

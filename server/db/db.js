@@ -36,7 +36,6 @@ if (config.resetDatabaseOnLoad) {
       t.string('refresh_token');
       t.string('access_token');
       t.bigInteger('token_expiry');
-      t.dateTime('last_sync');
       t.dateTime('created_at');
     });
   })
@@ -89,9 +88,9 @@ if (config.resetDatabaseOnLoad) {
       t.integer('beacon_id');
       t.integer('event_id');
     });
-  })
+  });
 
   // Once our tables have been created, fill them with data
-  .then(seed.seedTables);
+  // .then(seed.seedTables);
 
 }
