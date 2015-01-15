@@ -1,7 +1,20 @@
 
 angular.module('proximate.controllers', [])
 
-.controller('AppCtrl', function($scope, $rootScope, $window, Populate, PubNub, Auth) {
+.controller('AppCtrl', function($scope, $rootScope, $state, $window, Populate, PubNub, Auth) {
+
+  // Load the G+ API
+  var po = document.createElement('script');
+  po.type = 'text/javascript';
+  po.async = true;
+  po.src = 'https://plus.google.com/js/client:plusone.js';
+  var s = document.getElementsByTagName('script')[0];
+  s.parentNode.insertBefore(po, s);
+
+  po.onload = function() {
+    $scope.gapi_loaded = true;
+    $scope.$broadcast('google-api-loaded');
+  };
 
   // Initialize scope variables
   $scope.arrivedParticipants = [];
@@ -98,7 +111,14 @@ angular.module('proximate.controllers', [])
   };
 
   // Get admin and event info on user login
-  $rootScope.$on('auth-login-success', $scope.getAdminAndEventInfo);
+  $rootScope.$on('auth-login-success', function() {
+    $scope.getAdminAndEventInfo();
+    if ($rootScope.next) {
+      $state.go($rootScope.next);
+    } else {
+      $state.go('admin.events');
+    }
+  });
 
   // Fetch relevant info again in case the controller is reloaded
   if (Auth.isAuth()) { $scope.getAdminAndEventInfo(); }

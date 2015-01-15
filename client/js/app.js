@@ -62,6 +62,7 @@ angular.module('proximate',
   $rootScope.$on('$stateChangeStart', function(event, next) {
     if (next.name !== 'login' && !Auth.isAuth()) {
       event.preventDefault();
+      $rootScope.next = next.name;
       $state.transitionTo('login');
     }
   });

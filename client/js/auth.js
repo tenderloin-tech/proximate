@@ -46,7 +46,6 @@ angular.module('proximate.auth', [])
           $window.sessionStorage.email = res.data.email;
           // Render events view
           $rootScope.$broadcast('auth-login-success');
-          $state.go('admin.events');
         }).catch(function(err) {
           // Server rejected this token, unset it
           delete $window.sessionStorage.idToken;
@@ -79,13 +78,11 @@ angular.module('proximate.auth', [])
       'height': 'tall'
     });
   };
-  // Load the G+ API
-  var po = document.createElement('script');
-  po.type = 'text/javascript';
-  po.async = true;
-  po.src = 'https://plus.google.com/js/client:plusone.js';
-  var s = document.getElementsByTagName('script')[0];
-  s.parentNode.insertBefore(po, s);
 
-  po.onload = $scope.renderSignIn;
+  if ($scope.gapi_loaded) {
+    $scope.renderSignIn();
+  }
+
+  $scope.$on('google-api-loaded', $scope.renderSignIn);
+
 });

@@ -1,9 +1,12 @@
 <div class="events content">
-  <h1>{{data.currentEvent.name}}{{data.currentEvent.start_time | date:' M/d/yy h:mm a'}}</h1>
-  <h3>
-    <a ui-sref="projector">Projector View</a>
-    <a href="#" ng-click="getEventRoster($event, 'current')">Roster</a>
-  <hr>
+  <div ng-show="currentEvent.name">
+    <h1>{{currentEvent.name}}{{currentEvent.start_time | date:' M/d/yy h:mm a'}}</h1>
+    <h3>
+      <a ui-sref="projector">Projector View</a>
+      <a href="#" ng-click="getEventRoster($event, 'current')">Roster</a>
+    </h3>
+    <hr>
+  </div>
   <h3>Upcoming Events</h3>
   <table class="ui celled table sortable">
     <thead>
