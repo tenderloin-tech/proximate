@@ -46,7 +46,6 @@ angular.module('proximate.auth', [])
           $window.sessionStorage.email = res.data.email;
           // Render events view
           $rootScope.$broadcast('auth-login-success');
-          $state.go('admin.events');
         }).catch(function(err) {
           // Server rejected this token, unset it
           delete $window.sessionStorage.idToken;
