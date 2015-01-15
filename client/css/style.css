@@ -504,6 +504,119 @@ a {
   opacity: .8;
 }
 
+/* SPLASH VIEW */
+.splash .topBar {
+  background-color: #AC4A3F;
+  height: 0.25em;
+  width: 100%;
+}
+
+.pane1 {
+  font-family: 'Lato', serif;
+  text-align: center;
+  /*position: fixed;*/
+  height: 26.69em;
+  width: 100%;
+  /*min-width: 900px;*/
+  /*overflow: auto;*/
+  background: -webkit-radial-gradient(circle, #34465D, #243143);
+}
+
+.pane1 .logo {
+  position: relative;
+  top: 3.44em;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.pane1 .signinButton {
+  float: right;
+  color: #FFFFFF;
+  background-color: #636D7A;
+  width: 6.25em;
+  height: 1.88em;
+  font-size: 0.94em;
+  font-weight: 100;
+  margin-top: 1.88em;
+  margin-right: 2.5em;
+  border-width: 0;
+  border-radius: 0.19em;
+}
+
+.pane1 h1 {
+  margin-top: 2em;
+  font-weight: 300;
+  font-size: 0.06em;
+  color: #FFFFFF;
+}
+
+.pane1 h1 .io {
+  font-style: normal;
+  font-weight: 300;
+}
+
+.pane1 h2 {
+  margin-top: 3.31em;
+  margin-bottom: 1.19em;
+  font-size: 1.38em;
+  font-weight: 700;
+  font-style: bold;
+  color: #FFFFFF;
+}
+
+.pane1 h3 {
+  margin-top: 0.63em;
+  font-size: 0.94em;
+  font-weight: 300;
+  color: #FFFFFF;
+  opacity: 0.7;
+}
+
+.pane1 .getStartedButton {
+  margin-top: 2.5em;
+  color: #FFFFFF;
+  width: 9.5em;
+  height: 2.8em;
+  background-color: transparent;
+  font-size: 1.1em;
+  font-weight: 300;
+  border-color: #FFFFFF;
+  border-width: 0.13em;
+}
+
+.pane2 {
+  /*position: fixed;*/
+  height: 30.45em;
+  width: 100%;
+  border-color: #ECF0F1;
+  border-width: 1em;
+  border-style: solid;
+}
+
+.pane3 {
+  height: 30.45em;
+  width: 100%;
+  border-color: #000000;
+  border-width: 1em;
+  border-style: solid;
+}
+
+.pane4 {
+  height: 30.15em;
+  width: 100%;
+  border-color: #ECF0F1;
+  border-width: 1em;
+  border-style: solid;
+}
+
+.pane5 {
+  height: 10.7em;
+  width: 100%;
+  border-color: #000000;
+  border-width: 1em;
+  border-style: solid;
+}
+
 /* LOGIN VIEW */
 
 .login {
