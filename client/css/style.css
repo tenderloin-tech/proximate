@@ -417,7 +417,7 @@ ul {
 
 .sidebar-logo img {
   position: relative;
-  top: 25%;
+  top: 30%;
   left: 10%;
   width: 30px;
   height: 33px;
@@ -430,7 +430,7 @@ ul {
   font-weight: 500; /* 700 */
   color: white;
   left: 30%;
-  top: 4%;
+  top: 9%;
 }
 
 .sidebar-logo h3 .io {
@@ -444,8 +444,8 @@ ul {
 
 .admin-menu .menu-item {
   padding: 10px 20px;
-  border-bottom: 1px solid gray;
-
+/*  border-bottom: 1px solid #374E5E;
+*/
 }
 
 .admin-menu .menu-item:hover {
@@ -460,7 +460,8 @@ ul {
 
 /* changes line color on active admin-menu item to our highlight */
 .admin-menu .menu-item.active {
-  box-shadow: 2px 0 0 #EC4F43 inset !important;
+  box-shadow: 4px 0 0 #EC4F43 inset !important;
+  background-color: #1f2d38;
 }
 
 .events-table-controls input {

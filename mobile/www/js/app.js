@@ -38,7 +38,7 @@ angular.module('proximate', ['ionic',
     Settings.updateDeviceId();
 
     // Resets initialized value (testing)
-    $localStorage.set('initialized', 'false');
+    // $localStorage.set('initialized', 'false');
 
     if ($localStorage.get('initialized') !== 'true') {
       $state.go('splash', {}, {reload: true});
