@@ -3,6 +3,19 @@ angular.module('proximate.controllers', [])
 
 .controller('AppCtrl', function($scope, $rootScope, $window, Populate, PubNub, Auth) {
 
+  // Load the G+ API
+  var po = document.createElement('script');
+  po.type = 'text/javascript';
+  po.async = true;
+  po.src = 'https://plus.google.com/js/client:plusone.js';
+  var s = document.getElementsByTagName('script')[0];
+  s.parentNode.insertBefore(po, s);
+
+  po.onload = function() {
+    $scope.gapi_loaded = true;
+    $scope.$broadcast('google-api-loaded');
+  };
+
   // Initialize scope variables
   $scope.arrivedParticipants = [];
   $scope.currentEvent = {};
