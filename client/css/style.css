@@ -387,6 +387,15 @@ ul {
   margin-top: -35px;
 }
 
+.events-table-controls input {
+  float: left;
+  margin-right: 50px;
+}
+
+.time-select a:hover {
+  text-decoration: underline;
+}
+
 .admin-menu {
   color: #273A47;
   width: 212px !important; /* 16% */
