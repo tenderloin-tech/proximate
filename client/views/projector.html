@@ -14,9 +14,9 @@
     </div>
   </div>
   <div class="event" ng-switch="timeDiffFromEvent">
-    <h3 ng-switch-when="null">{{currentEvent.name}} Starts At</h3>
-    <h3 ng-switch-when="true">{{currentEvent.name}} Starts</h3>
-    <h3 ng-switch-when="false">{{currentEvent.name}} Started</h3>
+    <h3 ng-switch-when="null">{{currentEvent.name}} starts at</h3>
+    <h3 ng-switch-when="true">{{currentEvent.name}} starts</h3>
+    <h3 ng-switch-when="false">{{currentEvent.name}} started</h3>
   </div>
   <div class="time" ng-switch="timeDiffFromEvent">
     <h1 ng-switch-when="null">{{currentEvent.start_time | date:"h:mm a"}}</h1>
@@ -31,6 +31,6 @@
         </li>
       </ul>
     </div>
-    <h3>Have Not Checked In</h3>
+    <h3>have not checked in</h3>
   </div>
 </div>
