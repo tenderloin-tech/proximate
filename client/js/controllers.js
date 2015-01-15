@@ -126,6 +126,12 @@ angular.module('proximate.controllers', [])
 
 .controller('EventsCtrl', function($scope, $state, Populate) {
 
+  $scope.displayFilter = 'past';
+
+  $scope.setDisplayFilter = function(time) {
+    $scope.displayFilter = time;
+  };
+
   // Click handler for getting roster for a single event
   $scope.getEventRoster = function(event, eventId) {
     event.preventDefault();

@@ -50,6 +50,13 @@ ul {
   width: 100px;
 }
 
+.admin-topbar .leftMenu {
+  position: absolute;
+  top: 2%;
+  left: 2%;
+  width: 200px;
+}
+
 .nav {
   margin: 0;
   padding: 0;
@@ -70,6 +77,33 @@ ul {
 .nav li img {
   height: 45px;
   width: 45px;
+}
+
+.admin-topbar .nav li a {
+  text-decoration: none;
+  opacity: .9;
+  color: #fff;
+}
+
+.admin-topbar h3 {
+  position: relative;
+  margin-left: 62px;
+  letter-spacing: -.05em;
+  font-size: 1.2em;
+  font-weight: 500; /* 700 */
+  color: #34495E;
+}
+
+.admin-topbar h3 .io {
+  font-style: normal;
+  font-weight: 300;
+}
+
+.admin-topbar .nav li img {
+  top: 13%;
+  position: absolute;
+  height: 50px;
+  width: 46px;
 }
 
 .nav li a:hover {
@@ -152,6 +186,7 @@ ul {
 }
 
 .subMenu .item:hover {
+  cursor: pointer;
   color: white;
   background-color: rgba(39,58,71, 1);
   width: 87%;
@@ -343,8 +378,99 @@ ul {
 /* ADMIN VIEW */
 
 .admin {
+  /*background-image: url('../img/crossword-multiply-bonewhite.png');*/
+  background: white;
   position: absolute;
   width: 100%;
+}
+
+.topnav {
+  position: absolute;
+  width:100%;
+  height: 8%;
+  background-color: #ECF0F1;
+}
+
+.topnav .rightMenu {
+  position: absolute;
+  top: 20%;
+  right: 2%;
+  width: auto;
+  height: 100px;
+  text-align: right;
+}
+
+.sidebar {
+  width: 206px;
+  /*width: 18%;*/
+  position: absolute;
+  height: 100%;
+  background-color: #273A47;
+  color: white;
+}
+
+.sidebar-logo {
+  position: relative;
+  height: 8%;
+  background-color: #34495E;
+}
+
+.sidebar-logo img {
+  position: relative;
+  top: 30%;
+  left: 10%;
+  width: 30px;
+  height: 33px;
+}
+
+.sidebar-logo h3 {
+  position: absolute;
+  letter-spacing: -.02em;
+  font-size: 1.2em;
+  font-weight: 500; /* 700 */
+  color: white;
+  left: 30%;
+  top: 9%;
+}
+
+.sidebar-logo h3 .io {
+  font-style: normal;
+  font-weight: 300;
+}
+
+.admin-menu {
+  position: relative;
+}
+
+.admin-menu .menu-item {
+  padding: 10px 20px;
+/*  border-bottom: 1px solid #374E5E;
+*/
+}
+
+.admin-menu .menu-item:hover {
+  cursor: pointer;
+  background-color: rgba(255,255,255, .4);
+
+}
+
+.admin-menu .menu-item i {
+  opacity: .7;
+}
+
+/* changes line color on active admin-menu item to our highlight */
+.admin-menu .menu-item.active {
+  box-shadow: 4px 0 0 #EC4F43 inset !important;
+  background-color: #1f2d38;
+}
+
+.events-table-controls input {
+  float: left;
+  margin-right: 50px;
+}
+
+.time-select a:hover {
+  text-decoration: underline;
 }
 
 .admin .nav li a {
@@ -372,11 +498,20 @@ ul {
 .events {
   float: right !important;
   margin-right: 100px !important;
+  min-height: 800px;
+}
+
+.current-event-card {
+  position: relative;
+  height: 116px;
+  width: 100%;
+  top: 0;
+  background-color: #ddd;
 }
 
 .content {
   width: 70%;
-  margin: 100px auto;
+  margin: 7% auto;
 }
 
 .table .username {
