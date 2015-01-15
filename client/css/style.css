@@ -378,13 +378,89 @@ ul {
 /* ADMIN VIEW */
 
 .admin {
-  background-image: url('../img/crossword-multiply-bonewhite.png');
+  /*background-image: url('../img/crossword-multiply-bonewhite.png');*/
+  background: white;
   position: absolute;
   width: 100%;
 }
 
+.topnav {
+  position: absolute;
+  width:100%;
+  height: 8%;
+  background-color: #ECF0F1;
+}
+
+.topnav .rightMenu {
+  position: absolute;
+  top: 20%;
+  right: 2%;
+  width: auto;
+  height: 100px;
+  text-align: right;
+}
+
 .sidebar {
-  margin-top: -35px;
+  width: 206px;
+  /*width: 18%;*/
+  position: absolute;
+  height: 100%;
+  background-color: #273A47;
+  color: white;
+}
+
+.sidebar-logo {
+  position: relative;
+  height: 8%;
+  background-color: #34495E;
+}
+
+.sidebar-logo img {
+  position: relative;
+  top: 25%;
+  left: 10%;
+  width: 30px;
+  height: 33px;
+}
+
+.sidebar-logo h3 {
+  position: absolute;
+  letter-spacing: -.02em;
+  font-size: 1.2em;
+  font-weight: 500; /* 700 */
+  color: white;
+  left: 30%;
+  top: 4%;
+}
+
+.sidebar-logo h3 .io {
+  font-style: normal;
+  font-weight: 300;
+}
+
+.admin-menu {
+  position: relative;
+}
+
+.admin-menu .menu-item {
+  padding: 10px 20px;
+  border-bottom: 1px solid gray;
+
+}
+
+.admin-menu .menu-item:hover {
+  cursor: pointer;
+  background-color: rgba(255,255,255, .4);
+
+}
+
+.admin-menu .menu-item i {
+  opacity: .7;
+}
+
+/* changes line color on active admin-menu item to our highlight */
+.admin-menu .menu-item.active {
+  box-shadow: 2px 0 0 #EC4F43 inset !important;
 }
 
 .events-table-controls input {
@@ -394,41 +470,6 @@ ul {
 
 .time-select a:hover {
   text-decoration: underline;
-}
-
-.admin-menu {
-  color: #273A47;
-  width: 212px !important; /* 16% */
-  height: 161px !important;
-  -webkit-box-shadow: 2px 2px 1px 0px rgba(0,0,0,0.33)!important;
-  -moz-box-shadow: 2px 2px 1px 0px rgba(0,0,0,0.33)!important;
-  box-shadow: 2px 2px 1px 0px rgba(0,0,0,0.1)!important;
-}
-
-.admin-menu .item.admin-menu-item {
-  padding: .62em .95em !important;
-}
-
-.admin-menu .item.admin-menu-item:nth-of-type(3) .icon,
-.admin-menu .item.admin-menu-item:nth-of-type(3) b {
-  opacity: 0;
-}
-
-.admin-menu i {
-  position: absolute;
-  left: 5px;
-  padding-right: 10px;
-}
-
-.admin-menu b {
-  position: relative;
-  margin-left: 35px;
-  font-size: .9em;
-}
-
-/* changes line color on active admin-menu item to our highlight */
-.ui.vertical.menu .active.item {
-  box-shadow: 2px 0 0 #EC4F43 inset !important;
 }
 
 .admin .nav li a {
@@ -456,11 +497,20 @@ ul {
 .events {
   float: right !important;
   margin-right: 100px !important;
+  min-height: 800px;
+}
+
+.current-event-card {
+  position: relative;
+  height: 116px;
+  width: 100%;
+  top: 0;
+  background-color: #ddd;
 }
 
 .content {
   width: 70%;
-  margin: 100px auto;
+  margin: 7% auto;
 }
 
 .table .username {
