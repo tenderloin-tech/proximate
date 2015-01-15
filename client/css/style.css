@@ -50,6 +50,13 @@ ul {
   width: 100px;
 }
 
+.admin-topbar .leftMenu {
+  position: absolute;
+  top: 2%;
+  left: 2%;
+  width: 200px;
+}
+
 .nav {
   margin: 0;
   padding: 0;
@@ -70,6 +77,33 @@ ul {
 .nav li img {
   height: 45px;
   width: 45px;
+}
+
+.admin-topbar .nav li a {
+  text-decoration: none;
+  opacity: .9;
+  color: #fff;
+}
+
+.admin-topbar h3 {
+  position: relative;
+  margin-left: 62px;
+  letter-spacing: -.05em;
+  font-size: 1.2em;
+  font-weight: 500; /* 700 */
+  color: #34495E;
+}
+
+.admin-topbar h3 .io {
+  font-style: normal;
+  font-weight: 300;
+}
+
+.admin-topbar .nav li img {
+  top: 13%;
+  position: absolute;
+  height: 50px;
+  width: 46px;
 }
 
 .nav li a:hover {
@@ -152,6 +186,7 @@ ul {
 }
 
 .subMenu .item:hover {
+  cursor: pointer;
   color: white;
   background-color: rgba(39,58,71, 1);
   width: 87%;
@@ -343,8 +378,48 @@ ul {
 /* ADMIN VIEW */
 
 .admin {
+  background-image: url('../img/crossword-multiply-bonewhite.png');
   position: absolute;
   width: 100%;
+}
+
+.sidebar {
+  margin-top: -35px;
+}
+
+.admin-menu {
+  color: #273A47;
+  width: 212px !important; /* 16% */
+  height: 161px !important;
+  -webkit-box-shadow: 2px 2px 1px 0px rgba(0,0,0,0.33)!important;
+  -moz-box-shadow: 2px 2px 1px 0px rgba(0,0,0,0.33)!important;
+  box-shadow: 2px 2px 1px 0px rgba(0,0,0,0.1)!important;
+}
+
+.admin-menu .item.admin-menu-item {
+  padding: .62em .95em !important;
+}
+
+.admin-menu .item.admin-menu-item:nth-of-type(3) .icon,
+.admin-menu .item.admin-menu-item:nth-of-type(3) b {
+  opacity: 0;
+}
+
+.admin-menu i {
+  position: absolute;
+  left: 5px;
+  padding-right: 10px;
+}
+
+.admin-menu b {
+  position: relative;
+  margin-left: 35px;
+  font-size: .9em;
+}
+
+/* changes line color on active admin-menu item to our highlight */
+.ui.vertical.menu .active.item {
+  box-shadow: 2px 0 0 #EC4F43 inset !important;
 }
 
 .admin .nav li a {

@@ -7,7 +7,13 @@
     </h3>
     <hr>
   </div>
-  <h3>Upcoming Events</h3>
+  <h3>Events</h3>
+  <div class="events-table-controls">
+    <div class="time-select">
+      <a ng-click="setDisplayFilter('future')">Upcoming</a>
+      <a ng-click="setDisplayFilter('past')">Past</a>
+    </div>
+  </div>
   <table class="ui celled table sortable">
     <thead>
       <tr>
@@ -16,23 +22,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="event in events | filterByTime:'future'">
-        <td class="username">{{event.start_time | date:'MMM d, y, h:mm:ss a'}}</td>
-        <td class="participantStatus"><a href="#" ng-click="getEventRoster($event, event.id)">{{event.name}}</a></td>
-      </tr>
-    </tbody>
-  </table>
-  <hr>
-  <h3>Past Events</h3>
-  <table class="ui celled table sortable">
-    <thead>
-      <tr>
-        <th class="left align">Date</th>
-        <th class="left align">Event Name</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr ng-repeat="event in events | filterByTime:'past'">
+      <tr ng-repeat="event in events | filterByTime:{time: displayFilter}">
         <td class="username">{{event.start_time | date:'MMM d, y, h:mm:ss a'}}</td>
         <td class="participantStatus"><a href="#" ng-click="getEventRoster($event, event.id)">{{event.name}}</a></td>
       </tr>

@@ -1,10 +1,19 @@
-<div class="ui vertical menu">
-  <a class="item" ui-sref="admin.events" ui-sref-active="active">
-    Events
-    <div class="ui"></div>
-  </a>
-  <a class="item" ui-sref="admin.beacons" ui-sref-active="active">
-    Beacons
-    <div class="ui"></div>
-  </a>
+<div class="sidebar">
+  <div class="ui vertical menu admin-menu">
+    <a class="item admin-menu-item" ui-sref="admin.events" ui-sref-active="active">
+      <i class="calendar icon"></i> <b>events</b>
+      <div class="ui"></div>
+    </a>
+    <a class="item admin-menu-item" ui-sref="admin.beacons" ui-sref-active="active">
+      <i class="feed icon"></i> <b>beacons</b>
+      <div class="ui"></div>
+    </a>
+    <a class="item admin-menu-item">
+      <i class="feed icon"></i> <b>hidden</b>
+      <div class="ui"></div>
+    </a>
+    <a class="item admin-menu-item">
+      <div class="ui"></div>
+    </a>
+  </div>
 </div>
