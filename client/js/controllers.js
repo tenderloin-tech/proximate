@@ -145,7 +145,27 @@ angular.module('proximate.controllers', [])
 
 .controller('EventsCtrl', function($scope, $state, Populate) {
 
+  // Access $scope.currentEventParticipants
+  // Run it through calculate function
+  // Set the results on a scope variable
+
   $scope.displayFilter = 'past';
+
+  // Calculate and set # of checked-in users for current event
+  var setCheckinCount = function() {
+    var eventParticipants = $scope.currentEventParticipants;
+    var checkedInUserCount = 0;
+    var notCheckedInUserCount = 0;
+
+    for (var i = 0; i < eventParticipants.length; i++) {
+      var status = eventParticipants[i]._pivot_status;
+      if (status === null || status === 'excused' || status === 'absent') {
+        notCheckedInUserCount++;
+      } else {
+        checkedInUserCount++;
+      }
+    }
+  };
 
   $scope.setDisplayFilter = function(time) {
     $scope.displayFilter = time;
@@ -161,6 +181,9 @@ angular.module('proximate.controllers', [])
   Populate.getEventsByAdminId($scope.adminId).then(function(eventsData) {
     $scope.events = eventsData;
   });
+
+  setCheckinCount($scope.currentEventParticipants);
+  $scope.$on('current-event-updated', setCheckinCount);
 
 })
 

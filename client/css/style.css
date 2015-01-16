@@ -14,43 +14,39 @@ ul {
 }
 
 h1, h2, h3 {
-  color: #273a47;
+  color: #34495e;
+  margin: .1em 0;
 }
 
 h4, h5, h6 {
   color: #000;
   opacity: .5;
   font-weight: normal;
+  margin: .1em 0;
 }
 
 h1 {
   font-size: 2em;
-  margin: 0.1em 0;
 }
 
 h2 {
   font-size: 1.5em;
-  margin: 0.1em 0;
 }
 
 h3 {
   font-size: 1.17em;
-  margin: .1em 0;
 }
 
 h4 {
   font-size: 1em;
-  margin: .1em 0;
 }
 
 h5 {
   font-size: 0.83em;
-  margin: .1em 0;
 }
 
 h6 {
   font-size: 0.67em;
-  margin: .1em 0;
 }
 
 
@@ -475,7 +471,7 @@ h6 {
 }
 
   .adminTable th {
-    padding: 25px 0px 25px 20px;
+    padding: 25px 0px 25px 36px;
     border-bottom: 1px solid #efefef;
     text-transform: uppercase;
     color: #000;
@@ -486,7 +482,7 @@ h6 {
   }
 
   .adminTable tr td {
-    padding-left: 20px;
+    padding-left: 36px;
   }
 
   .adminTable .eventName a {
@@ -615,8 +611,8 @@ h6 {
 
 .current-event-card {
   position: relative;
-  padding: 46px 0px 0px 20px;
-  height: 70px;
+  padding: 40px 0px 0px 36px;
+  height: 76px;
   width: 100%;
   box-shadow: 7px 0 0 #89e4b7 inset;
 }
