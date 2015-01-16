@@ -182,6 +182,7 @@ angular.module('proximate.controllers', [])
     $scope.events = eventsData;
   });
 
+  // Define checkin count on the scope so we can display
   setCheckinCount($scope.currentEventParticipants);
   $scope.$on('current-event-updated', setCheckinCount);
 

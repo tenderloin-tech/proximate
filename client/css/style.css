@@ -526,6 +526,10 @@ a:visited {
     opacity: .4;
   }
 
+  .adminTable tr:hover {
+    background-color: #ecf0f1;
+  }
+
   .adminTable tr td {
     padding-left: 36px;
     height: 3.5em;

@@ -123,35 +123,7 @@ a:hover {
  * and Chrome.
  */
 
-h1 {
-  font-size: 2em;
-  margin: 0.1em 0;
-}
 
-h2 {
-  font-size: 1.5em;
-  margin: 0.1em 0;
-}
-
-h3 {
-  font-size: 1.17em;
-  margin: .1em 0;
-}
-
-h4 {
-  font-size: 1em;
-  margin: .1em 0;
-}
-
-h5 {
-  font-size: 0.83em;
-  margin: .1em 0;
-}
-
-h6 {
-  font-size: 0.67em;
-  margin: .1em 0;
-}
 
 /**
  * Address styling not present in IE 7/8/9, Safari 5, and Chrome.
