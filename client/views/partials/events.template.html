@@ -1,16 +1,16 @@
 <div class="events content">
   <div class="current-event-card">
+    <div ng-show="currentEvent.name">
+      <h3>{{currentEvent.name}}</h3>
+      <h4>{{currentEvent.start_time | date:' M/d/yy h:mm a'}}</h4>
 
+
+      <h3>
+   <!--      <a ui-sref="projector">Projector View</a>
+        <a href="#" ng-click="getEventRoster($event, 'current')">Roster</a> -->
+      </h3>
+    </div>
   </div>
-  <div ng-show="currentEvent.name">
-    <h1>{{currentEvent.name}}{{currentEvent.start_time | date:' M/d/yy h:mm a'}}</h1>
-    <h3>
-      <a ui-sref="projector">Projector View</a>
-      <a href="#" ng-click="getEventRoster($event, 'current')">Roster</a>
-    </h3>
-    <hr>
-  </div>
-  <h3>Events</h3>
   <div class="events-table-controls">
     <input type="text" ng-model="search" />
     <div class="time-select">
@@ -18,22 +18,23 @@
       <a ng-click="setDisplayFilter('past')">Past</a>
     </div>
   </div>
-  <table class="uiTable">
+  <table class="adminTable">
     <thead>
       <tr>
-        <th class="left align">Name</th>
-        <th class="left align">Time</th>
-        <th class="left align">Admin</th>
+        <th>Name</th>
+        <th>Time</th>
+        <th>Admin</th>
       </tr>
     </thead>
     <tbody>
       <tr ng-repeat="event in events | filterByTime: displayFilter | filter: search">
         <td class="eventName"><a href="#" ng-click="getEventRoster($event, event.id)">{{event.name}}</a></td>
-        <td class="eventTime">{{event.start_time | date:'MMM d, y, h:mm:ss a'}}</td>
+        <td class="eventTime">{{event.start_time | date:'MMM d, y, h:mm a'}}</td>
         <td class="eventAdmin">
-
-          Roster | Projector | Google Calendar
-        <a href="#" ng-click="getEventRoster($event, event.id)">{{event.name}}</a>
+          <a href="#" class="ui button" ng-click="getEventRoster($event, event.id)"><i class="user icon"></i></a>
+          <a href="#" class="ui button" ng-click="getProjector($event, event.id)"><i class="desktop icon"></i></a>
+          <a href="{{event.htmlLink}}" target="top" class="ui button"><i class="google icon"></i></a>
+        </a>
         </td>
       </tr>
     </tbody>

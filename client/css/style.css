@@ -4,7 +4,7 @@ body {
   height: 100%;
   min-height: 100%;
   background: #fff;
-  font-size: 1em;
+  font-size: 100%;
   font-family: 'Lato', sans-serif;
   zoom: 1;
 }
@@ -12,6 +12,47 @@ body {
 ul {
   list-style: none;
 }
+
+h1, h2, h3 {
+  color: #273a47;
+}
+
+h4, h5, h6 {
+  color: #000;
+  opacity: .5;
+  font-weight: normal;
+}
+
+h1 {
+  font-size: 2em;
+  margin: 0.1em 0;
+}
+
+h2 {
+  font-size: 1.5em;
+  margin: 0.1em 0;
+}
+
+h3 {
+  font-size: 1.17em;
+  margin: .1em 0;
+}
+
+h4 {
+  font-size: 1em;
+  margin: .1em 0;
+}
+
+h5 {
+  font-size: 0.83em;
+  margin: .1em 0;
+}
+
+h6 {
+  font-size: 0.67em;
+  margin: .1em 0;
+}
+
 
 /* EVENT VIEW */
 
@@ -426,10 +467,39 @@ ul {
   width: 100%;
 }
 
+.adminTable {
+  min-width: 600px;
+  width: 100%;
+  border: 1px solid #efefef;
+  text-align: left;
+}
+
+  .adminTable th {
+    padding: 25px 0px 25px 20px;
+    border-bottom: 1px solid #efefef;
+    text-transform: uppercase;
+    color: #000;
+    font-style: normal;
+    font-weight: 900;
+    font-size: .9em;
+    opacity: .4;
+  }
+
+  .adminTable tr td {
+    padding-left: 20px;
+  }
+
+  .adminTable .eventName a {
+    text-decoration: none;
+    color: #34495e;
+  }
+
+
+
 .topnav {
   position: absolute;
   width:100%;
-  height: 8%;
+  height: 75px;
   background-color: #ECF0F1;
 }
 
@@ -444,7 +514,6 @@ ul {
 
 .sidebar {
   width: 206px;
-  /*width: 18%;*/
   position: absolute;
   height: 100%;
   background-color: #273A47;
@@ -453,31 +522,32 @@ ul {
 
 .sidebar-logo {
   position: relative;
-  height: 8%;
+  height: 75px;
   background-color: #34495E;
+  padding-left: 20px;
 }
 
 .sidebar-logo img {
-  position: relative;
-  top: 30%;
-  left: 10%;
+  position: absolute;
+  top: 22px;
   width: 30px;
   height: 33px;
 }
 
 .sidebar-logo h3 {
   position: absolute;
+  top: 22px;
+  left: 64px;
   letter-spacing: -.02em;
   font-size: 1.2em;
-  font-weight: 500; /* 700 */
+  font-style: normal;
+  font-weight: 400;
   color: white;
-  left: 30%;
-  top: 9%;
 }
 
 .sidebar-logo h3 .io {
   font-style: normal;
-  font-weight: 300;
+  font-weight: 100;
 }
 
 .admin-menu {
@@ -486,6 +556,7 @@ ul {
 
 .admin-menu .menu-item {
   padding: 10px 20px;
+  font-weight: 300;
 /*  border-bottom: 1px solid #374E5E;
 */
 }
@@ -498,6 +569,7 @@ ul {
 
 .admin-menu .menu-item i {
   opacity: .7;
+
 }
 
 /* changes line color on active admin-menu item to our highlight */
@@ -538,22 +610,29 @@ ul {
 }
 
 .events {
-  float: right !important;
-  margin-right: 100px !important;
-  min-height: 800px;
+  margin-left: 207px !important;
 }
 
 .current-event-card {
   position: relative;
-  height: 116px;
+  padding: 46px 0px 0px 20px;
+  height: 70px;
   width: 100%;
-  top: 0;
-  background-color: #ddd;
+  box-shadow: 7px 0 0 #89e4b7 inset;
 }
+
+  .current-event-card h2 {
+    padding: 0;
+    margin: 0;
+    color: #34495e;
+    font-style: normal;
+    font-weight: 400;
+  }
 
 .content {
   width: 70%;
-  margin: 7% auto;
+  margin: 75px auto;
+  min-width: 693px;
 }
 
 .table .username {
