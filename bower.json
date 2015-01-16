@@ -30,6 +30,7 @@
     "ng-table": "~0.3.3",
     "underscore": "~1.7.0",
     "semantic-ui-icon": "~1.0.0",
-    "semantic-ui-button": "~1.0.0"
+    "semantic-ui-button": "~1.0.0",
+    "semantic-ui-input": "~1.0.0"
   }
 }

@@ -49,6 +49,19 @@ h6 {
   font-size: 0.67em;
 }
 
+a {
+  color: #34495e;
+}
+
+a:visited {
+  color: #34495e;
+}
+
+.text {
+  color: #000;
+  opacity: .3;
+}
+
 
 /* EVENT VIEW */
 
@@ -461,7 +474,39 @@ h6 {
   background: white;
   position: absolute;
   width: 100%;
+  min-height: 100%;
 }
+
+.tableControls {
+  background: #ffffff; /* Old browsers */
+  background: -moz-linear-gradient(top,  #ffffff 0%, #f5f5f5 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#f5f5f5)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  #ffffff 0%,#f5f5f5 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  #ffffff 0%,#f5f5f5 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  #ffffff 0%,#f5f5f5 100%); /* IE10+ */
+  background: linear-gradient(to bottom,  #ffffff 0%,#f5f5f5 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f5f5f5',GradientType=0 ); /* IE6-9 */
+  height: 55px;
+  padding-left: 36px;
+}
+
+  .tableControls .filterbox {
+    float: left;
+    width: 200px;
+    margin: 9px 50px 0 0;
+  }
+
+  .tableControls .timeSelect {
+    float: left;
+  }
+
+  .tableControls a {
+    line-height: 55px;
+    font-style: normal;
+    font-weight: 300;
+    font-size: .9em;
+    text-decoration: none;
+  }
 
 .adminTable {
   min-width: 600px;
@@ -483,6 +528,15 @@ h6 {
 
   .adminTable tr td {
     padding-left: 36px;
+    height: 3.5em;
+    border-bottom: 1px dashed #e4e4e4;
+  }
+
+  .adminTable .eventTime {
+    color: #000;
+    opacity: .7;
+    font-weight: 300;
+
   }
 
   .adminTable .eventName a {
@@ -574,15 +628,6 @@ h6 {
   background-color: #1f2d38;
 }
 
-.events-table-controls input {
-  float: left;
-  margin-right: 50px;
-}
-
-.time-select a:hover {
-  text-decoration: underline;
-}
-
 .admin .nav li a {
   color: #333;
 }
@@ -613,9 +658,14 @@ h6 {
   position: relative;
   padding: 40px 0px 0px 36px;
   height: 76px;
-  width: 100%;
   box-shadow: 7px 0 0 #89e4b7 inset;
+  border: 1px solid #efefef;
 }
+
+  .current-event-card .title {
+    width: 30%;
+    float: left;
+  }
 
   .current-event-card h2 {
     padding: 0;
@@ -623,6 +673,16 @@ h6 {
     color: #34495e;
     font-style: normal;
     font-weight: 400;
+  }
+
+  .current-event-card .checkIn {
+    float: left;
+    width: 20%
+  }
+
+  .current-event-card .buttons {
+    float: right;
+    padding-right: 20px;
   }
 
 .content {
