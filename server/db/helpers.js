@@ -198,8 +198,6 @@ exports.getCheckinStatus = function(deviceId, eventId) {
 
   var participant_id;
 
-  console.log('deviceId', deviceId, 'eventId', eventId);
-
   return exports.getParticipant(deviceId)
     .then(function(model) {
       participant_id = model.get('id');

@@ -11,17 +11,17 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="data in participants">
+      <tr ng-repeat="participant in participants">
         <td data-title="'Name'">
-          <span><a ng-click="showParticipantHistory(data.id)">{{data.name}}</a></span>
+          <span><a ng-click="showParticipantHistory(participant.id)">{{participant.name}}</a></span>
         </td>
         <td data-title="'Email'">
-          <span>{{data.email}}</span>
+          <span>{{participant.email}}</span>
         </td>
-        <td data-title="'Status'" ng-class="{'positive': data._pivot_status === 'ontime', 'negative': data._pivot_status === 'late', 'warning': data._pivot_Status === 'null'}">
-          <span ng-if="!data.$edit">{{data._pivot_status}}</span>
-          <div ng-if="data.$edit">
-            <select class="form-control" ng-model="data._pivot_status">
+        <td data-title="'Status'" ng-class="{'positive': participant._pivot_status === 'ontime', 'negative': participant._pivot_status === 'late', 'warning': participant._pivot_Status === 'null'}">
+          <span ng-if="!participant.$edit">{{participant._pivot_status}}</span>
+          <div ng-if="participant.$edit">
+            <select class="form-control" ng-model="participant._pivot_status">
                <option value="late">Late</option>
                <option value="ontime">Ontime</option>
                <option value="excused">Excused</option>
@@ -30,8 +30,8 @@
           </div>
         </td>
         <td data-title="'Actions'" width="200">
-          <a ng-if="!data.$edit" href="" ng-click="data.$edit = true">Edit</a>
-          <a ng-if="data.$edit" href="" ng-click="data.$edit = false; updateParticipantStatus(data.id, data._pivot_event_id, data._pivot_status)">Save</a>
+          <a ng-if="!participant.$edit" href="" ng-click="participant.$edit = true">Edit</a>
+          <a ng-if="participant.$edit" href="" ng-click="participant.$edit = false; updateParticipantStatus(participant)">Save</a>
         </td>
       </tr>
     </tbody>

@@ -36,9 +36,14 @@ module.exports = function(app) {
           if (!err) {
             data.emails.some(function(email) {
               if (email.type === 'account') {
-                helpers.updateAdminTokens(email.value, data.displayName, tokens);
-                res.status(200).json({name: data.displayName, email: email.value});
-                return true;
+                helpers.updateAdminTokens(email.value, data.displayName, tokens)
+                  .then(function() {
+                    res.status(200).json({name: data.displayName, email: email.value});
+                    return true;
+                  })
+                  .catch(function() {
+                    res.status(401).send('Authentication error');
+                  });
               }
             });
           } else {
