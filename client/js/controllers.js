@@ -145,11 +145,7 @@ angular.module('proximate.controllers', [])
 
 .controller('EventsCtrl', function($scope, $state, Populate) {
 
-  // Access $scope.currentEventParticipants
-  // Run it through calculate function
-  // Set the results on a scope variable
-
-  $scope.displayFilter = 'past';
+  $scope.displayFilter = 'all';
 
   // Calculate and set # of checked-in users for current event
   var setCheckinCount = function() {
@@ -185,6 +181,12 @@ angular.module('proximate.controllers', [])
   // Define checkin count on the scope so we can display
   setCheckinCount($scope.currentEventParticipants);
   $scope.$on('current-event-updated', setCheckinCount);
+
+  // Apply selected logic to time selectors
+  $('.tableControls .timeSelect li').on('click', function () {
+    $(this).addClass('selected');
+    $(this).siblings().removeClass('selected');
+  });
 
 })
 
