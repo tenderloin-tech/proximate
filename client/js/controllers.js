@@ -32,6 +32,7 @@ angular.module('proximate.controllers', [])
       $scope.$apply($scope.currentEventParticipants.some(function(participant) {
         if (participant.id === message.participantId) {
           participant._pivot_status = message.checkinStatus;
+          $scope.$broadcast('checkinConfirm', participant);
           return true;
         }
       }));
@@ -72,6 +73,24 @@ angular.module('proximate.controllers', [])
     $('.subMenu').removeClass('show');
     $('.admin-name').removeClass('menuOpen');
     $('.rightMenu .highlight').removeClass('menuOpen');
+  }
+
+  /**** SETUP FOR TOASTS ****/
+
+  $scope.showToast = function() {
+    $('.toast').animate({
+      opacity: [1, 'linear'],
+      top: [0, 'swing']
+    }, 450);
+
+    setTimeout($scope.hideToast, 2000);
+  };
+
+  $scope.hideToast = function() {
+    $('.toast').animate({
+      opacity: [0, 'linear'],
+      top: ['-100px', 'swing']
+    }, 450);
   }
 
   $scope.signOut = Auth.signOut;
@@ -265,6 +284,11 @@ angular.module('proximate.controllers', [])
 })
 
 .controller('ProjectorCtrl', function($scope, $interval) {
+
+  $scope.$on('checkinConfirm', function(event, participant) {
+    $scope.lastCheckin = participant;
+    $scope.showToast();
+  });
 
   $scope.timeDiffFromEvent = null;
   $interval(function() {

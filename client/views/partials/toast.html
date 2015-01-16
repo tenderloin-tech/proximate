@@ -1,0 +1,6 @@
+<div class="toast" ng-click="hideToast()">
+  <img src="img/participants/Sebastian-Tonkin.png" />
+  <h3>{{lastCheckin.name}}</h3>
+  <h4 ng-if="lastCheckin._pivot_status==='ontime'">Checked in <b class="ontime">on time</b></h4>
+  <h4 ng-if="lastCheckin._pivot_status==='late'">Checked in <b class="late">late</b></h4>
+</div>
