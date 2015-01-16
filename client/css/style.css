@@ -512,14 +512,17 @@ a {
 }
 
 .pane1 {
-  font-family: 'Lato', serif;
+  font-family: "Lato", Sans-Serif;
   text-align: center;
   /*position: fixed;*/
   height: 26.69em;
   width: 100%;
   /*min-width: 900px;*/
   /*overflow: auto;*/
-  background: -webkit-radial-gradient(circle, #34465D, #243143);
+  background: -webkit-radial-gradient(circle, #34465D, #243143); /* Safari 5.1 to 6.0 */
+  background: -o-radial-gradient(circle, #34465D, #243143); /* For Opera 11.6 to 12.0 */
+  background: -moz-radial-gradient(circle, #34465D, #243143); /* For Firefox 3.6 to 15 */
+  background: radial-gradient(circle, #34465D, #243143); /* Standard syntax */
 }
 
 .pane1 .logo {
@@ -585,38 +588,153 @@ a {
 }
 
 .pane2 {
-  /*position: fixed;*/
-  height: 30.45em;
+  padding: 1px;
+  height: 32.4em;
   width: 100%;
-  border-color: #ECF0F1;
-  border-width: 1em;
-  border-style: solid;
+  background-color: #000000;
 }
 
 .pane3 {
-  height: 30.45em;
+  padding: 1px;
+  height: 32.1em;
   width: 100%;
-  border-color: #000000;
-  border-width: 1em;
-  border-style: solid;
+  background: -webkit-linear-gradient(#C64534, #E6543F);
+  background: -o-linear-gradient(#C64534, #E6543F);
+  background: -moz-linear-gradient(#C64534, #E6543F);
+  background: linear-gradient(#C64534, #E6543F);
+}
+
+.pane3 .box-set, .pane3 .box {
+  border-radius: 6px;
+}
+
+.pane3 .box-set:before, .pane3 .box-set:after {
+  content: "";
+  display: table;
+}
+
+.pane3 .box-set:after {
+  clear: both;
+}
+
+.pane3 .box-set {
+  zoom: 1;
+}
+
+.pane3 .box {
+  background: #B84432;
+  float: left;
+  margin-left: 8.5%%;
+  margin-top:2.8%;
+  padding: 90px 0;
+  text-align: center;
+  width: 21.616%;
+  position: relative;
+  top: 1.3em;
 }
 
 .pane4 {
-  height: 30.15em;
+  height: 31.6em;
   width: 100%;
-  border-color: #ECF0F1;
-  border-width: 1em;
-  border-style: solid;
+  background: url('../img/classroom-blurred.jpg');
+  background-size: 100%;
+  text-align: center;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  zoom: 1;
+  z-index: 0;
+}
+
+.pane4 .quoteBox {
+  height: 17em;
+  width: 40em;
+  margin: 0 auto;
+  background-color:rgba(0,0,0,0.5);
+  position: relative;
+  top: 7em;
+}
+
+.pane4 .hrlogo {
+  margin-left: 16.9em;
+  /*margin-top: 3em;*/
+}
+
+.pane4 img {
+  height: auto;
+  max-width: 30%;
+  margin-top: 8%;
+  margin-right: 71%;
+}
+
+.pane4 p {
+  color: #FFFFFF;
 }
 
 .pane5 {
-  height: 10.7em;
+  padding: 1px;
+  height: 12.7em;
   width: 100%;
-  border-color: #000000;
-  border-width: 1em;
-  border-style: solid;
+  background: -webkit-linear-gradient(left, #28374B , #304056); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(right, #28374B, #304056); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(right, #28374B, #304056); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(to right, #28374B, #304056); /* Standard syntax */
+  /*border-color: #000000;*/
+  /*border-width: 1em;*/
+  /*border-style: solid;*/
 }
 
+.pane5 .bar {
+  background-color: #FFFFFF;
+  height: 0.34em;
+  width: 100%;
+}
+
+.pane5 .button-set, .pane3 .box {
+  border-radius: 6px;
+}
+
+.pane5 .button-set:before, .pane3 .button-set:after {
+  content: "";
+  display: table;
+}
+
+.pane5 .button-set:after {
+  clear: both;
+}
+
+.pane5 .button-set {
+  zoom: 1;
+}
+
+.pane5 .box {
+  background: #636D7A;
+  float: right;
+  margin-left: 8.5%%;
+  margin-top:2.8%;
+  padding: 6px 0;
+  text-align: center;
+  width: 6.25em;
+  position: relative;
+  top: 1.3em;
+  color: #FFFFFF;
+  font-size: 0.94em;
+  font-weight: 100;
+}
+
+/*.pane1 .signinButton {
+  float: right;
+  color: #FFFFFF;
+  background-color: #636D7A;
+  width: 6.25em;
+  height: 1.88em;
+  font-size: 0.94em;
+  font-weight: 100;
+  margin-top: 1.88em;
+  margin-right: 2.5em;
+  border-width: 0;
+  border-radius: 0.19em;
+}*/
 /* LOGIN VIEW */
 
 .login {
