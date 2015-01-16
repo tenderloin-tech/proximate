@@ -145,7 +145,7 @@ angular.module('proximate.controllers', [])
 
 })
 
-.controller('SettingsCtrl', function($scope, Settings) {
+.controller('SettingsCtrl', function($scope, Settings, Auth) {
 
   angular.element(document).ready(function() {
 
@@ -158,5 +158,9 @@ angular.module('proximate.controllers', [])
   $scope.updatePassword = function() {
     // Stem function
   };
+
+  $scope.refreshBeacons = Settings.updateBeaconList;
+
+  $scope.logout = Auth.logout;
 
 });

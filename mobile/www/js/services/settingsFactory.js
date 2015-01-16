@@ -7,7 +7,11 @@ angular.module('proximate.services')
 
   var data = {};
 
-  data.deviceId = $localStorage.get('deviceId'); //initialize with stored value
+  //initialize with stored values
+  data.deviceId = $localStorage.get('deviceId');
+  data.currentBeaconList = $localStorage.get('beaconList');
+  data.username = $localStorage.get('username');
+  data.userId = $localStorage.get('userId');
 
   // update the deviceID based on current device
   var updateDeviceId = function() {
@@ -29,24 +33,22 @@ angular.module('proximate.services')
     }
   };
 
-  data.currentBeaconList = $localStorage.get('beaconList');
-
   // Gets the most recent beacons from the server, populating local storage
   //on success
 
   var updateBeaconList = function() {
     return $http({
       method: 'GET',
-      url: webServer.url + '/api/beacons/' + data.deviceId,
+      url: webServer.url + '/api/devices/' + data.deviceId + '/beacons',
     }).then(function(result) {
-      data.currentBeaconList = result;
-      localStorage.set('beaconList', result);
+      // data.currentBeaconList = result;
+      // localStorage.set('beaconList', result);
+      logToDom('In settings factory', JSON.stringify(result));
+      return result;
+    }).catch(function(error) {
+      logToDom('Error in settings factory: ' + JSON.stringify(error));
     });
   };
-
-  //initializes the username property from localStorage
-  data.username = $localStorage.get('username');
-  data.userId = $localStorage.get('userId');
 
   //sets username both in localStorage and on the server
   var updateUsername = function(name) {
@@ -110,13 +112,29 @@ angular.module('proximate.services')
     });
   };
 
+  // Utility logging function. Currently set to log to settings screen on app for DEV purposes
+
+  var logToDom = function(message) {
+    var e = document.createElement('label');
+    e.innerText = message;
+
+    var devMsgElement = document.getElementById('dev-messages');
+
+    var br = document.createElement('br');
+    var br2 = document.createElement('br');
+    devMsgElement.appendChild(e);
+    devMsgElement.appendChild(br);
+    devMsgElement.appendChild(br2);
+  };
+
   return {
     data: data,
     updateDeviceId: updateDeviceId,
     updateBeaconList: updateBeaconList,
     updateUsername: updateUsername,
     updateParticipantInfo: updateParticipantInfo,
-    signin: signin
+    signin: signin,
+    logToDom: logToDom
   };
 
 });

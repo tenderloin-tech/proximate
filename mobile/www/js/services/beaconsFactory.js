@@ -2,21 +2,6 @@ angular.module('proximate.services')
 
 .factory('Beacons', function($localStorage, Settings) {
 
-  // Utility logging function. Currently set to log to settings screen on app for DEV purposes
-
-  var logToDom = function(message) {
-    var e = document.createElement('label');
-    e.innerText = message;
-
-    var devMsgElement = document.getElementById('dev-messages');
-
-    var br = document.createElement('br');
-    var br2 = document.createElement('br');
-    devMsgElement.appendChild(e);
-    devMsgElement.appendChild(br);
-    devMsgElement.appendChild(br2);
-  };
-
   // Sets up beacon environment and calls functions to begin monitoring / ranging
   //the beacon list
   var setupTestBeacons = function(onEnterCallback) {
@@ -73,7 +58,7 @@ angular.module('proximate.services')
         };
 
         onEnterCallback('checkins', regionInfo);
-        logToDom('[Prox] didEnterRegion:' + JSON.stringify(pluginResult));
+        // Settings.logToDom('[Prox] didEnterRegion:' + JSON.stringify(pluginResult));
 
       } else if (pluginResult.state === 'CLRegionStateOutside') {
         console.log('Exited the region!');
@@ -81,7 +66,7 @@ angular.module('proximate.services')
     };
 
     delegate.didStartMonitoringForRegion = function(pluginResult) {
-      logToDom('didStartMonitoringForRegion:' + JSON.stringify(pluginResult));
+      Settings.logToDom('didStartMonitoringForRegion:' + JSON.stringify(pluginResult));
     };
 
     delegate.didRangeBeaconsInRegion = function(pluginResult) {
@@ -94,7 +79,7 @@ angular.module('proximate.services')
       };
 
       onEnterCallback('ranging', rangingInfo);
-      logToDom('[Prox] Beacon 0 Accuracy: ' + JSON.stringify(pluginResult.beacons[0].accuracy));
+      // Settings.logToDom('[Prox] Beacon 0 Accuracy: ' + JSON.stringify(pluginResult.beacons[0].accuracy));
     };
 
     cordova.plugins.locationManager.setDelegate(delegate);

@@ -24,7 +24,13 @@
         <input ng-model="data.newPasswordConf" type="password" placeholder="New password (confirmation)">
       </label>
       <button ng-click="updatePassword()" class="button button-block button-positive">
-        Save settings!
+        Save settings
+      </button>
+      <button ng-click="refreshBeacons()" class="button button-block">
+        Refresh beacons
+      </button>
+      <button ng-click="logout()" class="button button-block">
+        Logout
       </button>
     </div>
     <div class="list card">

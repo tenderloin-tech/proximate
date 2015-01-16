@@ -5,24 +5,24 @@ angular.module('proximate', ['ionic',
 .run(function($ionicPlatform, $localStorage, $state, PubNub, Settings) {
 
   // Similarly, add fake region array to localStorage to simulate previous info
-  var testRegions = [{
-    uuid : 'B9407F30-F5F8-466E-AFF9-25556B57FE6D',
-    identifier : 'Estimote Icy One',
-    minor : 10907,
-    major : 23516
-  }, {
-    uuid : 'B9407F30-F5F8-466E-AFF9-25556B57FE6D',
-    identifier : 'Estimote Blue One',
-    minor : 50306,
-    major : 54690
-  }, {
-    uuid : 'B9407F30-F5F8-466E-AFF9-25556B57FE6D',
-    identifier : 'Estimote Mint One',
-    minor : 3704,
-    major : 57868
-  }];
+  // var testRegions = [{
+  //   uuid : 'B9407F30-F5F8-466E-AFF9-25556B57FE6D',
+  //   identifier : 'Estimote Icy One',
+  //   minor : 10907,
+  //   major : 23516
+  // }, {
+  //   uuid : 'B9407F30-F5F8-466E-AFF9-25556B57FE6D',
+  //   identifier : 'Estimote Blue One',
+  //   minor : 50306,
+  //   major : 54690
+  // }, {
+  //   uuid : 'B9407F30-F5F8-466E-AFF9-25556B57FE6D',
+  //   identifier : 'Estimote Mint One',
+  //   minor : 3704,
+  //   major : 57868
+  // }];
 
-  $localStorage.set('beaconList', JSON.stringify(testRegions));
+  // $localStorage.set('beaconList', JSON.stringify(testRegions));
 
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -36,6 +36,10 @@ angular.module('proximate', ['ionic',
     }
 
     Settings.updateDeviceId();
+    // Settings.updateBeaconList()
+    //         .then(function(data) {
+    //           Settings.logToDom('Beacons: ', JSON.stringify(data));
+    //         });
 
     // Resets initialized value (testing)
     // $localStorage.set('initialized', 'false');
