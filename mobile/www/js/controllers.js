@@ -1,15 +1,21 @@
 angular.module('proximate.controllers', [])
 
-.controller('StatusCtrl', function($scope, $state, PubNub, Events, Settings, Beacons) {
+.controller('AppCtrl', function($scope, $state, Settings, Events, PubNub) {
 
-  // Initial test data
+  $scope.hide_header = true;
+
+  // Initialize current event
   $scope.event = {
-    id: '882',
-    name: 'Test Event',
-    start_time: 'Tue, 30 Dec 2014 00:46:41 GMT',
-    pretty_time: '',
-    status: null
+    id: null
   };
+
+  //   $scope.event = {
+  //   id: '882',
+  //   name: 'Test Event',
+  //   start_time: 'Tue, 30 Dec 2014 00:46:41 GMT',
+  //   pretty_time: '',
+  //   status: null
+  // };
 
   // Gets the most current event for the user, and updates the
   // relevant checkin status, protecting for empty responses.
@@ -34,17 +40,28 @@ angular.module('proximate.controllers', [])
         });
       })
       .catch(function(err) {
-        console.log('getMostCurrentEvent error: ' + err);
+        console.log('getMostCurrentEvent error: ', JSON.stringify(err));
+
+        if(err.status === 404) {
+          $scope.event.id = null;
+        }
+
       })
       .finally(function() {
         $scope.$broadcast('scroll.refreshComplete');
       });
   };
 
+  // Utility function that populates the pretty time field from start time
+  $scope.setPrettyStartTime = function() {
+    $scope.event.pretty_time = moment($scope.event.start_time).format('h:mm a');
+  };
+
   // Subscribe to the checkins channel on PubNub, checking for events
   // that match a checkin confirmation for the relevant device, then
   // change status to match
   $scope.subscribeToCheckinStatus = function() {
+    Settings.logToDom('Subscribed to PubNub events');
     PubNub.subscribe('checkins', function(message) {
       console.log('Received PubNub message: ', JSON.stringify(message));
 
@@ -60,13 +77,12 @@ angular.module('proximate.controllers', [])
     });
   };
 
+})
+
+.controller('StatusCtrl', function($scope, $state, PubNub, Events, Settings, Beacons) {
+
   $scope.doRefresh = function() {
     $scope.initWithEvent();
-  };
-
-  // Utility function that populates the pretty time field from start time
-  $scope.setPrettyStartTime = function() {
-    $scope.event.pretty_time = moment($scope.event.start_time).format('h:mm a');
   };
 
   // Wait for load, then full initialize cycle
@@ -119,6 +135,8 @@ angular.module('proximate.controllers', [])
 
   $scope.error = '';
 
+  Settings.updateDeviceId();
+
   // Calls the factory signin function, and takes the user to the Status view upon success,
   // or displays an error otherwise
 
@@ -126,6 +144,7 @@ angular.module('proximate.controllers', [])
     Settings.signin($scope.data)
       .then(function(res) {
         $scope.error = '';
+        $scope.hide_header = false;
         $state.go('tab.status', {}, {reload: true});
       })
       .catch(function(err) {
@@ -161,6 +180,9 @@ angular.module('proximate.controllers', [])
 
   $scope.refreshBeacons = Settings.updateBeaconList;
 
-  $scope.logout = Auth.logout;
+  $scope.logout = function() {
+    $scope.hide_header = true;
+    Auth.logout();
+  }
 
 });

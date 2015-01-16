@@ -35,7 +35,7 @@ angular.module('proximate', ['ionic',
       StatusBar.styleDefault();
     }
 
-    Settings.updateDeviceId();
+    // Settings.updateDeviceId();
     // Settings.updateBeaconList()
     //         .then(function(data) {
     //           Settings.logToDom('Beacons: ', JSON.stringify(data));

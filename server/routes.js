@@ -149,8 +149,11 @@ module.exports = function(app) {
           .flatten()
           .uniq()
           .value();
-
-        res.status(200).json(beacons);
+        if (beacons.length > 0){
+          res.status(200).json(beacons);
+        } else {
+          res.status(404).send("No Beacons found for deviceId")
+        }
       });
 
   });

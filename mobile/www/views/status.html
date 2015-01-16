@@ -8,26 +8,50 @@
     <div class="col col-10"></div>
   </div>
 
-  <div class="row">
-    <div class="col-10"></div>
-    <div class="col col-80">
-      <div class="checkin-status">
-          <div class="checkin-status-loading" ng-show="event.status===''" ng-cloak><i class="ion-loop"></i></div>
-          <div class="checkin-status-notyet" ng-show="event.status===null||event.status==='null'" ng-cloak><i class="ion-close-round"></i>not checked in</div>
-          <div class="checkin-status-here" ng-show="event.status==='ontime'" ng-cloak><i class="ion-checkmark-round"></i>checked in</div>
-          <div class="checkin-status-late" ng-show="event.status==='late'" ng-cloak><i class="ion-alert-circled"></i>late</div>
+  <div class="current-event" ng-show="event.id !== null">
+    <div class="row">
+      <div class="col-10"></div>
+      <div class="col col-80">
+        <div class="checkin-status">
+            <div class="checkin-status-loading" ng-show="event.status===''" ng-cloak><i class="ion-loop"></i></div>
+            <div class="checkin-status-notyet" ng-show="event.status===null||event.status==='null'" ng-cloak><i class="ion-close-round"></i>not checked in</div>
+            <div class="checkin-status-here" ng-show="event.status==='ontime'" ng-cloak><i class="ion-checkmark-round"></i>checked in</div>
+            <div class="checkin-status-late" ng-show="event.status==='late'" ng-cloak><i class="ion-alert-circled"></i>late</div>
+          </div>
         </div>
+      <div class="col-10"></div>
+    </div>
+
+    <div class="row">
+      <div class="col col-10"></div>
+      <div class="col col-80">
+        <h2 class="status-heading">{{event.name}}</h2>
+        <h3 class="status-heading">{{event.pretty_time}}</h3>
+        <h3 class="status-heading">{{event.pretty_time}}</h3>
       </div>
-    <div class="col-10"></div>
+      <div class="col col-10"></div>
+    </div>
   </div>
 
-  <div class="row">
-    <div class="col col-10"></div>
-    <div class="col col-80">
-      <h2 class="status-heading">{{event.name}}</h2>
-      <h3 class="status-heading">{{event.pretty_time}}</h3>
+  <div class="current-event-null" ng-show="!event.id">
+    <div class="row">
+      <div class="col-10"></div>
+      <div class="col col-80">
+        <div class="checkin-status">
+            <div class="checkin-status-notyet" ng-cloak><i class="ion-ios-game-controller-a-outline"></i>not checked in</div>
+          </div>
+        </div>
+      <div class="col-10"></div>
     </div>
-    <div class="col col-10"></div>
+
+    <div class="row">
+      <div class="col col-10"></div>
+      <div class="col col-80">
+        <h2 class="status-heading">No current event</h2>
+        <h3 class="status-heading">Perhaps nothing is scheduled? Alternately, try refreshing</h3>
+      </div>
+      <div class="col col-10"></div>
+    </div>
   </div>
 
   </ion-content>
