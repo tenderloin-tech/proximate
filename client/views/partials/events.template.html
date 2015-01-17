@@ -1,34 +1,80 @@
 <div class="events content">
-  <div class="current-event-card">
-
-  </div>
-  <div ng-show="currentEvent.name">
-    <h1>{{currentEvent.name}}{{currentEvent.start_time | date:' M/d/yy h:mm a'}}</h1>
-    <h3>
-      <a ui-sref="projector">Projector View</a>
-      <a href="#" ng-click="getEventRoster($event, 'current')">Roster</a>
-    </h3>
-    <hr>
-  </div>
-  <h3>Events</h3>
-  <div class="events-table-controls">
-    <input type="text" ng-model="search" />
-    <div class="time-select">
-      <a ng-click="setDisplayFilter('future')">Upcoming</a> |
-      <a ng-click="setDisplayFilter('past')">Past</a>
+  <div class="current-event-card" ng-show="currentEvent.name">
+    <div>
+      <div class="title">
+        <h2>{{currentEvent.name}}</h2>
+        <h5>{{currentEvent.start_time | date:'MMM d, y, h:mm a'}}</h5>
+      </div>
+      <div class="checkIn">
+        <h2>18 / 31</h2>
+        <h5>Checked-In</h5>
+      </div>
+      <div class="buttons">
+        <a ui-sref="admin.roster({eventId: 'current'})" class="ui labeled icon blue button">
+          <i class="user icon"></i>
+          Roster
+        </a>
+        <a ui-sref="projector({eventId: 'current'})" class="ui labeled icon blue button">
+          <i class="desktop icon"></i>
+          Projector
+        </a>
+      </div>
+    </div>
+    <div ng-show="noCurrentEvent">
+      <div class="title">
+        <h2>No events currently scheduled within the hour</h2>
+      </div>
     </div>
   </div>
-  <table class="ui celled table sortable">
+  <div class="tableControls">
+    <div class="ui icon input small filterbox">
+      <input placeholder="search" type="text" ng-model="search" />
+      <i class="search icon"></i>
+    </div>
+    <ul class="timeSelect">
+      <li class="selected">
+        <a href="#" class="ui label" ng-click="setDisplayFilter('all')">All</a>
+      </li>
+      <li>
+        <a href="#" ng-click="setDisplayFilter('future')">Upcoming</a>
+      </li>
+      <li>
+        <a href="#" ng-click="setDisplayFilter('past')">Past</a>
+      </li>
+    </ul>
+    <ul class="syncEvents">
+      <li><a >
+        <a href="#" ng-click="getCurrentEventData()" class="ui icon button basic">
+          <i class="ui refresh icon"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+  <table class="adminTable">
     <thead>
       <tr>
-        <th class="left align">Date</th>
-        <th class="left align">Event Name</th>
+        <th>Name</th>
+        <th>Time</th>
+        <th>Admin</th>
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="event in events | filterByTime: displayFilter | filter: search">
-        <td class="username">{{event.start_time | date:'MMM d, y, h:mm:ss a'}}</td>
-        <td class="participantStatus"><a href="#" ng-click="getEventRoster($event, event.id)">{{event.name}}</a></td>
+      <tr class="adminRow" ng-repeat="event in events | filterByTime: displayFilter | filter: search | orderBy: '-start_time'">
+        <td ui-sref="admin.roster({eventId: event.id})" class="eventName"><a href="#">{{event.name}}</a></td>
+        <td ui-sref="admin.roster({eventId: event.id})" class="eventTime">{{event.start_time | date:'MMM d, y, h:mm a'}}</td>
+        <td class="eventAdmin">
+          <div class="ui icon buttons basic">
+            <a href="#" class="ui icon button" ui-sref="admin.roster({eventId: event.id})">
+            <i class="user icon"></i>
+            </a>
+            <a href="#" class="ui icon button" ui-sref="projector({eventId: event.id})">
+            <i class="desktop icon"></i>
+            </a>
+            <a href="{{event.htmlLink}}" target="top" class="ui icon button">
+              <i class="google icon"></i>
+            </a>
+          </div>
+        </td>
       </tr>
     </tbody>
   </table>
