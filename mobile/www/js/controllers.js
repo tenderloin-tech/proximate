@@ -72,8 +72,10 @@ angular.module('proximate.controllers', [])
   function loadCycle() {
     $scope.initWithEvent();
     $scope.subscribeToCheckinStatus();
-    Settings.updateBeaconList();
-    Beacons.setupBeacons(PubNub.publish);
+    Settings.updateBeaconList()
+      .then(function() {
+        Beacons.setupBeacons(PubNub.publish);
+      });
   }
 
   $ionicPlatform.ready(function() {
@@ -151,7 +153,8 @@ angular.module('proximate.controllers', [])
       .then(function(res) {
         $scope.error = '';
         $scope.hide_header = false;
-        $state.go('tab.status');
+        console.log('hit then block');
+        $state.go('tab.status', {}, {reload: true});
       })
       .catch(function(err) {
         $scope.logSplashError(err);
@@ -170,7 +173,7 @@ angular.module('proximate.controllers', [])
 
 })
 
-.controller('SettingsCtrl', function($scope, Settings, Auth) {
+.controller('SettingsCtrl', function($scope, Settings, Auth, Beacons) {
 
   angular.element(document).ready(function() {
 
@@ -184,7 +187,15 @@ angular.module('proximate.controllers', [])
     // Stem function
   };
 
-  $scope.refreshBeacons = Settings.updateBeaconList;
+  $scope.refreshBeacons = function() {
+    console.log('triggered');
+    Beacons.clearBeacons();
+    Settings.updateBeaconList()
+    .then(function() {
+      Beacons.restartBeacons();
+      console.log('done');
+    });
+  };
 
   $scope.logout = function() {
     $scope.hide_header = true;
