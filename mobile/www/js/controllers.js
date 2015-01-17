@@ -21,16 +21,16 @@ angular.module('proximate.controllers', [])
         return res;
       })
       .then(function(res) {
-        Events.getEventCheckinStatus($scope.event.id)
-        .then(function(res) {
-          console.log('Checkin status is: ' + JSON.stringify(res));
-          if (res) {
-            $scope.event.status = res.status;
-          } else {
-            $scope.event.status = null;
-            console.log('No data returned for checkin status');
-          }
-        });
+        return Events.getEventCheckinStatus($scope.event.id);
+      })
+      .then(function(res) {
+        console.log('Checkin status is: ' + JSON.stringify(res));
+        if (res) {
+          $scope.event.status = res.status;
+        } else {
+          $scope.event.status = null;
+          console.log('No data returned for checkin status');
+        }
       })
       .catch(function(err) {
         console.log('getMostCurrentEvent error: ', JSON.stringify(err));
@@ -82,7 +82,7 @@ angular.module('proximate.controllers', [])
   $ionicPlatform.ready(function() {
     if ($localStorage.get('initialized') !== 'true') {
       Settings.updateDeviceId();
-      $state.go('splash', {}, {reload: true});
+      $state.go('splash');
     } else {
       loadCycle();
     }
@@ -100,9 +100,7 @@ angular.module('proximate.controllers', [])
 
 .controller('StatusCtrl', function($scope) {
 
-  $scope.doRefresh = function() {
-    $scope.initWithEvent();
-  };
+  $scope.doRefresh = $scope.initWithEvent;
 
 })
 
@@ -156,7 +154,7 @@ angular.module('proximate.controllers', [])
       .then(function(res) {
         $scope.error = '';
         $scope.hide_header = false;
-        $state.go('tab.status', {firstLoad: true}, {reload: true});
+        $state.go('tab.status');
       })
       .catch(function(err) {
         $scope.logSplashError(err);

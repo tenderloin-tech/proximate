@@ -58,7 +58,6 @@ angular.module('proximate.services')
         };
 
         onEnterCallback('checkins', regionInfo);
-        // Settings.logToDom('[Prox] didEnterRegion:' + JSON.stringify(pluginResult));
 
       } else if (pluginResult.state === 'CLRegionStateOutside') {
         console.log('Exited the region!');
