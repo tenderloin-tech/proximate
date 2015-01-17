@@ -91,7 +91,7 @@ angular.module('proximate.controllers', [])
       opacity: [0, 'linear'],
       top: ['-100px', 'swing']
     }, 450);
-  }
+  };
 
   $scope.signOut = Auth.signOut;
 
@@ -145,7 +145,24 @@ angular.module('proximate.controllers', [])
 
 .controller('EventsCtrl', function($scope, $state, Populate) {
 
-  $scope.displayFilter = 'past';
+  $scope.displayFilter = 'all';
+
+  // Calculate and set # of checked-in users for current event
+  var setCheckinCount = function() {
+    var eventParticipants = $scope.currentEventParticipants;
+    var checkedInUserCount = 0;
+
+    for (var i = 0; i < eventParticipants.length; i++) {
+      var status = eventParticipants[i]._pivot_status;
+      if (status !== null) {
+        notCheckedInUserCount++;
+      }
+    }
+
+    $scope.checkedInUserCount = checkedInUserCount;
+    $scope.totalUserCount = eventParticipants.length;
+
+  };
 
   $scope.setDisplayFilter = function(time) {
     $scope.displayFilter = time;
@@ -160,6 +177,16 @@ angular.module('proximate.controllers', [])
   // Fetch events data for given adminId
   Populate.getEventsByAdminId($scope.adminId).then(function(eventsData) {
     $scope.events = eventsData;
+  });
+
+  // Define checkin count on the scope so we can display
+  setCheckinCount($scope.currentEventParticipants);
+  $scope.$on('current-event-updated', setCheckinCount);
+
+  // Apply selected logic to time selectors
+  $('.tableControls .timeSelect li').on('click', function() {
+    $(this).addClass('selected');
+    $(this).siblings().removeClass('selected');
   });
 
 })

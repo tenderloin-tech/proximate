@@ -4,7 +4,7 @@ body {
   height: 100%;
   min-height: 100%;
   background: #fff;
-  font-size: 1em;
+  font-size: 100%;
   font-family: 'Lato', sans-serif;
   zoom: 1;
 }
@@ -12,6 +12,52 @@ body {
 ul {
   list-style: none;
 }
+
+h1, h2, h3 {
+  color: #34495e;
+  margin: .1em 0;
+}
+
+h4, h5, h6 {
+  color: #000;
+  opacity: .5;
+  font-weight: normal;
+  margin: .1em 0;
+}
+
+h1 {
+  font-size: 2em;
+}
+
+h2 {
+  font-size: 1.5em;
+}
+
+h3 {
+  font-size: 1.17em;
+}
+
+h4 {
+  font-size: 1em;
+}
+
+h5 {
+  font-size: 0.83em;
+}
+
+h6 {
+  font-size: 0.67em;
+}
+
+a {
+  color: #34495e;
+}
+
+.text {
+  color: #000;
+  opacity: .3;
+}
+
 
 /* EVENT VIEW */
 
@@ -228,6 +274,7 @@ ul {
   line-height: 1;
   padding: 0;
   margin: 0;
+  color: #fff;
   letter-spacing: -.05em;
   font-size: 13em;
   font-weight: 700;
@@ -424,12 +471,126 @@ ul {
   background: white;
   position: absolute;
   width: 100%;
+  min-height: 100%;
 }
+
+.tableControls {
+  background: #ffffff; /* Old browsers */
+  background: -moz-linear-gradient(top,  #ffffff 0%, #f5f5f5 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#f5f5f5)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  #ffffff 0%,#f5f5f5 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  #ffffff 0%,#f5f5f5 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  #ffffff 0%,#f5f5f5 100%); /* IE10+ */
+  background: linear-gradient(to bottom,  #ffffff 0%,#f5f5f5 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f5f5f5',GradientType=0 ); /* IE6-9 */
+  height: 55px;
+  padding-left: 36px;
+}
+
+  .tableControls .filterbox {
+    float: left;
+    width: 200px;
+    margin: 9px 50px 0 0;
+  }
+
+  .tableControls .timeSelect {
+    float: left;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    color: #ccc;
+  }
+
+    .tableControls .timeSelect li {
+      display: inline-block;
+      padding-left: 10px;
+
+    }
+
+    .tableControls .timeSelect li::after {
+      content: ' |';
+    }
+
+     .tableControls .timeSelect li:last-child:after
+    {
+      content: '';
+    }
+
+    .tableControls .timeSelect li a {
+      padding-right: 10px;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .tableControls .timeSelect li.selected a {
+      font-style: bold;
+      font-weight: 700;
+    }
+
+  .tableControls a {
+    line-height: 55px;
+    font-style: normal;
+    font-weight: 300;
+    font-size: .9em;
+    text-decoration: none;
+  }
+
+  .tableControls .syncEvents {
+    float: right;
+    padding: 0 20px 0 0;
+    margin: 0;
+    list-style: none;
+    width: 100px;
+    text-align: right;
+  }
+
+.adminTable {
+  min-width: 600px;
+  width: 100%;
+  border: 1px solid #efefef;
+  text-align: left;
+}
+
+  .adminTable th {
+    padding: 25px 0px 25px 36px;
+    border-bottom: 1px solid #efefef;
+    text-transform: uppercase;
+    color: #000;
+    font-style: normal;
+    font-weight: 900;
+    font-size: .9em;
+    opacity: .4;
+  }
+
+  .adminRow:hover {
+    background-color: #ecf0f1;
+    cursor: pointer;
+  }
+
+  .adminTable tr td {
+    padding-left: 36px;
+    height: 3.5em;
+    border-bottom: 1px dashed #e4e4e4;
+  }
+
+  .adminTable .eventTime {
+    color: #000;
+    opacity: .7;
+    font-weight: 300;
+
+  }
+
+  .adminTable .eventName a {
+    text-decoration: none;
+    color: #34495e;
+  }
+
+
 
 .topnav {
   position: absolute;
   width:100%;
-  height: 8%;
+  height: 75px;
   background-color: #ECF0F1;
 }
 
@@ -444,7 +605,6 @@ ul {
 
 .sidebar {
   width: 206px;
-  /*width: 18%;*/
   position: absolute;
   height: 100%;
   background-color: #273A47;
@@ -453,31 +613,32 @@ ul {
 
 .sidebar-logo {
   position: relative;
-  height: 8%;
+  height: 75px;
   background-color: #34495E;
+  padding-left: 20px;
 }
 
 .sidebar-logo img {
-  position: relative;
-  top: 30%;
-  left: 10%;
+  position: absolute;
+  top: 22px;
   width: 30px;
   height: 33px;
 }
 
 .sidebar-logo h3 {
   position: absolute;
+  top: 22px;
+  left: 64px;
   letter-spacing: -.02em;
   font-size: 1.2em;
-  font-weight: 500; /* 700 */
+  font-style: normal;
+  font-weight: 400;
   color: white;
-  left: 30%;
-  top: 9%;
 }
 
 .sidebar-logo h3 .io {
   font-style: normal;
-  font-weight: 300;
+  font-weight: 100;
 }
 
 .admin-menu {
@@ -486,6 +647,7 @@ ul {
 
 .admin-menu .menu-item {
   padding: 10px 20px;
+  font-weight: 300;
 /*  border-bottom: 1px solid #374E5E;
 */
 }
@@ -498,21 +660,13 @@ ul {
 
 .admin-menu .menu-item i {
   opacity: .7;
+
 }
 
 /* changes line color on active admin-menu item to our highlight */
 .admin-menu .menu-item.active {
   box-shadow: 4px 0 0 #EC4F43 inset !important;
   background-color: #1f2d38;
-}
-
-.events-table-controls input {
-  float: left;
-  margin-right: 50px;
-}
-
-.time-select a:hover {
-  text-decoration: underline;
 }
 
 .admin .nav li a {
@@ -538,22 +692,48 @@ ul {
 }
 
 .events {
-  float: right !important;
-  margin-right: 100px !important;
-  min-height: 800px;
+  margin-left: 207px !important;
 }
 
 .current-event-card {
   position: relative;
-  height: 116px;
-  width: 100%;
-  top: 0;
-  background-color: #ddd;
+  padding: 40px 0px 0px 36px;
+  height: 76px;
+  box-shadow: 7px 0 0 #89e4b7 inset;
+  border: 1px solid #efefef;
 }
+
+  .current-event-card .title {
+    width: 30%;
+    float: left;
+  }
+
+  .current-event-card i {
+    padding-right: 10px;
+  }
+
+  .current-event-card h2 {
+    padding: 0;
+    margin: 0;
+    color: #34495e;
+    font-style: normal;
+    font-weight: 400;
+  }
+
+  .current-event-card .checkIn {
+    float: left;
+    width: 20%
+  }
+
+  .current-event-card .buttons {
+    float: right;
+    padding-right: 20px;
+  }
 
 .content {
   width: 70%;
-  margin: 7% auto;
+  margin: 75px auto;
+  min-width: 753px;
 }
 
 .table .username {
