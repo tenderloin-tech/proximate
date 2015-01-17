@@ -51,7 +51,7 @@ angular.module('proximate.services')
       data.deviceId = device.uuid;
       $localStorage.set('deviceId', data.deviceId);
     } else {
-      data.deviceId = '123456789';
+      data.deviceId = 'UNSUPPORTED_PLATFORM';
       $localStorage.set('deviceId', data.deviceId);
     }
   };
