@@ -235,6 +235,7 @@ angular.module('proximate.controllers', [])
   $scope.stats = [
     {name: 'ontime', label:'On Time', id: 'history-stats-ontime', value: 0},
     {name: 'late', label:'Late', id: 'history-stats-late', value: 0},
+    {name: 'excused', label:'Excused', id: 'history-stats-excused', value: 0},
     {name: null, label:'Absent', id: 'history-stats-absent', value: 0},
   ];
 
@@ -259,20 +260,27 @@ angular.module('proximate.controllers', [])
 
   var drawChart = function() {
 
-    // var maxWidth = $('table').css('width');
     var widthScale = 100;
     var animationTime = 1000;
+    var textAnimationTime = 500;
 
     $scope.stats.forEach(function(stat) {
       var nameForClass = stat.name === null ? 'absent' : stat.name;
       // If no vals calculated, hide element
       if (stat.value === 0) {
         $('#history-stats-' + nameForClass).css('display', 'none');
+        return;
       }
       // Otherwise append and animate
       $('#history-stats-' + nameForClass)
-        .append('<span>' + nameForClass + ': <strong>' + stat.value + '</strong></span>')
-        .animate({width: stat.value * widthScale + 'px'}, animationTime);
+        .css('opacity', 1)
+        .animate({width: stat.value * widthScale + 'px'}, animationTime, 'swing',
+          // Animate stats values on completion
+          function() {
+            $('#history-stats-' + nameForClass + ' strong')
+            .animate({opacity: 1}, textAnimationTime);
+          })
+        .append('<span>' + nameForClass + ': <strong>' + stat.value + '</strong></span>');
     });
 
   };

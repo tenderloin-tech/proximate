@@ -853,13 +853,17 @@ a {
   width: 0px;
   height: 30px;
   margin: 1px;
+  opacity: 0;
 }
 
 .history-stats span{
   margin-left: 5px;
+  display: inline;
+  line-height: 1.5em;
 }
 
 .history-stats strong{
+  opacity: 0;
   margin-left: 2px;
   font-size: 1.2em;
 }
@@ -881,7 +885,7 @@ a {
 
 #history-stats-excused {
   color: #ffffff;
-  color: #3498DB;
+  background-color: #3498DB;
 }
 
 /*
