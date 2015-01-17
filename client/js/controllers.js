@@ -227,7 +227,7 @@ angular.module('proximate.controllers', [])
 
 })
 
-.controller('ParticipantCtrl', function($scope, $stateParams, Participant) {
+.controller('ParticipantCtrl', function($scope, $stateParams, Participant, Populate) {
 
   // Init values for scope, setting params for status values
   $scope.participantInfo = {};
@@ -237,6 +237,12 @@ angular.module('proximate.controllers', [])
     {name: 'late', label:'Late', id: 'history-stats-late', value: 0},
     {name: null, label:'Absent', id: 'history-stats-absent', value: 0},
   ];
+
+  $scope.updateParticipantStatus = function(participant) {
+    console.log(participant);
+    Populate.updateParticipantStatus(participant.participant_id,
+      participant.event_id, participant.status);
+  };
 
   // Populates $scope.stats for use in table and chart
   var computeStats = function() {

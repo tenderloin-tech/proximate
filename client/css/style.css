@@ -482,11 +482,14 @@ a {
 }
 
 .rosterHeader {
+  padding-top: 40px;
+  padding-bottom: 20px;
   margin-left: 4%;
 }
 
 .participantHeader {
-  margin-left: 2%;
+  padding-top: 40px;
+  margin-left: 4%;
 }
 
 .tableControls {
@@ -611,11 +614,11 @@ a {
   }
 
   .adminTable .ontime {
-    color: #89e4b7;
+    color: #66BB6A;
   }
 
   .adminTable .late {
-    color: #f1c40f;
+    color: #EC4F43;
   }
 
   .adminTable .excused {
@@ -623,10 +626,8 @@ a {
   }
 
   .adminTable .absent {
-    color: #EC4F43;
+    color: #666666;
   }
-
-
 
 .topnav {
   position: absolute;
@@ -741,12 +742,16 @@ a {
   padding: 40px 0px 0px 36px;
 }
 
+.beaconsHeader h1 {
+  float: left;
+  width: 50%;
+}
+
 .addBeacon {
   position: relative;
   padding: 40px 100px 0px 36px;
-  box-shadow: 7px 0 0 #89e4b7 inset;
   border: 1px solid #efefef;
-  /*opacity: 0;*/
+  background-color: rgba(236,239,241, .2);
   display: none;
 }
 
@@ -760,12 +765,7 @@ a {
 
 .addBeacon .buttons {
   width: 46%;
-  padding-bottom: 20px;
-}
-
-.beaconsHeader h1 {
-  float: left;
-  width: 50%;
+  padding-bottom: 40px;
 }
 
 .addBeacon-toggle {
@@ -866,17 +866,22 @@ a {
 
 #history-stats-ontime {
   color: #ffffff;
-  background-color: #89e4b7;
+  background-color: #66BB6A;
 }
 
 #history-stats-late {
   color: #ffffff;
-  background-color: #FEEFB3;
+  background-color: #EC4F43;
 }
 
 #history-stats-absent {
   color: #ffffff;
-  background-color: #FFBABA;
+  background-color: #666666;
+}
+
+#history-stats-excused {
+  color: #ffffff;
+  color: #3498DB;
 }
 
 /*
