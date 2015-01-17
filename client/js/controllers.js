@@ -166,7 +166,8 @@ angular.module('proximate.controllers', [])
   };
 
   $scope.setDisplayFilterStatus = function(status) {
-    $scope.displayFilterStatus = 'cancelled';
+    $scope.displayFilterTime = 'all';
+    $scope.displayFilterStatus = status;
   };
 
   // Click handler for getting roster for a single event
