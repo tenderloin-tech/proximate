@@ -106,8 +106,6 @@ angular.module('proximate.services', [])
         url: url,
       }).then(function(res) {
         return res.data;
-      }).catch(function(error) {
-        console.log('Error getting current event');
       });
     },
 
@@ -177,6 +175,19 @@ angular.module('proximate.services', [])
     var a = moment(startTime);
     var b = moment();
     return moment.duration(a - b).minutes();
+  };
+})
+
+.filter('filterByStatus', function() {
+  return function(events, status) {
+    var filteredResults = [];
+    events.forEach(function(event) {
+      if (event.status !== status) {
+        return;
+      }
+      filteredResults.push(event);
+    });
+    return filteredResults;
   };
 })
 

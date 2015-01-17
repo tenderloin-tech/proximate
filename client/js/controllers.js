@@ -140,7 +140,8 @@ angular.module('proximate.controllers', [])
 
 .controller('EventsCtrl', function($scope, $state, Populate) {
 
-  $scope.displayFilter = 'all';
+  $scope.displayFilterTime = 'all';
+  $scope.displayFilterStatus = 'confirmed';
 
   // Calculate and set # of checked-in users for current event
   var setCheckinCount = function() {
@@ -159,8 +160,14 @@ angular.module('proximate.controllers', [])
 
   };
 
-  $scope.setDisplayFilter = function(time) {
-    $scope.displayFilter = time;
+  $scope.setDisplayFilterTime = function(time) {
+    $scope.displayFilterTime = time;
+    $scope.displayFilterStatus = 'confirmed';
+  };
+
+  $scope.setDisplayFilterStatus = function(status) {
+    $scope.displayFilterTime = 'all';
+    $scope.displayFilterStatus = status;
   };
 
   // Click handler for getting roster for a single event

@@ -32,13 +32,16 @@
     </div>
     <ul class="timeSelect">
       <li class="selected">
-        <a class="ui label" ng-click="setDisplayFilter('all')">All</a>
+        <a class="ui label" ng-click="setDisplayFilterTime('all')">All</a>
       </li>
       <li>
-        <a ng-click="setDisplayFilter('future')">Upcoming</a>
+        <a ng-click="setDisplayFilterTime('future')">Upcoming</a>
       </li>
       <li>
-        <a ng-click="setDisplayFilter('past')">Past</a>
+        <a ng-click="setDisplayFilterTime('past')">Past</a>
+      </li>
+      <li>
+        <a class="cancel" ng-click="setDisplayFilterStatus('cancelled')">Cancelled</a>
       </li>
     </ul>
     <ul class="syncEvents">
@@ -58,7 +61,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr class="adminRow" ng-repeat="event in events | filterByTime: displayFilter | filter: search | orderBy: '-start_time'">
+      <tr class="adminRow" ng-repeat="event in events | filterByTime: displayFilterTime | filter: search | filterByStatus: displayFilterStatus | orderBy: '-start_time'">
         <td ui-sref="admin.roster({eventId: event.id})" class="eventName"><a>{{event.name}}</a></td>
         <td ui-sref="admin.roster({eventId: event.id})" class="eventTime">{{event.start_time | date:'MMM d, y, h:mm a'}}</td>
         <td class="eventAdmin">
