@@ -505,6 +505,10 @@ a {
 }
 
 /* SPLASH VIEW */
+.splash {
+  min-width: 900px;
+}
+
 .splash .topBar {
   background-color: #AC4A3F;
   height: 0.25em;
@@ -523,12 +527,17 @@ a {
 }
 
 .pane1 .logo {
-  position: absolute;
-  top: 1.6em;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: auto;
+  position: relative;
+  /*top: 1.6em;*/
+  /*bottom: 0;*/
+  /*left: 0;*/
+  /*right: 0;*/
+  margin: 0 auto;
+}
+
+.pane1 .logo img {
+  margin-right: 3em;
+  margin-bottom: -5em;
 }
 
 .pane1 .signinButton {
@@ -590,11 +599,50 @@ a {
   padding: 1px;
   height: 32.4em;
   width: 100%;
-  background-color: #000000;
+  background: url('../img/textured_paper.png');
+  background-size: 100%;
+  opacity: 0.8;
+  text-align: center;
+}
+
+.pane2 h1 {
+  margin-top: 1.6em;
+  font-size: 2em;
+  font-weight: 600;
+}
+
+.pane2 .box {
+  width: 80%;
+  margin: 3.4em auto 0 auto;
+  padding-left: 5em;
+}
+
+.pane2 .box img {
+  position: relative;
+}
+
+.pane2 h3 {
+  font-size: 1em;
+  font-weight: 300;
+  position: relative;
+}
+
+.pane2 h3:nth-child(3) {
+  margin-top: -2em;
+  margin-left: -34em;
+}
+
+.pane2 h3:nth-child(4) {
+  margin-top: 1em;
+  margin-left: 1em;
+}
+
+.pane2 h3:nth-child(5) {
+  margin-top: -4.4em;
+  margin-left: 38em;
 }
 
 .pane3 {
-  overflow: scroll;
   padding: 1px;
   height: 32.1em;
   width: 100%;
@@ -625,12 +673,11 @@ a {
 }
 
 .pane3 .box {
-  background: #B84432;
+  background: #BD4634;
   float: left;
   margin-left: 4.25%;
   margin-right: 4.25%;
-  margin-top:2.8%;
-  margin-bottom: 2.8%;
+  margin-top:2.5%;
   padding: 90px 0;
   text-align: center;
   width: 24%;
@@ -641,7 +688,7 @@ a {
 }
 
 .pane3 .box:nth-child(1) {
-  overflow: auto;
+  background-color: #BF4735;
 }
 
 .pane3 .box:nth-child(3n+3){
@@ -706,8 +753,8 @@ a {
   color: #FFFFFF;
   margin-top: 59px;
   margin-bottom: -31px;
-  margin-left: 2em;
-  margin-right: 2em;
+  margin-left: 12em;
+  margin-right: 12em;
 }
 
 .pane5 {
@@ -730,14 +777,9 @@ a {
   width: 90%;
 }*/
 
-.pane5 .exlogo {
+.pane5 .extlogo {
   position: relative;
-  top: 1.6em;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: auto;
-  width: 30%;
+  width: 35%;
 }
 
 .pane5 img {
