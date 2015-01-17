@@ -2,6 +2,26 @@ angular.module('proximate.services')
 
 .factory('Settings', function($localStorage, $http, webServer) {
 
+  // Similarly, add fake region array to localStorage to simulate previous info
+  var testRegions = [{
+    uuid : 'B9407F30-F5F8-466E-AFF9-25556B57FE6D',
+    identifier : 'Estimote Icy One',
+    minor : 10907,
+    major : 23516
+  }, {
+    uuid : 'B9407F30-F5F8-466E-AFF9-25556B57FE6D',
+    identifier : 'Estimote Blue One',
+    minor : 50306,
+    major : 54690
+  }, {
+    uuid : 'B9407F30-F5F8-466E-AFF9-25556B57FE6D',
+    identifier : 'Estimote Mint One',
+    minor : 3704,
+    major : 57868
+  }];
+
+  $localStorage.set('beaconList', JSON.stringify(testRegions));
+
   // Container object for settings values, needed for syncing across controllers
   // Exposes the following: data.deviceId, data.username, data.currentBeaconList
 
@@ -29,6 +49,9 @@ angular.module('proximate.services')
         });
     } else if (ionic.Platform.isAndroid()) {
       data.deviceId = device.uuid;
+      $localStorage.set('deviceId', data.deviceId);
+    } else {
+      data.deviceId = '123456789';
       $localStorage.set('deviceId', data.deviceId);
     }
   };

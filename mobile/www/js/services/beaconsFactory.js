@@ -4,7 +4,7 @@ angular.module('proximate.services')
 
   // Sets up beacon environment and calls functions to begin monitoring / ranging
   //the beacon list
-  var setupTestBeacons = function(onEnterCallback) {
+  var setupBeacons = function(onEnterCallback) {
     setupDelegate(onEnterCallback);
 
     // request auth from the user
@@ -105,6 +105,6 @@ angular.module('proximate.services')
   };
 
   return {
-    setupTestBeacons: setupTestBeacons
+    setupBeacons: setupBeacons
   };
 });

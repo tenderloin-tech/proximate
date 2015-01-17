@@ -1,6 +1,7 @@
 angular.module('proximate.controllers', [])
 
-.controller('AppCtrl', function($scope, $state, Settings, Events, PubNub) {
+.controller('AppCtrl', function($ionicPlatform, $localStorage,
+  $scope, $state, Settings, Events, PubNub, Beacons) {
 
   $scope.hide_header = true;
 
@@ -8,14 +9,6 @@ angular.module('proximate.controllers', [])
   $scope.event = {
     id: null
   };
-
-  //   $scope.event = {
-  //   id: '882',
-  //   name: 'Test Event',
-  //   start_time: 'Tue, 30 Dec 2014 00:46:41 GMT',
-  //   pretty_time: '',
-  //   status: null
-  // };
 
   // Gets the most current event for the user, and updates the
   // relevant checkin status, protecting for empty responses.
@@ -61,7 +54,6 @@ angular.module('proximate.controllers', [])
   // that match a checkin confirmation for the relevant device, then
   // change status to match
   $scope.subscribeToCheckinStatus = function() {
-    Settings.logToDom('Subscribed to PubNub events');
     PubNub.subscribe('checkins', function(message) {
       console.log('Received PubNub message: ', JSON.stringify(message));
 
@@ -77,21 +69,41 @@ angular.module('proximate.controllers', [])
     });
   };
 
+  function loadCycle() {
+    $scope.initWithEvent();
+    $scope.subscribeToCheckinStatus();
+    // Settings.updateBeaconList()
+    //         .then(function(data) {
+    //           Settings.logToDom('Beacons: ', JSON.stringify(data));
+    //         });
+    Beacons.setupBeacons(PubNub.publish);
+  };
+
+  $ionicPlatform.ready(function() {
+    if ($localStorage.get('initialized') !== 'true') {
+      Settings.updateDeviceId();
+      $state.go('splash', {}, {reload: true});
+    } else {
+      loadCycle();
+    }
+  });
+
+  $ionicPlatform.on('resume', loadCycle);
+
+  $scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
+    console.log('fromState', fromState);
+    if (fromState.name === 'splash') {
+      loadCycle();
+    }
+  });
+
 })
 
-.controller('StatusCtrl', function($scope, $state, PubNub, Events, Settings, Beacons) {
+.controller('StatusCtrl', function($scope) {
 
   $scope.doRefresh = function() {
     $scope.initWithEvent();
   };
-
-  // Wait for load, then full initialize cycle
-  $scope.$on('$stateChangeSuccess', function() {
-    $scope.setPrettyStartTime();
-    $scope.initWithEvent();
-    $scope.subscribeToCheckinStatus();
-    Beacons.setupTestBeacons(PubNub.publish);
-  });
 
 })
 
@@ -145,7 +157,7 @@ angular.module('proximate.controllers', [])
       .then(function(res) {
         $scope.error = '';
         $scope.hide_header = false;
-        $state.go('tab.status', {}, {reload: true});
+        $state.go('tab.status', {firstLoad: true}, {reload: true});
       })
       .catch(function(err) {
         $scope.logSplashError(err);
