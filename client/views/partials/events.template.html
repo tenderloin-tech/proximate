@@ -59,7 +59,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr class="adminRow" ng-repeat="event in events | filterByTime: displayFilter | filter: search">
+      <tr class="adminRow" ng-repeat="event in events | filterByTime: displayFilter | filter: search | orderBy: '-start_time'">
         <td ui-sref="admin.roster({eventId: event.id})" class="eventName"><a href="#">{{event.name}}</a></td>
         <td ui-sref="admin.roster({eventId: event.id})" class="eventTime">{{event.start_time | date:'MMM d, y, h:mm a'}}</td>
         <td class="eventAdmin">
