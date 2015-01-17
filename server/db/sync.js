@@ -173,6 +173,36 @@ module.exports = function(adminId) {
       .value();
   };
 
+  var upsertEventsBeaconsParticipants = function(event) {
+    // We want attendees in scope, but we need to remove them before event upsert
+    var attendees = event.attendees;
+    delete event.attendees;
+
+    return helpers.upsertEvent(event)
+      .then(function(model) {
+        event = model;
+        var adminId = event.get('admin_id');
+
+        return new models.Beacons({admin_id: adminId}).fetch();
+      })
+      .then(function(beacons) {
+        beacons.forEach(function(beacon) {
+          var beaconEvent = {beacon_id: beacon.get('id'), event_id: event.id};
+
+          new models.BeaconEvent(beaconEvent)
+            .fetch()
+            .then(function(model) {
+              if (!model) {
+                models.BeaconEvent.forge(beaconEvent).save();
+              }
+            });
+        });
+      })
+      .then(function() {
+        return helpers.upsertEventParticipants(event, attendees);
+      });
+  };
+
   // CONTROL FLOW FOR SYNC OPERATION
 
   // Closure scope var to store result of db/api calls
@@ -209,7 +239,7 @@ module.exports = function(adminId) {
 
       // Update the participants table with a formatted group of participants
       var formattedAttendees = formatAttendees(fetchedEvents);
-      return promise.all(_.map(formattedAttendees, helpers.upsertParticipant));
+      return promise.map(formattedAttendees, helpers.upsertParticipant);
     })
     .then(function(participantRecords) {
       console.log('created/updated', participantRecords.length, 'participant records');
@@ -223,7 +253,8 @@ module.exports = function(adminId) {
 
       // Update the events and events_participants tables
       var formattedEvents = formatEvents(fetchedEvents, participantIds);
-      return promise.all(_.map(formattedEvents, helpers.upsertEventAndStatus));
+
+      return promise.map(formattedEvents, upsertEventsBeaconsParticipants);
     })
     .then(function(eventRecords) {
       // Log the results of our update if successful

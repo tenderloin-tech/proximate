@@ -287,13 +287,7 @@ exports.checkinUser = function(deviceId) {
 };
 
 // SYNC HELPERS
-
-// Update an event record, and event participant record based on gcal api event info
-exports.upsertEventAndStatus = function(event) {
-
-  // We want attendees in scope, but we need to remove them before event upsert
-  var attendees = event.attendees;
-  delete event.attendees;
+exports.upsertEvent = function(event) {
 
   return new models.Event({gcal_id: event.gcal_id})
     .fetch()
@@ -303,31 +297,34 @@ exports.upsertEventAndStatus = function(event) {
       } else {
         return models.Event.forge(event).save();
       }
-    })
-    .then(function(eventRecord) {
-    // Perform final format of attendee info and upsert into event_participants
-      if (attendees.length > 0) {
-        var eventParticipants = _.map(attendees, function(attendee) {
-          return {
-            event_id: eventRecord.attributes.id,
-            gcal_id: eventRecord.attributes.gcal_id,
-            participant_id: attendee.participant_id,
-            gcal_response_status: attendee.gcal_response_status
-          };
-        });
-        return promise.map(eventParticipants, function(eventParticipant) {
-          return new models.EventParticipant(eventParticipant)
-            .fetch()
-            .then(function(model) {
-              if (model) {
-                return model.save(eventParticipant);
-              } else {
-                return models.EventParticipant.forge(eventParticipant).save();
-              }
-            });
-        });
-      }
     });
+
+};
+
+// Update an event record, and event participant record based on gcal api event info
+exports.upsertEventParticipants = function(eventRecord, attendees) {
+
+  if (attendees.length > 0) {
+    var eventParticipants = _.map(attendees, function(attendee) {
+      return {
+        event_id: eventRecord.attributes.id,
+        gcal_id: eventRecord.attributes.gcal_id,
+        participant_id: attendee.participant_id,
+        gcal_response_status: attendee.gcal_response_status
+      };
+    });
+    return promise.map(eventParticipants, function(eventParticipant) {
+      return new models.EventParticipant(eventParticipant)
+        .fetch()
+        .then(function(model) {
+          if (model) {
+            return model.save(eventParticipant);
+          } else {
+            return models.EventParticipant.forge(eventParticipant).save();
+          }
+        });
+    });
+  }
 
 };
 
