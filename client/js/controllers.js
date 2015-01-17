@@ -17,17 +17,12 @@ angular.module('proximate.controllers', [])
   };
 
   // Initialize scope variables
-  $scope.arrivedParticipants = [];
   $scope.currentEvent = {};
   $scope.currentEventParticipants = {};
 
-  // Listen for checkin confirmations and add these to arrivedParticipants
+  // Listen for checkin confirmations
   PubNub.subscribe('checkins', function(message) {
     if (message.eventType === 'checkinConfirm') {
-      $scope.arrivedParticipants.push({
-        id: message.participantId,
-        status: message.checkinStatus
-      });
       // Find the correct participant in participantData and update their status
       $scope.$apply($scope.currentEventParticipants.some(function(participant) {
         if (participant.id === message.participantId) {
@@ -304,7 +299,10 @@ angular.module('proximate.controllers', [])
     $state.go('admin.participant', {participantId: participantId});
   };
 
-  $scope.updateParticipantStatus = Populate.updateParticipantStatus;
+  $scope.updateParticipantStatus = function(participant) {
+    Populate.updateParticipantStatus(participant.id,
+      participant._pivot_event_id, participant._pivot_status);
+  };
 
   $scope.getParticipants();
 

@@ -5,7 +5,6 @@ var knex = require('knex')({
 });
 var bookshelf = require('bookshelf')(knex);
 module.exports = bookshelf;
-var seed = require('./seed');
 var sync = require('./sync');
 
 if (config.resetDatabaseOnLoad) {
@@ -89,8 +88,5 @@ if (config.resetDatabaseOnLoad) {
       t.integer('event_id');
     });
   });
-
-  // Once our tables have been created, fill them with data
-  // .then(seed.seedTables);
 
 }

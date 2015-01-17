@@ -72,7 +72,7 @@ angular.module('proximate.services', [])
     adminId: adminId,
 
     getAdminId: function(email) {
-      var url = 'api/admin';
+      var url = '/api/admins/id';
       return $http({
         method: 'GET',
         url: url,
@@ -87,7 +87,7 @@ angular.module('proximate.services', [])
 
     // get event participants for a given eventID
     getEventWithParticipants: function(eventID) {
-      var url = 'api/events/' + eventID + '/participants';
+      var url = '/api/events/' + eventID + '/participants';
       return $http({
         method: 'GET',
         url: url,
@@ -112,7 +112,7 @@ angular.module('proximate.services', [])
     },
 
     getEventsByAdminId: function(adminId) {
-      var url = 'api/admins/' + adminId + '/events';
+      var url = '/api/admins/' + adminId + '/events';
       return $http({
         method: 'GET',
         url: url,
@@ -207,7 +207,7 @@ angular.module('proximate.services', [])
     var filteredResults = [];
     if (Array.isArray(participants)) {
       participants.forEach(function(participant) {
-        if (participant._pivot_status === 'ontime') {
+        if (participant._pivot_status) {
           return;
         }
         filteredResults.push(participant);

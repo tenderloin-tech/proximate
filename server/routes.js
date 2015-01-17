@@ -12,7 +12,7 @@ module.exports = function(app) {
     '/api/token',
     '/api/beacons',
     '/api/participant/status',
-    '/api/admin',
+    '/api/admins/id',
     '/api/admins/*/beacons'
   ], auth.authClient);
 
@@ -36,9 +36,14 @@ module.exports = function(app) {
           if (!err) {
             data.emails.some(function(email) {
               if (email.type === 'account') {
-                helpers.updateAdminTokens(email.value, data.displayName, tokens);
-                res.status(200).json({name: data.displayName, email: email.value});
-                return true;
+                helpers.updateAdminTokens(email.value, data.displayName, tokens)
+                  .then(function() {
+                    res.status(200).json({name: data.displayName, email: email.value});
+                    return true;
+                  })
+                  .catch(function() {
+                    res.status(401).send('Authentication error');
+                  });
               }
             });
           } else {
@@ -79,7 +84,21 @@ module.exports = function(app) {
 
     helpers.upsert('Beacon', beaconInfo, beaconId)
       .then(function(beacon) {
-        res.status(201).send(beacon.toJSON());
+        beaconId = beacon.get('id');
+        return helpers.getEventsByAdminId(beaconInfo.admin_id);
+      })
+      .then(function(events) {
+        events.forEach(function(event) {
+          var beaconEvent = {beacon_id: beaconId, event_id: event.get('id')};
+          new models.BeaconEvent(beaconEvent)
+            .fetch()
+            .then(function(model) {
+              if (!model) {
+                models.BeaconEvent.forge(beaconEvent).save();
+              }
+            });
+        });
+        res.status(201).send();
       })
       .catch(function(error) {
         res.status(404).send('Error updating beacon info' + error);
@@ -202,7 +221,7 @@ module.exports = function(app) {
   });
 
   // Get admin ID from email
-  app.get('/api/admin', function(req, res) {
+  app.get('/api/admins/id', function(req, res) {
     helpers.getAdminFromEmail(req.query.email)
       .then(function(admin) {
         res.status(200).json(admin.id);
