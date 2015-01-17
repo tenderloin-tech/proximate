@@ -70,24 +70,6 @@ angular.module('proximate.controllers', [])
     $('.rightMenu .highlight').removeClass('menuOpen');
   }
 
-  /**** SETUP FOR TOASTS ****/
-
-  $scope.showToast = function() {
-    $('.toast').animate({
-      opacity: [1, 'linear'],
-      top: [0, 'swing']
-    }, 450);
-
-    setTimeout($scope.hideToast, 2000);
-  };
-
-  $scope.hideToast = function() {
-    $('.toast').animate({
-      opacity: [0, 'linear'],
-      top: ['-100px', 'swing']
-    }, 450);
-  };
-
   $scope.signOut = Auth.signOut;
 
   // Fetch the participant and event data from the server
@@ -367,6 +349,24 @@ angular.module('proximate.controllers', [])
     $scope.lastCheckin = participant;
     $scope.showToast();
   });
+
+  /**** SETUP FOR TOASTS ****/
+
+  $scope.showToast = function() {
+    $('.toast').animate({
+      opacity: [1, 'linear'],
+      top: [0, 'swing']
+    }, 450);
+
+    setTimeout($scope.hideToast, 2000);
+  };
+
+  $scope.hideToast = function() {
+    $('.toast').animate({
+      opacity: [0, 'linear'],
+      top: ['-100px', 'swing']
+    }, 450);
+  };
 
   $scope.timeDiffFromEvent = null;
   $interval(function() {

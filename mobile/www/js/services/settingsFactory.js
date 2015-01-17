@@ -48,12 +48,9 @@ angular.module('proximate.services')
       if (result.status === 404) {
         console.log('Error getting beacons');
       } else {
-
+        // Stringified storage
         $localStorage.setObject('beaconList', result.data);
-
         data.currentBeaconList = $localStorage.get('beaconList');
-        // $localStorage.set('beaconList', result.data);
-        console.log('localStorage says:', $localStorage.get('beaconList'));
       }
       console.log('Fetched beacons from server: ', result.data);
       return result;
