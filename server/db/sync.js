@@ -36,7 +36,6 @@ module.exports = function(adminId) {
       calendarId: calendarId,
       maxResults: 250,
       orderBy: 'starttime',
-      sortorder: 'descending',
       showDeleted: true,
       singleEvents: true
     };

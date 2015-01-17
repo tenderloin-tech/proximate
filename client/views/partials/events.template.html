@@ -1,7 +1,7 @@
 <div class="events content">
-  <div class="current-event-card">
-    <div ng-show="currentEvent.name">
-    <div class="title">
+  <div class="current-event-card" ng-show="currentEvent.name">
+    <div>
+      <div class="title">
         <h2>{{currentEvent.name}}</h2>
         <h5>{{currentEvent.start_time | date:'MMM d, y, h:mm a'}}</h5>
       </div>
@@ -18,6 +18,11 @@
           <i class="desktop icon"></i>
           Projector
         </a>
+      </div>
+    </div>
+    <div ng-show="noCurrentEvent">
+      <div class="title">
+        <h2>No events currently scheduled within the hour</h2>
       </div>
     </div>
   </div>
