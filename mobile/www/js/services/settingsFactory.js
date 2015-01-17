@@ -2,26 +2,6 @@ angular.module('proximate.services')
 
 .factory('Settings', function($localStorage, $http, webServer) {
 
-  // Similarly, add fake region array to localStorage to simulate previous info
-  var testRegions = [{
-    uuid : 'B9407F30-F5F8-466E-AFF9-25556B57FE6D',
-    identifier : 'Estimote Icy One',
-    minor : 10907,
-    major : 23516
-  }, {
-    uuid : 'B9407F30-F5F8-466E-AFF9-25556B57FE6D',
-    identifier : 'Estimote Blue One',
-    minor : 50306,
-    major : 54690
-  }, {
-    uuid : 'B9407F30-F5F8-466E-AFF9-25556B57FE6D',
-    identifier : 'Estimote Mint One',
-    minor : 3704,
-    major : 57868
-  }];
-
-  $localStorage.set('beaconList', JSON.stringify(testRegions));
-
   // Container object for settings values, needed for syncing across controllers
   // Exposes the following: data.deviceId, data.username, data.currentBeaconList
 
@@ -64,9 +44,15 @@ angular.module('proximate.services')
       method: 'GET',
       url: webServer.url + '/api/devices/' + data.deviceId + '/beacons',
     }).then(function(result) {
-      // data.currentBeaconList = result;
-      // localStorage.set('beaconList', result);
-      logToDom('In settings factory', JSON.stringify(result));
+
+      if (result.status === 404) {
+        console.log('Error getting beacons');
+      } else {
+        data.currentBeaconList = result.data;
+        $localStorage.set('beaconList', result.data);
+        console.log('localStorage says:', $localStorage.get('beaconList'));
+      }
+      console.log('Fetched beacons from server: ', result.data);
       return result;
     }).catch(function(error) {
       logToDom('Error in settings factory: ' + JSON.stringify(error));

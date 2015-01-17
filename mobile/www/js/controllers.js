@@ -72,10 +72,7 @@ angular.module('proximate.controllers', [])
   function loadCycle() {
     $scope.initWithEvent();
     $scope.subscribeToCheckinStatus();
-    // Settings.updateBeaconList()
-    //         .then(function(data) {
-    //           Settings.logToDom('Beacons: ', JSON.stringify(data));
-    //         });
+    Settings.updateBeaconList();
     Beacons.setupBeacons(PubNub.publish);
   }
 
