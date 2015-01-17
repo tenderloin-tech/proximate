@@ -736,6 +736,11 @@ a {
   margin-left: 207px !important;
 }
 
+.beaconsHeader {
+  height: 70px;
+  padding: 40px 0px 0px 36px;
+}
+
 .addBeacon {
   position: relative;
   padding: 40px 100px 0px 36px;
@@ -745,23 +750,33 @@ a {
   display: none;
 }
 
-.addBeacon input {
-  width: 100%;
+.addBeacon h3 {
+  padding-bottom: 30px;
+}
+
+.addBeacon .bigFields {
+  width: 46%;
 }
 
 .addBeacon .buttons {
-  float: right;
-  padding-right: 20px;
+  width: 46%;
+  padding-bottom: 20px;
+}
+
+.beaconsHeader h1 {
+  float: left;
+  width: 50%;
 }
 
 .addBeacon-toggle {
   float: right;
-  margin-top: 20px;
+  color: #ffffff;
+  /*margin-bottom: 20px;*/
 }
 
-.addBeacon-toggle h2:hover {
+/*.addBeacon-toggle h2:hover {
   color: gray;
-}
+}*/
 
 .current-event-card {
   position: relative;
@@ -796,6 +811,10 @@ a {
   .current-event-card .buttons {
     float: right;
     padding-right: 20px;
+  }
+
+  .current-event-card .buttons a {
+    color: #ffffff;
   }
 
 .content {

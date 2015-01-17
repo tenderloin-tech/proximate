@@ -18,7 +18,7 @@
     <tbody>
       <tr class="adminRow" ng-repeat="data in eventHistory">
         <td ui-sref="admin.roster({eventId: data.event.id})">{{data.event.name}}</td>
-        <td>{{data.event.start_time | date:'MMM d, y, h:mm a'}}</td>
+        <td>{{data.event.start_time | date:'fullDate'}}</td>
         <td ng-if="data.status !== null && data.status !== 'null'" class="setStatus-cell" ng-class="{'ontime': data.status === 'ontime', 'late': data.status === 'late', 'excused': data.status === 'excused', 'absent': data.status === null || data.status === 'null'}">{{data.status}}</td>
         <td ng-if="data.status === null || data.status == 'null'" class="setStatus-cell" ng-class="{'ontime': data.status === 'ontime', 'late': data.status === 'late', 'excused': data.status === 'excused', 'absent': data.status === null || data.status === 'null'}">absent</td>
       </tr>
