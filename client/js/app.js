@@ -45,7 +45,7 @@ angular.module('proximate',
     .state('projector', {
       templateUrl: 'views/projector.html',
       controller: 'ProjectorCtrl',
-      url: '/projector'
+      url: '/events/:eventId/projector'
     })
 
     .state('login', {
