@@ -57,12 +57,12 @@ exports.updateAdminTokens = function(email, name, tokens) {
           access_token: tokens.access_token,
           token_expiry: tokens.expiry_date,
           created_at: moment().format('YYYY-MM-DD HH:mm:ss')
-        }).save();
+        });
       } else {
         // Update existing record
         model.set('access_token', tokens.access_token);
         model.set('token_expiry', tokens.expiry_date);
-        return model.save();
+        return model;
       }
     });
 

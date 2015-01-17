@@ -319,10 +319,13 @@ angular.module('proximate.controllers', [])
   $interval(function() {
     var timeDiff = moment($scope.currentEvent.start_time).diff(moment(), 'seconds');
     if (timeDiff > 0 && timeDiff >= 3600) {
+      // More than an hour in the future
       $scope.timeDiffFromEvent = null;
     } else if (timeDiff > 0 && timeDiff < 3600) {
+      // Less than an hour in the future
       $scope.timeDiffFromEvent = true;
     } else {
+      // In the past
       $scope.timeDiffFromEvent = false;
     }
 
