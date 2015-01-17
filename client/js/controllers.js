@@ -91,7 +91,7 @@ angular.module('proximate.controllers', [])
       opacity: [0, 'linear'],
       top: ['-100px', 'swing']
     }, 450);
-  }
+  };
 
   $scope.signOut = Auth.signOut;
 
@@ -183,7 +183,7 @@ angular.module('proximate.controllers', [])
   $scope.$on('current-event-updated', setCheckinCount);
 
   // Apply selected logic to time selectors
-  $('.tableControls .timeSelect li').on('click', function () {
+  $('.tableControls .timeSelect li').on('click', function() {
     $(this).addClass('selected');
     $(this).siblings().removeClass('selected');
   });
