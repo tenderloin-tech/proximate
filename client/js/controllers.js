@@ -151,16 +151,17 @@ angular.module('proximate.controllers', [])
   var setCheckinCount = function() {
     var eventParticipants = $scope.currentEventParticipants;
     var checkedInUserCount = 0;
-    var notCheckedInUserCount = 0;
 
     for (var i = 0; i < eventParticipants.length; i++) {
       var status = eventParticipants[i]._pivot_status;
-      if (status === null || status === 'excused' || status === 'absent') {
+      if (status !== null) {
         notCheckedInUserCount++;
-      } else {
-        checkedInUserCount++;
       }
     }
+
+    $scope.checkedInUserCount = checkedInUserCount;
+    $scope.totalUserCount = eventParticipants.length;
+
   };
 
   $scope.setDisplayFilter = function(time) {
