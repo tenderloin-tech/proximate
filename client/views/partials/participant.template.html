@@ -21,7 +21,7 @@
         <td ui-sref="admin.roster({eventId: data.event.id})">{{data.event.name}}</td>
         <td>{{data.event.start_time | date:'fullDate'}}</td>
         <td data-title="'Status'" class="setStatus-cell" ng-class="{'ontime': data.status === 'ontime', 'late': data.status === 'late', 'excused': data.status === 'excused', 'absent': data.status === null || data.status == 'null'}" ng-click="participant.$edit = true">
-          <span ng-if="!participant.$edit &&data.status !== null &&data.status !== 'null'"><i class="edit icon setStatus-icon"></i>{{data.status}}</span>
+          <span ng-if="!participant.$edit && data.status !== null && data.status !== 'null'"><i class="edit icon setStatus-icon"></i>{{data.status}}</span>
           <span ng-if="!participant.$edit && (data.status === null || data.status == 'null')"><i class="edit icon setStatus-icon"></i>absent</span>
           <div ng-if="participant.$edit">
             <select id="setStatus" class="" ng-model="data.status" ng-change="participant.$edit = false; updateParticipantStatus(data)">

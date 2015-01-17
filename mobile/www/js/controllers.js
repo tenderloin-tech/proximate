@@ -153,8 +153,7 @@ angular.module('proximate.controllers', [])
       .then(function(res) {
         $scope.error = '';
         $scope.hide_header = false;
-        console.log('hit then block');
-        $state.go('tab.status', {}, {reload: true});
+        $state.go('tab.status');
       })
       .catch(function(err) {
         $scope.logSplashError(err);
@@ -188,12 +187,10 @@ angular.module('proximate.controllers', [])
   };
 
   $scope.refreshBeacons = function() {
-    console.log('triggered');
     Beacons.clearBeacons();
     Settings.updateBeaconList()
     .then(function() {
       Beacons.restartBeacons();
-      console.log('done');
     });
   };
 
