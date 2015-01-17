@@ -1,37 +1,41 @@
 <div class="events content">
-  <h1>{{event.name}}</h1>
-  <p class="admin-time">{{event.start_time | date:'h:mm a, MMMM dd, yyyy'}}</p>
-  <table ng-table="tableParams" class="ui celled table sortable">
+  <div class="rosterHeader">
+    <h1>{{event.name}}</h1>
+    <p class="admin-time">{{event.start_time | date:'h:mm a, MMMM dd, yyyy'}}</p>
+  </div>
+  <div class="tableControls">
+    <div class="ui icon input small filterbox">
+      <input placeholder="search" type="text" ng-model="search" />
+      <i class="search icon"></i>
+    </div>
+  </div>
+  <table class="adminTable">
+  <!-- removed ng-table="tableParams" -->
     <thead>
       <tr>
-        <th class="left align">Participant</th>
-        <th class="left align">Email</th>
-        <th class="left align">Status</th>
-        <th></th>
+        <th>Participant</th>
+        <th>Email</th>
+        <th>Status</th>
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="participant in participants">
+      <tr class="adminRow" ng-repeat="participant in participants | filter: search">
         <td data-title="'Name'">
           <span><a ui-sref="admin.participant({participantId: participant.id})">{{participant.name}}</a></span>
         </td>
         <td data-title="'Email'">
           <span>{{participant.email}}</span>
         </td>
-        <td data-title="'Status'" ng-class="{'positive': participant._pivot_status === 'ontime', 'negative': participant._pivot_status === 'late', 'warning': participant._pivot_Status === 'null'}">
-          <span ng-if="!participant.$edit">{{participant._pivot_status}}</span>
+        <td data-title="'Status'" class="setStatus-cell" ng-class="{'ontime': participant._pivot_status === 'ontime', 'late': participant._pivot_status === 'late', 'excused': participant._pivot_status === 'excused', 'absent': participant._pivot_status === 'null'}" ng-click="participant.$edit = true">
+          <span ng-if="!participant.$edit"><i class="edit icon setStatus-icon"></i>{{participant._pivot_status}}</span>
           <div ng-if="participant.$edit">
-            <select class="form-control" ng-model="participant._pivot_status">
+            <select id="setStatus" class="" ng-model="participant._pivot_status" ng-change="participant.$edit = false; updateParticipantStatus(participant)">
                <option value="late">Late</option>
                <option value="ontime">Ontime</option>
                <option value="excused">Excused</option>
-               <option value="absent">Absent</option>
+               <option value="null">Absent</option>
             </select>
           </div>
-        </td>
-        <td data-title="'Actions'" width="200">
-          <a ng-if="!participant.$edit" href="" ng-click="participant.$edit = true">Edit</a>
-          <a ng-if="participant.$edit" href="" ng-click="participant.$edit = false; updateParticipantStatus(participant)">Save</a>
         </td>
       </tr>
     </tbody>

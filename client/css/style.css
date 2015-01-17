@@ -481,6 +481,10 @@ a {
   min-height: 100%;
 }
 
+.rosterHeader {
+  margin-left: 4%;
+}
+
 .tableControls {
   background: #ffffff; /* Old browsers */
   background: -moz-linear-gradient(top,  #ffffff 0%, #f5f5f5 100%); /* FF3.6+ */
@@ -590,6 +594,32 @@ a {
   .adminTable .eventName a {
     text-decoration: none;
     color: #34495e;
+  }
+
+  .adminTable .setStatus-icon {
+    opacity: .5;
+    margin-right: 5px;
+  }
+
+  .adminTable .setStatus-icon:hover {
+    opacity: 1;
+    color: white;
+  }
+
+  .adminTable .ontime {
+    background-color: #89e4b7;
+  }
+
+  .adminTable .late {
+    background-color: #EC4F43;
+  }
+
+  .adminTable .excused {
+    background-color: #3498DB;
+  }
+
+  .adminTable .absent {
+    background-color: #ECF0F1;
   }
 
 
