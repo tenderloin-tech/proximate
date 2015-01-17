@@ -150,7 +150,7 @@ angular.module('proximate.controllers', [])
     for (var i = 0; i < eventParticipants.length; i++) {
       var status = eventParticipants[i]._pivot_status;
       if (status !== null) {
-        notCheckedInUserCount++;
+        checkedInUserCount++;
       }
     }
 
