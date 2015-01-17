@@ -173,10 +173,10 @@ angular.module('proximate.services', [])
 })
 
 .filter('fromNow', function() {
-  return function(event) {
-    var a = moment(event.start_time);
+  return function(startTime) {
+    var a = moment(startTime);
     var b = moment();
-    return moment.duration(a - b).humanize(true);
+    return moment.duration(a - b).minutes();
   };
 })
 

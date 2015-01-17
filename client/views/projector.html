@@ -14,14 +14,16 @@
     </div>
   </div>
   <div class="event" ng-switch="timeDiffFromEvent">
-    <h3 ng-switch-when="null">{{currentEvent.name}} starts at</h3>
-    <h3 ng-switch-when="true">{{currentEvent.name}} starts</h3>
-    <h3 ng-switch-when="false">{{currentEvent.name}} started</h3>
+    <h1 ng-switch-when="null">{{currentEvent.name}} starts at</h1>
+    <h1 ng-switch-when="false">{{currentEvent.name}} started at</h1>
+    <h1 ng-switch-when="true">{{currentEvent.name}} starts in</h1>
   </div>
-  <div class="time" ng-switch="timeDiffFromEvent">
-    <h1 ng-switch-when="null">{{currentEvent.start_time | date:"h:mm a"}}</h1>
-    <h1 ng-switch-when="true">{{currentEvent | fromNow}}</h1>
-    <h1 ng-switch-when="false">{{currentEvent | fromNow}}</h1>
+  <div class="time">
+    <h1 ng-if="!timeDiffFromEvent">{{currentEvent.start_time | date:"h:mm a"}}</h1>
+    <h1 ng-if="timeDiffFromEvent">{{currentEvent.start_time | fromNow}}</h1>
+  </div>
+  <div ng-if="timeDiffFromEvent" class="minutes">
+    <h2>MINUTES</h2>
   </div>
   <div class="participants">
     <div class="status">
