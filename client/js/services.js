@@ -93,8 +93,6 @@ angular.module('proximate.services', [])
         url: url,
       }).then(function(res) {
         return res.data;
-      }).catch(function(error) {
-        console.log('Error getting event participants');
       });
     },
 

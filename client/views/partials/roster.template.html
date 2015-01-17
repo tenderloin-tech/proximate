@@ -13,7 +13,7 @@
     <tbody>
       <tr ng-repeat="participant in participants">
         <td data-title="'Name'">
-          <span><a ng-click="showParticipantHistory(participant.id)">{{participant.name}}</a></span>
+          <span><a ui-sref="admin.participant({participantId: participant.id})">{{participant.name}}</a></span>
         </td>
         <td data-title="'Email'">
           <span>{{participant.email}}</span>

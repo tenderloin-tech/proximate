@@ -1,7 +1,7 @@
 
 angular.module('proximate.controllers', [])
 
-.controller('AppCtrl', function($scope, $rootScope, $state, $window, Populate, PubNub, Auth) {
+.controller('AppCtrl', function($q, $rootScope, $scope, $state, $window, Auth, Populate, PubNub) {
 
   // Load the G+ API
   var po = document.createElement('script');
@@ -121,6 +121,40 @@ angular.module('proximate.controllers', [])
       .then(function(adminId) {
         $scope.adminId = adminId;
         $scope.getCurrentEventData();
+      });
+  };
+
+  // Gets participant and event data for a given eventId
+  $scope.getParticipants = function(eventId) {
+    if (eventId === 'current') {
+      var deferred = $q.defer();
+
+      deferred.resolve({
+        event: $scope.currentEvent,
+        participants: $scope.currentEventParticipants
+      });
+
+      return deferred.promise;
+    }
+
+    return Populate.getEventWithParticipants(eventId)
+      .then(function(eventData) {
+        return {
+          event: eventData,
+          participants: eventData.participants
+        };
+      });
+  };
+
+  // Sets event and participant scope variables for a given eventId
+  $scope.setScopeVars = function(eventId) {
+    $scope.getParticipants(eventId)
+      .then(function(result) {
+        $scope.event = result.event;
+        $scope.participants = result.participants;
+      })
+      .catch(function(error) {
+        console.log('Error retrieving event data');
       });
   };
 
@@ -273,49 +307,36 @@ angular.module('proximate.controllers', [])
 
 })
 
-.controller('RosterCtrl', function($scope, $rootScope, $state, $stateParams, Populate) {
+.controller('RosterCtrl', function($scope, $stateParams, Populate) {
 
   var eventId = $stateParams.eventId;
 
-  // This function pulls current event info from the AppCtrl scope
-  $scope.setScopeVars = function() {
-    $scope.event = $scope.currentEvent;
-    $scope.participants = $scope.currentEventParticipants;
-  };
+  $scope.setScopeVars(eventId);
 
-  $scope.getParticipants = function() {
-    // If the specified event is 'current', populate with the latest event
-    if (eventId === 'current') {
-      $scope.setScopeVars();
-      $scope.$on('current-event-updated', function() {
-        $scope.setScopeVars();
-      });
-    // Or proceed to get event by id
-    } else {
-      Populate.getEventWithParticipants(eventId).then(function(eventData) {
-        $scope.event = eventData;
-        $scope.participants = eventData.participants;
-      }).catch(function(error) {
-        console.log(error);
-      });
-    }
-  };
-
-  // Click handler for getting event participation history
-  $scope.showParticipantHistory = function(participantId) {
-    $state.go('admin.participant', {participantId: participantId});
-  };
+  if (eventId === 'current') {
+    $scope.$on('current-event-updated', function() {
+      $scope.setScopeVars(eventId);
+    });
+  }
 
   $scope.updateParticipantStatus = function(participant) {
     Populate.updateParticipantStatus(participant.id,
       participant._pivot_event_id, participant._pivot_status);
   };
 
-  $scope.getParticipants();
-
 })
 
-.controller('ProjectorCtrl', function($scope, $interval) {
+.controller('ProjectorCtrl', function($scope, $stateParams, $interval) {
+
+  var eventId = $stateParams.eventId;
+
+  $scope.setScopeVars(eventId);
+
+  if (eventId === 'current') {
+    $scope.$on('current-event-updated', function() {
+      $scope.setScopeVars(eventId);
+    });
+  }
 
   $scope.$on('checkinConfirm', function(event, participant) {
     $scope.lastCheckin = participant;
