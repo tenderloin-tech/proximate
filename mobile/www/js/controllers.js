@@ -1,14 +1,13 @@
 angular.module('proximate.controllers', [])
 
-.controller('StatusCtrl', function($scope, $state, PubNub, Events, Settings, Beacons) {
+.controller('AppCtrl', function($ionicPlatform, $localStorage,
+  $scope, $state, Settings, Events, PubNub, Beacons) {
 
-  // Initial test data
+  $scope.hide_header = true;
+
+  // Initialize current event
   $scope.event = {
-    id: '882',
-    name: 'Test Event',
-    start_time: 'Tue, 30 Dec 2014 00:46:41 GMT',
-    pretty_time: '',
-    status: null
+    id: null
   };
 
   // Gets the most current event for the user, and updates the
@@ -34,11 +33,21 @@ angular.module('proximate.controllers', [])
         });
       })
       .catch(function(err) {
-        console.log('getMostCurrentEvent error: ' + err);
+        console.log('getMostCurrentEvent error: ', JSON.stringify(err));
+
+        if (err.status === 404) {
+          $scope.event.id = null;
+        }
+
       })
       .finally(function() {
         $scope.$broadcast('scroll.refreshComplete');
       });
+  };
+
+  // Utility function that populates the pretty time field from start time
+  $scope.setPrettyStartTime = function() {
+    $scope.event.pretty_time = moment($scope.event.start_time).format('h:mm a');
   };
 
   // Subscribe to the checkins channel on PubNub, checking for events
@@ -60,22 +69,40 @@ angular.module('proximate.controllers', [])
     });
   };
 
+  function loadCycle() {
+    $scope.initWithEvent();
+    $scope.subscribeToCheckinStatus();
+    // Settings.updateBeaconList()
+    //         .then(function(data) {
+    //           Settings.logToDom('Beacons: ', JSON.stringify(data));
+    //         });
+    Beacons.setupBeacons(PubNub.publish);
+  }
+
+  $ionicPlatform.ready(function() {
+    if ($localStorage.get('initialized') !== 'true') {
+      Settings.updateDeviceId();
+      $state.go('splash', {}, {reload: true});
+    } else {
+      loadCycle();
+    }
+  });
+
+  $ionicPlatform.on('resume', loadCycle);
+
+  $scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
+    if (fromState.name === 'splash') {
+      loadCycle();
+    }
+  });
+
+})
+
+.controller('StatusCtrl', function($scope) {
+
   $scope.doRefresh = function() {
     $scope.initWithEvent();
   };
-
-  // Utility function that populates the pretty time field from start time
-  $scope.setPrettyStartTime = function() {
-    $scope.event.pretty_time = moment($scope.event.start_time).format('h:mm a');
-  };
-
-  // Wait for load, then full initialize cycle
-  $scope.$on('$stateChangeSuccess', function() {
-    $scope.setPrettyStartTime();
-    $scope.initWithEvent();
-    $scope.subscribeToCheckinStatus();
-    Beacons.setupTestBeacons(PubNub.publish);
-  });
 
 })
 
@@ -119,6 +146,8 @@ angular.module('proximate.controllers', [])
 
   $scope.error = '';
 
+  Settings.updateDeviceId();
+
   // Calls the factory signin function, and takes the user to the Status view upon success,
   // or displays an error otherwise
 
@@ -126,7 +155,8 @@ angular.module('proximate.controllers', [])
     Settings.signin($scope.data)
       .then(function(res) {
         $scope.error = '';
-        $state.go('tab.status', {}, {reload: true});
+        $scope.hide_header = false;
+        $state.go('tab.status', {firstLoad: true}, {reload: true});
       })
       .catch(function(err) {
         $scope.logSplashError(err);
@@ -145,7 +175,7 @@ angular.module('proximate.controllers', [])
 
 })
 
-.controller('SettingsCtrl', function($scope, Settings) {
+.controller('SettingsCtrl', function($scope, Settings, Auth) {
 
   angular.element(document).ready(function() {
 
@@ -159,4 +189,10 @@ angular.module('proximate.controllers', [])
     // Stem function
   };
 
+  $scope.refreshBeacons = Settings.updateBeaconList;
+
+  $scope.logout = function() {
+    $scope.hide_header = true;
+    Auth.logout();
+  };
 });

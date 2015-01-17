@@ -2,12 +2,36 @@ angular.module('proximate.services')
 
 .factory('Settings', function($localStorage, $http, webServer) {
 
+  // Similarly, add fake region array to localStorage to simulate previous info
+  var testRegions = [{
+    uuid : 'B9407F30-F5F8-466E-AFF9-25556B57FE6D',
+    identifier : 'Estimote Icy One',
+    minor : 10907,
+    major : 23516
+  }, {
+    uuid : 'B9407F30-F5F8-466E-AFF9-25556B57FE6D',
+    identifier : 'Estimote Blue One',
+    minor : 50306,
+    major : 54690
+  }, {
+    uuid : 'B9407F30-F5F8-466E-AFF9-25556B57FE6D',
+    identifier : 'Estimote Mint One',
+    minor : 3704,
+    major : 57868
+  }];
+
+  $localStorage.set('beaconList', JSON.stringify(testRegions));
+
   // Container object for settings values, needed for syncing across controllers
   // Exposes the following: data.deviceId, data.username, data.currentBeaconList
 
   var data = {};
 
-  data.deviceId = $localStorage.get('deviceId'); //initialize with stored value
+  //initialize with stored values
+  data.deviceId = $localStorage.get('deviceId');
+  data.currentBeaconList = $localStorage.get('beaconList');
+  data.username = $localStorage.get('username');
+  data.userId = $localStorage.get('userId');
 
   // update the deviceID based on current device
   var updateDeviceId = function() {
@@ -26,10 +50,11 @@ angular.module('proximate.services')
     } else if (ionic.Platform.isAndroid()) {
       data.deviceId = device.uuid;
       $localStorage.set('deviceId', data.deviceId);
+    } else {
+      data.deviceId = '123456789';
+      $localStorage.set('deviceId', data.deviceId);
     }
   };
-
-  data.currentBeaconList = $localStorage.get('beaconList');
 
   // Gets the most recent beacons from the server, populating local storage
   //on success
@@ -37,16 +62,16 @@ angular.module('proximate.services')
   var updateBeaconList = function() {
     return $http({
       method: 'GET',
-      url: webServer.url + '/api/beacons/' + data.deviceId,
+      url: webServer.url + '/api/devices/' + data.deviceId + '/beacons',
     }).then(function(result) {
-      data.currentBeaconList = result;
-      localStorage.set('beaconList', result);
+      // data.currentBeaconList = result;
+      // localStorage.set('beaconList', result);
+      logToDom('In settings factory', JSON.stringify(result));
+      return result;
+    }).catch(function(error) {
+      logToDom('Error in settings factory: ' + JSON.stringify(error));
     });
   };
-
-  //initializes the username property from localStorage
-  data.username = $localStorage.get('username');
-  data.userId = $localStorage.get('userId');
 
   //sets username both in localStorage and on the server
   var updateUsername = function(name) {
@@ -110,13 +135,29 @@ angular.module('proximate.services')
     });
   };
 
+  // Utility logging function. Currently set to log to settings screen on app for DEV purposes
+
+  var logToDom = function(message) {
+    var e = document.createElement('label');
+    e.innerText = message;
+
+    var devMsgElement = document.getElementById('dev-messages');
+
+    var br = document.createElement('br');
+    var br2 = document.createElement('br');
+    devMsgElement.appendChild(e);
+    devMsgElement.appendChild(br);
+    devMsgElement.appendChild(br2);
+  };
+
   return {
     data: data,
     updateDeviceId: updateDeviceId,
     updateBeaconList: updateBeaconList,
     updateUsername: updateUsername,
     updateParticipantInfo: updateParticipantInfo,
-    signin: signin
+    signin: signin,
+    logToDom: logToDom
   };
 
 });
