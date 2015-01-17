@@ -180,6 +180,19 @@ angular.module('proximate.services', [])
   };
 })
 
+.filter('filterByStatus', function() {
+  return function(events, status) {
+    var filteredResults = [];
+    events.forEach(function(event) {
+      if (event.status !== status) {
+        return;
+      }
+      filteredResults.push(event);
+    });
+    return filteredResults;
+  };
+})
+
 .filter('filterByTime', function() {
   return function(events, time) {
     var filteredResults = [];
