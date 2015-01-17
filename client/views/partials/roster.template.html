@@ -26,8 +26,9 @@
         <td data-title="'Email'">
           <span>{{participant.email}}</span>
         </td>
-        <td data-title="'Status'" class="setStatus-cell" ng-class="{'ontime': participant._pivot_status === 'ontime', 'late': participant._pivot_status === 'late', 'excused': participant._pivot_status === 'excused', 'absent': participant._pivot_status === 'null'}" ng-click="participant.$edit = true">
-          <span ng-if="!participant.$edit"><i class="edit icon setStatus-icon"></i>{{participant._pivot_status}}</span>
+        <td data-title="'Status'" class="setStatus-cell" ng-class="{'ontime': participant._pivot_status === 'ontime', 'late': participant._pivot_status === 'late', 'excused': participant._pivot_status === 'excused', 'absent': participant._pivot_status === null || participant._pivot_status == 'null'}" ng-click="participant.$edit = true">
+          <span ng-if="!participant.$edit &&participant._pivot_status !== null &&participant._pivot_status !== 'null'"><i class="edit icon setStatus-icon"></i>{{participant._pivot_status}}</span>
+          <span ng-if="!participant.$edit && (participant._pivot_status === null || participant._pivot_status == 'null')"><i class="edit icon setStatus-icon"></i>absent</span>
           <div ng-if="participant.$edit">
             <select id="setStatus" class="" ng-model="participant._pivot_status" ng-change="participant.$edit = false; updateParticipantStatus(participant)">
                <option value="late">Late</option>

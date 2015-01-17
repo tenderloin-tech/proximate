@@ -1,31 +1,16 @@
 <div class="events content">
-  <h1>Input Beacon Information</h1>
-  <form novalidate class="simple-form ui form">
-    Identifier:
-    <input type="text" ng-model="beacon.identifier" />
-    <br />
-    UUID:
-    <input type="text" ng-model="beacon.uuid" />
-    <br />
-    Major:
-    <input type="number" ng-model="beacon.major" /><br />
-    Minor:
-    <input type="number" ng-model="beacon.minor" /><br />
-    <input class="ui submit button" type="submit" ng-click="addBeacon(beacon)" value="submit" />
-  </form>
-  <hr>
-  <h3>My Beacons</h3>
-  <table class="ui celled table sortable">
+  <h1>My Beacons</h1>
+  <table class="adminTable">
     <thead>
       <tr>
-        <th class="left align">Identifier</th>
-        <th class="left align">UUID</th>
-        <th class="left align">Major</th>
-        <th class="left align">Minor</th>
+        <th>Identifier</th>
+        <th>UUID</th>
+        <th>Major</th>
+        <th>Minor</th>
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="beacon in beaconsData">
+      <tr class="adminRow" ng-repeat="beacon in beaconsData">
         <td class="username">{{beacon.identifier}}</td>
         <td class="mail">{{beacon.uuid}}</td>
         <td class="participantStatus">{{beacon.major}}</td>
@@ -33,4 +18,28 @@
       </tr>
     </tbody>
   </table>
+  <div class="addBeacon-toggle" ng-click="showAddBeacon()">
+    <h2><i class="icon plus"></i> Add a beacon</h2>
+  </div>
+  <div class="addBeacon">
+    <h1>Add a new beacon</h1>
+    <div novalidate class="ui form segment">
+      <input class="ui input" type="text" ng-model="beacon.identifier" placeholder="Identifier" />
+      <div class="ui divider"></div>
+      <input class="ui input" type="text" ng-model="beacon.uuid" placeholder="UUID" />
+      <div class="ui divider"></div>
+      <div class="inline fields">
+        <div class="field">
+          <input class="ui input" type="number" ng-model="beacon.major" placeholder="Major"/>
+        </div>
+        <div class="field">
+          <input class="ui input" type="number" ng-model="beacon.minor" placeholder="Minor"/>
+        </div>
+        <div class="buttons">
+          <a class="ui small icon button" type="cancel" ng-click="hideAddBeacon()">Cancel</a>
+          <a class="ui small icon blue button" type="submit" ng-click="addBeacon(beacon)" value="submit">Add this beacon</a>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

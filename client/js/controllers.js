@@ -305,6 +305,17 @@ angular.module('proximate.controllers', [])
     });
   };
 
+  $scope.showAddBeacon = function() {
+    $('.addBeacon').show();
+    $('.addBeacon-toggle').hide();
+
+  };
+
+  $scope.hideAddBeacon = function() {
+    $('.addBeacon').hide();
+    $('.addBeacon-toggle').show();
+  };
+
 })
 
 .controller('RosterCtrl', function($scope, $stateParams, Populate) {

@@ -485,6 +485,10 @@ a {
   margin-left: 4%;
 }
 
+.participantHeader {
+  margin-left: 2%;
+}
+
 .tableControls {
   background: #ffffff; /* Old browsers */
   background: -moz-linear-gradient(top,  #ffffff 0%, #f5f5f5 100%); /* FF3.6+ */
@@ -607,19 +611,19 @@ a {
   }
 
   .adminTable .ontime {
-    background-color: #89e4b7;
+    color: #89e4b7;
   }
 
   .adminTable .late {
-    background-color: #EC4F43;
+    color: #f1c40f;
   }
 
   .adminTable .excused {
-    background-color: #3498DB;
+    color: #3498DB;
   }
 
   .adminTable .absent {
-    background-color: #ECF0F1;
+    color: #EC4F43;
   }
 
 
@@ -732,6 +736,33 @@ a {
   margin-left: 207px !important;
 }
 
+.addBeacon {
+  position: relative;
+  padding: 40px 100px 0px 36px;
+  box-shadow: 7px 0 0 #89e4b7 inset;
+  border: 1px solid #efefef;
+  /*opacity: 0;*/
+  display: none;
+}
+
+.addBeacon input {
+  width: 100%;
+}
+
+.addBeacon .buttons {
+  float: right;
+  padding-right: 20px;
+}
+
+.addBeacon-toggle {
+  float: right;
+  margin-top: 20px;
+}
+
+.addBeacon-toggle h2:hover {
+  color: gray;
+}
+
 .current-event-card {
   position: relative;
   padding: 40px 0px 0px 36px;
@@ -815,17 +846,17 @@ a {
 }
 
 #history-stats-ontime {
-  color: #4F8A10;
-  background-color: #DFF2BF;
+  color: #ffffff;
+  background-color: #89e4b7;
 }
 
 #history-stats-late {
-  color: #9F6000;
+  color: #ffffff;
   background-color: #FEEFB3;
 }
 
 #history-stats-absent {
-  color: #D8000C;
+  color: #ffffff;
   background-color: #FFBABA;
 }
 
