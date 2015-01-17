@@ -35,7 +35,7 @@ angular.module('proximate.controllers', [])
       .catch(function(err) {
         console.log('getMostCurrentEvent error: ', JSON.stringify(err));
 
-        if(err.status === 404) {
+        if (err.status === 404) {
           $scope.event.id = null;
         }
 
@@ -77,7 +77,7 @@ angular.module('proximate.controllers', [])
     //           Settings.logToDom('Beacons: ', JSON.stringify(data));
     //         });
     Beacons.setupBeacons(PubNub.publish);
-  };
+  }
 
   $ionicPlatform.ready(function() {
     if ($localStorage.get('initialized') !== 'true') {
@@ -91,7 +91,6 @@ angular.module('proximate.controllers', [])
   $ionicPlatform.on('resume', loadCycle);
 
   $scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
-    console.log('fromState', fromState);
     if (fromState.name === 'splash') {
       loadCycle();
     }
@@ -195,6 +194,5 @@ angular.module('proximate.controllers', [])
   $scope.logout = function() {
     $scope.hide_header = true;
     Auth.logout();
-  }
-
+  };
 });

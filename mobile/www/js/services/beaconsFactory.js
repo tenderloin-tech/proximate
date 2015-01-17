@@ -79,7 +79,6 @@ angular.module('proximate.services')
       };
 
       onEnterCallback('ranging', rangingInfo);
-      // Settings.logToDom('[Prox] Beacon 0 Accuracy: ' + JSON.stringify(pluginResult.beacons[0].accuracy));
     };
 
     cordova.plugins.locationManager.setDelegate(delegate);

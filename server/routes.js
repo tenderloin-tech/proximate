@@ -149,13 +149,12 @@ module.exports = function(app) {
           .flatten()
           .uniq()
           .value();
-        if (beacons.length > 0){
+        if (beacons.length > 0) {
           res.status(200).json(beacons);
         } else {
-          res.status(404).send("No Beacons found for deviceId")
+          res.status(404).send('No Beacons found for deviceId');
         }
       });
-
   });
 
   // Return a list of events for a participant
