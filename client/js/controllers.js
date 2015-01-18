@@ -1,4 +1,3 @@
-
 angular.module('proximate.controllers', [])
 
 .controller('AppCtrl', function($q, $rootScope, $scope, $state, $window, Auth, Populate, PubNub) {
@@ -22,6 +21,8 @@ angular.module('proximate.controllers', [])
 
   // Listen for checkin confirmations
   PubNub.subscribe('checkins', function(message) {
+    console.log('message received', message);
+    console.log('event participants', $scope.currentEventParticipants);
     if (message.eventType === 'checkinConfirm') {
       // Find the correct participant in participantData and update their status
       $scope.$apply($scope.currentEventParticipants.some(function(participant) {
@@ -349,7 +350,6 @@ angular.module('proximate.controllers', [])
 
   $scope.setScopeVars(eventId);
 
-
   if (eventId === 'current') {
     $scope.$on('current-event-updated', function() {
       $scope.setScopeVars(eventId);
@@ -377,6 +377,7 @@ angular.module('proximate.controllers', [])
       opacity: [0, 'linear'],
       top: ['-100px', 'swing']
     }, 450);
+  };
 
   var setCountdown = function(startTime) {
     var a = moment(startTime);
@@ -400,4 +401,5 @@ angular.module('proximate.controllers', [])
       $scope.timeDiffFromEvent = false;
     }
   }, 1000);
+
 });

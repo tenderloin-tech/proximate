@@ -34,7 +34,7 @@ module.exports = function(adminId) {
 
     var params = {
       calendarId: calendarId,
-      maxResults: 2500,
+      maxResults: 250,
       orderBy: 'starttime',
       showDeleted: true,
       singleEvents: true

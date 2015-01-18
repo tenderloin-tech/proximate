@@ -84,6 +84,12 @@ a {
   min-width: 1000px;
 }
 
+  .projector-logo {
+    position: relative;
+    right: 20px;
+    top: 10px;
+  }
+
   .projector .eventInfo {
     margin: 10% auto;
     width: 60%;
@@ -109,7 +115,7 @@ a {
   .projector .title h3 {
     color: #fff;
     opacity: .7;
-    font-weight: 100;
+    font-weight: 300;
   }
 
   .projector .info {
@@ -359,7 +365,7 @@ a {
   position: absolute;
   top: -15px;
   right: 1%;
-  height: 2px;
+  height: 4px;
   background-color: rgba(236,240,241, 0);
   width: 95%;
 }
@@ -561,6 +567,7 @@ a {
   width: 300px;
   height: 100px;
   background-color: rgba(0,0,0,.6);
+  text-align: left;
   opacity: 0;
 }
 
@@ -576,13 +583,15 @@ a {
 .toast h3 {
   position: relative;
   left: 34%;
-  top: 10%;
+  color: #fff;
+  top: 27%;
 }
 
 .toast h4 {
   position: relative;
   left: 34%;
-  top: -10%;
+  top: 26%;
+  color: #fff;
   opacity: .7;
   font-weight: 300;
 }
