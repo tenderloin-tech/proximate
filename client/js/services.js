@@ -172,7 +172,7 @@ angular.module('proximate.services', [])
   return function(startTime) {
     var a = moment(startTime);
     var b = moment();
-    return moment.duration(a - b).format("mm:ss");;
+    return moment.duration(a - b).format('mm:ss');
   };
 })
 
@@ -213,12 +213,12 @@ angular.module('proximate.services', [])
 
 .filter('formatLocation', function() {
   return function(location) {
-    if(location.length > 27) {
+    if (location.length > 27) {
       return location.slice(0, 27) + '...';
     } else {
       return location;
     }
-  }
+  };
 })
 
 .filter('removeArrivedParticipants', function() {

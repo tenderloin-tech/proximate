@@ -21,8 +21,6 @@ angular.module('proximate.controllers', [])
 
   // Listen for checkin confirmations
   PubNub.subscribe('checkins', function(message) {
-    console.log('message received', message);
-    console.log('event participants', $scope.currentEventParticipants);
     if (message.eventType === 'checkinConfirm') {
       // Find the correct participant in participantData and update their status
       $scope.$apply($scope.currentEventParticipants.some(function(participant) {
@@ -382,7 +380,7 @@ angular.module('proximate.controllers', [])
   var setCountdown = function(startTime) {
     var a = moment(startTime);
     var b = moment();
-    $scope.countdown = moment.duration(a - b).format("mm:ss");
+    $scope.countdown = moment.duration(a - b).format('mm:ss');
   };
 
   $scope.timeDiffFromEvent = null;

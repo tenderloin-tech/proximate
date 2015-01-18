@@ -44,36 +44,3 @@
   </div>
   <ng-include src="'/views/partials/toast.html'"></ng-include>
 </div>
-
-
-
-
-
-
-
-
-<!--
-  <div class="event" ng-switch="timeDiffFromEvent">
-    <h1 ng-switch-when="null">{{event.name}} starts at</h1>
-    <h1 ng-switch-when="false">{{event.name}} started at</h1>
-    <h1 ng-switch-when="true">{{event.name}} starts in</h1>
-  </div>
-  <div class="time">
-    <h1 ng-if="!timeDiffFromEvent">{{event.start_time | date:"h:mm a"}}</h1>
-    <h1 ng-if="timeDiffFromEvent">{{event.start_time | fromNow}}</h1>
-  </div>
-  <div ng-if="timeDiffFromEvent" class="minutes">
-    <h2>MINUTES</h2>
-  </div>
-  <div class="participants">
-    <div class="status">
-      <ul>
-        <li ng-repeat="participant in participants | removeArrivedParticipants" class="repeated-item">
-         <a>{{participant.name}}</a>
-        </li>
-      </ul>
-    </div>
-    <h3>have not checked in</h3>
-  </div>
-  <ng-include src="'/views/partials/toast.html'"></ng-include>
-</div> -->
