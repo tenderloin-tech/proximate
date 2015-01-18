@@ -1,8 +1,11 @@
 /* GENERAL */
 
+html {
+  height: 100%;
+}
+
 body {
   height: 100%;
-  min-height: 100%;
   background: #fff;
   font-size: 100%;
   font-family: 'Lato', sans-serif;
@@ -59,34 +62,200 @@ a {
 }
 
 
-/* EVENT VIEW */
+/* PROJECTOR VIEW */
 
-.background {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+.container {
+  height: 100%;
+}
+
+.projector {
+  text-shadow: 0px 1px 5px rgba(0,0,0,0.3);
+  color: #fff;
+  text-align: center;
+  position: relative;
+  height: 100%;
+  background-color: #000;
+  overflow: auto;
+  background-image: url(../img/background.jpg);
   background-color: transparent;
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
-  zoom: 1;
-  background-image: url(../img/background.jpg);
-  z-index: 0;
 }
 
-.container {
-  text-shadow: 0px 1px 5px rgba(0,0,0,0.3);
-  color: #fff;
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  z-index: 1;
-  min-height: 680px;
-  min-width: 1000px;
+  .projector .eventInfo {
+    margin: 10% auto;
+    width: 60%;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(255, 255, 255, .2);
+    border-radius: 15px;
+    z-index: 1;
+  }
+
+  .projector .title {
+    padding: 25px 0px;
+    z-index: 1;
+  }
+
+  .projector .title h1 {
+    color: #fff;
+    font-weight: 700;
+    font-size: 2.8em;
+  }
+
+  .projector .title h3 {
+    color: #fff;
+    opacity: .7;
+    font-weight: 100;
+  }
+
+  .projector .info {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border: 1px solid rgba(255, 255, 255, .25);
+  }
+
+    .projector .icon {
+      float: left;
+      font-size: 3em;
+      height: 72px;
+      margin-top: 15px;
+      opacity: .5;
+    }
+
+    .projector .label {
+      float: left;
+    }
+
+    .projector .info h2 {
+      color: #fff;
+      line-height: 72px;
+      font-weight: 100;
+      font-size: 2em;
+    }
+
+    .projector ul.info li {
+      display: inline-block;
+      text-align: center;
+      width: 48%;
+      height: 72px;
+    }
+
+    .projector ul li div {
+      width: 80%;
+      margin: 0 auto;
+    }
+
+  .projector .countdown {
+    width: 100px;
+    text-align: center;
+  }
+
+  .projector .location {
+    width: 100px;
+    text-align: center;
+  }
+
+    .projector .info .countdown {
+      color: #fff;
+
+    }
+
+    .projector .info .location {
+      color: #fff;
+    }
+
+    .projector .names {
+      padding: 25px 20px 25px 20px;
+    }
+
+    .projector .names ul {
+      margin: 0;
+      padding: 0;
+      list-style-type: none;
+      text-align: center;
+
+    }
+
+    .projector .names ul li {
+      display: inline-block;
+      padding: 9px;
+      font-weight: 300;
+
+    }
+
+    .projector .names ul li a {
+      padding: .6em .6em;
+      color: #fff;
+      border-radius: 3px;
+      font-size: .9em;
+      /* Fallback for web browsers that don't support RGBa */
+      background-color: rgb(255, 255, 255);
+      background-color: rgba(255, 255, 255, 0.15);
+
+    }
+
+/*
+  We're using CSS transitions for when
+  the enter and move events are triggered
+  for the element that has the .repeated-item
+  class
+*/
+.repeated-item.ng-enter, .repeated-item.ng-move {
+  -webkit-transition:1.0s linear all;
+  -moz-transition:1.0s linear all;
+  -o-transition:1.0s linear all;
+  transition:1.0s linear all;
+  opacity:0;
+}
+
+/*
+ The ng-enter-active and ng-move-active
+ are where the transition destination properties
+ are set so that the animation knows what to
+ animate.
+*/
+.repeated-item.ng-enter.ng-enter-active,
+.repeated-item.ng-move.ng-move-active {
+  opacity:1;
+}
+
+/*
+  We're using CSS keyframe animations for when
+  the leave event is triggered for the element
+  that has the .repeated-item class
+*/
+.repeated-item.ng-leave {
+  -webkit-animation:1.5s my_animation;
+  -moz-animation:1.5s my_animation;
+  -o-animation:1.5s my_animation;
+  animation:1.5s my_animation;
+}
+
+@keyframes my_animation {
+  from { opacity:1; }
+  to { opacity:0; }
+}
+
+/*
+  Unfortunately each browser vendor requires
+  its own definition of keyframe animation code...
+*/
+@-webkit-keyframes my_animation {
+  from { opacity:1; }
+  to { opacity:0; }
+}
+
+@-moz-keyframes my_animation {
+  from { opacity:1; }
+  to { opacity:0; }
+}
+
+@-o-keyframes my_animation {
+  from { opacity:1; }
+  to { opacity:0; }
 }
 
 .leftMenu {
@@ -95,6 +264,8 @@ a {
   left: 2%;
   width: 100px;
 }
+
+
 
 .admin-topbar .leftMenu {
   position: absolute;
@@ -297,62 +468,9 @@ a {
   font-weight: 400;
 }
 
-.participants {
-  position: absolute;
-  bottom: 2%;
-  -webkit-transform: translate(0,0);
-  text-align: center;
-  vertical-align: bottom;
-  width: 100%;
-  display: block;
-  -webkit-transform-origin: 50% 50%;
-    -webkit-transform-origin-x: 50%;
-    -webkit-transform-origin-y: 50%;
-    -webkit-transform-origin-z: initial;
-}
 
-.status {
-  background-color: #ECF0F1;
-  width: 75%;
-  color: #333;
-  margin: 0 auto;
-  padding: 20px;
-  margin-top: 20px;
-  opacity: .9;
-  border-radius: 3px;
-  position: relative;
-}
 
-.status ul {
-  margin: 0;
-  padding: 0;
-  list-style-type: none;
-  text-align: left;
 
-}
-
-.status ul li {
-  display: inline-block;
-  opacity: 1.0;
-  padding: 9px;
-  font-weight: 300;
-}
-
-.status ul li a {
-  text-decoration: none;
-  padding: .3em 1em;
-  color: #fff;
-  border-radius: 3px;
-  font-size: .9em;
-  background: #0e0e0e; /* Old browsers */
-  background: -moz-linear-gradient(top,  #0e0e0e 0%, #7d7e7d 100%); /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#0e0e0e), color-stop(100%,#7d7e7d)); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(top,  #0e0e0e 0%,#7d7e7d 100%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(top,  #0e0e0e 0%,#7d7e7d 100%); /* Opera 11.10+ */
-  background: -ms-linear-gradient(top,  #0e0e0e 0%,#7d7e7d 100%); /* IE10+ */
-  background: linear-gradient(to bottom,  #0e0e0e 0%,#7d7e7d 100%); /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0e0e0e', endColorstr='#7d7e7d',GradientType=0 ); /* IE6-9 */
-}
 
 .participants h3 {
   padding: 0;
@@ -884,63 +1002,4 @@ a {
   background-color: #3498DB;
 }
 
-/*
-  We're using CSS transitions for when
-  the enter and move events are triggered
-  for the element that has the .repeated-item
-  class
-*/
-.repeated-item.ng-enter, .repeated-item.ng-move {
-  -webkit-transition:1.0s linear all;
-  -moz-transition:1.0s linear all;
-  -o-transition:1.0s linear all;
-  transition:1.0s linear all;
-  opacity:0;
-}
 
-/*
- The ng-enter-active and ng-move-active
- are where the transition destination properties
- are set so that the animation knows what to
- animate.
-*/
-.repeated-item.ng-enter.ng-enter-active,
-.repeated-item.ng-move.ng-move-active {
-  opacity:1;
-}
-
-/*
-  We're using CSS keyframe animations for when
-  the leave event is triggered for the element
-  that has the .repeated-item class
-*/
-.repeated-item.ng-leave {
-  -webkit-animation:1.5s my_animation;
-  -moz-animation:1.5s my_animation;
-  -o-animation:1.5s my_animation;
-  animation:1.5s my_animation;
-}
-
-@keyframes my_animation {
-  from { opacity:1; }
-  to { opacity:0; }
-}
-
-/*
-  Unfortunately each browser vendor requires
-  its own definition of keyframe animation code...
-*/
-@-webkit-keyframes my_animation {
-  from { opacity:1; }
-  to { opacity:0; }
-}
-
-@-moz-keyframes my_animation {
-  from { opacity:1; }
-  to { opacity:0; }
-}
-
-@-o-keyframes my_animation {
-  from { opacity:1; }
-  to { opacity:0; }
-}

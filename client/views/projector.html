@@ -13,6 +13,45 @@
       <div class="item" ng-click="signOut()"><i class="sign out icon"></i> Logout</div>
     </div>
   </div>
+  <div class="eventInfo">
+    <div class="title">
+      <h1>{{event.name}}</h1>
+      <h3>{{event.start_time | date:"fullDate"}}</h3>
+    </div>
+    <ul class="info">
+      <li class="countdown">
+        <div>
+           <i class="clock icon"></i>
+           <h2 class="label" ng-if="!timeDiffFromEvent">{{event.start_time | date:"h:mm a"}}</h2>
+           <h2 class="label" ng-if="timeDiffFromEvent">{{event.start_time | fromNow}}</h2>
+        </div>
+      </li>
+      <li class="location">
+        <div>
+            <i class="marker icon"></i>
+            <h2 class="label">{{event.location}}</h2>
+        </div>
+      </li>
+    </ul>
+    <div class="names">
+      <ul>
+        <li ng-repeat="participant in participants | removeArrivedParticipants" class="repeated-item">
+         <a ng-if="participant.name">{{participant.name}}</a>
+         <a ng-if="!participant.name">{{participant.email}}</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <ng-include src="'/views/partials/toast.html'"></ng-include>
+</div>
+
+
+
+
+
+
+
+<!--
   <div class="event" ng-switch="timeDiffFromEvent">
     <h1 ng-switch-when="null">{{event.name}} starts at</h1>
     <h1 ng-switch-when="false">{{event.name}} started at</h1>
@@ -36,4 +75,4 @@
     <h3>have not checked in</h3>
   </div>
   <ng-include src="'/views/partials/toast.html'"></ng-include>
-</div>
+</div> -->
