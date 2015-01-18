@@ -19,18 +19,18 @@
       <h3>{{event.start_time | date:"fullDate"}}</h3>
     </div>
     <ul class="info">
-      <li class="countdown">
-        <div>
-           <i class="clock icon"></i>
-           <h2 class="label" ng-if="!timeDiffFromEvent">{{event.start_time | date:"h:mm a"}}</h2>
-           <h2 class="label" ng-if="timeDiffFromEvent">{{event.start_time | fromNow}}</h2>
-        </div>
+      <li class="iconItem">
+        <i class="clock icon infoIcon"></i>
       </li>
-      <li class="location">
-        <div>
-            <i class="marker icon"></i>
-            <h2 class="label">{{event.location}}</h2>
-        </div>
+      <li>
+        <h2 class="label" ng-if="!timeDiffFromEvent">{{event.start_time | date:"h:mm a"}}</h2>
+        <h2 class="label" ng-if="timeDiffFromEvent">{{countdown}}</h2>
+      </li>
+      <li ng-if="event.location" class="iconItem">
+        <i class="marker icon infoIcon"></i>
+      </li>
+      <li ng-if="event.location">
+         <h2 class="label">{{event.location | formatLocation}}</h2>
       </li>
     </ul>
     <div class="names">
