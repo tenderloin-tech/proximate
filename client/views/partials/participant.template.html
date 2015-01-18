@@ -17,10 +17,10 @@
       </tr>
     </thead>
     <tbody>
-      <tr class="adminRow" ng-repeat="data in eventHistory | orderBy: '-start_time'"">
+      <tr class="adminRow" ng-repeat="data in eventHistory | orderBy: '-start_time'">
         <td ui-sref="admin.roster({eventId: data.event.id})">{{data.event.name}}</td>
         <td>{{data.event.start_time | date:'fullDate'}}</td>
-        <td data-title="'Status'" class="setStatus-cell" ng-class="{'ontime': data.status === 'ontime', 'late': data.status === 'late', 'excused': data.status === 'excused', 'absent': data.status === null || data.status == 'null'}" ng-click="participant.$edit = true">
+        <td data-title="'Status'" class="setStatus-cell" ng-class="setClassForStatus(data.status)" ng-click="participant.$edit = true">
           <span ng-if="!participant.$edit && data.status !== null && data.status !== 'null'"><i class="edit icon setStatus-icon"></i>{{data.status}}</span>
           <span ng-if="!participant.$edit && (data.status === null || data.status == 'null')"><i class="edit icon setStatus-icon"></i>absent</span>
           <div ng-if="participant.$edit">

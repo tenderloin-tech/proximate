@@ -474,7 +474,6 @@ a {
 /* ADMIN VIEW */
 
 .admin {
-  /*background-image: url('../img/crossword-multiply-bonewhite.png');*/
   background: white;
   position: absolute;
   width: 100%;
@@ -591,15 +590,19 @@ a {
     border-bottom: 1px dashed #e4e4e4;
   }
 
-  .adminTable .eventTime {
+  .adminTable .eventTime, .adminTable .participantEmail {
     color: #000;
     opacity: .7;
     font-weight: 300;
 
   }
 
-  .adminTable .eventName a {
+  .adminTable a {
     text-decoration: none;
+    color: #34495e;
+  }
+
+  .adminTable td {
     color: #34495e;
   }
 
@@ -690,8 +693,6 @@ a {
 .admin-menu .menu-item {
   padding: 10px 20px;
   font-weight: 300;
-/*  border-bottom: 1px solid #374E5E;
-*/
 }
 
 .admin-menu .menu-item:hover {
@@ -771,12 +772,7 @@ a {
 .addBeacon-toggle {
   float: right;
   color: #ffffff;
-  /*margin-bottom: 20px;*/
 }
-
-/*.addBeacon-toggle h2:hover {
-  color: gray;
-}*/
 
 .current-event-card {
   position: relative;

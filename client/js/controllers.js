@@ -154,6 +154,17 @@ angular.module('proximate.controllers', [])
   if (Auth.isAuth()) { $scope.getAdminAndEventInfo(); }
 })
 
+.controller('AdminCtrl', function($scope) {
+
+  // Sets CSS classes for editable participant statuses
+  $scope.setClassForStatus = function(status) {
+    if (status === null || status === 'null') {
+      return 'absent';
+    }
+    return status;
+  };
+})
+
 .controller('EventsCtrl', function($scope, $state, Populate) {
 
   $scope.displayFilterTime = 'all';

@@ -10,7 +10,6 @@
     </div>
   </div>
   <table class="adminTable">
-  <!-- removed ng-table="tableParams" -->
     <thead>
       <tr>
         <th>Participant</th>
@@ -21,12 +20,12 @@
     <tbody>
       <tr class="adminRow" ng-repeat="participant in participants | filter: search">
         <td data-title="'Name'">
-          <span><a ui-sref="admin.participant({participantId: participant.id})">{{participant.name}}</a></span>
+          <span><a ui-sref="admin.participant({participantId: participant.id})" class="participantName">{{participant.name}}</a></span>
         </td>
         <td data-title="'Email'">
-          <span>{{participant.email}}</span>
+          <span class="participantEmail">{{participant.email}}</span>
         </td>
-        <td data-title="'Status'" class="setStatus-cell" ng-class="{'ontime': participant._pivot_status === 'ontime', 'late': participant._pivot_status === 'late', 'excused': participant._pivot_status === 'excused', 'absent': participant._pivot_status === null || participant._pivot_status == 'null'}" ng-click="participant.$edit = true">
+        <td data-title="'Status'" class="setStatus-cell" ng-class="setClassForStatus(participant._pivot_status)" ng-click="participant.$edit = true">
           <span ng-if="!participant.$edit && participant._pivot_status !== null && participant._pivot_status !== 'null'"><i class="edit icon setStatus-icon"></i>{{participant._pivot_status}}</span>
           <span ng-if="!participant.$edit && (participant._pivot_status === null || participant._pivot_status == 'null')"><i class="edit icon setStatus-icon"></i>absent</span>
           <div ng-if="participant.$edit">
