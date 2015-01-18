@@ -70,24 +70,6 @@ angular.module('proximate.controllers', [])
     $('.rightMenu .highlight').removeClass('menuOpen');
   }
 
-  /**** SETUP FOR TOASTS ****/
-
-  $scope.showToast = function() {
-    $('.toast').animate({
-      opacity: [1, 'linear'],
-      top: [0, 'swing']
-    }, 450);
-
-    setTimeout($scope.hideToast, 2000);
-  };
-
-  $scope.hideToast = function() {
-    $('.toast').animate({
-      opacity: [0, 'linear'],
-      top: ['-100px', 'swing']
-    }, 450);
-  };
-
   $scope.signOut = Auth.signOut;
 
   // Fetch the participant and event data from the server
@@ -172,6 +154,17 @@ angular.module('proximate.controllers', [])
   if (Auth.isAuth()) { $scope.getAdminAndEventInfo(); }
 })
 
+.controller('AdminCtrl', function($scope) {
+
+  // Sets CSS classes for editable participant statuses
+  $scope.setClassForStatus = function(status) {
+    if (status === null || status === 'null') {
+      return 'absent';
+    }
+    return status;
+  };
+})
+
 .controller('EventsCtrl', function($scope, $state, Populate) {
 
   $scope.displayFilterTime = 'all';
@@ -227,7 +220,7 @@ angular.module('proximate.controllers', [])
 
 })
 
-.controller('ParticipantCtrl', function($scope, $stateParams, Participant) {
+.controller('ParticipantCtrl', function($scope, $stateParams, Participant, Populate) {
 
   // Init values for scope, setting params for status values
   $scope.participantInfo = {};
@@ -235,8 +228,14 @@ angular.module('proximate.controllers', [])
   $scope.stats = [
     {name: 'ontime', label:'On Time', id: 'history-stats-ontime', value: 0},
     {name: 'late', label:'Late', id: 'history-stats-late', value: 0},
+    {name: 'excused', label:'Excused', id: 'history-stats-excused', value: 0},
     {name: null, label:'Absent', id: 'history-stats-absent', value: 0},
   ];
+
+  $scope.updateParticipantStatus = function(participant) {
+    Populate.updateParticipantStatus(participant.participant_id,
+      participant.event_id, participant.status);
+  };
 
   // Populates $scope.stats for use in table and chart
   var computeStats = function() {
@@ -253,20 +252,27 @@ angular.module('proximate.controllers', [])
 
   var drawChart = function() {
 
-    // var maxWidth = $('table').css('width');
     var widthScale = 100;
     var animationTime = 1000;
+    var textAnimationTime = 500;
 
     $scope.stats.forEach(function(stat) {
       var nameForClass = stat.name === null ? 'absent' : stat.name;
       // If no vals calculated, hide element
       if (stat.value === 0) {
         $('#history-stats-' + nameForClass).css('display', 'none');
+        return;
       }
       // Otherwise append and animate
       $('#history-stats-' + nameForClass)
-        .append('<span>' + nameForClass + ': <strong>' + stat.value + '</strong></span>')
-        .animate({width: stat.value * widthScale + 'px'}, animationTime);
+        .css('opacity', 1)
+        .animate({width: stat.value * widthScale + 'px'}, animationTime, 'swing',
+          // Animate stats values on completion
+          function() {
+            $('#history-stats-' + nameForClass + ' strong')
+            .animate({opacity: 1}, textAnimationTime);
+          })
+        .append('<span>' + nameForClass + ': <strong>' + stat.value + '</strong></span>');
     });
 
   };
@@ -303,6 +309,17 @@ angular.module('proximate.controllers', [])
     .then(function() {
       $scope.beaconsData.push(beacon);
     });
+  };
+
+  $scope.showAddBeacon = function() {
+    $('.addBeacon').show();
+    $('.addBeacon-toggle').hide();
+
+  };
+
+  $scope.hideAddBeacon = function() {
+    $('.addBeacon').hide();
+    $('.addBeacon-toggle').show();
   };
 
 })
@@ -342,6 +359,24 @@ angular.module('proximate.controllers', [])
     $scope.lastCheckin = participant;
     $scope.showToast();
   });
+
+  /**** SETUP FOR TOASTS ****/
+
+  $scope.showToast = function() {
+    $('.toast').animate({
+      opacity: [1, 'linear'],
+      top: [0, 'swing']
+    }, 450);
+
+    setTimeout($scope.hideToast, 2000);
+  };
+
+  $scope.hideToast = function() {
+    $('.toast').animate({
+      opacity: [0, 'linear'],
+      top: ['-100px', 'swing']
+    }, 450);
+  };
 
   $scope.timeDiffFromEvent = null;
   $interval(function() {

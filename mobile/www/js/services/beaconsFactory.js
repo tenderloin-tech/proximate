@@ -10,13 +10,43 @@ angular.module('proximate.services')
     // request auth from the user
     cordova.plugins.locationManager.requestAlwaysAuthorization();
 
-    startMonitoringRegions();
-    startRangingRegions();
+    startMonitoringRegions(Settings.data.currentBeaconList);
+    startRangingRegions(Settings.data.currentBeaconList);
+  };
+
+  // Stops monitoring / ranging for all current beacons
+  var clearBeacons = function() {
+    cordova.plugins.locationManager.getMonitoredRegions()
+      .then(function(data) {
+        console.log('Clearing monitored regions:', data);
+
+        data.forEach(function(region) {
+          cordova.plugins.locationManager.stopMonitoringForRegion(region)
+            .fail(console.error)
+            .done();
+        });
+
+        return data;
+      })
+      .then(function(data) {
+        data.forEach(function(region) {
+          cordova.plugins.locationManager.stopRangingBeaconsInRegion(region)
+            .fail(console.error)
+            .done();
+        });
+      });
+  };
+
+  var restartBeacons = function() {
+    if (Settings.data.currentBeaconList.length > 0) {
+      startMonitoringRegions(Settings.data.currentBeaconList);
+      startRangingRegions(Settings.data.currentBeaconList);
+    }
   };
 
   // Begins monitoring for all regions, as specified in the beacon list
-  var startMonitoringRegions = function() {
-    var currentRegions = regionsFromBeacons(Settings.data.currentBeaconList);
+  var startMonitoringRegions = function(beaconList) {
+    var currentRegions = regionsFromBeacons(beaconList);
 
     currentRegions.forEach(function(region) {
       cordova.plugins.locationManager.startMonitoringForRegion(region)
@@ -26,8 +56,8 @@ angular.module('proximate.services')
   };
 
   // Begins monitoring for all regions, as specified in the beacon list
-  var startRangingRegions = function() {
-    var currentRegions = regionsFromBeacons(Settings.data.currentBeaconList);
+  var startRangingRegions = function(beaconList) {
+    var currentRegions = regionsFromBeacons(beaconList);
 
     currentRegions.forEach(function(region) {
       cordova.plugins.locationManager.startRangingBeaconsInRegion(region)
@@ -103,6 +133,8 @@ angular.module('proximate.services')
   };
 
   return {
-    setupBeacons: setupBeacons
+    setupBeacons: setupBeacons,
+    clearBeacons: clearBeacons,
+    restartBeacons: restartBeacons
   };
 });

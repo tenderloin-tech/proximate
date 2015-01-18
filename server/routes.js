@@ -159,6 +159,9 @@ module.exports = function(app) {
           })
           .flatten()
           .uniq()
+          .map(function(event) {
+            return JSON.parse(event);
+          })
           .value();
         if (beacons.length > 0) {
           res.status(200).json(beacons);

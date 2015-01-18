@@ -474,11 +474,21 @@ a {
 /* ADMIN VIEW */
 
 .admin {
-  /*background-image: url('../img/crossword-multiply-bonewhite.png');*/
   background: white;
   position: absolute;
   width: 100%;
   min-height: 100%;
+}
+
+.rosterHeader {
+  padding-top: 40px;
+  padding-bottom: 20px;
+  margin-left: 4%;
+}
+
+.participantHeader {
+  padding-top: 40px;
+  margin-left: 4%;
 }
 
 .tableControls {
@@ -580,19 +590,47 @@ a {
     border-bottom: 1px dashed #e4e4e4;
   }
 
-  .adminTable .eventTime {
+  .adminTable .eventTime, .adminTable .participantEmail {
     color: #000;
     opacity: .7;
     font-weight: 300;
 
   }
 
-  .adminTable .eventName a {
+  .adminTable a {
     text-decoration: none;
     color: #34495e;
   }
 
+  .adminTable td {
+    color: #34495e;
+  }
 
+  .adminTable .setStatus-icon {
+    opacity: .5;
+    margin-right: 5px;
+  }
+
+  .adminTable .setStatus-icon:hover {
+    opacity: 1;
+    color: white;
+  }
+
+  .adminTable .ontime {
+    color: #66BB6A;
+  }
+
+  .adminTable .late {
+    color: #EC4F43;
+  }
+
+  .adminTable .excused {
+    color: #3498DB;
+  }
+
+  .adminTable .absent {
+    color: #666666;
+  }
 
 .topnav {
   position: absolute;
@@ -655,8 +693,6 @@ a {
 .admin-menu .menu-item {
   padding: 10px 20px;
   font-weight: 300;
-/*  border-bottom: 1px solid #374E5E;
-*/
 }
 
 .admin-menu .menu-item:hover {
@@ -702,6 +738,42 @@ a {
   margin-left: 207px !important;
 }
 
+.beaconsHeader {
+  height: 70px;
+  padding: 40px 0px 0px 36px;
+}
+
+.beaconsHeader h1 {
+  float: left;
+  width: 50%;
+}
+
+.addBeacon {
+  position: relative;
+  padding: 40px 100px 0px 36px;
+  border: 1px solid #efefef;
+  background-color: rgba(236,239,241, .2);
+  display: none;
+}
+
+.addBeacon h3 {
+  padding-bottom: 30px;
+}
+
+.addBeacon .bigFields {
+  width: 46%;
+}
+
+.addBeacon .buttons {
+  width: 46%;
+  padding-bottom: 40px;
+}
+
+.addBeacon-toggle {
+  float: right;
+  color: #ffffff;
+}
+
 .current-event-card {
   position: relative;
   padding: 40px 0px 0px 36px;
@@ -735,6 +807,10 @@ a {
   .current-event-card .buttons {
     float: right;
     padding-right: 20px;
+  }
+
+  .current-event-card .buttons a {
+    color: #ffffff;
   }
 
 .content {
@@ -773,30 +849,39 @@ a {
   width: 0px;
   height: 30px;
   margin: 1px;
+  opacity: 0;
 }
 
 .history-stats span{
   margin-left: 5px;
+  display: inline;
+  line-height: 1.5em;
 }
 
 .history-stats strong{
+  opacity: 0;
   margin-left: 2px;
   font-size: 1.2em;
 }
 
 #history-stats-ontime {
-  color: #4F8A10;
-  background-color: #DFF2BF;
+  color: #ffffff;
+  background-color: #66BB6A;
 }
 
 #history-stats-late {
-  color: #9F6000;
-  background-color: #FEEFB3;
+  color: #ffffff;
+  background-color: #EC4F43;
 }
 
 #history-stats-absent {
-  color: #D8000C;
-  background-color: #FFBABA;
+  color: #ffffff;
+  background-color: #666666;
+}
+
+#history-stats-excused {
+  color: #ffffff;
+  background-color: #3498DB;
 }
 
 /*
