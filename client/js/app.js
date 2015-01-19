@@ -8,7 +8,7 @@ angular.module('proximate',
   ])
 
 .config(function($stateProvider, $urlRouterProvider, $httpProvider) {
-  $urlRouterProvider.otherwise('/admin/events');
+  $urlRouterProvider.otherwise('/login');
 
   $stateProvider
 
@@ -94,10 +94,13 @@ angular.module('proximate',
 
 .run(function($rootScope, $state, Auth) {
   // Redirect to login if user is not authenticated
-  $rootScope.$on('$stateChangeStart', function(event, next) {
-    if (next.name !== 'login' && !Auth.isAuth()) {
+  $rootScope.$on('$stateChangeStart', function(event, toState, toParams) {
+    if (toState.name !== 'login' && !Auth.isAuth()) {
       event.preventDefault();
-      $rootScope.next = next.name;
+      $rootScope.next = {
+        name: toState.name,
+        params: toParams
+      };
       $state.transitionTo('login');
     }
   });

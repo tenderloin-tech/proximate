@@ -21,6 +21,11 @@ var port = process.env.PORT || 8080;
 
 app.use(morgan('dev'));
 app.use(bodyparser.json());
+
+app.get('/', function(req, res) {
+  res.redirect('splash.html');
+});
+
 app.use(express.static(__dirname + '/../client'));
 app.use(allowCrossDomain);
 
