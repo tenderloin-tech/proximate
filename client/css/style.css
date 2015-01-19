@@ -516,7 +516,6 @@ a {
 }
 
 .pane1 {
-  overflow: hidden;
   text-align: center;
   height: 26.69em;
   width: 100%;
@@ -528,26 +527,27 @@ a {
 
 .pane1 .logo {
   position: relative;
-  /*top: 1.6em;*/
-  /*bottom: 0;*/
-  /*left: 0;*/
-  /*right: 0;*/
   margin: 0 auto;
+  width: 50%;
 }
 
 .pane1 .logo img {
-  margin-right: 3em;
-  margin-bottom: -5em;
+  /*position: relative;*/
+  /*margin-right: 3em;*/
+  /*margin-left: -0.3em;*/
+  /*margin-bottom: -5em;*/
+  display: block;
+  margin: 0 auto -72px auto;
+  padding: 18px 41px 0 0;
 }
 
 .pane1 .signinButton {
   float: right;
   color: #FFFFFF;
-  background-color: #636D7A;
-  width: 6.25em;
+  width: 120px;
   height: 1.88em;
   font-size: 0.94em;
-  font-weight: 100;
+  font-weight: bold;
   margin-top: 1.88em;
   margin-right: 2.5em;
   border-width: 0;
@@ -592,23 +592,34 @@ a {
   font-size: 1.1em;
   font-weight: 300;
   border-color: #FFFFFF;
+  border-right-color: #FFFFFF;
   border-width: 0.13em;
+  border-radius: 8px;
 }
 
 .pane2 {
   padding: 1px;
   height: 32.4em;
-  width: 100%;
-  background: url('../img/textured_paper.png');
-  background-size: 100%;
-  opacity: 0.8;
   text-align: center;
+}
+
+.pane2::after {
+  content: "";
+  background: url('../img/textured_paper.png');
+  opacity: 0.5;
+  top: 0;
+  left: 0;
+  bottom: -300px;
+  right: 0;
+  position: absolute;
+  z-index: -1;
 }
 
 .pane2 h1 {
   margin-top: 1.6em;
   font-size: 2em;
   font-weight: 600;
+  color: #34465D;
 }
 
 .pane2 .box {
@@ -632,14 +643,30 @@ a {
   margin-left: -34em;
 }
 
-.pane2 h3:nth-child(4) {
-  margin-top: 1em;
+.pane2 .appLogos h3 {
+  margin-top: 2em;
   margin-left: 1em;
 }
 
 .pane2 h3:nth-child(5) {
-  margin-top: -4.4em;
+  margin-top: -5.2em;
   margin-left: 38em;
+}
+
+.pane2 .appLogos img:first-of-type {
+  /*remove line below when on app store*/
+  display: none;
+  width: 77px;
+  margin-left: 1px;
+  opacity: 0.4;
+}
+
+.pane2 .appLogos img:last-of-type {
+  /*remove line below when on app store*/
+  display: none;
+  width: 81px;
+  margin-left: 10px;
+  opacity: 0.5;
 }
 
 .pane3 {
@@ -668,8 +695,10 @@ a {
 .pane3 .box-set {
   text-align: center;
   margin: 0 auto;
-  width: 90%;
+  width: 830px;
+  min-width: 730px;
   zoom: 1;
+  padding-left: 55px;
 }
 
 .pane3 .box {
@@ -680,15 +709,15 @@ a {
   margin-top:2.5%;
   padding: 90px 0;
   text-align: center;
-  width: 24%;
+  width: 188px;
   height: 1em;
   position: relative;
   top: 1.3em;
   border-radius: 3px;
 }
 
-.pane3 .box:nth-child(1) {
-  background-color: #BF4735;
+.pane3 .box:nth-child(2) {
+  background-color: #B74432;
 }
 
 .pane3 .box:nth-child(3n+3){
@@ -760,6 +789,7 @@ a {
 .pane5 {
   height: 12.7em;
   width: 100%;
+  min-width: 900px;
   background: -webkit-linear-gradient(left, #28374B , #304056); /* For Safari 5.1 to 6.0 */
   background: -o-linear-gradient(right, #28374B, #304056); /* For Opera 11.1 to 12.0 */
   background: -moz-linear-gradient(right, #28374B, #304056); /* For Firefox 3.6 to 15 */
@@ -772,12 +802,8 @@ a {
   width: 100%;
 }
 
-/*.pane5 .box {
-  margin: 0 auto;
-  width: 90%;
-}*/
-
 .pane5 .extlogo {
+  float: left;
   position: relative;
   width: 35%;
 }
@@ -813,27 +839,32 @@ a {
   color: #FFFFFF;
 }
 
-.pane5 .buttons {
-  position: relative;
-  float: right;
+.pane5 .bottomLinks {
+  position: absolute;
+  float: left;
+  left: 443px;
   margin-top: -12em;
 }
 
-.pane5 .buttons input[type="button"]{
+.pane5 a:link, a:visited {
   float: left;
   margin-top: 3.9em;
   margin-right: 2em;
-  color: #FFFFFF;
-  background-color: #636D7A;
-  width: 9em;
-  height: 2.5em;
+  height: 1.5em;
   font-size: 0.94em;
   font-weight: 100;
+  display: block;
+  font-weight: bold;
+  color: #ffffff;
+  width: 120px;
+  text-align: center;
+  padding: 4px;
+  text-decoration: underline;
 }
 
-  .pane5 .buttons input[type="button"]:last-child{
-    margin-right: 4em;
-  }
+.pane5 a:hover, a:active {
+  color: grey;
+}
 
 /* LOGIN VIEW */
 
