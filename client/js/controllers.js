@@ -1,4 +1,3 @@
-
 angular.module('proximate.controllers', [])
 
 .controller('AppCtrl', function($q, $rootScope, $scope, $state, $window, Auth, Populate, PubNub) {
@@ -378,8 +377,15 @@ angular.module('proximate.controllers', [])
     }, 450);
   };
 
+  var setCountdown = function(startTime) {
+    var a = moment(startTime);
+    var b = moment();
+    $scope.countdown = moment.duration(a - b).format('mm:ss');
+  };
+
   $scope.timeDiffFromEvent = null;
   $interval(function() {
+    setCountdown($scope.currentEvent.start_time);
     var timeDiff = moment($scope.currentEvent.start_time).diff(moment(), 'seconds');
     if (timeDiff > 0 && timeDiff >= 3600) {
       // More than an hour in the future
@@ -387,10 +393,11 @@ angular.module('proximate.controllers', [])
     } else if (timeDiff > 0 && timeDiff < 3600) {
       // Less than an hour in the future
       $scope.timeDiffFromEvent = true;
+
     } else {
       // In the past
       $scope.timeDiffFromEvent = false;
     }
+  }, 1000);
 
-  });
 });
