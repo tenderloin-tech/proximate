@@ -53,6 +53,42 @@ angular.module('proximate',
       url: '/login'
     });
 
+  $httpProvider.interceptors.push(function($q, $injector) {
+    var $http;
+    var rootScope;
+
+    return {
+      request: function(config) {
+        rootScope = rootScope || $injector.get('$rootScope');
+        rootScope.$broadcast('ajax-loading');
+
+        return config;
+      },
+
+      response: function(response) {
+        $http = $http || $injector.get('$http');
+
+        if ($http.pendingRequests.length === 0) {
+          rootScope = rootScope || $injector.get('$rootScope');
+          rootScope.$broadcast('ajax-success');
+        }
+
+        return response;
+      },
+
+      responseError: function(rejection) {
+        $http = $http || $injector.get('$http');
+
+        if ($http.pendingRequests.length === 0) {
+          rootScope = rootScope || $injector.get('$rootScope');
+          rootScope.$broadcast('ajax-success');
+        }
+
+        return $q.reject(rejection);
+      }
+    };
+  });
+
   $httpProvider.interceptors.push('authInterceptor');
 })
 

@@ -18,7 +18,7 @@
           <i class="desktop icon"></i>
           Projector
         </a>
-        <a href="{{event.htmlLink}}" target="top" class="ui small icon blue button">
+        <a href="{{currentEvent.htmlLink}}" target="top" class="ui small icon blue button">
           <i class="google icon"></i>
           GCal
         </a>
@@ -32,7 +32,7 @@
     </div>
     <ul class="timeSelect">
       <li class="selected">
-        <a ng-click="setDisplayFilter('all')">All</a>
+        <a ng-click="setDisplayFilterTime('all')">All</a>
       </li>
       <li>
         <a ng-click="setDisplayFilterTime('future')">Upcoming</a>

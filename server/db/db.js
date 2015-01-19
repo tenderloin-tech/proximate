@@ -14,6 +14,9 @@ if (config.resetDatabaseOnLoad) {
     return bookshelf.knex.schema.dropTableIfExists('events');
   })
   .then(function() {
+    return bookshelf.knex.schema.dropTableIfExists('calendars');
+  })
+  .then(function() {
     return bookshelf.knex.schema.dropTableIfExists('admins');
   })
   .then(function() {
@@ -36,6 +39,14 @@ if (config.resetDatabaseOnLoad) {
       t.string('access_token');
       t.bigInteger('token_expiry');
       t.dateTime('created_at');
+    });
+  })
+  .then(function() {
+    return bookshelf.knex.schema.createTable('calendars', function(t) {
+      t.increments('id').primary();
+      t.integer('admin_id').notNullable();
+      t.string('calendar_id');
+      t.string('sync_token');
     });
   })
   .then(function() {
