@@ -534,7 +534,7 @@ a {
 .pane1 .logo img {
   display: block;
   margin: 0 auto -72px auto;
-  padding: 18px 41px 0 0;
+  padding: 18px 44px 0 0;
 }
 
 .pane1 .signinButton {
@@ -548,6 +548,10 @@ a {
   margin-right: 2.5em;
   border-width: 0;
   border-radius: 0.19em;
+}
+
+.pane1 .signinButton:hover, .signinButton:active {
+  color: grey;
 }
 
 .pane1 h1 {
@@ -645,7 +649,7 @@ a {
 }
 
 .pane2 h3:nth-child(5) {
-  margin-top: -5.2em;
+  margin-top: -4.5em;
   margin-left: 38em;
 }
 
@@ -727,7 +731,7 @@ a {
 .pane3 .box h3 {
   color: #FFFFFF;
   margin-top: 0.5em;
-  margin-bottom: -0.5em;
+  margin-bottom: 0.2em;
 }
 
 .pane3 .box h4 {
@@ -812,7 +816,7 @@ a {
 .pane5 h1 {
   position: relative;
   left: 7.6em;
-  bottom: 3.5em;
+  bottom: 3em;
   font-size: 1.4em;
   width: 50%;
   color: #FFFFFF;
@@ -828,7 +832,7 @@ a {
   position: relative;
   width: 50%;
   left: 15.2em;
-  bottom: 8em;
+  bottom: 6em;
   font-size: 0.7em;
   font-weight: 200;
   opacity: 0.7;
@@ -844,7 +848,7 @@ a {
 
 .pane5 a:link, a:visited {
   float: left;
-  margin-top: 3.9em;
+  margin-top: 5.9em;
   margin-right: 2em;
   height: 1.5em;
   font-size: 0.94em;
