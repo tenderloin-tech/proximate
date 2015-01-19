@@ -532,10 +532,6 @@ a {
 }
 
 .pane1 .logo img {
-  /*position: relative;*/
-  /*margin-right: 3em;*/
-  /*margin-left: -0.3em;*/
-  /*margin-bottom: -5em;*/
   display: block;
   margin: 0 auto -72px auto;
   padding: 18px 41px 0 0;
