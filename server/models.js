@@ -7,6 +7,9 @@ var Admin = exports.Admin = bookshelf.Model.extend({
   events: function() {
     return this.hasMany(Event);
   },
+  calendars: function() {
+    return this.hasMany(Calendar);
+  },
   beacons: function() {
     return this.hasMany(Beacon);
   },
@@ -38,6 +41,13 @@ var Participant = exports.Participant = bookshelf.Model.extend({
         .orderByRaw('ABS(UNIX_TIMESTAMP() - UNIX_TIMESTAMP(events.start_time)) ASC')
         .limit(1);
     });
+  }
+});
+
+var Calendar = exports.Calendar = bookshelf.Model.extend({
+  tableName: 'calendars',
+  admin: function() {
+    return this.belongsTo(Admin);
   }
 });
 
@@ -94,6 +104,10 @@ exports.EventsParticipants = bookshelf.Collection.extend({
 
 exports.Events = bookshelf.Collection.extend({
   model: Event
+});
+
+exports.Calendars = bookshelf.Collection.extend({
+  model: Calendar
 });
 
 exports.Beacons = bookshelf.Collection.extend({

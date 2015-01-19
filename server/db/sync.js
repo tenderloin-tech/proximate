@@ -34,21 +34,51 @@ module.exports = function(adminId) {
 
     var params = {
       calendarId: calendarId,
-      maxResults: 250,
-      orderBy: 'starttime',
+      maxResults: 1000,
       showDeleted: true,
       singleEvents: true
     };
 
-    return new promise(function(resolve, reject) {
+    var eventList = [];
+
+    var getEventsPage = function(resolve, reject, pageToken) {
+      if (pageToken) {
+        params.pageToken = pageToken;
+      } else {
+        delete params.pageToken;
+      }
+
       calendar.events.list(params, function(err, data) {
-        if (data) {
-          resolve(data.items);
-        } else {
+        if (err) {
           reject(err);
         }
+
+        eventList = eventList.concat(data.items);
+
+        if (data.nextPageToken) {
+          getEventsPage(resolve, reject, data.nextPageToken);
+        } else {
+          helpers.upsertSyncTokens({
+            admin_id: adminParams.id,
+            calendar_id: calendarId,
+            sync_token: data.nextSyncToken
+          })
+            .then(function() {
+              resolve(eventList);
+            });
+        }
       });
-    });
+    };
+
+    return helpers.getSyncToken(adminParams.id, calendarId)
+      .then(function(syncToken) {
+        if (syncToken) {
+          params.syncToken = syncToken;
+        }
+      })
+      .then(function() {
+        return new promise(getEventsPage);
+      });
 
   };
 
@@ -94,6 +124,8 @@ module.exports = function(adminId) {
 
   // Make sure the event meet all conditions before performing operations
   var isValid = function(event) {
+    if (!event) { return false; }
+
     var conditions = [
       event.creator.email === adminParams.email,
       hasProximate(event.attendees),

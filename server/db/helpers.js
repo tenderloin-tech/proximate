@@ -287,6 +287,17 @@ exports.checkinUser = function(deviceId) {
 };
 
 // SYNC HELPERS
+exports.getSyncToken = function(adminId, calendarId) {
+
+  return new models.Calendar({admin_id: adminId, calendar_id: calendarId})
+    .fetch()
+    .then(function(model) {
+      if (model) {
+        return model.get('sync_token');
+      }
+    });
+};
+
 exports.upsertEvent = function(event) {
 
   return new models.Event({gcal_id: event.gcal_id})
@@ -299,6 +310,19 @@ exports.upsertEvent = function(event) {
       }
     });
 
+};
+
+exports.upsertSyncTokens = function(calendarRecord) {
+
+  return new models.Calendar({calendar_id: calendarRecord.calendar_id})
+    .fetch()
+    .then(function(model) {
+      if (model) {
+        return model.save(calendarRecord);
+      } else {
+        return models.Calendar.forge(calendarRecord).save();
+      }
+    });
 };
 
 // Update an event record, and event participant record based on gcal api event info
