@@ -10,13 +10,15 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/normalize.css">
     <link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic' rel='stylesheet' type='text/css'>
-    <!-- LIBS -->
+    <!-- SEMANTIC -->
     <link rel="stylesheet" href="lib/semantic-ui-form/form.min.css">
     <link rel="stylesheet" href="lib/semantic-ui-menu/menu.min.css">
     <link rel="stylesheet" href="lib/semantic-ui-icon/icon.min.css">
     <link rel="stylesheet" href="lib/semantic-ui-input/input.min.css">
     <link rel="stylesheet" href="lib/semantic-ui-label/label.min.css">
     <link rel="stylesheet" href="lib/semantic-ui-button/button.min.css">
+    <link rel="stylesheet" href="lib/semantic-ui-loader/loader.min.css">
+    <!-- LIBS -->
     <script src="https://cdn.pubnub.com/pubnub.min.js"></script>
     <script src="lib/jquery/dist/jquery.min.js"></script>
     <script src="lib/angular/angular.min.js"></script>
@@ -35,7 +37,9 @@
   </head>
   <body ng-controller="AppCtrl">
     <div class="spinner">
-        <img class="spinner-img" src="img/spinner.gif">
+          <div class="ui inverted active dimmer">
+            <div class="ui loader"></div>
+          </div>
     </div>
     <div class="container" ui-view></div>
   </body>

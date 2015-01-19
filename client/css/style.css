@@ -62,16 +62,11 @@ a {
 }
 
 .spinner {
+  background-color: rgba(0,0,0,.5);
   min-height: 100%;
   min-width: 100%;
   position: fixed;
   z-index: 99;
-}
-.spinner-img {
-  position: fixed;
-  z-index: 100;
-  top: 50%;
-  left: 50%;
 }
 
 /* PROJECTOR VIEW */
