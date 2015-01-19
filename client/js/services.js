@@ -234,4 +234,22 @@ angular.module('proximate.services', [])
     }
     return filteredResults;
   };
+})
+
+.directive('spinner', function() {
+  return {
+    restrict: 'C',
+
+    link: function(scope, element) {
+      element.hide();
+
+      scope.$on('ajax-loading', function() {
+        element.show();
+      });
+
+      scope.$on('ajax-success', function() {
+        element.hide();
+      });
+    }
+  };
 });
