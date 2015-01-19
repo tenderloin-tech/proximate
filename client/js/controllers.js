@@ -143,7 +143,7 @@ angular.module('proximate.controllers', [])
   $rootScope.$on('auth-login-success', function() {
     $scope.getAdminAndEventInfo();
     if ($rootScope.next) {
-      $state.go($rootScope.next);
+      $state.go($rootScope.next.name, $rootScope.next.params);
     } else {
       $state.go('admin.events');
     }

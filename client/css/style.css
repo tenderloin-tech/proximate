@@ -504,6 +504,368 @@ a {
   opacity: .8;
 }
 
+/* SPLASH VIEW */
+.splash {
+  min-width: 900px;
+}
+
+.splash .topBar {
+  background-color: #AC4A3F;
+  height: 0.25em;
+  width: 100%;
+}
+
+.pane1 {
+  text-align: center;
+  height: 26.69em;
+  width: 100%;
+  background: -webkit-radial-gradient(circle, #34465D, #243143); /* Safari 5.1 to 6.0 */
+  background: -o-radial-gradient(circle, #34465D, #243143); /* For Opera 11.6 to 12.0 */
+  background: -moz-radial-gradient(circle, #34465D, #243143); /* For Firefox 3.6 to 15 */
+  background: radial-gradient(circle, #34465D, #243143); /* Standard syntax */
+}
+
+.pane1 .logo {
+  position: relative;
+  margin: 0 auto;
+  width: 50%;
+}
+
+.pane1 .logo img {
+  display: block;
+  margin: 0 auto -72px auto;
+  padding: 18px 44px 0 0;
+}
+
+.pane1 .signinButton {
+  float: right;
+  color: #FFFFFF;
+  width: 120px;
+  height: 1.88em;
+  font-size: 0.94em;
+  font-weight: bold;
+  margin-top: 1.88em;
+  margin-right: 2.5em;
+  border-width: 0;
+  border-radius: 0.19em;
+}
+
+.pane1 .signinButton:hover, .signinButton:active {
+  color: grey;
+}
+
+.pane1 h1 {
+  margin-top: 4.7em;
+  font-weight: 400;
+  font-size: 1.4em;
+  color: #FFFFFF;
+}
+
+.pane1 h1 .io {
+  font-style: normal;
+  font-weight: 200;
+}
+
+.pane1 h2 {
+  margin-top: -2.1em;
+  margin-bottom: 0.7em;
+  font-size: 1.38em;
+  font-weight: 700;
+  font-style: bold;
+  color: #FFFFFF;
+}
+
+.pane1 h3 {
+  margin-top: 0.63em;
+  font-size: 0.94em;
+  font-weight: 300;
+  color: #FFFFFF;
+  opacity: 0.7;
+}
+
+.pane1 .getStartedButton {
+  margin-top: 2.2em;
+  color: #FFFFFF;
+  width: 9.5em;
+  height: 2.8em;
+  background-color: transparent;
+  font-size: 1.1em;
+  font-weight: 300;
+  border-color: #FFFFFF;
+  border-right-color: #FFFFFF;
+  border-width: 0.13em;
+  border-radius: 8px;
+}
+
+.pane2 {
+  padding: 1px;
+  height: 32.4em;
+  text-align: center;
+}
+
+.pane2::after {
+  content: "";
+  background: url('../img/textured_paper.png');
+  opacity: 0.5;
+  top: 0;
+  left: 0;
+  bottom: -300px;
+  right: 0;
+  position: absolute;
+  z-index: -1;
+}
+
+.pane2 h1 {
+  margin-top: 1.6em;
+  font-size: 2em;
+  font-weight: 600;
+  color: #34465D;
+}
+
+.pane2 .box {
+  width: 80%;
+  margin: 3.4em auto 0 auto;
+  padding-left: 5em;
+}
+
+.pane2 .box img {
+  position: relative;
+}
+
+.pane2 h3 {
+  font-size: 1em;
+  font-weight: 300;
+  position: relative;
+}
+
+.pane2 h3:nth-child(3) {
+  margin-top: -2em;
+  margin-left: -34em;
+}
+
+.pane2 .appLogos h3 {
+  margin-top: 2em;
+  margin-left: 1em;
+}
+
+.pane2 h3:nth-child(5) {
+  margin-top: -4.5em;
+  margin-left: 38em;
+}
+
+.pane2 .appLogos img:first-of-type {
+  /*remove line below when on app store*/
+  display: none;
+  width: 77px;
+  margin-left: 1px;
+  opacity: 0.4;
+}
+
+.pane2 .appLogos img:last-of-type {
+  /*remove line below when on app store*/
+  display: none;
+  width: 81px;
+  margin-left: 10px;
+  opacity: 0.5;
+}
+
+.pane3 {
+  padding: 1px;
+  height: 32.1em;
+  width: 100%;
+  background: -webkit-linear-gradient(#C64534, #E6543F);
+  background: -o-linear-gradient(#C64534, #E6543F);
+  background: -moz-linear-gradient(#C64534, #E6543F);
+  background: linear-gradient(#C64534, #E6543F);
+}
+
+.pane3 .box-set, .pane3 .box {
+  border-radius: 6px;
+}
+
+.pane3 .box-set:before, .pane3 .box-set:after {
+  content: "";
+  display: table;
+}
+
+.pane3 .box-set:after {
+  clear: both;
+}
+
+.pane3 .box-set {
+  text-align: center;
+  margin: 0 auto;
+  width: 830px;
+  min-width: 730px;
+  zoom: 1;
+  padding-left: 55px;
+}
+
+.pane3 .box {
+  background: #BD4634;
+  float: left;
+  margin-left: 4.25%;
+  margin-right: 4.25%;
+  margin-top:2.5%;
+  padding: 90px 0;
+  text-align: center;
+  width: 188px;
+  height: 1em;
+  position: relative;
+  top: 1.3em;
+  border-radius: 3px;
+}
+
+.pane3 .box:nth-child(2) {
+  background-color: #B74432;
+}
+
+.pane3 .box:nth-child(3n+3){
+  margin-right: 0;
+}
+
+.pane3 .box img {
+  margin-top: -4em;
+}
+
+.pane3 .box h3 {
+  color: #FFFFFF;
+  margin-top: 0.5em;
+  margin-bottom: 0.2em;
+}
+
+.pane3 .box h4 {
+  color: #FFFFFF;
+  top: 9.8em;
+  left: 1.8em;
+  font-size: 85%;
+  font-weight: 200;
+}
+
+.pane4 {
+  height: 31.6em;
+  width: 100%;
+  background: url('../img/classroom-blurred.jpg');
+  background-size: 100%;
+  text-align: center;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  zoom: 1;
+  z-index: 0;
+}
+
+.pane4 .quoteBox {
+  height: 17em;
+  width: 80%;
+  margin: 0 auto;
+  background-color:rgba(0,0,0,0.5);
+  position: relative;
+  top: 7em;
+
+}
+
+.pane4 .hrlogo {
+  margin: 0 auto;
+  position: relative;
+}
+
+.pane4 img {
+  position: relative;
+  height: auto;
+  top: 30px;
+  max-width: 18%;
+  margin: auto;
+}
+
+.pane4 p {
+  color: #FFFFFF;
+  margin-top: 59px;
+  margin-bottom: -31px;
+  margin-left: 12em;
+  margin-right: 12em;
+}
+
+.pane5 {
+  height: 12.7em;
+  width: 100%;
+  min-width: 900px;
+  background: -webkit-linear-gradient(left, #28374B , #304056); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(right, #28374B, #304056); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(right, #28374B, #304056); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(to right, #28374B, #304056); /* Standard syntax */
+}
+
+.pane5 .bar {
+  background-color: #FFFFFF;
+  height: 0.34em;
+  width: 100%;
+}
+
+.pane5 .extlogo {
+  float: left;
+  position: relative;
+  width: 35%;
+}
+
+.pane5 img {
+  margin-top: 3em;
+  margin-left: 5.6em;
+}
+
+.pane5 h1 {
+  position: relative;
+  left: 7.6em;
+  bottom: 3em;
+  font-size: 1.4em;
+  width: 50%;
+  color: #FFFFFF;
+  font-weight: 400;
+}
+
+.pane5 h1 .io {
+  font-style: normal;
+  font-weight: 200;
+}
+
+.pane5 h2 {
+  position: relative;
+  width: 50%;
+  left: 15.2em;
+  bottom: 6em;
+  font-size: 0.7em;
+  font-weight: 200;
+  opacity: 0.7;
+  color: #FFFFFF;
+}
+
+.pane5 .bottomLinks {
+  position: absolute;
+  float: left;
+  left: 443px;
+  margin-top: -12em;
+}
+
+.pane5 a:link, a:visited {
+  float: left;
+  margin-top: 5.9em;
+  margin-right: 2em;
+  height: 1.5em;
+  font-size: 0.94em;
+  font-weight: 100;
+  display: block;
+  font-weight: bold;
+  color: #ffffff;
+  width: 120px;
+  text-align: center;
+  padding: 4px;
+  text-decoration: underline;
+}
+
+.pane5 a:hover, a:active {
+  color: grey;
+}
+
 /* LOGIN VIEW */
 
 .login {
