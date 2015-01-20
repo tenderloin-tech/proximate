@@ -385,8 +385,8 @@ angular.module('proximate.controllers', [])
 
   $scope.timeDiffFromEvent = null;
   $interval(function() {
-    setCountdown($scope.currentEvent.start_time);
-    var timeDiff = moment($scope.currentEvent.start_time).diff(moment(), 'seconds');
+    setCountdown($scope.event.start_time);
+    var timeDiff = moment($scope.event.start_time).diff(moment(), 'seconds');
     if (timeDiff > 0 && timeDiff >= 3600) {
       // More than an hour in the future
       $scope.timeDiffFromEvent = null;

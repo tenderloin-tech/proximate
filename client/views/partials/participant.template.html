@@ -19,7 +19,7 @@
     <tbody>
       <tr class="adminRow" ng-repeat="data in eventHistory | orderBy: '-start_time'">
         <td ui-sref="admin.roster({eventId: data.event.id})">{{data.event.name}}</td>
-        <td>{{data.event.start_time | date:'fullDate'}}</td>
+        <td>{{data.event.start_time | date:'EEE, MMM d, h:mm a'}}</td>
         <td data-title="'Status'" class="setStatus-cell" ng-class="setClassForStatus(data.status)" ng-click="participant.$edit = true">
           <span ng-if="!participant.$edit && data.status !== null && data.status !== 'null'"><i class="edit icon setStatus-icon"></i>{{data.status}}</span>
           <span ng-if="!participant.$edit && (data.status === null || data.status == 'null')"><i class="edit icon setStatus-icon"></i>absent</span>
